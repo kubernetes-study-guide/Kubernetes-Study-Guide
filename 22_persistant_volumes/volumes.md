@@ -8,6 +8,26 @@ Persistant volumes are volumes that stores a container's data outside of a pod. 
 
  There are lots of other [Persistant Volume Plugins](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes) available, some of which are cloud platform specific. There are 2 ways to create persistant volumes:
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  - statically 
  - dynamically (by using persistantVolumeClaims)
  

@@ -7,6 +7,7 @@ emptyDir volumes exists outside a container but inside the pod. This setup has t
 - If the container dies, then kubernetes will launch a new container inside the pod, and that container will reconnect to the volume and pick up where the previous container left off
 - emptyDir volumes are only mountable by containers in the same pod.
 - The underlying storage used by emptyDir volumes is the worker node's disk space. 
+- emptyDir volumes gets deleted if/when the pod dies. 
 
 One possible use case for using emptyDir is when you have a 2 container pod, where the main container app outputs logs, and the sidecar container is a log-forwarder that will forward your log to a log aggregator such as ELK server. In that scenario, you can have a emptyDir volume mounted on to the directory where your main app writes logs to. Then on the sidecar container, you mount the same volume so that it can read the logs and forward them to the elk server.
 
