@@ -6,7 +6,42 @@ Persistant volumes are volumes that stores a container's data outside of a pod. 
 - If worker nodes gets terminated then all hostPath volumes gets deleted. 
 
 
- There are lots of other [Persistant Volume Plugins](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes) available, some of which are cloud platform specific. There are 2 ways to create persistant volumes:
+ There are lots of other [Persistant Volume Plugins](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes) available, some of which are cloud platform specific. 
+
+ There's a few ways to create PersistentVolumes. The first way is to define as part of the pod definition:
+
+
+ ```yaml
+ ---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-mysql-db
+  labels:
+    component: mysql_db
+spec: 
+  volumes: 
+    - name: db-data-storage
+      nfs:                      # here we are using nfs specification for the Persistent Volume
+        path: /nfs/export_rw
+        server: 10.3.5.109 
+        readOnly: false
+  containers:
+    - name: cntr-mysql-db
+      image: mysql
+      env:
+        - name: "MYSQL_ROOT_PASSWORD"
+          value: "password123"
+      volumeMounts:
+        - name: db-data-storage              # Here we call the PersistentVolume by it's name.
+          mountPath: /var/lib/mysql
+      ports:
+        - containerPort: 3306
+ ```
+
+
+
+
 
 
 

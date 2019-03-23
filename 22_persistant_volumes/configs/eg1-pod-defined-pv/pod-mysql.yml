@@ -7,8 +7,8 @@ metadata:
     component: mysql_db
 spec: 
   volumes: 
-    - name: db-data-storage 
-      nfs:
+    - name: db-data-storage
+      nfs:                      # here we are using nfs specification for the Persistent Volume
         path: /nfs/export_rw
         server: 10.3.5.109 
         readOnly: false
@@ -19,7 +19,7 @@ spec:
         - name: "MYSQL_ROOT_PASSWORD"
           value: "password123"
       volumeMounts:
-        - name: db-data-storage
+        - name: db-data-storage              # Here we call the PersistentVolume by it's name.
           mountPath: /var/lib/mysql
       ports:
         - containerPort: 3306
