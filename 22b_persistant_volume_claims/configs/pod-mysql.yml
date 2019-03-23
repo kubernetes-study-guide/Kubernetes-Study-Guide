@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-mysql-db
+  labels:
+    component: mysql_db
+spec: 
+  volumes: 
+    - name: db-data-storage 
+      persistentVolumeClaim:       
+        claimName: pvc-mysql-db   # here we specify which PVC should request for this pod's PV
+  containers:
+    - name: cntr-mysql-db
+      image: mysql
+      env:
+        - name: "MYSQL_ROOT_PASSWORD"
+          value: "password123"
+      volumeMounts:
+        - name: db-data-storage
+          mountPath: /var/lib/mysql
+      ports:
+        - containerPort: 3306

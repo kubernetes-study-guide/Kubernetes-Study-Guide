@@ -1,4 +1,82 @@
-# Persistant Volumes
+# Persistant Volume Claims
+
+
+Following on from the previous NFS example, the Kubernetes Administrator (KA) is the person who not only builds+maintains the kubecluster, but also manages the underlying infrastructure, e.g. AWS, Azure, On-Premise,...etc. 
+
+
+In this scenario, the KA could also be the person who built the NFS server too. Once the NFS server is available, the KA would then create the PV:
+
+```bash
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: db-data-storage 
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /nfs/export_rw
+    server: 10.3.5.109
+```
+
+This ends up creating:
+
+```bash
+$ kubectl get persistentvolume
+NAME              CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS   REASON   AGE
+db-data-storage   1Gi        RWO            Retain           Available                                   38m
+
+
+$ kubectl describe persistentvolume
+Name:            db-data-storage
+Labels:          <none>
+Annotations:     kubectl.kubernetes.io/last-applied-configuration:
+                   {"apiVersion":"v1","kind":"PersistentVolume","metadata":{"annotations":{},"name":"db-data-storage"},"spec":{"accessModes":["ReadWriteOnce"...
+Finalizers:      [kubernetes.io/pv-protection]
+StorageClass:
+Status:          Available
+Claim:
+Reclaim Policy:  Retain
+Access Modes:    RWO
+VolumeMode:      Filesystem
+Capacity:        1Gi
+Node Affinity:   <none>
+Message:
+Source:
+    Type:      NFS (an NFS mount that lasts the lifetime of a pod)
+    Server:    10.3.5.109
+    Path:      /nfs/export_rw
+    ReadOnly:  false
+Events:        <none>
+
+```
+
+
+
+
+The KA would then notify the Developer that the PV is now ready. The Developer then 'claims' the PV by creating a PVC:
+
+
+```bash
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------
 
 Persistant volumes are volumes that stores a container's data outside of a pod. So that when a pod dies, then the data still persists and get's used by a replacement container. hostpath volumes is an example of a persistant volume. However it has some limitations, in that:
 

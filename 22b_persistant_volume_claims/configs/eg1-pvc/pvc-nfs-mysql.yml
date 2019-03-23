@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-db-data-storage
+spec:
+  volumeName: pv-db-data-storage
