@@ -3,6 +3,10 @@ kind: PersistentVolume
 metadata:
   name: db-data-storage 
 spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
   nfs:
     path: /nfs/export_rw
     server: 10.3.5.109
