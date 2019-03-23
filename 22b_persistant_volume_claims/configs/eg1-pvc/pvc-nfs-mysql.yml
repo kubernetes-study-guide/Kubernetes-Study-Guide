@@ -4,4 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: pvc-db-data-storage
 spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
   volumeName: pv-db-data-storage
