@@ -6,9 +6,10 @@ metadata:
   labels:
     component: mysql_db
 spec: 
-#  volumes: 
-#    - name: db-data-storage
-#      pers
+  volumes: 
+    - name: db-data-storage
+      persistentVolumeClaim:
+        claimName: pvc-db-data-storage
   containers:
     - name: cntr-mysql-db
       image: mysql

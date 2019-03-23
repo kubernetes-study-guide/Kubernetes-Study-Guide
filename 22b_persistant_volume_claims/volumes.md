@@ -59,10 +59,22 @@ Events:        <none>
 The KA would then notify the Developer that the PV is now ready. The Developer then 'claims' the PV by creating a PVC:
 
 
-```bash
-
-
+```yaml
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-db-data-storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pv-db-data-storage
 ```
+
+
 
 
 
