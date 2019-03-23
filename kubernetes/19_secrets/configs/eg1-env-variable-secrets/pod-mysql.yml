@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-mysql-db
+  labels:
+    component: mysql_db_server
+spec: 
+  containers:
+    - name: cntr-mysql-db
+      image: mysql
+      env:
+        - name: MYSQL_DATABASE
+          value: dummy_db
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets      # this is the name of the object that holds one or more key-value pairs. 
+              key: MysqlRootPassword   # this is the name of the key, whose value we're interested in. 
+      ports:
+        - containerPort: 3306

@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-nodeport-httpd
+spec:
+  type: NodePort   # there are 4 types of Services. ClusterIP, NodePort, LoadBalancer, Ingress. https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types. NodePort should only be used for dev environments. 
+  ports:
+    - port: 3050  # this is used by other pods to access assets that's avialable in our demo conainer 
+      targetPort: 80 # port number of the pod's primary container is listening on. So needs to mirror containerPort setting as defined in the object config file. 
+      nodePort: 31000  # this ranges between 30000-32767. Our worker node VM will be listening on this port. It's actually the kube-proxy component on worker nodes that will start listening on this port. This is the port number we need to enter into our web browser. That's one of the drawbacks in using nodePort service type, i.e. have to explicitly specify ugly port numbers in the url
+  selector:
+    app: apache_webserver  # this says it will forward traffic to object that has metadata.label entry with key/value pair of 'app: apache_webserver' that's how this object and the pod object links together. 

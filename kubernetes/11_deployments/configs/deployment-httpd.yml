@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-httpd
+  labels:
+    component: httpd_webserver
+spec:
+  replicas: 2 
+  minReadySeconds: 10 # This is one of the bells and whistle feature that deployment objects provides,
+                      # but replica sets doesn't. 
+                      # it's how many seconds to wait after pod is created, before deployment 
+                      # will allow the pod to start receiving traffic. 
+  selector:
+    matchLabels:
+      component: httpd_webserver
+  template:
+    metadata:
+      labels:
+        component: httpd_webserver
+    spec: 
+      containers:
+        - name: cntr-httpd
+          image: httpd:2.4.37
+#          image: httpd:2.4.38
+          ports:
+            - containerPort: 80

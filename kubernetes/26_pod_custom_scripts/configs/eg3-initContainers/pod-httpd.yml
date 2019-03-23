@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-httpd
+  labels:
+    component: httpd
+spec:
+  initContainers:      # here we'ved added the initialisation contaner
+    - name: init
+      image: centos
+      command:
+        - /bin/bash
+        - -c
+        - |
+          echo "$(date) INFO: sleep for 1 minute"
+          sleep 60
+  containers:
+    - name: cntr-httpd
+      image: httpd
+      ports:
+        - containerPort: 80

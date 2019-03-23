@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-httpd-webserver
+spec:
+  type: NodePort
+  ports:
+    - port: 3050
+      targetPort: 80
+      nodePort: 31000
+  selector:
+    component: httpd_webserver

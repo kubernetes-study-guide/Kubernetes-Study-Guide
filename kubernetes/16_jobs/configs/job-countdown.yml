@@ -1,0 +1,21 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-countdown
+spec:
+  completions: 4  # this causes the pod to run successfully 4 times, one after another. The default is 1 if not set.
+  parallelism: 2  # specifies how many pods runs simultaneously, in parrallel. The default is 1 if not set. 
+  template:
+    spec:
+      containers:
+        - name: cntr-countdown
+          image: centos:latest
+          command:
+            - "bin/bash"
+            - "-c"
+            - "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; sleep 10 ; done"
+      restartPolicy: Never
+    
+      
+

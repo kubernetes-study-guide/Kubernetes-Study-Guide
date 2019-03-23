@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx_webserver
+  template:
+    metadata:
+      labels:
+        app: nginx_webserver
+    spec: 
+      tolerations:                    # add toleration here. 
+        - key: TrialNode                     # All this info is used to 
+          operator: Equal                    # match particular taint 
+          value: SpecialNodeForDevTeam       # setting. 
+          effect: NoSchedule
+      containers:
+        - name: cntr-nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80

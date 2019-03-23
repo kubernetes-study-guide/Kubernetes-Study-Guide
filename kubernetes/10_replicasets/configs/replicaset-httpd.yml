@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: rs-httpd
+  labels:
+    component: httpd_webserver
+spec:
+  replicas: 2   # This sets the number of pods that needs to exist. 
+                # This is a bit like the ASG equivalent of min/desired/max, but as a single value. 
+  selector:
+    matchLabels:
+      component: httpd_webserver  # this is used by the ReplicaSet object to keep track 
+                                  # of which pods it's configuration created.
+
+  template:  # the content nested in this section is pretty much what was in the pod-definition yaml file. 
+             # I.e. it's the aws equivalent of the EC2 Launch Configuration. 
+    metadata:
+      labels:
+        component: httpd_webserver  # this needs to be match up with the matchLabels setting above, 
+                                    # so that the replicaset knows which pods it has created.
+    spec: 
+      containers:
+        - name: cntr-httpd
+          image: httpd:latest 
+          ports:
+            - containerPort: 80
+          command: ["/bin/bash", "-c"]     # We have performed a command override here for testing purposes.
+          args:
+            - |
+              /bin/echo "The pod, $HOSTNAME is displaying this page." > /usr/local/apache2/htdocs/index.html
+              /usr/local/bin/httpd-foreground  

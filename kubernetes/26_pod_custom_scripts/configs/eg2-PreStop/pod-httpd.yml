@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-httpd
+  labels:
+    component: httpd
+spec:
+  volumes:
+    - name: list-of-deleted-pods
+      hostPath:
+        path: /tmp/ListOfDeletedPods
+        type: DirectoryOrCreate
+  containers:
+    - name: cntr-httpd
+      image: httpd
+      lifecycle:
+        postStart:
+          exec:
+            command:
+              - /bin/bash
+              - -c
+              - |
+                echo "the data is $(date)" > /usr/local/apache2/htdocs/index.html
+                echo 'this content was created by the postStart hook'  >> /usr/local/apache2/htdocs/index.html
+        preStop:
+          exec:
+            command:
+              - /bin/bash
+              - -c
+              - |
+                echo "the date is $(date)" > /preStopScriptOutput/$(hostname).txt
+                echo "the pod $(hostname) has been terminated" >> /preStopScriptOutput/$(hostname).txt
+      volumeMounts:
+        - name: list-of-deleted-pods
+          mountPath: /preStopScriptOutput
+      ports:
+        - containerPort: 80

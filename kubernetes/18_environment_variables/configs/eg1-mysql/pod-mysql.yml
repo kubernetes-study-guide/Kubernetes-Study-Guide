@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-mysql-db
+  labels:
+    component: mysql_db_server
+spec: 
+  containers:
+    - name: cntr-mysql-db
+      image: mysql
+      env:                       # we use 'env' section to feed in environments variables
+        - name: MYSQL_DATABASE      # this is an optional environment variable
+          value: dummy_db
+        - name: MYSQL_ROOT_PASSWORD  # this is a mandatory environment variable
+          value: password123
+      ports:
+        - containerPort: 3306

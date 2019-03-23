@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-httpd
+  labels:
+    app: apache_webserver
+spec:
+  containers:
+    - name: cntr-httpd
+      image: httpd:latest
+      ports:
+        - containerPort: 80
+
+
+
+

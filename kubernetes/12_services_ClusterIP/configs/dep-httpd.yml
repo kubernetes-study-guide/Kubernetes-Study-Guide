@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-httpd
+  labels:
+    component: apache_webserver
+spec:
+  replicas: 3 
+  selector:
+    matchLabels:
+      component: httpd_webserver
+  template:
+    metadata:
+      labels:
+        component: httpd_webserver
+    spec: 
+      containers:
+        - name: cntr-httpd
+          image: httpd:latest
+          ports:
+            - containerPort: 80
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              /bin/echo "The pod, $HOSTNAME is displaying this page." > /usr/local/apache2/htdocs/index.html
+              /usr/local/bin/httpd-foreground  

@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-nodeport-httpd
+spec:
+  type: NodePort
+  ports:
+    - port: 3050      # This is the port to use by other pods to reach target port
+      targetPort: 80     # This is the port the destination pod is listening on. 
+      nodePort: 31000     # port to use from your macbook
+  selector:
+    component: httpd   # this service will forward traffic to any pods with this label. 

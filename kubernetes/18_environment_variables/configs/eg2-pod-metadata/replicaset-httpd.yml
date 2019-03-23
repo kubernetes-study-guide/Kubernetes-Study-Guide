@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet 
+metadata:
+  name: rs-httpd
+  labels:
+    component: httpd_webserver
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: httpd_webserver
+  template:
+    metadata:
+      labels:
+        component: httpd_webserver
+    spec: 
+      containers:
+        - name: cntr-httpd
+          image: httpd:latest 
+          ports:
+            - containerPort: 80
+          env:  
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              /bin/echo "The pod, $MY_POD_NAME is displaying this page." > /usr/local/apache2/htdocs/index.html
+              /usr/local/bin/httpd-foreground  

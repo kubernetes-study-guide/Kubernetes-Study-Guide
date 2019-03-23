@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-centos
+spec:
+  volumes:                  # this approach requires the use of volumes, of the type 'secret'. 
+    - name: my-secrets
+      secret:
+        secretName: mysecrets
+  containers:
+    - name: cntr-centos
+      image: centos
+      volumeMounts:
+        - name: my-secrets
+          mountPath: /etc/secrets      # this folder will house one or more files, one for each key/value secret pair. 
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          while true ; do
+            date 
+            sleep 10 
+          done

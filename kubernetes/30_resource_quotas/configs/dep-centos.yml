@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-centos
+  namespace: codingbee     # notice we are using a new namespace. This is in preperation for a later demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: centos_os
+  template:
+    metadata:
+      labels:
+        app: centos_os
+    spec: 
+      containers:
+        - name: cntr-centos
+          image: centos:latest
+          resources:             # requests are used for minimum requirements. 
+            requests:
+              memory: "64Mi"
+              cpu: "100m"    # 1000m = 1 cpu core. So here we're requesting just 10%.
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              while true ; do
+                date 
+                sleep 10 
+              done
+          ports:
+            - containerPort: 80

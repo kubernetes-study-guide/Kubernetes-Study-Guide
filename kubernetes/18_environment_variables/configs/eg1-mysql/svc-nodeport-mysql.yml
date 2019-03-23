@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-nodeport-mysql-db-server
+spec:
+  type: NodePort
+  ports:
+    - port: 3050     # only used for pod-2-pod communication. 
+      targetPort: 3306
+      nodePort: 31306
+  selector:
+    component: mysql_db_server

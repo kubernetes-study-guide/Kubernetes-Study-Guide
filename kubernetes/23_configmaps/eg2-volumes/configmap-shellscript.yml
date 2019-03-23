@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: customscripts
+data:
+  healthcheck.sh: |
+    #!/bin/bash
+    sleep 20  # this is to allow the webserver pod to start up fully
+    while true
+    do
+      date >> /tmp/script.log
+      curl http://svc-clusterip-httpd.default.svc.cluster.local:4000 >> /tmp/script.log
+      sleep 10
+    done
+  helloworld.sh: |
+    #!/bin/bash
+    echo hello world
+  

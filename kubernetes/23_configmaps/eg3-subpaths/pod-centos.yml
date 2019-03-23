@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-centos
+spec: 
+  volumes:
+    - name: healthscript
+      configMap:
+        name: customscripts
+        items:                      # this bit is optional in this scenario
+          - key: healthcheck.sh     # here we're making only one key/value aviable inside the volume
+            path: healthcheck.sh 
+        defaultMode: 0744
+  containers:
+    - name: cntr-centos
+      image: centos
+      volumeMounts:
+        - name: healthscript
+          mountPath: /etc/healthcheck.sh
+          subPath: healthcheck.sh          # this is the extra bit you need to add in. 
+      command: ["/etc/healthcheck.sh"]

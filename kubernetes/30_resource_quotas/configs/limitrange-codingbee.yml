@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: limitrange-codingbee
+  namespace: codingbee
+spec:
+  limits:
+    - type: Pod      # This sets pod level quotas, i.e. all containers in a pod combined
+      min:
+        cpu: 50m
+        memory: 10Mi
+      max:
+        cpu: 800m
+        memory: 200Mi
+    - type: Container    # This sets limits and default quotas at the pod level
+      min:
+        cpu: 50m
+        memory: 10Mi
+      max:
+        cpu: 400m
+        memory: 200Mi
+      defaultRequest:     # default requests value
+        cpu: 100m
+        memory: 50Mi
+      default:            # default limit values
+        cpu: 200m
+        memory: 100Mi

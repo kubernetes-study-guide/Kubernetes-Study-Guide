@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-clusterip-caddy   # this is the service endpoint that has a dns entry that we can curl for. 
+spec:
+  type: ClusterIP 
+  ports:
+    - port: 80
+      targetPort: 2015
+  selector:
+    component: caddy_pod

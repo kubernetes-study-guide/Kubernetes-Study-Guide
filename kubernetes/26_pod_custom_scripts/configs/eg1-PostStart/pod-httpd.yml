@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-httpd
+  labels:
+    component: httpd
+spec:
+  containers:
+    - name: cntr-httpd
+      image: httpd
+      lifecycle:          # we add in the lifecycle section which houses the 
+        postStart:             # podStart section
+          exec:
+            command:
+              - /bin/bash
+              - -c
+              - |
+                echo "the date is: $(date)" > /usr/local/apache2/htdocs/index.html
+                echo 'This content was created by the postStart hook' >> /usr/local/apache2/htdocs/index.html
+      ports:
+        - containerPort: 80

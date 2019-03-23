@@ -1,0 +1,26 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+spec:
+  rules:
+    - host: httpd-demo.com    # we specify a domain name this time. 
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: svc-clusterip-httpd
+              servicePort: 4000
+    - host: caddy-demo.com          # we specify a domain name this time. 
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: svc-clusterip-caddy
+              servicePort: 2015

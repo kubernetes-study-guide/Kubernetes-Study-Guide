@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ds-httpd
+  labels:
+    app: httpd_webserver
+spec:
+  selector:
+    matchLabels:
+      app: httpd_webserver
+  template:
+    metadata:
+      labels:
+        app: httpd_webserver
+    spec: 
+      containers:
+        - name: cntr-httpd
+          image: httpd:latest 
+          ports:
+            - containerPort: 80

@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-caddy
+  labels:
+    component: caddy_webserver
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      component: caddy_pod
+  template:
+    metadata:
+      labels:
+        component: caddy_pod
+    spec: 
+      containers:
+        - name: cntr-caddy
+          # image: nginx:latest
+          image: abiosoft/caddy 
+          ports:
+            - containerPort: 2015       # this particular image listens on this port by default. 
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              /bin/echo "Hello I'm the caddy pod, $HOSTNAME, and I'm displaying this page." > /srv/index.html
+              /bin/parent caddy --conf /etc/Caddyfile --log stdout --agree=$ACME_AGREE 

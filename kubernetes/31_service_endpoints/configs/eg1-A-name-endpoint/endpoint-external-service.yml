@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: my-external-service    # this name must match the ClusterIP service name
+subsets:
+  - addresses:
+    - ip: 77.104.171.177       # nslookup codingbee.net. 
+#   - ip: x.x.x.x          # add more if available for loadbalancing purposes. 
+    ports:
+      - port: 443

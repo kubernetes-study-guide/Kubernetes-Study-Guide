@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-centos
+  labels:
+    component: centos
+spec:
+  containers:
+    - name: cntr-centos
+      image: centos
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          while true ; do
+            date 
+            # curl http://??????
+            sleep 10 
+          done

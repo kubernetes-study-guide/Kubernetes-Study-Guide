@@ -1,0 +1,24 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cronjob-countdown
+spec:
+  schedule: "*/2 * * * *"     # run every job every couple of minutes. 
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: cntr-countdown
+              image: centos:latest
+              command:
+                - "bin/bash"
+                - "-c"
+                - |
+                  for i in 9 8 7 6 5 4 3 2 1 ; do 
+                    echo $i 
+                    sleep 10
+                  done
+    

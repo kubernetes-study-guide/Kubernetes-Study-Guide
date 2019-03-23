@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sts-httpd
+  labels:
+    app: httpd_webserver
+spec:
+  serviceName: httpd-service     # Need to add this in stateful sets
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: httpd_webserver
+  volumeClaimTemplates:          # this is something specific to StatefulSets
+    - metadata:
+        name: httpd-data-storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:                 
+            storage: 10Mi
+  template:
+    metadata:
+      labels:
+        app: httpd_webserver
+    spec:
+      containers:
+        - name: cntr-httpd
+          image: httpd:2.4.37
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - |
+                    if [ -f /usr/local/apache2/htdocs/index.html ]; then
+                      exit 0
+                    fi
+                    echo "This persistant storage was created on: $(date)" > /usr/local/apache2/htdocs/index.html
+                    echo "You've hit container, $(hostname)" >> /usr/local/apache2/htdocs/index.html
+          volumeMounts:
+            - name: httpd-data-storage
+              mountPath: /usr/local/apache2/htdocs/
+          ports:
+            - containerPort: 80

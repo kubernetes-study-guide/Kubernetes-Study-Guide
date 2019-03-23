@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-httpd
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: httpd_webserver
+  template:
+    metadata:
+      labels:
+        app: httpd_webserver
+    spec: 
+      containers:
+        - name: cntr-httpd
+          image: httpd:latest
+          ports:
+            - containerPort: 80

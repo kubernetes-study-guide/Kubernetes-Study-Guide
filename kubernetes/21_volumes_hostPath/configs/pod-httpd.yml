@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-httpd
+  labels:
+    component: apache_webserver
+spec: 
+  volumes: 
+    - name: webcontent    # here we specify the name of the volume
+      hostPath:
+        path: /tmp/webcontent  # this folder will get created inside minikube vm if it doesn't already exist. 
+        type: DirectoryOrCreate  # this is one of several options at https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
+  containers:
+    - name: cntr-httpd
+      image: httpd
+      volumeMounts:
+        - name: webcontent
+          mountPath: /usr/local/apache2/htdocs
+      ports:
+        - containerPort: 80

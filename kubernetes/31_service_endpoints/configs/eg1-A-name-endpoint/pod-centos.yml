@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-centos
+spec:
+  containers:
+    - name: cntr-centos
+      image: centos
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          /usr/bin/yum install -y -q bind-utils       # this install nslookup
+          while true ; do
+            date
+            curl -skL http://my-external-service
+            sleep 10
+          done

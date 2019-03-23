@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-nodeport-apache-webserver
+  namespace: codingbee-hello-world       # we add this line. 
+spec:
+  type: NodePort
+  ports:
+    - port: 3050
+
+      targetPort: 80
+      nodePort: 31000
+  selector:
+    component: apache_webserver

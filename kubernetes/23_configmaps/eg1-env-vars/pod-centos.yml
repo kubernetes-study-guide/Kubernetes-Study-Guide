@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-centos
+  labels:
+    component: apache_webserver
+spec: 
+  containers:
+    - name: cntr-centos
+      image: centos
+      env: 
+        - name: FruitName    # This sets the name of the environment variable inside the container. 
+          valueFrom:
+            configMapKeyRef:
+              name: fav-fruit  # this sets the name of the configmap to read from. 
+              key: fruit.name  # this picks out the particular key value from the chosen configmap. 
+        - name: FruitColor
+          valueFrom:
+            configMapKeyRef:
+              name: fav-fruit
+              key: fruit.color
+      command: ["/bin/bash", "-c"]
+      args:
+        - while true ; do
+            date ;
+            curl -s http://svc-clusterip-httpd.default.svc.cluster.local:4000 ;
+            sleep 10 ;
+          done
