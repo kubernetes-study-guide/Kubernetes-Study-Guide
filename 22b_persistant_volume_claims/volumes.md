@@ -77,6 +77,15 @@ spec:
 
 
 
+In case the PV didn't exist, then you would get something like this:
+
+```bash
+# kubectl get pvc
+NAME                  STATUS    VOLUME               CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+pvc-db-data-storage   Pending   pv-db-data-storage   0                                        15s
+```
+
+
 
 
 

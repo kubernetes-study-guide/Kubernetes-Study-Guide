@@ -8,5 +8,5 @@ spec:
     - ReadWriteOnce   # this means that corresponding PV can only be used by a single node. Also see: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
   resources:
     requests:
-      storage: 100Mi
+      storage: 1Gi
   storageClassName: standard  # This specifies which the StorageClass's name. It defaults to 'standard' if you omit this line
