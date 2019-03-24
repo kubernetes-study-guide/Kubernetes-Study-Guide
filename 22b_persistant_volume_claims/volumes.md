@@ -81,10 +81,75 @@ In case the PV didn't exist, then you would get something like this:
 
 ```bash
 # kubectl get pvc
-NAME                  STATUS    VOLUME               CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-pvc-db-data-storage   Pending   pv-db-data-storage   0                                        15s
+NAME                  STATUS   VOLUME               CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+pvc-db-data-storage   Bound    pv-db-data-storage   1Gi        RWO                           68s
+
+
+# kubectl describe pvc pvc-db-data-storage
+Name:          pvc-db-data-storage
+Namespace:     default
+StorageClass:
+Status:        Bound
+Volume:        pv-db-data-storage
+Labels:        <none>
+Annotations:   kubectl.kubernetes.io/last-applied-configuration:
+                 {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"pvc-db-data-storage","namespace":"default"},"spec":...
+               pv.kubernetes.io/bind-completed: yes
+Finalizers:    [kubernetes.io/pvc-protection]
+Capacity:      1Gi
+Access Modes:  RWO
+VolumeMode:    Filesystem
+Events:        <none>
+Mounted By:    pod-mysql-db
+#
 ```
 
+The status here shows 'Bound' which means the the developer's pvc has successfully claimed the PV. Now the developer can use the PV by referencing the PVC in the pod spec:
+
+```yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-mysql-db
+  labels:
+    component: mysql_db
+spec: 
+  volumes: 
+    - name: db-data-storage
+      persistentVolumeClaim:
+        claimName: pvc-db-data-storage
+  containers:
+    - name: cntr-mysql-db
+      image: mysql
+      env:
+        - name: "MYSQL_ROOT_PASSWORD"
+          value: "password123"
+      volumeMounts:
+        - name: db-data-storage              # Here we call the PersistentVolume by it's name.
+          mountPath: /var/lib/mysql
+      ports:
+        - containerPort: 3306
+```
+
+Now let's check if that has worked:
+
+
+```bash
+# kubectl exec -it pod-mysql-db -- /bin/bash
+root@pod-mysql-db:/# df -h
+Filesystem                    Size  Used Avail Use% Mounted on
+overlay                        62G  2.6G   56G   5% /
+tmpfs                          64M     0   64M   0% /dev
+tmpfs                         497M     0  497M   0% /sys/fs/cgroup
+/dev/mapper/vagrant--vg-root   62G  2.6G   56G   5% /etc/hosts
+shm                            64M     0   64M   0% /dev/shm
+10.3.5.109:/nfs/export_rw      41G  1.2G   40G   3% /var/lib/mysql
+tmpfs                         497M   12K  497M   1% /run/secrets/kubernetes.io/serviceaccount
+tmpfs                         497M     0  497M   0% /proc/acpi
+tmpfs                         497M     0  497M   0% /proc/scsi
+tmpfs                         497M     0  497M   0% /sys/firmware
+```
 
 
 
