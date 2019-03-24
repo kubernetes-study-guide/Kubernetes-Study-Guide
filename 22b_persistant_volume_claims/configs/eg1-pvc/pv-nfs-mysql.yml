@@ -6,8 +6,11 @@ metadata:
 spec:
   capacity:
     storage: 1Gi
-  accessModes:         # this means that corresponding PV can only be used by a single node. Also see: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
-    - ReadWriteOnce
+  accessModes:
+    - ReadWriteOnce    # aka RWO
+    - ReadOnlyMany     # aka ROX 
+    - ReadWriteMany    # aka RWX
+  persistentVolumeReclaimPolicy: retain
   nfs:
     path: /nfs/export_rw
     server: 10.3.5.109

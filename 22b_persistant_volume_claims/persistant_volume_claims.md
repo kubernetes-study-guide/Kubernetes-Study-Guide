@@ -1,4 +1,184 @@
-# Persistant Volumes
+# Persistant Volume Claims
+
+I've created a [/kubernetes-NFS-Persistant-Volume-Vagrant](https://github.com/Sher-Chowdhury/kubernetes-NFS-Persistant-Volume-Vagrant-Demo) for this article so that you can follow along this demo. 
+
+Following on from the previous NFS example, the Kubernetes Administrator (KA) is the person who not only builds+maintains the kubecluster, but also manages the underlying infrastructure, e.g. AWS, Azure, On-Premise,...etc. 
+
+
+In this scenario, the KA could also be the person who built the NFS server too. Once the NFS server is available, the KA would then create the PV:
+
+```yaml
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-db-data-storage 
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce    # aka RWO
+    - ReadOnlyMany     # aka ROX 
+    - ReadWriteMany    # aka RWX
+  persistentVolumeReclaimPolicy: retain
+  nfs:
+    path: /nfs/export_rw
+    server: 10.3.5.109
+```
+
+There are a few features to highlight abou this yaml file:
+
+- [accessModes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes): The various ways available to a worker node (not pods). They are mutually exclusive, so you can only opt for one of available options during mount time.
+  - ReadWriteOnce – the volume can be mounted as read-write by a single node
+  - ReadOnlyMany – the volume can be mounted read-only by many nodes
+  - ReadWriteMany – the volume can be mounted as read-write by many nodes
+- [persistentVolumeReclaimPolicy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaim-policy) - This defines what to do with a PV's content want's it getes released by a PVC.
+  - Retain – manual reclamation. The PV's data is retained after it's associated PVC is deleted. However the PV status becomes 'pending' rather than available. That's to give the KA a chance to (if necessary) to backup the PV's content and then make it available, be recreating the PV. 
+  - Recycle – Delete all data stored inside the PV, so that it can be used as a clean PV.
+  - Delete – Delete the whole PV
+
+
+
+The above yaml ends up creating:
+
+```bash
+$ kubectl get persistentvolume
+NAME              CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS   REASON   AGE
+db-data-storage   1Gi        RWO            Retain           Available                                   38m
+
+
+$ kubectl describe persistentvolume
+Name:            db-data-storage
+Labels:          <none>
+Annotations:     kubectl.kubernetes.io/last-applied-configuration:
+                   {"apiVersion":"v1","kind":"PersistentVolume","metadata":{"annotations":{},"name":"db-data-storage"},"spec":{"accessModes":["ReadWriteOnce"...
+Finalizers:      [kubernetes.io/pv-protection]
+StorageClass:
+Status:          Available
+Claim:
+Reclaim Policy:  Retain
+Access Modes:    RWO
+VolumeMode:      Filesystem
+Capacity:        1Gi
+Node Affinity:   <none>
+Message:
+Source:
+    Type:      NFS (an NFS mount that lasts the lifetime of a pod)
+    Server:    10.3.5.109
+    Path:      /nfs/export_rw
+    ReadOnly:  false
+Events:        <none>
+
+```
+
+Persistant Volumes are actually kube cluster level objects, i.e. they don't belong to any namespaces. After creating the PV, the KA would then notify the Developer that the PV is now ready. The Developer then 'claims' the PV by creating a PVC:
+
+
+```yaml
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-db-data-storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pv-db-data-storage
+```
+
+As soon as you apply the above yaml, Kubernetes will cross reference this PVC against all available PVs to find a suitable match. In particular the PV needs to:
+
+- Support the accessMode requested by the pvc
+- Offer enough storage. 
+
+In our case our PV meeds the needs of the PVC so the PVC successfully bounds itself to the PVC, i.e. the PVC successfully claimed the PV:
+
+```bash
+# kubectl get pvc
+NAME                  STATUS   VOLUME               CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+pvc-db-data-storage   Bound    pv-db-data-storage   1Gi        RWO                           68s
+
+
+# kubectl describe pvc pvc-db-data-storage
+Name:          pvc-db-data-storage
+Namespace:     default
+StorageClass:
+Status:        Bound
+Volume:        pv-db-data-storage
+Labels:        <none>
+Annotations:   kubectl.kubernetes.io/last-applied-configuration:
+                 {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"pvc-db-data-storage","namespace":"default"},"spec":...
+               pv.kubernetes.io/bind-completed: yes
+Finalizers:    [kubernetes.io/pvc-protection]
+Capacity:      1Gi
+Access Modes:  RWO
+VolumeMode:    Filesystem
+Events:        <none>
+Mounted By:    pod-mysql-db
+#
+```
+
+The status here shows 'Bound' which means the the developer's pvc has successfully claimed the PV. Now the developer can use the PV by referencing the PVC in the pod spec:
+
+```yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-mysql-db
+  labels:
+    component: mysql_db
+spec: 
+  volumes: 
+    - name: db-data-storage
+      persistentVolumeClaim:
+        claimName: pvc-db-data-storage
+  containers:
+    - name: cntr-mysql-db
+      image: mysql
+      env:
+        - name: "MYSQL_ROOT_PASSWORD"
+          value: "password123"
+      volumeMounts:
+        - name: db-data-storage              # Here we call the PersistentVolume by it's name.
+          mountPath: /var/lib/mysql
+      ports:
+        - containerPort: 3306
+```
+
+Now let's check if that has worked:
+
+```bash
+# kubectl exec -it pod-mysql-db -- /bin/bash
+root@pod-mysql-db:/# df -h
+Filesystem                    Size  Used Avail Use% Mounted on
+overlay                        62G  2.6G   56G   5% /
+tmpfs                          64M     0   64M   0% /dev
+tmpfs                         497M     0  497M   0% /sys/fs/cgroup
+/dev/mapper/vagrant--vg-root   62G  2.6G   56G   5% /etc/hosts
+shm                            64M     0   64M   0% /dev/shm
+10.3.5.109:/nfs/export_rw      41G  1.2G   40G   3% /var/lib/mysql
+tmpfs                         497M   12K  497M   1% /run/secrets/kubernetes.io/serviceaccount
+tmpfs                         497M     0  497M   0% /proc/acpi
+tmpfs                         497M     0  497M   0% /proc/scsi
+tmpfs                         497M     0  497M   0% /sys/firmware
+```
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------
 
 Persistant volumes are volumes that stores a container's data outside of a pod. So that when a pod dies, then the data still persists and get's used by a replacement container. hostpath volumes is an example of a persistant volume. However it has some limitations, in that:
 
@@ -38,15 +218,6 @@ spec:
       ports:
         - containerPort: 3306
  ```
-
-
-However, there is a problem with this approach, the developers who are packaging their apps into docker-images and pods are likely to not be familiar with the underlying platform that the kubecluster relies on. In fact it's not in their remit to have that kind of knowledge because Kubernetes is supposed to allow developers to develop without having to worry about whether their app is running in AWS, Azure,....etc.
-
-So filling in things like NFS server ip address in their yaml files becomes an undesired burden on the developers. A better solution would be for the Kubernetes Administrators to create the PV's as standalone Kubernetes Objects that are then available for the developers to reference in their pod yaml definitions.
-
-
-
-That's exactly the purpose of Persistant Volume Claims. 
 
 
 
