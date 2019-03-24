@@ -10,7 +10,7 @@ spec:
     - ReadWriteOnce    # aka RWO
     - ReadOnlyMany     # aka ROX 
     - ReadWriteMany    # aka RWX
-  persistentVolumeReclaimPolicy: retain
+  persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /nfs/export_rw
     server: 10.3.5.109
