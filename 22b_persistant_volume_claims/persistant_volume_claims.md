@@ -71,7 +71,7 @@ Events:        <none>
 
 ```
 
-Persistant Volumes are actually kube cluster level objects, i.e. they don't belong to any namespaces. After creating the PV, the KA would then notify the Developer that the PV is now ready. The Developer then 'claims' the PV by creating a PVC:
+Persistant Volumes are actually kube cluster level objects, i.e. they don't belong to any namespaces. That means that objects in any namespaces can make use of it. After creating the PV, the KA would then notify the Developer that the PV is now ready. The Developer then 'claims' the PV by creating a PVC:
 
 
 ```yaml
@@ -89,10 +89,11 @@ spec:
   volumeName: pv-db-data-storage
 ```
 
-As soon as you apply the above yaml, Kubernetes will cross reference this PVC against all available PVs to find a suitable match. In particular the PV needs to:
+As soon as you apply the above yaml, we don't explicitly refer to a particular PV object, instead it specifies some of the storage requirements. Kubernetes will therefore cross-reference this PVC's requirements against all available PVs to find a suitable match. In particular the PV needs to:
 
-- Support the accessMode requested by the pvc
-- Offer enough storage. 
+- Support the accessMode requested by the PVC
+- Offer equal to or more storage requested by the PVC
+- If 'volumeName' is used then pv name needs to match too. So may be convenient to omit this. 
 
 In our case our PV meeds the needs of the PVC so the PVC successfully bounds itself to the PVC, i.e. the PVC successfully claimed the PV:
 

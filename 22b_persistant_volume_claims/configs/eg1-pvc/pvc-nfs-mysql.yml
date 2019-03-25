@@ -9,4 +9,5 @@ spec:
   resources:
     requests:
       storage: 0.5Gi
-  volumeName: pv-db-data-storage
+#  volumeName: pv-db-data-storage   # this is optional, and adds extra constraint if used. 
+  storageClassName: ""    # we'll explain why this should be include later. 
