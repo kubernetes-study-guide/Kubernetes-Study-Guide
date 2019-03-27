@@ -1,9 +1,13 @@
 # pod commands
 
-The primary function of a docker container is to run a process. This process comes in the form of a command or an entrypoint script, and is baked into the docker image using the Dockerfile's [CMD](https://docs.docker.com/engine/reference/builder/#cmd) or the [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint).
+The primary function of a docker container is to run a executable (e.g. a binary/command or shell script) along with some optional arguments. The executable+arguments are both specified in the Dockerfile with the following settings:
+
+- [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint)
+- [CMD](https://docs.docker.com/engine/reference/builder/#cmd) - There's three ways to use this settng - the 2nd approach, which is to use CMD in conjunction with the ENTRYPOINT is the recommended way. This may look less intuitively but it ensures that the primary process (PID 1) inside the container isn't the bash/sh session wrapper, but is the primary executable. 
 
 
-These commands/script can be shortlived, if the container is supposed to perform a specific task, in which case the container stops once the commands/script finishes running. Containers also run continuously, becuase they provide an ongoing service, for example the httpd container provides an ongoing web service.
+These commands/script can be shortlived, if the container is supposed to perform a specific task, in which case the container stops once the commands/script finishes running. Containers can also run continuously, which is the case when they provide an ongoing service, for example the httpd container provides an ongoing web service.
+
 
 
 So if you build a pod using a docker image that runs a short lived process, for example:
@@ -90,6 +94,13 @@ spec:
             sleep 10
           done
 ```
+
+Here we used the following settings:
+
+- `pod.spec.containers.command` - This overrides/adds the docker images 'ENTRYPOINT' setting.
+- `pod.spec.containers.args` - This override/adds the docker images 'CMD' setting
+
+
 
 Here we're feeding an infinite while loop to keep the pod running continuously:
 

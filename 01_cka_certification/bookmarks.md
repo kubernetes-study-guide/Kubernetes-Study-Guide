@@ -44,6 +44,11 @@ source <(kubectl completion bash) # see the cheatsheet page
 # this creates a service yaml file
 kubectl expose pod podname --type=NodePort --name servicename -o yaml --dry-run
 kubectl create secret generic mysql-secrets --from-literal MysqlRootPassword=password123 --dry-run -o yaml
+
+kubectl edit services kubernetes # see example files
+
+
+kubectl explain pod.spec.containers --recursive   # really good way to see a quick overall yaml structure. 
 ```
 
 3. If pods keeps dying, run the following command to see the previously failed pod's main container log:

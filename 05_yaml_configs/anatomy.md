@@ -47,6 +47,13 @@ DESCRIPTION:
 ...etc
 ```
 
+You can get a high-level overview of the entire structure:
+
+```bash
+kubectl explain pod --recursive
+```
+
+
 And you can drill down like this:
 
 

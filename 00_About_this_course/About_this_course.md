@@ -70,7 +70,7 @@ Also you can access a lot more info by running:
 kubectl explain xxxxx
 ```
 
-In this qude, we'll refer to what to put in here, using a dot like notation e.g. 'pod.spec'. 
+In this case, we'll refer to what to put in here, using a dot like notation e.g. 'pod.spec'. 
 
 
 Also some commands have a long output, so we only show an extract inside 3-dot notation:
