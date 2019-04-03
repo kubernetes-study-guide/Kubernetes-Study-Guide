@@ -1,4 +1,4 @@
-# Services
+# Services - Nodeport
 
 In Kubernetes, 'services' is actually all about networking. In Docker world, when you use docker-compose, all the networking is done for you automatically behind the scenes. However that's not the case when it comes to kubernetes. To setup networking in Kubernetes, you need to create 'service' objects.
 
@@ -24,13 +24,12 @@ pod-httpd    1/1     Running   0          4s    172.17.0.8   minikube   <none>  
 At this stage we have created 2 pods, pod-httpd is an apache webserver listening on port 80, and pod-centos is a generic centos container. Kubernetes automatically assigns an IP address to each pod. These ip address makes it possible for all the pods in a kubecluster to reach each other:
 
 ```bash
-$ kubectl exec pod-centos -it /bin/bash -c cntr-centos
+$ kubectl exec pod-centos -it -c cntr-centos -- /bin/bash 
 [root@pod-centos /]# curl http://172.17.0.8
 <html><body><h1>It works!</h1></body></html>
-[root@pod-centos /]# 
 ```
 
-These IPs are in an private internal ip range that's only accessible from within the kubecluster. So if try to run this curl this ip from your macbook then it will fail. However just for testing purposes, you can temporarily set up port forwarding:
+These IPs are in an private internal ip range that's only accessible from within the kubecluster. So if try to run this curl this ip from your macbook then it will fail. However just for testing purposes, you can temporarily set up port forwarding, on your macbook, run:
 
 ```bash
 $ kubectl port-forward pod-httpd 8080:80
@@ -38,14 +37,14 @@ Forwarding from 127.0.0.1:8080 -> 80
 Forwarding from [::1]:8080 -> 80
 ```
 
-This will cause your terminal to hang, so you have to open up another bash terminal to test this:
+This will cause your terminal to hang, so you have to open up another bash terminal on your macbook to test this:
 
 ```bash
 $ curl http://127.0.0.1:8080
 <html><body><h1>It works!</h1></body></html>
 ```
 
-Here your request get's forwarded to port 80 on hte pod-httpd pod.
+Here your request get's forwarded to port 80 on the pod-httpd pod.
 
 ## Nodeport Service Type
 
@@ -70,7 +69,7 @@ spec:
 With this in place, you can now do pod-2-pod communication using a dns name. The full dns name is the metadata.name value from above, along with what's specified in the /etc/resolv.conf file:
 
 ```bash
-$ kubectl exec pod-centos -it /bin/bash -c cntr-centos
+$ kubectl exec pod-centos -it -c cntr-centos -- /bin/bash
 
 
 [root@pod-centos /]# cat /etc/resolv.conf
@@ -90,7 +89,7 @@ The 'default' actually refers to the namespace. If our pod-httpd pod was in diff
 <html><body><h1>It works!</h1></body></html>
 ```
 
-These dns names can only be used from inside the kube cluster. So to access the pods externally, e.g. from your macbook, then you use your minikube's ip address. 
+These dns names can only be used from inside the kube cluster, since the dns service is inside the cluster. So to access the pods externally, e.g. from your macbook, then you use your minikube's ip address.
 
 ```bash
 $ minikube ip
@@ -103,7 +102,7 @@ $ curl http://192.168.99.105:31000
 Another way to find out the above url is:
 
 ```bash
-$ $ minikube service svc-nodeport-httpd --url
+$ minikube service svc-nodeport-httpd --url
 http://192.168.99.105:31000
 ```
 
@@ -118,17 +117,16 @@ As you can see, the nodePort service object not only makes it easier for pod-2-p
 
 ## Nodeport Services are kubecluster wide
 
-When you create a nodeport service, than all worker nodes in the kubecluster is listening on the Nodeport's port, even workers that doesn't have the pod in question. So when you access the port on a worker node, that request gets routed to the nodeport service first, then the node port service forwards your request onto the pod in question. 
+When you create a nodeport service, than all worker nodes in the kubecluster is listening on the Nodeport's port, even workers that doesn't have the pod in question. So when you access the port on a worker node, that request gets routed to the nodeport service first, then the node port service forwards your request onto the worker node, that has the pod in question.
 
 ## Drawbacks to using nodeport
 
 Nodeport is actually rarely used in production, and is mainly used for development purposes only. That's because:
 
-- url endpoint needs to explicitly end with ':{port nubmer}'. That looks ugly, doesn't scale well, and keep tracking of lots of pod numbers would be a nightmare. 
+- url endpoint needs to explicitly end with ':{port number}'. That looks ugly, doesn't scale well, and keep tracking of lots of pod numbers would be a nightmare. 
 - You'll end up using a lot of non-standard ports. 
 - all the port numbers requires extra work on the cloud platfrom.
-- To set up HA, you need to create an ELB for each nodeport service. 
+- To set up HA, you need to create an ELB for each nodeport service.
 
 
-That's why there are other types of service objects such as Ingress and ClusterIP service objects which we'll cover later. 
-
+That's why there are other types of service objects such as Ingress and ClusterIP service objects which we'll cover later.

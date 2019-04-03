@@ -1,6 +1,6 @@
 # Networking Basics
 
-In Kubernetes, 'services' is actually all about networking. In Docker world, when you use docker-compose, all the networking is done for you automatically behind the scenes. With Kubernetes on the other hand, you will need to set up a lot of the networking. However there are some basic networking features that comes out-of-the-box with Kubernetes:
+In Docker world, when you use docker-compose, all the networking is done for you automatically behind the scenes. However with Kubernetes, you will need to set up a lot of the networking yourself, by creating `service` and `ingress`. Kubernetes does come with some basic networking features out-of-the-box:
 
 - A pod's internal networking
 - IP based pod-to-pod networking
@@ -51,23 +51,19 @@ pod-demo   2/2     Running   0          28m   172.17.0.7   minikube   <none>    
 These containers should be able to talk to each other without needing any further configurations. Let's start by logging into one of the containers:
 
 ```bash
-$ kubectl exec pod-demo -c cntr-centos  -it /bin/bash
+$ kubectl exec pod-demo -c cntr-centos -it -- /bin/bash
 [root@pod-demo /]#
 
 ```
 
-Notice that I also specified the -c (container) flag followed by the container name. That's only required when logging into a container in a multi-container pod, so that kubectl knows which container you want to access. If you omit this then kubectl will default to logging into the first container that's listed in the yaml file. With multi-container pods it's really important to only have on primary container, and all other containers act as secondary/supporting/sidecar containers. Meaning that, if the sidecar containers fails, then the pod's main app (primary container) still continues to function.
-
-
-
-Also notice that the containers hostname is the same as the pod's name:
+Notice that I also specified the -c (container) flag followed by the container name. That's only required when logging into a container in a multi-container pod, so that kubectl knows which container you want to access. If you omit this then kubectl will default to logging into the first container that's listed in the pod yaml descriptor. With multi-container pods it's really important to only have one primary container, and all other containers act as secondary containers. Meaning that, if the secondary containers fails, then the pod's main app (primary container) still continues to function. All containers in a pod are actually assigned the same hostname, which is the pod's hostname.:
 
 ```bash
 [root@pod-demo /]# hostname
 pod-demo
 ```
 
-All containers in a pod are actually assigned the same hostname, which is the pod's hostname. You'll find is that each container is attached to 2 network interfaces:
+You'll find is that each container is attached to 2 network interfaces:
 
 ```bash
 [root@pod-centos /]# yum install -q -y net-tools      # we have to install ifconfig before we can use it. 
@@ -90,7 +86,7 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 
-These are virtual network interfaces that exists as part of the pod. These same network interfaces are actually attached to all the containers in the pod at the same time. Because of that, it means that, from cntr-centos container you can reach the cntr-httpd via either of these interfaces ip address:
+These are virtual network interfaces that exists as part of the pod. These same network interfaces are actually attached to all the containers in the pod at the same time. Because of that, it means that, from cntr-centos container you can reach the cntr-httpd via the localhost ip address, or the pod's ip address:
 
 ```bash
 [root@pod-centos /]# curl http://127.0.0.1
@@ -101,8 +97,8 @@ These are virtual network interfaces that exists as part of the pod. These same 
 
 Here our pod routes this curl request internally to the cntr-httpd container.
 
-**Question:** If our pod had several other containers, then how would our pod know which container to route the curl request to? 
-**Answer:** Our yaml file specifies which port each container is listening on (if any). Therefore our pod knows that requests destined to port 80 should be routed to cntr-httpd container.
+**Question:** If our pod had several other containers, then how would our pod know which container to route the curl request to?
+**Answer:** Our yaml descriptor specifies which port each container is listening on (if any). Therefore our pod knows that requests destined to port 80 should be routed to cntr-httpd container.
 
 
 
@@ -111,9 +107,12 @@ You also find that the following works as well:
 ```bash
 [root@pod-centos /]# curl http://localhost
 <html><body><h1>It works!</h1></body></html>
+
+[root@pod-centos /]# curl http://pod-centos
+<html><body><h1>It works!</h1></body></html>
 ```
 
-That's because all the containers in the pods has the following hosts file, which resolves 'localhost' to it's internal network interface, 127.0.0.1:
+That's because of the /etc/hosts file:
 
 ```bash
 [root@pod-centos /]# cat /etc/hosts
@@ -127,29 +126,31 @@ fe00::2 ip6-allrouters
 172.17.0.7      pod-centos
 ```
 
-Furthermore all containers in a pod, have the same hostname, which by default is the pod's name:
+In both 'localhost' and 'hostname' curl requests, a static internal dns-lookup occured thanks to the /etc/hosts entry.
+
+So far we did a **cntr-centos**-->**cntr-httpd**, where both containers are in the same pod. But we didn't do it in the other direction. That's because cntr-centos is in theory reachable, but we haven't setup anytihng (e.g. web server) on cntr-centos to listen on any ports.
+
+## IP based kube-node-to-pod networking
+
+The container's eth0 interface is on the same network as the the kube masters/worker nodes. This means that you can also curl from inside the master/worker nodes:
+
 
 ```bash
-[root@pod-centos /]# hostname
-pod-centos
-```
+$ minikube ssh
+                         _             _
+            _         _ ( )           ( )
+  ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __
+/' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
+| ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
+(_) (_) (_)(_)(_) (_)(_)(_) (_)`\___/'(_,__/'`\____)
 
-and since we have an entry in the hosts file for this hostname, it means the following also works:
-
-```bash
-[root@pod-centos /]# curl http://pod-centos
+$ curl http://172.17.0.7
 <html><body><h1>It works!</h1></body></html>
 ```
 
-In both 'locahost' and 'hostname' curl requests, a static internal dns-lookup occured thanks to the /etc/hosts entry.
+## IP based Pod-2-Pod networking (eg2-pod2pod-networking)
 
-So far we did a **cntr-centos**-->**cntr-httpd**. But we didn't do it in the other direction. That's because cntr-centos is in theory reachable, but we haven't setup anytihng (e.g. web servre) on cntr-centos to listen on any ports.
-
-
-
-## IP based Pod-2-Pod networking
-
-[Pod-2-pod](https://kubernetes.io/docs/concepts/cluster-administration/networking/) is possible thanks to the fact that Kubernetes auto-assigns an private ip address to all pods during the pod's launch time. The pods can reach each other with these ip addresses.
+[Pod-2-pod](https://kubernetes.io/docs/concepts/cluster-administration/networking/) is possible thanks to the fact that Kubernetes auto-assigns a private ip address to all pods during the pod's launch time. The pods can reach each other with these ip addresses.
 
 ```yaml
 ---
@@ -170,7 +171,7 @@ metadata:
   name: pod-nginx
 spec:
   containers:
-    - name: cntr-httpd
+    - name: cntr-nginx
       image: nginx:latest
       ports:
         - containerPort: 80
@@ -188,16 +189,12 @@ pod-nginx   1/1     Running   0          54s   172.17.0.7   minikube   <none>   
 To test this, we need to log into one of the pods, and run curl to the other pod. Let's log into pod-httpd:
 
 ```bash
-kubectl exec pod-httpd -it /bin/bash
+kubectl exec pod-httpd -it -- /bin/bash
 root@pod-httpd:/usr/local/apache2# apt-get update
 root@pod-httpd:/usr/local/apache2# apt-get install -y curl
 ```
 
-
-
-
 We also had to install the curl command itself. Before we can perform the test:
-
 
 ```bash
 root@pod-httpd:/usr/local/apache2# curl http://172.17.0.7
@@ -228,7 +225,7 @@ Commercial support is available at
 </html>
 ```
 
-However we can't rely on IP addresses because they are prone to changing, e.g. when a pod is rebuilt. So hard coding ip addresses in various places is not an option. The conventional to address this problem is giving each pod a human-readable dns name, which is kept up to date dynamically, that's where kube-dns comes to the rescue
+However we can't rely on IP addresses because they are prone to changing, e.g. when a pod is rebuilt. So hard coding ip addresses in various places is not an option. The conventional way address this problem is giving each pod a human-readable dns name, which is kept up to date dynamically, that's where kube-dns comes to the rescue
 
 
 ## DNS Service
@@ -254,9 +251,25 @@ options ndots:5
 So all we need to do is create dns entries in our internal dns server (kube-dns). That's done by creating service objects. There are different types of service objects, such as nodePort, and ClusterIP service. We'll cover them later. 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## The 'kubectl expose' command
 
-In this course we'll focus on creating service objects declaratively using yaml files. But you can create them implicitly from the command line usng the 'expose' subcommand:
+In this course we'll focus on creating service objects declaratively using yaml files. But you can create them implicitly from the command line using the 'expose' subcommand:
 
 ```bash
 kubectl expose pod podname --type=NodePort --name servicename
