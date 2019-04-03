@@ -7,7 +7,7 @@ $ kubectl get pods
 No resources found.
 ```
 
-This is not strictly true. In Kubernetes we have a feature called namespaces that lets us segment/organise all our objects into a construct know as namespaces. Here's the current list of namespaces:
+This is not strictly true. In Kubernetes we have a feature called namespaces that lets us segment/organise all our objects into a construct known as namespaces. Here's the current list of namespaces:
 
 ```bash
 $ kubectl get namespaces
@@ -65,7 +65,7 @@ rs/coredns-86c58d9df4               2         2         2         11h
 rs/kubernetes-dashboard-ccc79bfc9   1         1         1         11h
 ```
 
-You can organise your objects in various ways using namespace. For example, you can create namespaces called 'Prod' and 'Dev', although it's best to segment prod/dev by having seperate kubernetes cluster altogether. Alternatively, have namespaces based on project/programme name. Here's how to create a new namespace:
+You can organise your objects in various ways using namespace. For example, you can create namespaces called 'Prod' and 'Dev', although it's best to segment prod/dev by having seperate kubernetes cluster altogether. Alternatively, have namespaces based on project/programme name. Here's how to create a new namespace imperitively:
 
 ```bash
 $ kubectl create namespace codingbee-hello-world
