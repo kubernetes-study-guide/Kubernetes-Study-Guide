@@ -1,16 +1,19 @@
 # pod commands
 
-The primary function of a docker container is to run a executable (e.g. a binary/command or shell script) along with some optional arguments. The executable+arguments are both specified in the Dockerfile with the following settings:
+The primary function of a docker container is to run an executable (e.g. a binary, command, or shell script) along with some optional arguments. The executable+arguments are both specified in the Dockerfile with the following settings:
 
 - [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint)
-- [CMD](https://docs.docker.com/engine/reference/builder/#cmd) - There's three ways to use this settng - the 2nd approach, which is to use CMD in conjunction with the ENTRYPOINT is the recommended way. This may look less intuitively but it ensures that the primary process (PID 1) inside the container isn't the bash/sh session wrapper, but is the primary executable. 
+- [CMD](https://docs.docker.com/engine/reference/builder/#cmd) - There's three ways to use this settng - the 2nd approach, which is to use CMD in conjunction with the ENTRYPOINT is the recommended way. This may look untuitively but it ensures that the primary process (PID 1) inside the container isn't the bash/sh session wrapper, but is the primary executable. 
 
 
-These commands/script can be shortlived, if the container is supposed to perform a specific task, in which case the container stops once the commands/script finishes running. Containers can also run continuously, which is the case when they provide an ongoing service, for example the httpd container provides an ongoing web service.
+This entrypoint binary/command/script can be to run:
+
+- **shortlived workloads** - if the container is supposed to perform a specific task.
+- **ongoing workloads** - E.g. running the apache httpd binary to provide an ongoing web service. 
 
 
-
-So if you build a pod using a docker image that runs a short lived process, for example:
+## Shortlived Workloads (eg1-shortlived)
+Pods are designed for running containers with ongoing workloads. If your pod is built from an image, whose entrypoint is a shortlived (e.g. centos):
 
 ```bash
 ---
@@ -29,8 +32,6 @@ spec:
 Then the pod is created, it runs it's command, then shuts down again within a few seconds.
 
 ```bash
-$ kubectl apply -f configs/pod-centos-shortlived.yml
-pod/pod-centos created
 $ kubectl get pods
 NAME         READY   STATUS              RESTARTS   AGE
 pod-centos   0/1     ContainerCreating   0          2s
@@ -43,7 +44,6 @@ pod-centos   0/1     CrashLoopBackOff   1          9s
 $ kubectl get pods
 NAME         READY   STATUS             RESTARTS   AGE
 pod-centos   0/1     CrashLoopBackOff   1          12s
-$ 
 $ kubectl get pods
 NAME         READY   STATUS             RESTARTS   AGE
 pod-centos   0/1     CrashLoopBackOff   1          21s
@@ -53,7 +53,7 @@ pod-centos   0/1     Completed   2          26s
 $ 
 ```
 
-Here the pods ran for less than a second before shutting down. However pods are supposed to be used for running continuous workloads, so when the container stopped, kubernetes thought something went wrong and tried to restart it:
+Here the pods ran for less than a second before shutting down, kubernetes thought something went wrong and restart the container, and keeps restarting it in an endless cycle:
 
 ```bash
 $ kubectl describe pod pod-centos
@@ -70,9 +70,12 @@ Events:
 
 ```
 
-Kubernetes will just keep restarting this in an endless cycle. and the pod will keep starting+stopping in an endless cycle too. To run containers that have shortlived workloads, you should run them as Kubernetes jobs or cronjobs objeect. We'll cover them later. 
+To run containers that have shortlived workloads, you should run them as Kubernetes jobs or cronjobs objeect. We'll cover them later.
 
-If you want the container in this pod to run on an ongoing basis, then you can override the centos image's default CMD setting with an ongoing command/script using the command+args settings:
+
+## Ongoing Workloads (eg2-ongoing)
+
+Lets say you still want to use the centos image for the primary container in your pod. That's still possible, by overriding the centos image's default ENTRYPOINT/CMD, with an ongoing command/script using the command+args settings:
 
 ```bash
 ---
@@ -131,7 +134,7 @@ Mon Mar 11 12:15:51 UTC 2019
 You can also monitor the pods standard output in realtime by using the logs -f flag:
 
 ```bash
-$ kubectl logs -f pod-centos
+kubectl logs -f pod-centos
 ```
 
 Or connect your bash terminal directly to the pod's standard output using the 'attach' command:
@@ -149,4 +152,10 @@ Mon Mar 11 12:22:31 UTC 2019
 Mon Mar 11 12:22:41 UTC 2019
 ```
 
-There could be times when you want to run commands/scripts in addition to the docker image's backed in CMD/Entrypoint, rather than over-riding it. Luckily there are other ways to inject commands/shellscripts into pods, using [Poststart/PreStop](https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/) hooks. We'll cover them later. 
+In this demo we use an image with an shortlived workload. However you can use this approach to replace a ongoing workload with another ongoing workload. 
+
+
+## Other workloads
+There could be times when you want to run commands/scripts in addition to the docker image's backed in CMD/Entrypoint, rather than over-riding it. Luckily there are other ways to inject commands/shellscripts into pods, using [Poststart/PreStop](https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/) hooks. We'll cover them later.
+
+You can also run non-primary containers with shortlived workloads using `pod.spec.initContainers`, which will cover later. 
