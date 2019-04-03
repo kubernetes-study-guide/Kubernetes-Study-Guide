@@ -94,7 +94,7 @@ metadata:
   name: pod-httpd
   namespace: codingbee-hello-world       # we add this line.
   labels:
-    component: apache_webserver
+    app: apache_webserver
 spec:
   containers:
     - name: cntr-httpd
@@ -106,6 +106,7 @@ spec:
 And for the service we have:
 
 ```yaml
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -115,33 +116,59 @@ spec:
   type: NodePort
   ports:
     - port: 3050
-
       targetPort: 80
       nodePort: 31000
   selector:
-    component: apache_webserver
+    app: apache_webserver
 ```
 
 We can apply them using the usual apply commands. And then we can check that they have been created by running:
 
 ```bash
-$ kubectl get all --namespace=codingbee-hello-world
-NAME           READY     STATUS    RESTARTS   AGE
-po/pod-httpd   1/1       Running   0          6m
+$ kubectl get all -o wide --namespace=codingbee-hello-world
+NAME            READY   STATUS    RESTARTS   AGE    IP           NODE       NOMINATED NODE   READINESS GATES
+pod/pod-httpd   1/1     Running   0          107s   172.17.0.8   minikube   <none>           <none>
 
-NAME                                CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-svc/svc-nodeport-apache-webserver   10.109.20.222   <nodes>       3050:31000/TCP   1m
+NAME                                    TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE   SELECTOR
+service/svc-nodeport-apache-webserver   NodePort   10.107.98.250   <none>        3050:31000/TCP   62s   app=apache_webserver
 ```
 
-
-Specifying namespaces on the command line can get quite tedious, which might put you off from using namespaces. However you can persistantly change namespaces by running
+Specifying namespaces on the command line can get quite tedious, which might put you off from using namespaces. However you can persistantly change namespaces by running:
 
 ```bash
-$ kubectl config set-context $(kubectl config current-context) --namespace=kube-system
+$ kubectl config set-context $(kubectl config current-context) --namespace=codingbee-hello-world
 Context "minikube" modified.
 ```
 
-As you can see, the command we use to configure which kubecluster our kubectl command should connect (i.e. the context) to also lets you set the namespace (i.e. namespace to use when not explicitly specified on the command line).
+The above command essentially makes a one-line change in your `~/.kube/config` file. 
+
+```bash
+$ diff ~/.kube/config ~/.kube/config-orig
+26c26
+<     namespace: codingbee-hello-world
+---
+>     namespace: kube-system
+
+
+$ grep 'codingbee-hello-world' ~/.kube/config -A2 -B2
+- context:
+    cluster: minikube
+    namespace: codingbee-hello-world
+    user: minikube
+  name: minikube
+```
+
+This results in:
+
+```bash
+$ kubectl config get-contexts
+CURRENT   NAME                 CLUSTER                      AUTHINFO             NAMESPACE
+          default              kubernetes                   chowdhus
+          docker-for-desktop   docker-for-desktop-cluster   docker-for-desktop
+*         minikube             minikube                     minikube             codingbee-hello-world
+```
+
+This command essentially displays some of the the content extracted from `~/.kube/config` in a more readable form. As you can see, the command we use to configure which kubecluster our kubectl command should connect (i.e. the context) to also lets you set the namespace (i.e. namespace to use when not explicitly specified on the command line).
 
 
 

@@ -5,7 +5,7 @@ metadata:
   name: pod-httpd
   namespace: codingbee-hello-world       # we add this line. 
   labels:
-    component: apache_webserver
+    app: apache_webserver
 spec: 
   containers:
     - name: cntr-httpd
