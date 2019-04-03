@@ -18,15 +18,16 @@ You create an object by first writing a yaml config file, and then feeding that 
 apiVersion: v1      # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/
 kind: Pod           # type of object that's defined in this file
 metadata:
-  name: pod-httpd # name of the pod to be created. 
+  name: pod-httpd   # the name displayed in the first column of 'kubectl get pods' 
   labels:
-    component: apache_webserver  # this tag is added to help this object to link to the service object.
+    app: apache_webserver  # this tag is added to help this object to link to the service object. 
 spec:
   containers:
-    - name: cntr-httpd  # name of the container that will reside in the pod
-      image: httpd    # using the official apache image from docker hub
-      ports:
-        - containerPort: 80  # what port the container will be listening on
+    - name: cntr-httpd      # name of the container that will reside in the pod
+      image: httpd:latest      # using the official apache image from docker hub, along with a tag
+      ports:                # this bit is purely for informational purposes only and can be omitted. 
+        - containerPort: 80   # what port the container will be listening on
+
 ```
 
 We'll cover how to construct these yaml files from scratch in the anatomy tutorial later on. For now all you need to know is that this yaml file will instruct kubectl to:
