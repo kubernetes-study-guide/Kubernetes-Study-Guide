@@ -2,7 +2,6 @@
 
 As covered earlier, Kubernetes comes with some networking features out-of-the-box. But there are other networking that you need to setup yourself, which you do by creating Service objects. We've already covered one type of service object, the nodePort type. nodePort services are relatively easy to understand+setup, but they're not suitable for using in production environments. Instead of creating NodePort services, it's better to create **ClusterIP** and **Ingress** service objects.
 
-
 This ClusterIp service objets are specifically designed for setting up inter pod-to-pod communications inside a kube cluster.
 
 For example, let's say we have 2 pods, one is generic httpd pod, and the other is a generic centos pod. Let's say we want to be able to curl from the centos pod, to the httpd pod. To be able to do this, you need to create a ClusterIP service to sit in front of the httpd pod so that it can accept curl requests coming from other pods in the same kubecluster. So first we build the httpd pod:
