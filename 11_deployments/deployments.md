@@ -17,11 +17,8 @@ metadata:
   labels:
     component: httpd_webserver
 spec:
-  replicas: 2
-  minReadySeconds: 60 # This is one of the bells and whistle feature that deployment objects provides,
-                      # but replica sets doesn't.
-                      # it's how many seconds to wait after pod is created, before deployment
-                      # will allow the pod to start receiving traffic.
+  replicas: 2 
+  minReadySeconds: 10 # This is one of the features Deployments have that enhances replicasets
   selector:
     matchLabels:
       component: httpd_webserver
@@ -29,15 +26,21 @@ spec:
     metadata:
       labels:
         component: httpd_webserver
-    spec:
+    spec: 
       containers:
-        - name: cntr-nginx
-          image: httpd:latest
+        - name: cntr-httpd
+          image: httpd:2.4.37
+#          image: httpd:2.4.38
           ports:
             - containerPort: 80
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              /bin/echo "You've hit - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
+              /usr/local/bin/httpd-foreground 
 ```
 
-applying this yaml file ends up creating the following deployment object:
+This descriptor ends up creating the following deployment object:
 
 ```bash
 $ kubectl get deployments
@@ -45,7 +48,7 @@ NAME        READY   UP-TO-DATE   AVAILABLE   AGE
 dep-httpd   2/2     2            2           12s
 ```
 
- This deployment object created the following replicaset:
+This deployment object in turn creates the following replicaset:
 
 ```bash
 $ kubectl get rs
@@ -53,7 +56,7 @@ NAME                   DESIRED   CURRENT   READY   AGE
 dep-httpd-6b84f9fd8c   2         2         2       16s
 ```
 
-This replicaset in turn created the following pods:
+This replicaset in turn creates the following pods:
 
 ```bash
 $ kubectl get -o wide pods
@@ -61,7 +64,7 @@ NAME                                READY     STATUS    RESTARTS   AGE       IP 
 deployment-httpd-648756c8dd-hcc7f   1/1       Running   0          1m        172.17.0.5   minikube
 ```
 
-So a deployment object created another controller object (replicaset), which in turn created the pod objects. That means if we manually delete the RS then the deployment would automatically recreate it again, which in turn will recreate the pods. Going back to the yaml file, you'll notice that it's content is essentially 3 object definitions in a nested fashion. At the top we have the deploymnet, followed by the replicaset, and finally the pod definition. If you want to increase the number of pods running under this deployment, then just update the replicas setting in the yaml file and reapply. You can check the sequence of tasks that kubernetes performed behind the scenes using the 'events' subcommand:
+So a deployment object created another controller object (replicaset), which in turn created the pod objects. That means if we manually delete the RS then the deployment would automatically recreate it again, which in turn will recreate the pods. Going back to the description yaml file, you'll notice that it's content is essentially 3 object definitions in a nested fashion. At the top we have the deployment, followed by the replicaset, and finally the pod definition. If you want to increase the number of pods running under this deployment, then just update the replicas setting in the yaml file and re-apply. You can check the sequence of tasks that kubernetes performed behind the scenes using the 'events' subcommand:
 
 
 ```bash
@@ -137,9 +140,7 @@ REVISION  CHANGE-CAUSE
 5         <none>
 ```
 
-Note: by default kubernetes only stores info about the last 2 deployments. which is why revisions 1-3 are missing here. You can increase this limit by settin your deployment's deployment.spec.revisionHistoryLimit yaml setting.
-
-Let's say I want to rollback to the image used in revision 4, then first need to check what image I will end up with:
+Note: by default kubernetes only stores info about the last 2 deployments. which is why revisions 1-3 are missing here. You can increase this limit by setting your deployment's `deployment.spec.revisionHistoryLimit` setting. Let's say I want to rollback to the image used in revision 4, then first need to check what image I will end up with:
 
 ```bash
 $ kubectl rollout history deployment dep-httpd --revision=4
@@ -172,4 +173,4 @@ If you want to delete the deployment and everything that's associated with it, t
 kubectl delete deployments deployment-nginx
 ```
 
-Notice that we run this command imperitively rather than doing it declaritevely by specifying the config file.
+Here we did it imperatively. But you can also do it declaritively too.

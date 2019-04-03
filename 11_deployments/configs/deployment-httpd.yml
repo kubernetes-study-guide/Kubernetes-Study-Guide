@@ -7,10 +7,7 @@ metadata:
     component: httpd_webserver
 spec:
   replicas: 2 
-  minReadySeconds: 10 # This is one of the bells and whistle feature that deployment objects provides,
-                      # but replica sets doesn't. 
-                      # it's how many seconds to wait after pod is created, before deployment 
-                      # will allow the pod to start receiving traffic. 
+  minReadySeconds: 10 # This is one of the features Deployments have that enhances replicasets
   selector:
     matchLabels:
       component: httpd_webserver
@@ -25,3 +22,8 @@ spec:
 #          image: httpd:2.4.38
           ports:
             - containerPort: 80
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              /bin/echo "You've hit - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
+              /usr/local/bin/httpd-foreground 
