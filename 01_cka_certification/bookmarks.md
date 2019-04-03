@@ -37,7 +37,9 @@ Need to purchase exam via the cncf website, to be eligible for a free retake. (s
 source <(kubectl completion bash) # see the cheatsheet page
 ```
 
-2. quick create yaml file templates:
+Also see: [https://learnk8s.io/blog/kubectl-productivity/](https://learnk8s.io/blog/kubectl-productivity/)
+
+1. quick create yaml file templates:
 
 ```bash
 
