@@ -116,7 +116,7 @@ pod-centos   1/1     Running   0          15s
 We specified the 'date' command in the while loop, so you can monitor the pods standard output for this info:
 
 ```bash
-$ kubectl logs pod-centos
+$ kubectl logs pod-centos -c cntr-centos
 Mon Mar 11 12:14:01 UTC 2019
 Mon Mar 11 12:14:11 UTC 2019
 Mon Mar 11 12:14:21 UTC 2019
@@ -134,7 +134,7 @@ Mon Mar 11 12:15:51 UTC 2019
 You can also monitor the pods standard output in realtime by using the logs -f flag:
 
 ```bash
-kubectl logs -f pod-centos
+kubectl logs -f pod-centos -c cntr-centos
 ```
 
 Or connect your bash terminal directly to the pod's standard output using the 'attach' command:

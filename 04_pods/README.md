@@ -257,9 +257,9 @@ If a pod is failing to enter running mode, then there's a few ways to investigat
 
 ```bash
 
-kubectl logs podname
+kubectl logs podname -c container_name
 
-kubectl logs podname --previous   # view previous crashed pod's log. 
+kubectl logs podname  -c container_name --previous   # view previous crashed pod's log. 
 
 kubectl describe pods podname   # this has a history session, which could give more info
 
