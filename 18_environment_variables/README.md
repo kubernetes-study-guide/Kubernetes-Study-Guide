@@ -8,7 +8,7 @@ The images on docker hub comes with a set of default configurations baked into t
 - Volumes - covered later
 - Secrets - Used for feeding in sensitive data (e.g. passwords) into your containers. Covered later. 
 
-## Configurable Images
+## Configurable Images (eg1-mysql)
 Some Docker images, e.g. the [official mysql image](https://hub.docker.com/_/mysql) let's you feed in [docker image environment variables](https://hub.docker.com/_/mysql#environment-variables) into the the container. These environment variables are usually optional, but some can be mandatory. In the case of the mysql image, the MYSQL_ROOT_PASSWORD variable is mandatory. These environment variables are usually used by an [entrypoint](https://github.com/docker-library/mysql/blob/master/8.0/docker-entrypoint.sh) script during a container's launch time.
 
 Here we're going to look at how we feed in environment variables into a container using kubernetes. We'll use the official mysql image for this demo.
@@ -38,14 +38,6 @@ spec:
 Note: We have defined MYSQL_ROOT_PASSWORD in plain text above. That's not best practice, we'll cover a better approach using 'secret', covered later. Environment variables must be in the form of a string. Hence any variable that is a number, must be enclosed in single quotes. Now lets build this:
 
 ```bash
-$ kubectl apply -f configs
-pod/pod-mysql-db created
-service/svc-nodeport-mysql-db-server created
-```
-
-This seems to have worked:
-
-```bash
 $ kubectl get pods
 NAME           READY   STATUS    RESTARTS   AGE
 pod-mysql-db   1/1     Running   0          39s
@@ -59,7 +51,7 @@ svc-nodeport-mysql-db-server   NodePort    10.111.211.39   <none>        3050:31
 Let's now check if our env variables exist inside the mysql container:
 
 ```bash
-$ kubectl exec -it pod-mysql-db /bin/bash
+$ kubectl exec -it pod-mysql-db -- /bin/bash
 root@pod-mysql-db:/# env | grep PASSWORD
 MYSQL_ROOT_PASSWORD=password123
 root@pod-mysql-db:/# env | grep MYSQL_DATABASE
@@ -70,7 +62,7 @@ So it looks likes this has worked and it means that these environment variables 
 
 But the only way to know for sure is to take a look inside the pod by creating a mysql session inside it.
 
-## Creating an interactive mysql session to a pod
+### Creating an interactive mysql session to a pod
 
 Let's start by finding out what ip address we should be using:
 
@@ -135,14 +127,8 @@ mysql>
 
 Success! however note that dummy_db was created because of the env variables we fed in via the yaml configurations. if dummy_db contained data, then that data would get wiped out if you rebuild the pod, leaving you with a empty dummy_db db again. To make the db and it's data persistant, we need to make use of persistant volumes, covered later.
 
-Now let's delete everything:
 
-```bash
-$ kubectl delete -f configs
-pod "pod-mysql-db" deleted
-service "svc-nodeport-mysql-db-server" deleted
-```
 
-## Inject Pod metadata into containers
+## Inject Pod metadata into containers (eg2-pod-metadata)
 
 You can also environment variables to [inject pod metadata into containers](https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/).
