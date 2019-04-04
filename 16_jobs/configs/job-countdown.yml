@@ -4,8 +4,8 @@ kind: Job
 metadata:
   name: job-countdown
 spec:
-  completions: 4  # this causes the pod to run successfully 4 times, one after another. The default is 1 if not set.
-  parallelism: 2  # specifies how many pods runs simultaneously, in parrallel. The default is 1 if not set. 
+  completions: 4  # This means run the job 4 times as part of a run. The default is 1.
+  parallelism: 2  # specifies how many pods can run simultaneously in parrallel. The default is 1.
   template:
     spec:
       containers:
