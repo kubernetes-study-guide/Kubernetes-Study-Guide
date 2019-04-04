@@ -220,7 +220,7 @@ Just remember, if our httpd pods were in a different namespace to our centos pod
 
 At the moment our httpd pods are not externally accessible, which is fine if they are solely intended to be used inside the kube cluster.
 
-However if you want the httpd pods to be externally accessible, then just setting up ClusterIP objects alone won't be enough to give you that ability. The recommended way of doing this is by creating another type of service object, the Ingress object. We'll cover that next. 
+However if you want the httpd pods to be externally accessible, then just setting up ClusterIP objects alone won't be enough to give you that ability. The recommended way of doing this is by 'Ingress' objects. We'll cover that next. 
 
 
 ### Further Reading
