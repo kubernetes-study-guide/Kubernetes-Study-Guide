@@ -2,9 +2,9 @@
 
 As covered earlier, Kubernetes comes with some networking features out-of-the-box. But there are other networking that you need to setup yourself, which you do by creating Service objects. We've already covered one type of service object, the nodePort type. nodePort services are relatively easy to understand+setup, but they're not suitable for using in production environments. Instead of creating NodePort services, it's better to create **ClusterIP** and **Ingress** service objects.
 
-This ClusterIp service objets are specifically designed for setting up inter pod-to-pod communications inside a kube cluster.
+This ClusterIP service objets are specifically designed for setting up inter pod-to-pod communications inside a kube cluster.
 
-For example, let's say we have 2 pods, one is generic httpd pod, and the other is a generic centos pod. Let's say we want to be able to curl from the centos pod, to the httpd pod. To be able to do this, you need to create a ClusterIP service to sit in front of the httpd pod so that it can accept curl requests coming from other pods in the same kubecluster. So first we build the httpd pod:
+For example, let's say we have 2 pods, a httpd pod, and a centos pod. Let's say we want to be able to curl from the centos pod, to the httpd pod using a dns name (as opposed to pod ip address). To be able to do this, you need to create a ClusterIP service to sit in front of the httpd pod so that it can accept curl requests coming from other pods in the same kubecluster. So first we build the httpd pod:
 
 ```yaml
 ---
@@ -37,7 +37,6 @@ svc-clusterip-httpd             ClusterIP   10.99.76.207     <none>        80/TC
 
 You can think of ClusterIP objects as an internal loadbalancer with a working static dns name. It's makes ClusterIP objects perfectly suited to deliver traffic to a group of pods spawned by a Deployment object. Here's our example:
 
-
 ```yaml
 ---
 apiVersion: apps/v1
@@ -64,8 +63,8 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - |
-              /bin/echo "The pod, $HOSTNAME is displaying this page." > /usr/local/apache2/htdocs/index.html
-              /usr/local/bin/httpd-foreground  
+              /bin/echo "You've hit - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
+              /usr/local/bin/httpd-foreground
 ```
 
 This deployment ends up creating:
