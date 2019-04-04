@@ -3,8 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dep-httpd
-  labels:
-    component: apache_webserver
 spec:
   replicas: 3 
   selector:

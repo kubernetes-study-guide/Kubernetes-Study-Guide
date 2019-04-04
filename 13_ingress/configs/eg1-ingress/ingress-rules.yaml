@@ -3,21 +3,21 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: ingress-service
-  annotations:
-    kubernetes.io/ingress.class: nginx
+  annotations:   # this is something specific to ingress objects. It lets you customise your ingress setup.
+    kubernetes.io/ingress.class: nginx   # this is how we tell k8s to build ingress controller using the nginx project.
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
 spec:
   rules:
-    - host: httpd-demo.com    # we specify a domain name this time. 
-      http:
+    - host: httpd-demo.com
+      http:                    # this enables listening on port 80, i.e. http port
         paths:
           - path: /
             backend:
               serviceName: svc-clusterip-httpd
               servicePort: 4000
-    - host: caddy-demo.com          # we specify a domain name this time. 
+    - host: caddy-demo.com     
       http:
         paths:
           - path: /
