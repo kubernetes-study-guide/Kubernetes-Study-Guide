@@ -35,7 +35,7 @@ calico-node   3         3         3       3            3           beta.kubernet
 kube-proxy    3         3         3       3            3           <none>                        4m45s
 ```
 
-Note, a kubecluster built with kubeadm has kubemasters that also doubles as kubeworkers, but that's only for running internal kubernetes pods.
+Note, a kubeadm provisioned kubecluster has kubemasters that also doubles as kubeworkers, but that's only for running internal kubernetes related pods.
 
 ```bash
 root@kube-master:~# kubectl get pods -o wide --namespace=kube-system | grep proxy
