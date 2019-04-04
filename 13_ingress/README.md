@@ -4,9 +4,9 @@ Earlier we covered service objects which sets up networking between pods in the 
 
 The ideal solution would be to have your worker nodes only listening to standard ports, e.g. port 443 for https. That's possible by setting up Ingress objects. 
 
-Ingress ojects are used to make pods externally accessible. Before you can start creating ingress objects, you first need to setup an [Ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/). An ingress controllers provides Forward Proxy, 'Edge router' and 'Loadbalancing' features. One popular choice is [Traefik](https://github.com/containous/traefik). However in our case we'll use [ingress-nginx github repo](https://github.com/kubernetes/ingress-nginx), which essentially makes use of an internal nginx forward-proxy pod behind the scenes. 
+Ingress ojects are used to make pods externally accessible. Before you can start creating ingress objects, you first need to setup an [Ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/). Ingress controllers provides Forward Proxy, 'Edge router' and 'Loadbalancing' features. One popular choice is [Traefik](https://github.com/containous/traefik). However in our case we'll use [ingress-nginx github repo](https://github.com/kubernetes/ingress-nginx), which essentially makes use of an internal nginx forward-proxy pod behind the scenes.
 
-The way you set up the ingres-nginx controller depends on what underlying platfrom you're using, in our examples we'll be using minikube. 
+The way you set up the ingres-nginx controller depends on what underlying platfrom you're using, which in our case is minikube. 
 
 
 ## Setting up Ingress Controller on Minikube
