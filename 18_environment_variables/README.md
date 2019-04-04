@@ -131,4 +131,6 @@ Success! however note that dummy_db was created because of the env variables we 
 
 ## Inject Pod metadata into containers (eg2-pod-metadata)
 
+
+
 You can also environment variables to [inject pod metadata into containers](https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/).
