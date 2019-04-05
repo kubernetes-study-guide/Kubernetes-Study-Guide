@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: pod-httpd
+  annotations:
+    annotation1: hello
+  labels:
+    app: httpd
+spec:
+  containers:
+    - name: cntr-httpd
+      image: httpd:latest 
+      ports:
+        - containerPort: 80
+      env:  
+        - name: pod_name
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: pod_namespace
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: pod_nodeName
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: pod_serviceAccountName
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.serviceAccountName
+        - name: pod_hostIP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: pod_podIP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP

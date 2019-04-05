@@ -128,9 +128,3 @@ mysql>
 Success! however note that dummy_db was created because of the env variables we fed in via the yaml configurations. if dummy_db contained data, then that data would get wiped out if you rebuild the pod, leaving you with a empty dummy_db db again. To make the db and it's data persistant, we need to make use of persistant volumes, covered later.
 
 
-
-## Inject Pod metadata into containers (eg2-pod-metadata)
-
-
-
-You can also environment variables to [inject pod metadata into containers](https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/).
