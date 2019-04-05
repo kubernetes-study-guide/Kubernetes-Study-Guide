@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: pod-httpd
+  annotations:
+    annotation1: hello
+  labels:
+    app: httpd
+spec:
+  containers:
+    - name: cntr-httpd
+      image: httpd:latest 
+      ports:
+        - containerPort: 80
