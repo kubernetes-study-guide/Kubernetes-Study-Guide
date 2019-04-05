@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: pod-httpd
+  annotations:
+    annotation1: hello
+    annotation2: world
+  labels:
+    app: httpd
+    cms: wordpress
+spec:
+  containers:
+    - name: cntr-httpd
+      image: httpd:latest 
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: labels-and-annotations
+          mountPath: /etc/pod_data
+  volumes:
+    - name: labels-and-annotations
+      downwardAPI:
+        items:
+          - path: labels_data.txt
+            fieldRef:
+              fieldPath: metadata.labels
+          - path: annotations_data.txt
+            fieldRef:
+              fieldPath: metadata.annotations
