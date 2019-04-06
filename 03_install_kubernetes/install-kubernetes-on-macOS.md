@@ -12,8 +12,8 @@ There are a few steps involved in this process:
 After minikube is installed, next check it's version:
 
 ```bash
-$ minikube version
-minikube version: v0.34.1
+$ minikube version 
+minikube version: v1.0.0
 ```
 
 Similarly you check it's status:
@@ -67,13 +67,24 @@ KubeDNS is running at https://192.168.99.100:8443/api/v1/proxy/namespaces/kube-s
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```
 
+Another command can run to see the health of your kub cluster's control plane:
+
+```bash
+$ kubectl get componentstatus
+NAME                 STATUS    MESSAGE             ERROR
+controller-manager   Healthy   ok                  
+scheduler            Healthy   ok                  
+etcd-0               Healthy   {"health":"true"} 
+```
+
 Also to see how many nodes are in our kubecluster, run:
 
 ```bash
-$ kubectl get nodes  
-NAME       STATUS   ROLES    AGE     VERSION
-minikube   Ready    master   6d23h   v1.13.3
+$ kubectl get nodes -o wide
+NAME       STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE            KERNEL-VERSION   CONTAINER-RUNTIME
+minikube   Ready    master   20h   v1.14.0   10.0.2.15     <none>        Buildroot 2018.05   4.15.0           docker://18.6.2
 ```
+This command lists out all VMs that has the kubelet component running on it. Also the VERSION lists the version of the kubelet. If you built kubernetes the hardway then the masters won't get listed here, since the masters don't have the kubelet running on them.
 
 By design, to stay lightweight, our minikube based kubecluster only has one node, which acts as both the master and worker node. That's fine in a development environment. But in production, you should have multiple master and worker nodes for HA.
 

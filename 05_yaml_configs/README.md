@@ -24,10 +24,13 @@ The apiVersion, kind, metadata, and spec, are the [required fields](https://kube
 You need to take a look at the [Kubernetes API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/) to work out what to set this for your chosen object type (kind). This reference doc is really useful have displays example yaml content for your chosen kind. This link is for version v1.14. But in your case you need go to the link, that's specified with the Major and Minor tag of Server Version in:
 
 ```bash
-$ kubectl version
-Client Version: version.Info{Major:"1", Minor:"13", GitVersion:"v1.13.3", GitCommit:"721bfa751924da8d1680787490c54b9179b1fed0", GitTreeState:"clean", BuildDate:"2019-02-04T04:48:03Z", GoVersion:"go1.11.5", Compiler:"gc", Platform:"darwin/amd64"}
-Server Version: version.Info{Major:"1", Minor:"13", GitVersion:"v1.13.3", GitCommit:"721bfa751924da8d1680787490c54b9179b1fed0", GitTreeState:"clean", BuildDate:"2019-02-01T20:00:57Z", GoVersion:"go1.11.5", Compiler:"gc", Platform:"linux/amd64"}
+$ kubectl version --short
+Client Version: v1.13.4
+Server Version: v1.14.0
 ```
+
+This shows that the kubectl binary we have installed locally on our macbook is v1.13.4, whereas the kubecluster our kubectl command is talking to is version v1.14.0. 
+
 
 You can also view the api reference data from the cli, using the 'explain' subcommand:
 

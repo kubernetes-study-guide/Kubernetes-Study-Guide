@@ -21,7 +21,7 @@ Along with those, you also have:
 Master nodes have the following components installed on them:
 
 - etcd - this is a key/value datastore to store the current state of the kube cluster.
-- kube-apiserver - this recieves instructions from the kubectl cli tool
+- [kube-apiserver](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/) - This is single binary that we run using a daemon. this recieves instructions from the kubectl cli tool
 - kube-controller-manager
 - kube-scheduler
 
