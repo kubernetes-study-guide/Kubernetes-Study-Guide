@@ -116,8 +116,226 @@ Here's how the handshake works:
 
 
 
+## create a new certificate. 
+
+Let's rename our kubectl config file so that we can start from scratch:
 
 
+```bash
+$ cd ~/.kube/
+$ mv config config-orig
+
+$ kubectl get nodes
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+```
+
+Now kubectl is broken, now let's regenerate it again:
+
+```bash
+$ kubectl config set-cluster minikube-cluster --server=https://192.168.99.110:8443 --certificate-authority=/Users/schowdhury/.minikube/ca.crt
+Cluster "minikube-cluster" set.
+```
+
+This results in:
+
+```bash
+$ cat ~/.kube/config
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /Users/schowdhury/.minikube/ca.crt
+    server: https://192.168.99.110:8443
+  name: minikube-cluster
+contexts: []
+current-context: ""
+kind: Config
+preferences: {}
+users: []
+```
+
+If we retry:
+
+```bash
+$ kubectl get nodes
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+```
+
+That's because:
+
+```bash
+$ kubectl config current-context
+error: current-context is not set
+```
+
+So we have to create a context:
+
+```bash
+$ kubectl config set-context minikube-default-admin --cluster=minikube-cluster
+Context "minikube-default-admin" created.
+```
+
+
+~/.kube/config now looks like:
+
+```yaml
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /Users/schowdhury/.minikube/ca.crt
+    server: https://192.168.99.110:8443
+  name: minikube-cluster
+contexts:                    # now we have this context present
+- context:                            
+    cluster: minikube-cluster
+    user: ""
+  name: minikube-default-admin        # I've taken {clustername}-{namespace-name}-{username} convention
+current-context: ""
+kind: Config
+preferences: {}
+users: []
+
+```
+
+However the error message is still the same as before:
+
+
+```bash
+$ kubectl get nodes
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+```
+
+
+That's becuase we need to tell kubectl to use this context:
+
+```bash
+$ kubectl config current-context
+error: current-context is not set
+
+$ kubectl config use-context minikube-default-admin
+Switched to context "minikube-default-admin".
+
+$ kubectl config current-context
+minikube-default-admin
+```
+
+~/.kube/config now looks like:
+
+```yaml
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /Users/schowdhury/.minikube/ca.crt
+    server: https://192.168.99.110:8443
+  name: minikube-cluster
+contexts:
+- context:
+    cluster: minikube-cluster
+    user: ""
+  name: minikube-default-admin
+current-context: minikube-default-admin           # this line is now populated
+kind: Config
+preferences: {}
+users: []
+```
+
+
+Now if we try again, we get a password prompt:
+
+```bash
+$ kubectl get nodes
+Please enter Username:
+```
+
+Now let's add user credentials and then associate it with our context:
+
+```bash
+$ kubectl config set-credentials minikube --client-key=/Users/schowdhury/.minikube/client.key --client-certificate=/Users/schowdhury/.minikube/client.crt
+User "minikube" set.
+
+$ kubectl config set-context minikube-default-admin --cluster=minikube-cluster --user=minikube
+Context "minikube-default-admin" modified.
+```
+
+now looks like:
+
+```yaml
+$ cat config
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /Users/schowdhury/.minikube/ca.crt
+    server: https://192.168.99.110:8443
+  name: minikube-cluster
+contexts:
+- context:
+    cluster: minikube-cluster
+    user: minikube                     # this line now added
+  name: minikube-default-admin
+current-context: minikube-default-admin
+kind: Config
+preferences: {}
+users:
+- name: minikube               # this section now exists
+  user:
+    client-certificate: /Users/schowdhury/.minikube/client.crt
+    client-key: /Users/schowdhury/.minikube/client.key
+```
+
+Now let's retry:
+
+```bash
+$ kubectl get nodes
+NAME       STATUS   ROLES    AGE   VERSION
+minikube   Ready    master   40h   v1.14.0
+```
+
+This worked, even though we haven't specified what namespace we want to work with. 
+
+```bash
+$ kubectl config get-contexts
+CURRENT   NAME                     CLUSTER            AUTHINFO   NAMESPACE
+*         minikube-default-admin   minikube-cluster   minikube
+```
+
+the kubecluster assumed we're interested in the 'default' cluster. But it's best practice to explicitly set the namespace as well to remove any chance of ambiguity:
+
+```bash
+$ kubectl config set-context minikube-default-admin --cluster=minikube-cluster --user=minikube --namespace=default
+Context "minikube-default-admin" modified.
+```
+
+This results in:
+
+```yaml
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /Users/schowdhury/.minikube/ca.crt
+    server: https://192.168.99.110:8443
+  name: minikube-cluster
+contexts:
+- context:
+    cluster: minikube-cluster
+    namespace: default             # this line now added
+    user: minikube
+  name: minikube-default-admin
+current-context: minikube-default-admin
+kind: Config
+preferences: {}
+users:
+- name: minikube
+  user:
+    client-certificate: /Users/schowdhury/.minikube/client.crt
+    client-key: /Users/schowdhury/.minikube/client.key
+```
+
+which now results in:
+
+```bash
+$ kubectl config get-contexts
+CURRENT   NAME                     CLUSTER            AUTHINFO   NAMESPACE
+*         minikube-default-admin   minikube-cluster   minikube   default
+```
 
 ## Reference
 
@@ -126,4 +344,4 @@ Here's how the handshake works:
 
 [https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/](https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/)
 
-
+[https://github.com/kubernetes-sigs/kubespray/issues/257](https://github.com/kubernetes-sigs/kubespray/issues/257)
