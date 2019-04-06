@@ -316,7 +316,7 @@ clusters:
 contexts:
 - context:
     cluster: minikube-cluster
-    namespace: default             # this line now added
+    namespace: default                    # this line now added
     user: minikube
   name: minikube-default-admin
 current-context: minikube-default-admin
@@ -336,6 +336,9 @@ $ kubectl config get-contexts
 CURRENT   NAME                     CLUSTER            AUTHINFO   NAMESPACE
 *         minikube-default-admin   minikube-cluster   minikube   default
 ```
+
+Note: you can't create 'users' in kubernetes. They are [handled using authentication plugins externally](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#users-in-kubernetes). 
+
 
 ## Reference
 
