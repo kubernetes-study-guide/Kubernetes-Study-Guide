@@ -14,10 +14,10 @@ metadata:
   name: role-read
   namespace: default    # This is mandatory, if omitted then 'default' is used
 rules:
-  - apiGroups: ["v1"] 
+  - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "watch", "list"]
-  - apiGroups: ["v1"] 
+  - apiGroups: [""]
     resources: ["services"]
     verbs: ["get", "watch", "list"]
 ```
@@ -31,9 +31,7 @@ NAME            AGE
 employee-role   74s
 ```
 
-
 This is a permission, but we now need to attach this permission to a user or group. We do this by creating a rolebinding object:
-
 
 ```yaml
 ---
@@ -48,10 +46,11 @@ roleRef:
   name: role-read
 subjects:
   - kind: Group
+    apiGroup: rbac.authorization.k8s.io
     name: employee
 ```
 
-Here we attached our role to a group. Note you can associate multiple users/groups to a single role. This creates:
+You can associate multiple users/groups to a single role. Here we attached our role to the 'employee' group:
 
 ```bash
 # kubectl get rolebindings -o wide
@@ -61,10 +60,43 @@ rb-read   8s    Role/role-read           employee
 
 Also notice that in kubernetes we don't create 'groups'. the concept of groups works in a similar way to selectors+labels. The tls certificate specifies a Organisation in the subject section, which kubernetes uses as a group's name, and matches to rolebindings, which have a matching name in `rolebindings.subjects.name`.
 
+Note: You can also attach ServiceAccounts to roles. We'll cover ServiceAccounts later. 
+
+After that, Lisa will now be able list pods and services, when she runs:
+
+```bash
+$ kubectl config get-contexts
+CURRENT   NAME                     CLUSTER             AUTHINFO         NAMESPACE
+*         codingbee-default-lisa   codingbee-cluster   codingbee-lisa   default
+
+$ kubectl get svc
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          2d22h
+svc-nodeport-httpd   NodePort    10.109.105.25   <none>        3050:31000/TCP   32s
+
+$ kubectl get pods
+NAME        READY   STATUS    RESTARTS   AGE
+pod-httpd   1/1     Running   0          35s
+```
+
+However these priveleges are limited to the namespace we specified in our role/rolebinding definitions, so you will get error messages if you try to query other namespaces:
+
+```bash
+$ kubectl get pods --namespace=kube-system
+Error from server (Forbidden): pods is forbidden: User "lisa" cannot list resource "pods" in API group "" in the namespace "kube-system"
+```
+
+Also roles+rolebindings can't be used to set up access for things that live outside namespaces, e.g. nodes:
+
+```bash
+$ kubectl get nodes
+Error from server (Forbidden): nodes is forbidden: User "lisa" cannot list resource "nodes" in API group "" at the cluster scope
+```
+
+To overcome these limitiation, you can create cluster wide roles and rolebindings, called CluserRoles and ClusterRolebindings. Which we'll cover next. 
 
 
-
-# Reference
+## Reference
 
 [# https://kubernetes.io/docs/reference/access-authn-authz/rbac/](# https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 
