@@ -5,9 +5,9 @@ metadata:
   name: role-read
   namespace: default    # This is mandatory, if omitted then 'default' is used
 rules:
-  - apiGroups: ["v1"] 
+  - apiGroups: [""] 
     resources: ["pods"]
     verbs: ["get", "watch", "list"]
-  - apiGroups: ["v1"] 
+  - apiGroups: [""] 
     resources: ["services"]
     verbs: ["get", "watch", "list"]
