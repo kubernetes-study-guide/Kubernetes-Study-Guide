@@ -11,5 +11,5 @@ roleRef:
   namespace: default
 subjects:
   - kind: Group
+    apiGroup: rbac.authorization.k8s.io
     name: employee
-    namespace: default
