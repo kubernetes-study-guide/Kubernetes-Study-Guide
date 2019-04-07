@@ -18,31 +18,45 @@ The api-server is the first point of contact when you interact with the kubeclus
 3. Admission Control - we'll cover this later. 
 
 
-### Authentication
-Kubectl uses the credential info stored in the ~/.kube/config to authenticate with the api-server:
+## Authentication
+Kubectl uses the credential info stored in the `~/.kube/config` to authenticate with the the api-server. This config file can store settings for multiple clusters, for example here's the connection details for connecting to a minikube cluster:
 
 ```bash
 $ cat ~/.kube/config
 ...
+clusters:
 - cluster:
     certificate-authority: /Users/schowdhury/.minikube/ca.crt
     server: https://192.168.99.110:8443
+  name: minikube
 ...
+contexts:
 - context:
     cluster: minikube
     user: minikube
+    namespace: default        # defaults to 'default' if this line is omitted
   name: minikube
 ...
+users:
 - name: minikube
   user:
     client-certificate: /Users/schowdhury/.minikube/client.crt
     client-key: /Users/schowdhury/.minikube/client.key
 ...
+current-context: minikube
 ```
 
+The above entries was added by the minikube cli, behind the scenes when you ran the `minikube start` command. Note, you can refresh these entries with minikube:
+
+```
+$ minikube update-context
+🙄  IP was already correctly configured for 192.168.99.110
+```
+
+## Certificate-Based Mutual Authentication
 
 
-So why do we have these 3 files?:
+When connecting to a cluster (e.g. the minikube cluster), we need to specify 3 TLS files:
 
 ```bash
 $ file /Users/schowdhury/.minikube/ca.crt
@@ -53,9 +67,8 @@ $ file /Users/schowdhury/.minikube/client.key
 /Users/schowdhury/.minikube/client.key: PEM RSA private key
 ```
 
-## Certificate-Based Mutual Authentication
 
-The following files are used to gain the api-servers trust:
+The following files are used to gain the api-server's trust of kubectl:
 
 ```
     client-certificate: /Users/schowdhury/.minikube/client.crt
@@ -115,236 +128,3 @@ Here's how the handshake works:
 10. The api-server recieves the encrypted api-requests and successfully decrypts it with the second-session-id. This is enough for the api-server to fully trust the message-sender, i.e. the kubectl. The secure hand-shake is now complete, that means that authentication is also successful. The second-session-id will now be used to send encrypted communications between kubectl & api-server. The second-session-id key has an expiration time, when it expires, the whole handshaking process starts again in order to renew the second-session-id
 
 
-
-## create a new certificate. 
-
-Let's rename our kubectl config file so that we can start from scratch:
-
-
-```bash
-$ cd ~/.kube/
-$ mv config config-orig
-
-$ kubectl get nodes
-The connection to the server localhost:8080 was refused - did you specify the right host or port?
-```
-
-Now kubectl is broken, now let's regenerate it again:
-
-```bash
-$ kubectl config set-cluster minikube-cluster --server=https://192.168.99.110:8443 --certificate-authority=/Users/schowdhury/.minikube/ca.crt
-Cluster "minikube-cluster" set.
-```
-
-This results in:
-
-```bash
-$ cat ~/.kube/config
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority: /Users/schowdhury/.minikube/ca.crt
-    server: https://192.168.99.110:8443
-  name: minikube-cluster
-contexts: []
-current-context: ""
-kind: Config
-preferences: {}
-users: []
-```
-
-If we retry:
-
-```bash
-$ kubectl get nodes
-The connection to the server localhost:8080 was refused - did you specify the right host or port?
-```
-
-That's because:
-
-```bash
-$ kubectl config current-context
-error: current-context is not set
-```
-
-So we have to create a context:
-
-```bash
-$ kubectl config set-context minikube-default-admin --cluster=minikube-cluster
-Context "minikube-default-admin" created.
-```
-
-
-~/.kube/config now looks like:
-
-```yaml
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority: /Users/schowdhury/.minikube/ca.crt
-    server: https://192.168.99.110:8443
-  name: minikube-cluster
-contexts:                    # now we have this context present
-- context:                            
-    cluster: minikube-cluster
-    user: ""
-  name: minikube-default-admin        # I've taken {clustername}-{namespace-name}-{username} convention
-current-context: ""
-kind: Config
-preferences: {}
-users: []
-
-```
-
-However the error message is still the same as before:
-
-
-```bash
-$ kubectl get nodes
-The connection to the server localhost:8080 was refused - did you specify the right host or port?
-```
-
-
-That's becuase we need to tell kubectl to use this context:
-
-```bash
-$ kubectl config current-context
-error: current-context is not set
-
-$ kubectl config use-context minikube-default-admin
-Switched to context "minikube-default-admin".
-
-$ kubectl config current-context
-minikube-default-admin
-```
-
-~/.kube/config now looks like:
-
-```yaml
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority: /Users/schowdhury/.minikube/ca.crt
-    server: https://192.168.99.110:8443
-  name: minikube-cluster
-contexts:
-- context:
-    cluster: minikube-cluster
-    user: ""
-  name: minikube-default-admin
-current-context: minikube-default-admin           # this line is now populated
-kind: Config
-preferences: {}
-users: []
-```
-
-
-Now if we try again, we get a password prompt:
-
-```bash
-$ kubectl get nodes
-Please enter Username:
-```
-
-Now let's add user credentials and then associate it with our context:
-
-```bash
-$ kubectl config set-credentials minikube --client-key=/Users/schowdhury/.minikube/client.key --client-certificate=/Users/schowdhury/.minikube/client.crt
-User "minikube" set.
-
-$ kubectl config set-context minikube-default-admin --cluster=minikube-cluster --user=minikube
-Context "minikube-default-admin" modified.
-```
-
-now looks like:
-
-```yaml
-$ cat config
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority: /Users/schowdhury/.minikube/ca.crt
-    server: https://192.168.99.110:8443
-  name: minikube-cluster
-contexts:
-- context:
-    cluster: minikube-cluster
-    user: minikube                     # this line now added
-  name: minikube-default-admin
-current-context: minikube-default-admin
-kind: Config
-preferences: {}
-users:
-- name: minikube               # this section now exists
-  user:
-    client-certificate: /Users/schowdhury/.minikube/client.crt
-    client-key: /Users/schowdhury/.minikube/client.key
-```
-
-Now let's retry:
-
-```bash
-$ kubectl get nodes
-NAME       STATUS   ROLES    AGE   VERSION
-minikube   Ready    master   40h   v1.14.0
-```
-
-This worked, even though we haven't specified what namespace we want to work with. 
-
-```bash
-$ kubectl config get-contexts
-CURRENT   NAME                     CLUSTER            AUTHINFO   NAMESPACE
-*         minikube-default-admin   minikube-cluster   minikube
-```
-
-the kubecluster assumed we're interested in the 'default' cluster. But it's best practice to explicitly set the namespace as well to remove any chance of ambiguity:
-
-```bash
-$ kubectl config set-context minikube-default-admin --cluster=minikube-cluster --user=minikube --namespace=default
-Context "minikube-default-admin" modified.
-```
-
-This results in:
-
-```yaml
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority: /Users/schowdhury/.minikube/ca.crt
-    server: https://192.168.99.110:8443
-  name: minikube-cluster
-contexts:
-- context:
-    cluster: minikube-cluster
-    namespace: default                    # this line now added
-    user: minikube
-  name: minikube-default-admin
-current-context: minikube-default-admin
-kind: Config
-preferences: {}
-users:
-- name: minikube
-  user:
-    client-certificate: /Users/schowdhury/.minikube/client.crt
-    client-key: /Users/schowdhury/.minikube/client.key
-```
-
-which now results in:
-
-```bash
-$ kubectl config get-contexts
-CURRENT   NAME                     CLUSTER            AUTHINFO   NAMESPACE
-*         minikube-default-admin   minikube-cluster   minikube   default
-```
-
-Note: you can't create 'users' in kubernetes. They are [handled using authentication plugins externally](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#users-in-kubernetes). 
-
-
-## Reference
-
-
-[https://medium.com/@awkwardferny/configuring-certificate-based-mutual-authentication-with-kubernetes-ingress-nginx-20e7e38fdfca](https://medium.com/@awkwardferny/configuring-certificate-based-mutual-authentication-with-kubernetes-ingress-nginx-20e7e38fdfca)
-
-[https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/](https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/)
-
-[https://github.com/kubernetes-sigs/kubespray/issues/257](https://github.com/kubernetes-sigs/kubespray/issues/257)
