@@ -6,7 +6,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cluster-admin
+  name: cluster-admin     # here we used one of the ready-made clusterroles
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
