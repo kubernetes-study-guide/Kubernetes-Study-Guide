@@ -1,0 +1,11 @@
+---
+# https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: employee-role
+  namespace: default
+rules:
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["nodes"]
+    verbs: ["get", "watch", "list"]
