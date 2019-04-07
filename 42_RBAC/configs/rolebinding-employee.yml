@@ -1,0 +1,11 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  metadata: employees
+  namespace: default
+roleRef:
+  apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  name: employee-role
+  
