@@ -10,5 +10,5 @@ roleRef:
   name: employee-role
 subjects:
   - kind: Group
-    name: employees
+    name: employee
     namespace: default
