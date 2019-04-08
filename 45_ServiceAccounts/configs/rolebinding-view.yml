@@ -10,5 +10,5 @@ roleRef:
   name: view
 subjects:
   - kind: ServiceAccount
-    apiGroup: rbac.authorization.k8s.io
+    apiGroup: ""
     name: basic-access
