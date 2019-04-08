@@ -308,3 +308,6 @@ Error from server (Forbidden): pods is forbidden: User "system:serviceaccount:de
 
 That's because we've done something a little different this time to demo this behaviour. We referenced a clusterRole in a rolebinding (instead of clusterrolebinding) object. This has the effect of limiting all accesses to the pod's namespace and it also means the pod can't access to things that arent namespace specific, e.g. nodes. If you want the SA do have cluster level permissions, then create a clusterrolebinding instead.
 
+## Use curl instead of kubectl
+
+All the api interactions we performed inside the pods so far, we did so using the kubectl command. However you may not want  kubectl installed inside your pods, in that case you can just use curl, since the kube-apiserver is just a REST based API. 

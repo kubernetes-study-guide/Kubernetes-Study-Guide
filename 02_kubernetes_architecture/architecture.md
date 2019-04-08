@@ -1,5 +1,8 @@
 # architecture
 
+The Kubernetes software is not a single software, it is in fact a highly modular software that's made up of several independent components. You can install all these components on a single machine, which is the case with minikube. But for better redundancies, HA, scalability it is better to install the components a cluster of vms. 
+
+
 
 A production ready kuberenetes setup is made up of several servers. they are either:
 
