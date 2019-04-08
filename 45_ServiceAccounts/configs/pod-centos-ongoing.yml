@@ -4,11 +4,12 @@ kind: Pod
 metadata:
   name: pod-centos
 spec: 
+  serviceAccountName: basic-access     # We add this line. 
   containers:
     - name: cntr-centos
       image: centos
-      command: ["/bin/bash", "-c"]       # this starts a bash terminal and feeds the args content into it
-      args:                         # the args section here is used to store a small shell script
+      command: ["/bin/bash", "-c"]
+      args:
         - |
           while true ; do
             date 

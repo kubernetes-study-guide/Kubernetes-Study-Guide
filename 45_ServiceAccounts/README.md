@@ -161,7 +161,28 @@ NAME                       TYPE                                  DATA   AGE
 basic-access-token-nlrc4   kubernetes.io/service-account-token   3      23m
 ```
 
-This secret contains 3 bits of data, namespace, ca.crt, and token. These data translates to the 3 files that appear inside the pod's mountpoint.
+This secret contains 3 bits of data, namespace, ca.crt, and token. These data translates to the 3 files that appear inside the pod's mountpoint. Now that we have the ServiceAccount, we can then attach it to a pod:
+
+```yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-centos
+  namespace: default
+spec: 
+  serviceAccountName: basic-access     # We add this line.
+  containers:
+    - name: cntr-centos
+      image: centos
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          while true ; do
+            date 
+            sleep 10 
+          done
+```
 
 
 
