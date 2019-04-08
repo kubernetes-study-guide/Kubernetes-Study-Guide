@@ -178,13 +178,42 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |
+          cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+          [kubernetes]
+          name=Kubernetes
+          baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+          enabled=1
+          gpgcheck=1
+          repo_gpgcheck=1
+          gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+          EOF
+          yum install -y kubectl
           while true ; do
             date 
             sleep 10 
           done
 ```
 
+Note, for convenience we're installing kubectl as part of the startup command. This ends up creating:
 
+```bash
+# kubectl get pods pod-centos -o yaml
+spec:
+...
+  serviceAccount: basic-access
+  containers:
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: basic-access-token-nlrc4
+      readOnly: true
+...
+  volumes:
+  - name: basic-access-token-nlrc4
+    secret:
+      defaultMode: 420
+      secretName: basic-access-token-nlrc4
+...
+```
 
 
 
