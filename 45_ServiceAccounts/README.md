@@ -242,7 +242,69 @@ PolicyRule:
 
 So let's create a rolebinding to attach this clusterrole to our service account:
 
-```yaml
 
+```yaml
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rb-view  
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+  - kind: ServiceAccount
+    apiGroup: ""          # found this by running: kubectl api-resources
+    name: basic-access
 ```
+
+This ends up creating:
+
+```bash
+root@kube-master:~/Kubernetes-Study-Guide/45_ServiceAccounts# kubectl get rolebindings rb-view -o wide
+NAME      AGE   ROLE               USERS   GROUPS   SERVICEACCOUNTS
+rb-view   28s   ClusterRole/view                    /basic-access
+
+
+root@kube-master:~/Kubernetes-Study-Guide/45_ServiceAccounts# kubectl describe rolebindings rb-view
+Name:         rb-view
+Labels:       <none>
+Annotations:  kubectl.kubernetes.io/last-applied-configuration:
+                {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"RoleBinding","metadata":{"annotations":{},"name":"rb-view","namespace":"default"},"ro...
+Role:
+  Kind:  ClusterRole
+  Name:  view
+Subjects:
+  Kind            Name          Namespace
+  ----            ----          ---------
+  ServiceAccount  basic-access
+```
+
+Now we'll see that kubectl now works from inside the pod:
+
+```bash
+# kubectl exec pod-centos -it -- /bin/bash
+[root@pod-centos /]# kubectl get svc
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          3d23h
+svc-nodeport-httpd   NodePort    10.109.105.25   <none>        3050:31000/TCP   25h
+[root@pod-centos /]# kubectl get pods
+NAME         READY   STATUS    RESTARTS   AGE
+pod-centos   1/1     Running   0          45m
+```
+
+However other commands don't work even though they are permitted in the 'view' ClusterRole:
+
+```bash
+[root@pod-centos /]# kubectl get nodes
+Error from server (Forbidden): nodes is forbidden: User "system:serviceaccount:default:basic-access" cannot list resource "nodes" in API group "" at the cluster scope
+[root@pod-centos /]# kubectl get PersistentVolumes
+Error from server (Forbidden): persistentvolumes is forbidden: User "system:serviceaccount:default:basic-access" cannot list resource "persistentvolumes" in API group "" at the cluster scope
+[root@pod-centos /]# kubectl get pods --namespace=kube-system
+Error from server (Forbidden): pods is forbidden: User "system:serviceaccount:default:basic-access" cannot list resource "pods" in API group "" in the namespace "kube-system"
+```
+
+That's because we've done something a little different this time to demo this behaviour. We referenced a clusterRole in a rolebinding (instead of clusterrolebinding) object. This has the effect of limiting all accesses to the pod's namespace and it also means the pod can't access to things that arent namespace specific, e.g. nodes. 
 
