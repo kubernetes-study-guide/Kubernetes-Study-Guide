@@ -306,5 +306,5 @@ Error from server (Forbidden): persistentvolumes is forbidden: User "system:serv
 Error from server (Forbidden): pods is forbidden: User "system:serviceaccount:default:basic-access" cannot list resource "pods" in API group "" in the namespace "kube-system"
 ```
 
-That's because we've done something a little different this time to demo this behaviour. We referenced a clusterRole in a rolebinding (instead of clusterrolebinding) object. This has the effect of limiting all accesses to the pod's namespace and it also means the pod can't access to things that arent namespace specific, e.g. nodes. 
+That's because we've done something a little different this time to demo this behaviour. We referenced a clusterRole in a rolebinding (instead of clusterrolebinding) object. This has the effect of limiting all accesses to the pod's namespace and it also means the pod can't access to things that arent namespace specific, e.g. nodes. If you want the SA do have cluster level permissions, then create a clusterrolebinding instead.
 
