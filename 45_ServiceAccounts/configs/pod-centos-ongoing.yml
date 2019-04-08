@@ -3,8 +3,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: pod-centos
+  namespace: default
 spec: 
-  serviceAccountName: basic-access     # We add this line. 
+  serviceAccountName: basic-access     # We add this line.
   containers:
     - name: cntr-centos
       image: centos
