@@ -1,10 +1,9 @@
-# ServiceAccounts
+# Service Accounts
 
-Earlier we saw how we can control an individual's (or group's) permissions, at the [authorisation](https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/) stage by using Roles, RolesBindings, ClusterRoles, and ClusterRolesBindings objects.
+In Kubernetes, it's possible to run kubectl commands (e.g. kubectl get pods), from inside pods themselves. In doing so pods have to follow the same [authentications+authorsations](https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/) process that individuals are subjected. This also means that you can control a pods access privileges using Roles, RolesBindings, ClusterRoles, and ClusterRolesBindings objects.
 
-However you can also use these objects to control access privileges for pods too. That's because pods also goes through the same authentication+authorization process if/when it sets api requests to the kube-api server. 
-
-A pods authentication is done via the use of ServiceAccounts. A ServiceAccount is an identity that's attached to a pod. Each namespace comes with a default serviceaccount:
+## Pod Authentication with the kube-apiserver
+When humans use the kubectl command, we establish our identity with the kube-apiserver using TLS certificates. However for non-humans, i.e. pods, the pods identifies itself to the kube-apiserver by using Service Account objects. A ServiceAccount is an identity that's attached to a pod. Each namespace comes with a default serviceaccount:
 
 ```bash
 # kubectl get serviceaccounts
@@ -30,7 +29,7 @@ default-token-z8ffc   kubernetes.io/service-account-token   3      3d1h
 
 ```
 
-You can attach a serviceaccount to your pod using the `pods.spec.serviceAccountName` setting. If this setting is omitted then the 'default' sa get's attached instead. Service accounts are attached to a pod in the form of a secrets volume:
+You can attach a serviceaccount to your pod using the `pods.spec.serviceAccountName` setting. If this setting is omitted then the 'default' sa get's attached instead. Service accounts are attached to pods via secrets volume:
 
 ```bash
 # kubectl edit pods pod-centos 
@@ -65,15 +64,12 @@ lrwxrwxrwx 1 root root 12 Apr  8 08:38 token -> ..data/token
 eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9...
 ```
 
-So basically pods authenticates itself with the kube-apiserver by using the [token](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#static-token-file) approach.
-```
-
-
-The default SA isn't attached to any clusterbinding/rolebindings. Which means that it can only authenticate with the kube-apiserver but can't do anything else. To show a successful authentication, we'll test the sa by running a kubectl command inside the pod, first we have to [install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-binary-using-native-package-management) inside the pod itself:
+So basically pods authenticates itself with the kube-apiserver by ServiceAccount objects which in turn uses the [token](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#static-token-file) authentication approach. Lets try using this ServiceAccount by running a kubectl command inside a pod, first we have to [install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-binary-using-native-package-management) inside the pod itself:
 
 
 ```bash
-cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+# kubectl exec pod-centos -it -- /bin/bash
+[root@pod-centos /]# cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
 baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
@@ -82,10 +78,11 @@ gpgcheck=1
 repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
-yum install -y kubectl
+
+[root@pod-centos /]# yum install -y kubectl
 
 
-[root@pod-centos serviceaccount]# kubectl get pods
+[root@pod-centos /]# kubectl get pods
 Error from server (Forbidden): pods is forbidden: User "system:serviceaccount:default:default" cannot list resource "pods" in API group "" in the namespace "default"
 ```
 
@@ -126,7 +123,50 @@ kube-worker2   NotReady   <none>   3d12h   v1.14.0
 
 # Create and Use Service Accounts
 
-However this isn't good practice because it means all pods that are using the 'default' SA will also end up with full priveleges. A better approach would be to create create custom service accounts attach the appropriate priveleges, then attach them to the pods that need those privileges.
+Giving this much access privileges to the 'default' service account is not a good idea, because it means all pods that are using the 'default' SA will also end up with full priveleges. A better approach would be to create create another Service Account along with the necessary privileges, and then attach ServiceAccount to your pods as appropriate.
+
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: basic-access
+```
+
+This creates:
+
+```
+# kubectl get sa basic-access
+NAME           SECRETS   AGE
+basic-access   1         81s
+
+# kubectl describe sa basic-access
+Name:                basic-access
+Namespace:           default
+Labels:              <none>
+Annotations:         kubectl.kubernetes.io/last-applied-configuration:
+                       {"apiVersion":"v1","kind":"ServiceAccount","metadata":{"annotations":{},"name":"basic-access","namespace":"default"}}
+Image pull secrets:  <none>
+Mountable secrets:   basic-access-token-nlrc4
+Tokens:              basic-access-token-nlrc4
+Events:              <none>
+```
+
+Also notice that a secret object is created for each ServiceAccount that you create:
+
+
+```bash
+# kubectl get secrets basic-access-token-nlrc4
+NAME                       TYPE                                  DATA   AGE
+basic-access-token-nlrc4   kubernetes.io/service-account-token   3      23m
+```
+
+This secret contains 3 bits of data, namespace, ca.crt, and token. These data translates to the 3 files that appear inside the pod's mountpoint.
+
+
+
+
+
 
 
 
