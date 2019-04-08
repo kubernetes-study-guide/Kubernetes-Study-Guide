@@ -10,5 +10,5 @@ roleRef:
   name: view
 subjects:
   - kind: ServiceAccount
-    apiGroup: ""
+    apiGroup: ""          # kubectl api-resources
     name: basic-access
