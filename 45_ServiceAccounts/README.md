@@ -215,9 +215,34 @@ spec:
 ...
 ```
 
+At this point if you exec inside this pod and try to run a kubectl command, then you'll successfully authenticate but will get a 'forbidden' message. That's because we haven't assigned any priveleges to our new new ServiceAccount, basic-access. Now let's say we want to give this SA account just view access to all resources, then we an use one of the out-of-the-box clusterroles that matches that requirement's it called 'view':
 
+```bash
+root@kube-master:~/Kubernetes-Study-Guide/45_ServiceAccounts# kubectl describe clusterroles view
+Name:         view
+Labels:       kubernetes.io/bootstrapping=rbac-defaults
+              rbac.authorization.k8s.io/aggregate-to-edit=true
+Annotations:  rbac.authorization.kubernetes.io/autoupdate: true
+PolicyRule:
+  Resources                                Non-Resource URLs  Resource Names  Verbs
+  ---------                                -----------------  --------------  -----
+  bindings                                 []                 []              [get list watch]
+  configmaps                               []                 []              [get list watch]
+  endpoints                                []                 []              [get list watch]
+  events                                   []                 []              [get list watch]
+  limitranges                              []                 []              [get list watch]
+  namespaces/status                        []                 []              [get list watch]
+  namespaces                               []                 []              [get list watch]
+  persistentvolumeclaims                   []                 []              [get list watch]
+  pods/log                                 []                 []              [get list watch]
+  pods/status                              []                 []              [get list watch]
+  pods                                     []                 []              [get list watch]
+  ...
+  ```
 
+So let's create a rolebinding to attach this clusterrole to our service account:
 
+```yaml
 
-
+```
 
