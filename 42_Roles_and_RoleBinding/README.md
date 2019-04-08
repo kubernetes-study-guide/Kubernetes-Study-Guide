@@ -14,10 +14,10 @@ metadata:
   name: role-read
   namespace: default    # This is mandatory, if omitted then 'default' is used
 rules:
-  - apiGroups: [""]
+  - apiGroups: [""]      # find this by running the 'kubectl api-resources' command
     resources: ["pods"]
     verbs: ["get", "watch", "list"]
-  - apiGroups: [""]
+  - apiGroups: [""]             # find this by running the 'kubectl api-resources' command
     resources: ["services"]
     verbs: ["get", "watch", "list"]
 ```
@@ -41,12 +41,12 @@ metadata:
   name: rb-read  
   namespace: default
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: rbac.authorization.k8s.io     # this is a fixed string
   kind: Role
   name: role-read
 subjects:
   - kind: Group
-    apiGroup: rbac.authorization.k8s.io
+    apiGroup: rbac.authorization.k8s.io    # this is a fixed string
     name: employee
 ```
 

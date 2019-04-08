@@ -30,10 +30,7 @@ default-token-z8ffc   kubernetes.io/service-account-token   3      3d1h
 
 ```
 
-
-You can attach a serviceaccount to your pod using the `pods.spec.serviceAccountName` setting. If this setting is omitted then the 'default' sa get's attached instead.
-
-The service account get attached to a pod in the form of a secret volume:
+You can attach a serviceaccount to your pod using the `pods.spec.serviceAccountName` setting. If this setting is omitted then the 'default' sa get's attached instead. Service accounts are attached to a pod in the form of a secrets volume:
 
 ```bash
 # kubectl edit pods pod-httpd
@@ -73,4 +70,4 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3Nlc
 
 So basically pods authenticates itself with the kube-apiserver by using the [token](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#static-token-file) approach. 
 
-The default service account is actually quite powerful. it's gives a pod control over everything at the namespace level. 
+

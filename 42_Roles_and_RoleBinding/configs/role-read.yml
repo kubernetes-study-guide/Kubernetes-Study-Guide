@@ -5,9 +5,9 @@ metadata:
   name: role-read
   namespace: default    # This is mandatory, if omitted then 'default' is used
 rules:
-  - apiGroups: [""] 
+  - apiGroups: [""]      # find this by running the 'kubectl api-resources' command
     resources: ["pods"]
     verbs: ["get", "watch", "list"]
-  - apiGroups: [""] 
+  - apiGroups: [""]             # find this by running the 'kubectl api-resources' command
     resources: ["services"]
     verbs: ["get", "watch", "list"]
