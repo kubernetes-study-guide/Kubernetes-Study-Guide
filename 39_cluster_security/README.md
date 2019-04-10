@@ -15,7 +15,7 @@ The api-server is the first point of contact when you interact with the kubeclus
 
 1. Authentication - i.e. provide valid credentials
 2. Authorization - i.e. credentials have adequate permssions for the cluster and namespace in question. 
-3. Admission Control - we'll cover this later. 
+3. Admission Control - This is a long list of plugins, a pods plugin, a services plugin,....etc. Each plugin in turn assesses whether it can process the api request. E.g. the pods plugin will process any api requests that makes any pod changes. Note these Admission Control plugins are all ignored if the api request is a view request, e.g. kubectl get xxx. In which case kube-apiserver just queries etcd. 
 
 
 ## Authentication

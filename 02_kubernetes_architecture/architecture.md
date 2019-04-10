@@ -1,6 +1,30 @@
 # architecture
 
-The Kubernetes software is not a single software, it is in fact a highly modular software that's made up of several independent components. You can install all these components on a single machine, which is the case with minikube. But for better redundancies, HA, scalability it is better to install the components a cluster of vms. 
+Let's say you want to run all your containers ona single docker server. Then you have two problems:
+
+- The more containers you run the more powerful vm you need. So will have to do vertical scaling. 
+- No HA. If docker server crashes then all containers die. 
+
+That's why a better approach is to run all your containers using kubernetes. There's actually lots of different way to install kubernetes. One of the simplest ways is to use minikube. 
+
+
+However minikube presents the same problem. 
+
+
+
+
+
+
+
+The Kubernetes software is not a single software, it is in fact a highly modular software that's made up of several independent components. Some of these components controls the actual internal runnings of kubernetes, whereas other components are responsible for running the actual containers. 
+
+. You can install all these components on a single vm. Which is the case of minikube. 
+
+
+However for Horizontal scaling and HA, it's best to run the ac
+
+
+You can install all these components on a single machine, which is the case with minikube. But for better redundancies, HA, scalability it is better to install the components a cluster of vms. 
 
 
 

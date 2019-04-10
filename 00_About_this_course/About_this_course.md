@@ -105,3 +105,10 @@ Note: don't worry if it deletes the kubernetes service, that will just get recre
 ## Disclaimer
 
 I have not taken my KCA exam yet. 
+
+
+## Reference
+
+[https://towardsdatascience.com/key-kubernetes-concepts-62939f4bc08e?sk=d46386ce56c00701dbf41aa8d308a14d](https://towardsdatascience.com/key-kubernetes-concepts-62939f4bc08e?sk=d46386ce56c00701dbf41aa8d308a14d)
+
+[https://github.com/ramitsurana/awesome-kubernetes](https://github.com/ramitsurana/awesome-kubernetes)
