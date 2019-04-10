@@ -11,7 +11,9 @@ That's why a better approach is to run all your containers using kubernetes. The
 However minikube presents the same problem. 
 
 
+Draw diagram based on this info:
 
+[https://kubernetes.io/docs/setup/independent/install-kubeadm/#check-required-ports](https://kubernetes.io/docs/setup/independent/install-kubeadm/#check-required-ports).
 
 
 
@@ -40,6 +42,13 @@ Along with those, you also have:
 - loadbalancer - used to loadbalance kube-api data traffic to master nodes. In particular is forwards traffic to the kube-apiserver component. the traffic may originate from:
   - local workstations - when someone uses the kubectl command to perform tasks
   - The kubelet or kube-proxy components that are running inside worker nodes. 
+
+
+### Terminology
+
+master nodes are also known be other names, controllers, ... For the rest of this study guide I'll use the phrase master nodes, worker nodes, and kube cluster. 
+
+
 
 
 
