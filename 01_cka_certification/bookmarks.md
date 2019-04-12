@@ -1,5 +1,8 @@
 # useful links
 
+
+[curriculum mapping](https://github.com/walidshaari/Kubernetes-Certified-Administrator)
+
 main exam homepage: [https://www.cncf.io/certification/cka/](https://www.cncf.io/certification/cka/)
 
 

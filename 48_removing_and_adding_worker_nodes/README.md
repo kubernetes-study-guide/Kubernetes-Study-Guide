@@ -108,6 +108,16 @@ node "kube-worker1" deleted
 ```
 
 
+## Adding new worker nodes
+
+You might find that you need to add new worker nodes because you're running low on capacity. If that's the case, just run the [print-to-join](https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-join/#token-based-discovery-with-ca-pinning) command on the master:
+
+```bash
+kubeadm token create --print-join-command
+kubeadm join 10.2.5.110:6443 --token 8qo20w.05p788jbh8z59cvm     --discovery-token-ca-cert-hash sha256:86dc21e3ca348f695d5aabe534a568ae3e3e68b5bc42073751663b6863855554
+```
+
+Then run this output on your new worker node. 
 
 
 

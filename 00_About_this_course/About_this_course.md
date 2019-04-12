@@ -43,7 +43,7 @@ This is an intermediate level course. You need to know the following:
 
 - We don't spend that much time going over concepts and theories. The hope is that you'll understand and learn kubernetes faster by seeing it in action. 
 - Kubernetes installation - only focusing no minikube on macs
-- docker, this won't cover a lot about docker
+- docker, this course won't cover a lot about docker
 - 
 
 ## Study guide
@@ -57,7 +57,9 @@ most of the demos are done on a minikube based kubecluster. But some demo requir
 
 # Course Structure 
 
-How to follow this course
+How to follow this course,
+
+This course is heavily focused helping you get familiar with the official kubernetes documentation, so that you know your way around it. Since you will have access to the docs during the exam. 
 
 
 ## Notations.
