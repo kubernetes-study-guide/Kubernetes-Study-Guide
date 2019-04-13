@@ -52,6 +52,7 @@ kubectl create secret generic mysql-secrets --from-literal MysqlRootPassword=pas
 
 kubectl edit services kubernetes # see example files
 
+kubectl create configmap...
 
 kubectl explain pod.spec.containers --recursive   # really good way to see a quick overall yaml structure. 
 ```
