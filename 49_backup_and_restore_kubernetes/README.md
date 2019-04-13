@@ -76,24 +76,56 @@ API version: 3.2
 
 Notice that this time we omitted '--' in '--version', that's because this version of the binary has slightly different command syntaxes. 
 
+## Using etcdctl
+
+Now that we have setup etcdctl, we can now start using it. Everytime you interact with etcdctl you need to authenticate using tls certificates, similar to the way do when using kubectl. Here are the commands:
+
+```bash
+$ etcdctl member list --cacert /etc/kubernetes/pki/etcd/server.crt --cert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/ca.key
+730157f1ac45b3cf, started, kube-master, https://10.2.5.110:2380, https://10.2.5.110:2379
+```
+
+Here we specified 3 certs. If this cluster is built with kubeadm then these certs are all under /etc/kubernetes/pki/etcd/. You always have to specify these 3 flags when using the etcdctl flag. 
 
 
 ## Create backups
 
+Now that we have setup the etcdctl, we can now create a backup by running:
 
 
+```bash
+$ etcdctl snapshot save snapshot.db --cacert /etc/kubernetes/pki/etcd/server.crt --cert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/ca.key
+Snapshot saved at snapshot.db
+
+$ ll -h snapshot.db
+-rw-r--r-- 1 root root 2.1M Apr 13 11:27 snapshot.db
+```
+
+You can then check if your snapshot.db is valid by running:
+
+```bash
+$ etcdctl --write-out=table snapshot status snapshot.db
++----------+----------+------------+------------+
+|   HASH   | REVISION | TOTAL KEYS | TOTAL SIZE |
++----------+----------+------------+------------+
+| 1c0d2b9f |    14323 |       1051 |     2.2 MB |
++----------+----------+------------+------------+
+```
+
+Now you need to store this snapshot.db and all the `/etc/kubernetes/pki/etcd` folder in a places, e.g. AWS S3 buckets.
 
 ## Restore backups
 
 
+covered later. 
 
 
 
 
 
+## Reference
+
+[https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/](https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/)
 
 
-
-
-
-wget https://github.com/coreos/etcd/releases/download/v3.2.0/etcd-v3.2.0-linux-amd64.tar.gz
+[performing etcd restore](https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/recovery.md)

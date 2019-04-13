@@ -230,7 +230,7 @@ However we can't rely on IP addresses because they are prone to changing, e.g. w
 
 ## DNS Service
 
-Minikube comes with a builtin internal dns service, kube-dns ([soon to be coredn](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/)).
+Kubernetes comes with a builtin internal dns service, kube-dns ([soon to be coredn](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/)).
 
 
 ```bash
@@ -248,22 +248,7 @@ search default.svc.cluster.local svc.cluster.local cluster.local
 options ndots:5
 ```
 
-So all we need to do is create dns entries in our internal dns server (kube-dns). That's done by creating service objects. There are different types of service objects, such as nodePort, and ClusterIP service. We'll cover them later. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+So all we need to do to use this dns service, is create dns entries in our internal dns server (kube-dns). That's done by creating service objects. There are different types of service objects, such as nodePort, and ClusterIP service. We'll cover them later. 
 
 
 
