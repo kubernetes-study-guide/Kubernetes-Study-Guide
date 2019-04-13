@@ -2,7 +2,7 @@
 
 [deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) are a special type of object referred to as 'controllers'. Controllers are objects that monitors+controls other objects.
 
-In the case of deployments, they control the state of other pod objects. Deployments are a bit like the equivalent of AWS EC2 Autoscaling Scaling Groups, Where instead of autoamatically scaling ec2 instances, in kubernetes you autoscale identical pods across one or more worker nodes.
+In the case of deployments, they control the state of Replicasets which is itself another type of controller object. Deployments are a bit like the equivalent of AWS EC2 Autoscaling Scaling Groups, Where instead of autoamatically scaling ec2 instances, it autoscales identical pods across one or more worker nodes.
 
 Deployments monitors the pods by continously performing pod healthchecks and ensures that the desired state (of number of healthy active pods) is maintained. That's why it's [kubernetes best practice](https://kubernetes.io/docs/concepts/configuration/overview/#naked-pods-vs-replicasets-deployments-and-jobs) to always create pods using a controller object, such as deployments.
 
@@ -85,8 +85,20 @@ LAST SEEN   TYPE     REASON              KIND         MESSAGE
 38m         Normal   ScalingReplicaSet   Deployment   Scaled up replica set dep-httpd-95466f584 to 2
 ```
 
+## Scaling Deployments
+
+You can scale deployments up/down by simply updating the `deployment.spec.replicas` value to the desired number of pods and then re-apply. In case you can't locate the deployment yaml descriptor, you can instead edit it:
 
 
+```bash
+kubectl edit deployments deploymentname
+```
+
+You can also do it imperatively using the scale subcommand:
+
+```bash
+kubectl scale deployment DeploymentName --replicas=3
+```
 
 ## Rolling updates to pods
 
@@ -164,6 +176,19 @@ Once I'm happy with my chosen revision I then perform the rollback:
 $ kubectl rollout undo deployment dep-httpd --to-revision=4
 deployment.extensions/dep-httpd rolled back
 ```
+
+## Imperitavely update image
+
+You can also change a pod/pod-templates image from the command line using the kubectl command:
+
+```bash
+kubectl set image deployment/dep-httpd cntr-httpd=httpd:latest
+```
+
+Note, the '/' is just an alternation notation you can use. Although in most of this course I've used space. 
+
+Here we specified which deployment to update, and which pod's container's image to update. 
+
 
 ## Deleting Deployments
 

@@ -60,6 +60,8 @@ None of the pods ended up on the tainted node, kube-worker1.
 **Answer**: You can add a 'toleration' setting in your pod yaml spec to override taint setting.  
 
 
+Note: Daemonsets ignore taints altogether. So tainted nodes end up with daemonset pods. Need to create a demo of this. 
+
 ## Toleration
 
 Toleration is setting you can apply to our pods using `pod.spec.tolerations`. Here's an example:

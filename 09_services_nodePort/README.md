@@ -82,14 +82,15 @@ options ndots:5
 <html><body><h1>It works!</h1></body></html>
 ```
 
-The 'default' actually refers to the namespace. If our pod-httpd pod was in different namespace, then our dns name needs to specify that namespace instead. In this example both pods are in the 'default' namespace, which means we can infact get our curl command to work with the dns shortname:
+The 'default' actually refers to the namespace. If our pod-httpd pod was in different namespace, then our dns name needs to specify that namespace instead. In this example both pods are in the 'default' namespace, which means we can in fact get our curl command to work with the dns shortname:
 
 ```bash
 [root@pod-centos /]# curl http://svc-nodeport-httpd:3050
 <html><body><h1>It works!</h1></body></html>
 ```
 
-These dns names can only be used from inside the kube cluster, since the dns service is inside the cluster. So to access the pods externally, e.g. from your macbook, then you use your minikube's ip address.
+
+So to access the pods externally, e.g. from your macbook, then you use your minikube's ip address.
 
 ```bash
 $ minikube ip

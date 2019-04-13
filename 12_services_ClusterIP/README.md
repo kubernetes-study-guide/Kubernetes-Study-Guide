@@ -126,7 +126,45 @@ The pod, dep-httpd-597fc5f696-qw4pf is displaying this page.
 
 This time we managed to curl to our pods using a dns name rather than ip address. Also we didn't need to use an non-standard port either (although that option is available for use, if we need it). 
 
-So now we no longer need to worry about a pods IP address changing. Also we don't need to worry about how one pod can work out the ip address of another pod that's it trying to reach. We can now just use the static dns name instead for pod-to-pod communication. However how will our pod know what IP address to use, if it's a non-standard ip address? Luckily info for ALL service objects are available as environment variables from inside every container!:
+So now we no longer need to worry about a pods IP address changing. Also we don't need to worry about how one pod can work out the ip address of another pod that's it trying to reach. We can now just use the static dns name instead for pod-to-pod communication. 
+
+
+## DNS Entry structure
+
+We didn't explain how we came up with the url name. Here's the dns name breakdown:
+
+```text
+http://{service.metadata.name}.{target.pod's.namespace.name}.svc.cluster.local
+```
+
+## Kube-DNS/CoreDNS names usage
+These dns (irrespective of service type, nodePort, ClusterIP) names can only be used from pods that's inside the kube cluster, since the dns service is internal to the kube cluster. So you can't use these dns entries at master/worker node level:
+
+```bash
+root@kube-master:~# kubectl get service
+NAME                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+kubernetes            ClusterIP   10.96.0.1       <none>        443/TCP   10m
+svc-clusterip-httpd   ClusterIP   10.111.77.164   <none>        80/TCP    9m12s
+
+root@kube-master:~# curl http://svc-clusterip-httpd
+<gives error message>
+
+root@kube-worker1:~# curl http://svc-clusterip-httpd
+<gives error message>
+```
+
+So if you want to reach these services directly from the worker/master node, then you need to use the service's ip address. 
+
+```bash
+root@kube-master:~# curl http://10.111.77.164
+You've hit - dep-httpd-fdcdd697f-z459b
+root@kube-master:~# curl http://10.111.77.164
+You've hit - dep-httpd-fdcdd697f-42nfd
+```
+
+## Non-standard port numbers
+
+However how will our pod know what port to use, if it's a non-standard port number? Luckily info for ALL service objects are available as environment variables from inside every container!:
 
 ```bash
 $ kubectl get svc
@@ -167,13 +205,6 @@ The pod, dep-httpd-597fc5f696-qw4pf is displaying this page.
 
 
 
-## DNS Entry structure
-
-We didn't explain how we came up with the url name. Here's the dns name breakdown:
-
-```text
-http://{service.metadata.name}.{target.pod's.namespace.name}.svc.cluster.local
-```
 
 ### Some background info
 
@@ -215,6 +246,9 @@ Address: 10.99.76.207
 Just remember, if our httpd pods were in a different namespace to our centos pods, then we would have needed to replace 'default' with the correct namespace name.
 
 
+## Modifying the /etc/resolv.conf file
+
+A pod's dns configuration is stored in `/etc/resolv.conf`. Kubernetes autogenerate this file, however you can [customise/override a pods dns configurations](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/) which results in changing `/etc/resolv.conf` file's content. That's done using the `pod.spec.dnsPolicy` and `pod.spec.dnsConfig` settings. 
 
 ## Making Pods Externally accessible
 

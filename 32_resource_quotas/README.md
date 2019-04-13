@@ -1,20 +1,31 @@
 # Quotas
 
-Each worker node has a limited amount of cpu+ram available:
+Each worker node has a limited amount of cpu+ram available, you can get info aobut how much cpu+ram a worker node has, and how much of that is allocatable, and how much of that is used by pods so far:
 
 ```bash
+$ kubectl describe nodes kube-worker1
+...
 Capacity:
  cpu:                2
- ephemeral-storage:  16888216Ki
+ ephemeral-storage:  64194404Ki
  hugepages-2Mi:      0
- memory:             2038624Ki
+ memory:             1015840Ki
  pods:               110
 Allocatable:
  cpu:                2
- ephemeral-storage:  15564179840
+ ephemeral-storage:  59161562629
  hugepages-2Mi:      0
- memory:             1936224Ki
+ memory:             913440Ki
  pods:               110
+...
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests    Limits
+  --------           --------    ------
+  cpu                250m (12%)  0 (0%)
+  memory             0 (0%)      0 (0%)
+  ephemeral-storage  0 (0%)      0 (0%)
+...
 ```
 
 So to make optimal use of these resources, we have to set quotas. 
@@ -314,7 +325,6 @@ $ kubectl describe pod pod-httpd
       memory:     50Mi
 ...
 ```
-
 
 
 
