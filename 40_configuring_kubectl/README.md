@@ -44,7 +44,7 @@ So let's start by creating the cluster:
 
 
 ```bash
-$ kubectl config set-cluster minikube-cluster --server=https://192.168.99.110:8443 --certificate-authority=/Users/schowdhury/.minikube/ca.crt
+$ kubectl config set-cluster minikube-cluster --server=https://192.168.99.110:8443 --certificate-authority=/Users/schowdhury/.minikube/ca.crt  # --embed-certs=true
 Cluster "minikube-cluster" set.
 ```
 
@@ -64,7 +64,7 @@ preferences: {}
 users: []
 ```
 
-If we retry:
+Notice that my `~/.kube/config` file now references the ca.crt. So our config file now dependes on this ca.crt file to be present at this location for this config file to work properly. If you want to avoid having these dependencies, then you can use the '--embed-certs=true' flag. This will end copy and pasting the ca.crts content into the config file in base64 encoded form. If we now retry:
 
 ```bash
 $ kubectl get nodes

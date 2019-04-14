@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-clusterip-httpd   # this is the service endpoint that has a dns entry that we can curl for. 
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80         # This svc will listen on this port, for traffic coming from other pods
+      targetPort: 80   # This svc will forward traffic to this port, for matching pods
+  selector:
+    component: httpd_webserver

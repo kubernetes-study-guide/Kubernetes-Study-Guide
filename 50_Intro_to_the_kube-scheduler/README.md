@@ -88,6 +88,11 @@ If pod has tolerations to override the taints.
 
 ### 7. Node Anti-Affinity
 
+### 8. HostPorts
+
+This is the `pods.spec.containers.ports.hostPort`. Basically a pod listens on a particular port number at the worker node level. Covered later
+
+
 
 ## Resulting matches
 

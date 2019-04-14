@@ -6,15 +6,14 @@ Earlier we saw how ClusterIP service objects are used:
 - loadbalancing a cluster of pods
 
 
-However what if you want your pods to access an external server which is accessible by an external IP address? You can feed in the external IP addreess into your pods via environment variables, but if the ip address then changes? Luckily you can address this problem using ClusterIP service objects again, but this time you omit specifying a selector section:
+However what if you want your pods to access an external server which is accessible by an external IP address? You can feed in the external IP addreess into your pods via environment variables, but what if the IP address then changes? Luckily you can solve this problem using ClusterIP service objects again, but this time you omit specifying a selector section:
 
 ```yaml
 $ kubectl describe service my-external-service | grep -i endpoint
-
 ```
 
 
-At ths stage, this service has no idea where to forward any traffic to:
+At this stage, this service has no idea where to forward any traffic to:
 
 
 ```bash
