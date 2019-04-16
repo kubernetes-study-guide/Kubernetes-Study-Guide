@@ -3,8 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dep-caddy
-  labels:
-    component: caddy_webserver
+  namespace: codingbee
 spec:
   replicas: 2 
   selector:
@@ -17,7 +16,6 @@ spec:
     spec: 
       containers:
         - name: cntr-caddy
-          # image: nginx:latest
           image: abiosoft/caddy 
           ports:
             - containerPort: 2015       # this particular image listens on this port by default. 

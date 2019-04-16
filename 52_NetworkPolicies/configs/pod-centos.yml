@@ -13,6 +13,9 @@ spec:
         - |
           while true ; do
             date
+            echo "Attempting connection to httpd:"
             curl --silent --show-error --connect-timeout 10 http://svc-clusterip-httpd.default.svc.cluster.local 2>&1
+            echo "Attempting connection to caddy:"
+            curl --silent --show-error --connect-timeout 10 http://svc-clusterip-caddy.codingbee.svc.cluster.local 2>&1
             sleep 10
           done
