@@ -22,4 +22,4 @@ spec:
           project: codingbee
     - podSelector:
         matchLabels:
-          app: healthchecker
+          app: curl_client 
