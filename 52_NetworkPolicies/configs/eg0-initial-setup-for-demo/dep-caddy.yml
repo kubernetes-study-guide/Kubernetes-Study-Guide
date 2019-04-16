@@ -22,5 +22,6 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
+              apk add curl
               /bin/echo "You've hit caddy - $HOSTNAME" > /srv/index.html
               /bin/parent caddy --conf /etc/Caddyfile --log stdout --agree=$ACME_AGREE 

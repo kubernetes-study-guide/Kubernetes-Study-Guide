@@ -15,7 +15,21 @@ However even with this I couldn't get networkpolicies to work so I have used the
 
 
 
-For this demo we'll start by creating the following pods service:
+We'll start by creating a dummy environment for this demo:
+
+```bash
+$ kubectl apply -f configs/eg0-initial-setup-for-demo/
+deployment.apps/dep-httpd created
+namespace/codingbee created
+pod/pod-centos created
+service/svc-clusterip-caddy created
+service/svc-clusterip-httpd created
+deployment.apps/dep-caddy created
+```
+
+You might get a 'namspace not found' error when running this command. That's because of a race condition, it's trying to create pod in a namespace that's still in the process of being created. If so then run the above command again. 
+
+
 
 
 ```bash
