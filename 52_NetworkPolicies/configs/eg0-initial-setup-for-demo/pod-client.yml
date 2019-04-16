@@ -12,6 +12,7 @@ spec:
       args:
         - |
           while true ; do
+            echo "#############################################################"
             date
             echo "Attempting connection to httpd:"
             curl --silent --show-error --connect-timeout 10 http://svc-clusterip-httpd.default.svc.cluster.local 2>&1

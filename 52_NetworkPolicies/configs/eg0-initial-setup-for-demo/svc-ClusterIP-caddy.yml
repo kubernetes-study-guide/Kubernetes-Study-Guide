@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: svc-clusterip-caddy
-  namespace: codingbee
+  namespace: codingbee         # notice that you have to specify the namespace to get the correct dns entry setup
 spec:
   type: ClusterIP 
   ports:
