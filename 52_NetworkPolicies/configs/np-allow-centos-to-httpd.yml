@@ -7,19 +7,19 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      component: httpd_webserver
+      component: httpd_webserver    # This np gets applied to all pods with this label. 
   policyTypes:
   - Ingress
   - Egress
   ingress:
   - from:
-    - ipBlock:
+    - ipBlock:               
         cidr: 172.17.0.0/16
         except:
         - 172.17.1.0/24
     - namespaceSelector:
         matchLabels:
-          project: myproject
+          project: codingbee
     - podSelector:
         matchLabels:
           app: healthchecker

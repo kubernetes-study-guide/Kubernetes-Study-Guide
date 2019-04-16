@@ -4,13 +4,14 @@ So far we have seen that every pod is assigned it's own IP address and all the p
 
 So to fix this we need to set up firewalls in our kubernetes networking, and that's done by creating NetworkPolicy objects. NetworkPolicies objects are used for restricting a pod's inbound (aka ingress) and outbound (aka egress) network traffic.
 
+
 Let's show how this works by going through a demo. In order to run this demo in minikube, you need to create a new minikube cluster with the [minikube cni flags](https://kubernetes.io/docs/setup/minikube/#containerd):
 
 ```bash
 minikube start --network-plugin=cni --enable-default-cni
 ```
 
-
+However even with this I couldn't get networkpolicies to work so I have used the vagrant-kubeadm environment. 
 
 
 
