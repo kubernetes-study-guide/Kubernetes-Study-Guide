@@ -154,12 +154,118 @@ curl: (28) Connection timed out after 10000 milliseconds
 ```
 
 
+## PodSelector demo
 
 
+Now let's create the following:
 
 
+```yaml
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: client-to-httpd 
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      component: httpd_webserver    # This np gets applied to all pods with this label. 
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - ipBlock:               
+        cidr: 172.17.0.0/16
+        except:
+        - 172.17.1.0/24
+    - podSelector:
+        matchLabels:
+          app: curl_client 
+
+```
+
+The 'ipBlock' is another approach, but this bit doesn't get used for anything here. But it's here just to show other possibilities. 
+
+We now have a new NetworkPolicy:
+
+```bash
+# kubectl get networkpolicies
+NAME                   POD-SELECTOR                AGE
+block-all-by-default   <none>                      21m
+client-to-httpd        component=httpd_webserver   2m39s
+```
+
+Here we see that the this rule is this time attached to specif pod. 
+After which we end up with:
+
+```bash
+kubectl logs pod-curl-client -c cntr-centos
+...
+#############################################################
+Tue Apr 16 21:12:34 UTC 2019
+Attempting connection to httpd:
+You've hit httpd - dep-httpd-6f45c8fd4c-jmv5p
+Attempting connection to caddy:
+You've hit caddy - dep-caddy-5b6ff8d5fb-dbw68
+#############################################################
+Tue Apr 16 21:12:44 UTC 2019
+Attempting connection to httpd:
+You've hit httpd - dep-httpd-6f45c8fd4c-jmv5p
+Attempting connection to caddy:
+You've hit caddy - dep-caddy-5b6ff8d5fb-tjgp4
+```
 
 
+Now access is working, that's becuase access permit rules override deny rules. However other pods, such as pods within the same deployment of pods from other namespaces still don't have access:
+
+
+```bash
+$ kubectl exec dep-httpd-6f45c8fd4c-cf4vw -it -- bash
+root@dep-httpd-6f45c8fd4c-cf4vw:/usr/local/apache2# curl --silent --show-error --connect-timeout 5 http://svc-clusterip-httpd.default.svc.cluster.local
+curl: (28) Resolving timed out after 5571 milliseconds
+
+
+$ kubectl exec dep-caddy-5b6ff8d5fb-dbw68 -it --namespace=codingbee -- sh
+/srv # curl --silent --show-error --connect-timeout 5 http://svc-clusterip-httpd.default.svc.cluster.local
+curl: (28) Connection timed out after 5001 milliseconds
+/srv #
+```
+
+## Permit access using
+
+Her
+
+
+```yaml
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: give-centos-access-to-httpd 
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      component: httpd_webserver    # This np gets applied to all pods with this label. 
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - ipBlock:               
+        cidr: 172.17.0.0/16
+        except:
+        - 172.17.1.0/24
+    - namespaceSelector:
+        matchLabels:
+          project: codingbee
+    - podSelector:
+        matchLabels:
+          app: curl_client 
+
+```
 
 
 
