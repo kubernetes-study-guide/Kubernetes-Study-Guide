@@ -21,5 +21,7 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - |
+              apt-get update
+              apt-get install -y curl
               /bin/echo "You've hit httpd - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
               /usr/local/bin/httpd-foreground

@@ -5,4 +5,4 @@ metadata:
   name: block-all-by-default
   namespace: default
 spec:
-  podSelector: {}     # This empty map means, apply this network policy to all pods in the given namespace
+  podSelector: {}     # This empty map acts as a asteril-lide wildcard, apply this network policy to all pods in the given namespace

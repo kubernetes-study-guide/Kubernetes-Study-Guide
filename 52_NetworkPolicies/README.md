@@ -14,7 +14,7 @@ minikube start --network-plugin=cni --enable-default-cni
 However even with this I couldn't get networkpolicies to work so I have used the vagrant-kubeadm environment. 
 
 
-
+## Create dummy test environment (eg0-initial-setup-for-demo)
 We'll start by creating a dummy environment for this demo:
 
 ```bash
@@ -29,39 +29,81 @@ deployment.apps/dep-caddy created
 
 You might get a 'namspace not found' error when running this command. That's because of a race condition, it's trying to create pod in a namespace that's still in the process of being created. If so then run the above command again. 
 
-
+After which, you should find the following pods and services:
 
 
 ```bash
-$ kubectl apply -f configs/svc-ClusterIP-httpd.yml
-service/svc-clusterip-httpd created
-$ kubectl apply -f configs/dep-httpd.yml
-deployment.apps/dep-httpd created
-$ kubectl apply -f configs/pod-centos.yml
-pod/pod-centos created
+$ # kubectl get pods -o wide --show-labels
+NAME                         READY   STATUS    RESTARTS   AGE     IP             NODE           NOMINATED NODE   READINESS GATES   LABELS
+dep-httpd-6f45c8fd4c-cf4vw   1/1     Running   0          8m4s    192.168.1.25   kube-worker1   <none>           <none>            component=httpd_webserver,pod-template-hash=6f45c8fd4c
+dep-httpd-6f45c8fd4c-dmrtk   1/1     Running   0          8m4s    192.168.1.23   kube-worker1   <none>           <none>            component=httpd_webserver,pod-template-hash=6f45c8fd4c
+dep-httpd-6f45c8fd4c-jmv5p   1/1     Running   0          8m4s    192.168.1.24   kube-worker1   <none>           <none>            component=httpd_webserver,pod-template-hash=6f45c8fd4c
+pod-curl-client              1/1     Running   0          2m22s   192.168.1.29   kube-worker1   <none>           <none>            app=curl_client
 
-$ kubectl get pods -o wide --show-labels
-NAME                        READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES   LABELS
-dep-httpd-fdcdd697f-4lcdj   1/1     Running   0          52s   172.17.0.8    minikube   <none>           <none>            component=httpd_webserver,pod-template-hash=fdcdd697f
-dep-httpd-fdcdd697f-55rkb   1/1     Running   0          52s   172.17.0.7    minikube   <none>           <none>            component=httpd_webserver,pod-template-hash=fdcdd697f
-dep-httpd-fdcdd697f-dv9bz   1/1     Running   0          52s   172.17.0.9    minikube   <none>           <none>            component=httpd_webserver,pod-template-hash=fdcdd697f
-pod-centos                  1/1     Running   0          43s   172.17.0.10   minikube   <none>           <none>            app=healthchecker
-
+$ kubectl get service -o wide
+NAME                  TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE     SELECTOR
+kubernetes            ClusterIP   10.96.0.1     <none>        443/TCP   14m     <none>
+svc-clusterip-httpd   ClusterIP   10.96.186.3   <none>        80/TCP    9m25s   component=httpd_webserver
 ```
 
-After which we can see that our pod-centos pod is successfully hitting the httpd pods:
+We also ended creating the following namespace alongside the following pods (via deployments) and services: 
 
 ```bash
-$ kubectl logs pod-centos
-You've hit - dep-httpd-fdcdd697f-55rkb
-You've hit - dep-httpd-fdcdd697f-dv9bz
-You've hit - dep-httpd-fdcdd697f-4lcdj
-You've hit - dep-httpd-fdcdd697f-55rkb
-You've hit - dep-httpd-fdcdd697f-4lcdj
-You've hit - dep-httpd-fdcdd697f-55rkb
+# kubectl get namespaces codingbee
+NAME        STATUS   AGE
+codingbee   Active   95m
+# kubectl get service --namespace=codingbee
+NAME                  TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+svc-clusterip-caddy   ClusterIP   10.101.67.30   <none>        80/TCP    20m
+# kubectl get pods --namespace=codingbee
+NAME                         READY   STATUS    RESTARTS   AGE
+dep-caddy-5b6ff8d5fb-dbw68   1/1     Running   0          21m
+dep-caddy-5b6ff8d5fb-tjgp4   1/1     Running   0          21m
 ```
 
-At the moment, its successfully hitting all the pods in this deployment. 
+The pod-curl-client is set up to perioding ping both the caddy and httpd services:
+
+
+```bash
+$ kubectl logs pod-curl-client
+#############################################################
+Tue Apr 16 20:12:25 UTC 2019
+Attempting connection to httpd:
+You've hit httpd - dep-httpd-6f45c8fd4c-jmv5p
+Attempting connection to caddy:
+You've hit caddy - dep-caddy-5b6ff8d5fb-dbw68
+#############################################################
+Tue Apr 16 20:12:35 UTC 2019
+Attempting connection to httpd:
+You've hit httpd - dep-httpd-6f45c8fd4c-dmrtk
+Attempting connection to caddy:
+You've hit caddy - dep-caddy-5b6ff8d5fb-tjgp4
+#############################################################
+Tue Apr 16 20:12:45 UTC 2019
+Attempting connection to httpd:
+You've hit httpd - dep-httpd-6f45c8fd4c-dmrtk
+Attempting connection to caddy:
+You've hit caddy - dep-caddy-5b6ff8d5fb-dbw68
+...
+```
+
+At the moment, its successfully hitting all the in both httpd and caddy deployments. Also we can curl from caddy->httpd, and vice versa:
+
+```bash
+$ kubectl exec dep-httpd-6f45c8fd4c-cf4vw -it -- bash
+root@dep-httpd-6f45c8fd4c-cf4vw:/usr/local/apache2# curl http://svc-clusterip-caddy.codingbee.svc.cluster.local
+You've hit caddy - dep-caddy-5b6ff8d5fb-tjgp4
+
+$ kubectl exec dep-caddy-5b6ff8d5fb-dbw68 -it --namespace=codingbee -- sh
+/srv # curl http://svc-clusterip-httpd.default.svc.cluster.local
+You've hit httpd - dep-httpd-6f45c8fd4c-dmrtk
+```
+
+We performed the test using the dns entries, but it would have also worked if we tried connecting using a pod's IP address. So essentially all pods can reach each other. Note, none of the pods can't initiate a connection to the pod-curl-client pod, only because pod-curl-client doesn't contain a service that's listening on a port. 
+
+
+
+## Block all traffic
 
 Now we can block pod-centos's access to the httpd pods by creating:
 
@@ -79,10 +121,47 @@ spec:
 This creates:
 
 ```bash
-$ kubectl get networkpolicies
-NAME              POD-SELECTOR   AGE
-deny-by-default   <none>         2m50s
+# kubectl get networkpolicies
+NAME                   POD-SELECTOR   AGE
+block-all-by-default   <none>         23s
 ```
+
+This ends up blocking all pod-to-pod traffic in the default namespace. Here's what the latest log entries now look like:
+
+```bash
+$ kubectl logs pod-curl-client
+...
+#############################################################
+Tue Apr 16 20:55:12 UTC 2019
+Attempting connection to httpd:
+curl: (28) Connection timed out after 10002 milliseconds
+Attempting connection to caddy:
+You've hit caddy - dep-caddy-5b6ff8d5fb-dbw68
+#############################################################
+Tue Apr 16 20:55:32 UTC 2019
+Attempting connection to httpd:
+curl: (28) Connection timed out after 10033 milliseconds
+Attempting connection to caddy:
+You've hit caddy - dep-caddy-5b6ff8d5fb-tjgp4
+```
+
+As you can see, our client pod can still reach the caddy pods because the networkpolicy is only applied for inbound traffic for pods in the default namespace. Also the httpd pods can no longer reach other pods in it's own deployment:
+
+```bash
+$ kubectl exec dep-httpd-6f45c8fd4c-cf4vw -it -- bash
+root@dep-httpd-6f45c8fd4c-cf4vw:/usr/local/apache2# curl --silent --show-error --connect-timeout 10 http://svc-clusterip-httpd.default.svc.cluster.local
+curl: (28) Connection timed out after 10000 milliseconds
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
