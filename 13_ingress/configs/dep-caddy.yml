@@ -3,8 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dep-caddy
-  labels:
-    component: caddy_webserver
 spec:
   replicas: 2 
   selector:
@@ -24,5 +22,5 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              /bin/echo "You've hit caddy pod, $HOSTNAME" > /srv/index.html
+              /bin/echo "You've hit caddy - $HOSTNAME" > /srv/index.html
               /bin/parent caddy --conf /etc/Caddyfile --log stdout --agree=$ACME_AGREE 

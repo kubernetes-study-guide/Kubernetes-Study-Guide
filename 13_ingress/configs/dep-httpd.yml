@@ -3,8 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dep-httpd
-  labels:
-    component: apache_webserver
 spec:
   replicas: 2 
   selector:
@@ -23,5 +21,5 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - |
-              /bin/echo "You've hit httpd pod, $HOSTNAME" > /usr/local/apache2/htdocs/index.html
+              /bin/echo "You've hit httpd, $HOSTNAME" > /usr/local/apache2/htdocs/index.html
               /usr/local/bin/httpd-foreground  
