@@ -13,6 +13,6 @@ spec:
         - |
           while true ; do
             date
-            curl -s http://svc-clusterip-httpd.default.svc.cluster.local
+            curl --connect-timeout 10 http://svc-clusterip-httpd.default.svc.cluster.local
             sleep 10
           done
