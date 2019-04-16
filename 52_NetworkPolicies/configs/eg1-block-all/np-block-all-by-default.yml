@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: deny-by-default
+  name: block-all-by-default
   namespace: default
 spec:
   podSelector: {}     # This empty map means, apply this network policy to all pods in the given namespace

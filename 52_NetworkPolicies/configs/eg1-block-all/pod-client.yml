@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: pod-centos
   labels:
-    app: healthchecker
+    app: curl_client 
 spec:
   containers:
     - name: cntr-centos
