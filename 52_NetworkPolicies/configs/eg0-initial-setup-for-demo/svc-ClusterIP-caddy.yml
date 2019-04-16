@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: svc-clusterip-caddy
   namespace: codingbee
- spec:
+spec:
   type: ClusterIP 
   ports:
     - port: 80
