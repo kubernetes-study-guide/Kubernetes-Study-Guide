@@ -292,6 +292,34 @@ $ kubectl exec dep-caddy-5b6ff8d5fb-dbw68 -it --namespace=codingbee -- sh
 You've hit httpd - dep-httpd-6f45c8fd4c-cf4vw
 ```
 
+## Egress demo
+
+Now let's do an egress demo. At the moment our pod-curl-client can reach the caddy pod, via it's service:
+
+```bash
+$ kubectl get svc -o wide --namespace=codingbee
+NAME                  TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE   SELECTOR
+svc-clusterip-caddy   ClusterIP   10.101.67.30   <none>        80/TCP    16h   component=caddy_pod
+
+$ kubectl get pods -o wide --namespace=codingbee
+NAME                         READY   STATUS    RESTARTS   AGE   IP             NODE           NOMINATED NODE   READINESS GATES
+dep-caddy-5b6ff8d5fb-dbw68   1/1     Running   0          16h   192.168.1.27   kube-worker1   <none>           <none>
+dep-caddy-5b6ff8d5fb-tjgp4   1/1     Running   0          16h   192.168.1.28   kube-worker1   <none>           <none>
+
+$ kubectl exec pod-curl-client -it -- bash
+
+[root@pod-curl-client /]$ curl --silent --show-error --connect-timeout 1 http://svc-clusterip-caddy.codingbee.svc.cluster.local
+You've hit caddy - dep-caddy-5b6ff8d5fb-dbw68
+
+[root@pod-curl-client /]$ curl --silent --show-error --connect-timeout 1 http://192.168.1.27:2015
+You've hit caddy - dep-caddy-5b6ff8d5fb-dbw68
+```
+
+When using the ip, we had to specify the port, 2015, since that's the port the caddy pods are listenining to. Now let's say we want the caddy pods to continue to accept traffic from port 2015, but we want to prevent port 2015 outbound traffic from pod-curl-client. In that case we can create the following netpool:
+
+```yaml
+
+```
 
 
 
@@ -299,3 +327,5 @@ You've hit httpd - dep-httpd-6f45c8fd4c-cf4vw
 ## References
 
 [https://kubernetes.io/docs/concepts/services-networking/network-policies/](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+
+[https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/](https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/)
