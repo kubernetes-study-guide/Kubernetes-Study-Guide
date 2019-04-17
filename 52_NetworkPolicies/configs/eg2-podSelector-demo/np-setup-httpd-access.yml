@@ -13,9 +13,6 @@ spec:
     - Egress
   ingress:
     - from:
-      ports:         # notice here we can apply port level restriction as well
-        - protocol: TCP
-          port: 80
       - ipBlock:               
           cidr: 172.17.0.0/16
           except:
@@ -23,3 +20,6 @@ spec:
       - podSelector:                  # Here we're saying that any pods with this label is permitted access. 
           matchLabels:
             app: curl_client 
+      ports:         # notice here we can apply port level restriction as well
+        - protocol: TCP
+          port: 80
