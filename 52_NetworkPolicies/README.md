@@ -218,7 +218,7 @@ You've hit caddy - dep-caddy-5b6ff8d5fb-tjgp4
 ```
 
 
-Now access is working, that's becuase access permit rules override deny rules. However other pods, such as pods within the same deployment of pods from other namespaces still don't have access:
+Now access is working, that's becuase access rules overrides deny rules. However other pods in the cluster don't have access:
 
 
 ```bash
@@ -233,9 +233,9 @@ curl: (28) Connection timed out after 5001 milliseconds
 /srv #
 ```
 
-## Permit access using
+## Permit access using namespaceSelector
 
-Her
+Here's an example of giving a whole namespace access to your pods:
 
 
 ```yaml
@@ -248,7 +248,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      component: httpd_webserver    # This np gets applied to all pods with this label. 
+      component: httpd_webserver  
   policyTypes:
   - Ingress
   - Egress
@@ -258,14 +258,15 @@ spec:
         cidr: 172.17.0.0/16
         except:
         - 172.17.1.0/24
-    - namespaceSelector:
+    - namespaceSelector:   # here we grant access at the namespace level
         matchLabels:
           project: codingbee
     - podSelector:
         matchLabels:
           app: curl_client 
-
 ```
+
+This results in editing our existing networkpolicy to allow grant all pods in the 'codingbee' namesapce.
 
 
 

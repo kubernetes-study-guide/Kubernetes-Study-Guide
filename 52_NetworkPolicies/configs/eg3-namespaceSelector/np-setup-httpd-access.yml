@@ -2,12 +2,12 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: client-to-httpd 
+  name: give-centos-access-to-httpd 
   namespace: default
 spec:
   podSelector:
     matchLabels:
-      component: httpd_webserver    # This np gets applied to all pods with this label. 
+      component: httpd_webserver  
   policyTypes:
   - Ingress
   - Egress
@@ -17,6 +17,9 @@ spec:
         cidr: 172.17.0.0/16
         except:
         - 172.17.1.0/24
+    - namespaceSelector:   # here we grant access at the namespace level
+        matchLabels:
+          project: codingbee
     - podSelector:
         matchLabels:
           app: curl_client 

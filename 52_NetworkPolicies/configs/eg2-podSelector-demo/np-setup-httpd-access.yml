@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: give-centos-access-to-httpd 
+  name: client-to-httpd 
   namespace: default
 spec:
   podSelector:
@@ -17,9 +17,6 @@ spec:
         cidr: 172.17.0.0/16
         except:
         - 172.17.1.0/24
-    - namespaceSelector:
-        matchLabels:
-          project: codingbee
-    - podSelector:
+    - podSelector:                  # Here we're saying that any pods with this label is permitted access. 
         matchLabels:
           app: curl_client 
