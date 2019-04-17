@@ -165,7 +165,7 @@ Now let's create the following:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: client-to-httpd 
+  name: access-to-httpd 
   namespace: default
 spec:
   podSelector:
@@ -180,10 +180,9 @@ spec:
         cidr: 172.17.0.0/16
         except:
         - 172.17.1.0/24
-    - podSelector:
+    - podSelector:                  # Here we're saying that any pods with this label is permitted access. 
         matchLabels:
           app: curl_client 
-
 ```
 
 The 'ipBlock' is another approach, but this bit doesn't get used for anything here. But it's here just to show other possibilities. 

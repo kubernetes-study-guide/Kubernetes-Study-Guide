@@ -59,6 +59,7 @@ configmaps                        cm                                          tr
 endpoints                         ep                                          true         Endpoints
 ...
 ```
+Also notice that this table species which objects are namespace level objects, and which are cluster-wide
 
 This replicaset in turn creates the following pods:
 
