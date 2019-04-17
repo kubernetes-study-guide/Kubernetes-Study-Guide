@@ -301,10 +301,10 @@ $ kubectl get svc -o wide --namespace=codingbee
 NAME                  TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE   SELECTOR
 svc-clusterip-caddy   ClusterIP   10.101.67.30   <none>        80/TCP    16h   component=caddy_pod
 
-$ kubectl get pods -o wide --namespace=codingbee
-NAME                         READY   STATUS    RESTARTS   AGE   IP             NODE           NOMINATED NODE   READINESS GATES
-dep-caddy-5b6ff8d5fb-dbw68   1/1     Running   0          16h   192.168.1.27   kube-worker1   <none>           <none>
-dep-caddy-5b6ff8d5fb-tjgp4   1/1     Running   0          16h   192.168.1.28   kube-worker1   <none>           <none>
+$ kubectl get pods -o wide --namespace=codingbee --show-labels
+NAME                         READY   STATUS    RESTARTS   AGE   IP             NODE           NOMINATED NODE   READINESS GATES   LABELS
+dep-caddy-5b6ff8d5fb-dbw68   1/1     Running   0          16h   192.168.1.27   kube-worker1   <none>           <none>            component=caddy_pod,pod-template-hash=5b6ff8d5fb
+dep-caddy-5b6ff8d5fb-tjgp4   1/1     Running   0          16h   192.168.1.28   kube-worker1   <none>           <none>            component=caddy_pod,pod-template-hash=5b6ff8d5fb
 
 $ kubectl exec pod-curl-client -it -- bash
 
@@ -315,7 +315,7 @@ You've hit caddy - dep-caddy-5b6ff8d5fb-dbw68
 You've hit caddy - dep-caddy-5b6ff8d5fb-dbw68
 ```
 
-When using the ip, we had to specify the port, 2015, since that's the port the caddy pods are listenining to. Now let's say we want the caddy pods to continue to accept traffic from port 2015, but we want to prevent port 2015 outbound traffic from pod-curl-client. In that case we can create the following netpool:
+When using the ip, we had to specify the port, 2015, since that's the port the caddy pods are listening to. Now let's say we want the caddy pods to continue to accept traffic from port 2015, but we want to prevent all port 2015 outbound traffic from the pod-curl-client pod. In that case we can create the following netpool:
 
 ```yaml
 

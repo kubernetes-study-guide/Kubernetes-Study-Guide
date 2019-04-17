@@ -17,4 +17,4 @@ spec:
             component: caddy_pod
       ports:
         - protocol: TCP
-          port: 2015
+          port: 80
