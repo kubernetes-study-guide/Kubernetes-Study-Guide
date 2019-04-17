@@ -190,10 +190,10 @@ The 'ipBlock' is another approach, but this bit doesn't get used for anything he
 We now have a new NetworkPolicy:
 
 ```bash
-# kubectl get networkpolicies
+$ kubectl get networkpolicies
 NAME                   POD-SELECTOR                AGE
-block-all-by-default   <none>                      21m
-client-to-httpd        component=httpd_webserver   2m39s
+access-to-httpd        component=httpd_webserver   3s
+block-all-by-default   <none>                      12h
 ```
 
 Here we see that the this rule is this time attached to specif pod. 
@@ -234,7 +234,7 @@ curl: (28) Connection timed out after 5001 milliseconds
 
 ## Permit access using namespaceSelector
 
-Here's an example of giving a whole namespace access to your pods:
+Here's an example of giving a whole namespace access to your pods, by editing an existing networkpolicy:
 
 
 ```yaml
@@ -265,7 +265,9 @@ spec:
           app: curl_client 
 ```
 
-This results in editing our existing networkpolicy to allow grant all pods in the 'codingbee' namesapce.
+This results in granting access to all pods in the 'codingbee' namespace.
+
+
 
 
 
