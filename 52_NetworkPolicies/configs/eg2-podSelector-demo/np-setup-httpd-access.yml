@@ -9,16 +9,16 @@ spec:
     matchLabels:
       component: httpd_webserver    # This np gets applied to all pods with this label. 
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
-  - from:
-    ports:         # notice here we can apply port level restriction as well
-      - 80
-    - ipBlock:               
-        cidr: 172.17.0.0/16
-        except:
-        - 172.17.1.0/24
-    - podSelector:                  # Here we're saying that any pods with this label is permitted access. 
-        matchLabels:
-          app: curl_client 
+    - from:
+      - ipBlock:               
+          cidr: 172.17.0.0/16
+          except:
+          - 172.17.1.0/24
+      - podSelector:                  # Here we're saying that any pods with this label is permitted access. 
+          matchLabels:
+            app: curl_client 
+      ports:         # notice here we can apply port level restriction as well
+        - 80
