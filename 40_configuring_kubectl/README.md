@@ -348,3 +348,7 @@ Instead Kubernetes has various [authentication plugins](https://kubernetes.io/do
 [https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/](https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/)
 
 [https://github.com/kubernetes-sigs/kubespray/issues/257](https://github.com/kubernetes-sigs/kubespray/issues/257)
+
+[https://ahmet.im/blog/mastering-kubeconfig/](https://ahmet.im/blog/mastering-kubeconfig/)
+
+[https://learnk8s.io/blog/kubectl-productivity/#4-switch-between-clusters-and-namespaces-with-ease](https://learnk8s.io/blog/kubectl-productivity/#4-switch-between-clusters-and-namespaces-with-ease)

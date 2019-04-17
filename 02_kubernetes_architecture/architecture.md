@@ -18,7 +18,7 @@ Draw diagram based on this info:
 
 
 
-The Kubernetes software is not a single software, it is in fact a highly modular software that's made up of several independent components. Some of these components controls the actual internal runnings of kubernetes, whereas other components are responsible for running the actual containers. 
+The Kubernetes software is not a single software, it is in fact a highly modular software that's made up of several independent components, this design is based on the microservice concept. Some of these components controls the actual internal runnings of kubernetes, whereas other components are responsible for running the actual containers. 
 
 . You can install all these components on a single vm. Which is the case of minikube. 
 

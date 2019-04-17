@@ -320,7 +320,7 @@ When using the ip, we had to specify the port, 2015, since that's the port the c
 ```yaml
 
 ```
-
+Note, i could only get the ipblock egress to work. I can't podselector to work. 
 
 
 
