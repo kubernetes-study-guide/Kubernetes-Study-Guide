@@ -29,7 +29,11 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - |
-              apt-get update
-              apt-get install -y curl
+              # this sed command was taken from https://hub.docker.com/_/httpd
+              sed -i \
+                  -e 's/^#\(Include .*httpd-ssl.conf\)/\1/' \
+                  -e 's/^#\(LoadModule .*mod_ssl.so\)/\1/' \
+                  -e 's/^#\(LoadModule .*mod_socache_shmcb.so\)/\1/' \
+                  conf/httpd.conf
               /bin/echo "You've hit httpd - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
               /usr/local/bin/httpd-foreground
