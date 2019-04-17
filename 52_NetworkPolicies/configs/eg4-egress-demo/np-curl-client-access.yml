@@ -14,7 +14,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-            component: caddy_pod
+            component: httpd_webserver
 #      - ipBlock:
 #          cidr: 192.168.0.0/16
 #      ports:
