@@ -15,6 +15,7 @@ spec:
           # the root ca crt is already present inside the container thanks to the default service account. 
           #cp /run/secrets/kubernetes.io/serviceaccount/ca.crt /etc/pki/ca-trust/source/anchors/
           #update-ca-trust   # ubuntu approach: https://kubernetes.io/docs/concepts/cluster-administration/certificates/#distributing-self-signed-ca-certificate
+          #update-ca-trust extract
           while true ; do
             curl https://svc-clusterip-httpd.default.svc.cluster.local
             sleep 10
