@@ -17,6 +17,8 @@ spec:
           #update-ca-trust   # ubuntu approach: https://kubernetes.io/docs/concepts/cluster-administration/certificates/#distributing-self-signed-ca-certificate
           #update-ca-trust extract
           while true ; do
+            echo "################################"
+            date
             curl https://svc-clusterip-httpd.default.svc.cluster.local
             sleep 10
           done
