@@ -30,11 +30,11 @@ spec:
           args:
             - |
               # this sed command was taken from https://hub.docker.com/_/httpd
-              sed -i \
-                  -e 's/^#\(Include .*httpd-ssl.conf\)/\1/' \
-                  -e 's/^#\(LoadModule .*mod_ssl.so\)/\1/' \
-                  -e 's/^#\(LoadModule .*mod_socache_shmcb.so\)/\1/' \
-                  conf/httpd.conf
+              #sed -i \
+              #    -e 's/^#\(Include .*httpd-ssl.conf\)/\1/' \
+              #    -e 's/^#\(LoadModule .*mod_ssl.so\)/\1/' \
+              #    -e 's/^#\(LoadModule .*mod_socache_shmcb.so\)/\1/' \
+              #    conf/httpd.conf
               
               cp conf/extra/httpd-ssl.conf conf/extra/httpd-ssl.conf-orig
               #sed -i \
