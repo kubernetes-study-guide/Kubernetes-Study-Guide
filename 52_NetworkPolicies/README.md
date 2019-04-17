@@ -154,7 +154,7 @@ curl: (28) Connection timed out after 10000 milliseconds
 ```
 
 
-## PodSelector demo
+## PodSelector demo (eg2-podSelector-demo)
 
 
 Now let's create the following:
@@ -172,20 +172,25 @@ spec:
     matchLabels:
       component: httpd_webserver    # This np gets applied to all pods with this label. 
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
-  - from:
-    - ipBlock:               
-        cidr: 172.17.0.0/16
-        except:
-        - 172.17.1.0/24
-    - podSelector:                  # Here we're saying that any pods with this label is permitted access. 
-        matchLabels:
-          app: curl_client 
+    - from:
+      - ipBlock:               
+          cidr: 172.17.0.0/16
+          except:
+          - 172.17.1.0/24
+      - podSelector:                  # Here we're saying that any pods with this label is permitted access. 
+          matchLabels:
+            app: curl_client 
+      ports:         # notice here we can apply port level restriction as well
+        - protocol: TCP
+          port: 80
 ```
 
-The 'ipBlock' is another approach, but this bit doesn't get used for anything here. But it's here just to show other possibilities. 
+The 'ipBlock' is another approach, but this bit doesn't get used for anything here. But it's here just to show other possibilities. Also the 'ports' section appears to need to be indented a bit more than I thoughght would be necessary, not sure why that is. 
+
+
 
 We now have a new NetworkPolicy:
 
@@ -232,7 +237,7 @@ curl: (28) Connection timed out after 5001 milliseconds
 /srv #
 ```
 
-## Permit access using namespaceSelector
+## Permit access using namespaceSelector (eg3-namespaceSelector)
 
 Here's an example of giving a whole namespace access to your pods, by editing an existing networkpolicy:
 
@@ -242,7 +247,7 @@ Here's an example of giving a whole namespace access to your pods, by editing an
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: give-centos-access-to-httpd 
+  name: access-to-httpd 
   namespace: default
 spec:
   podSelector:
@@ -257,7 +262,7 @@ spec:
         cidr: 172.17.0.0/16
         except:
         - 172.17.1.0/24
-    - namespaceSelector:   # here we grant access at the namespace level, based on a namespace's label.
+    - namespaceSelector:   # here we grant access at the namespace level
         matchLabels:
           project: codingbee
     - podSelector:
