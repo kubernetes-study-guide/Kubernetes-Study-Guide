@@ -19,6 +19,6 @@ spec:
           while true ; do
             echo "################################"
             date
-            curl https://svc-clusterip-httpd.default.svc.cluster.local
+            curl -s https://svc-clusterip-httpd.default.svc.cluster.local
             sleep 10
           done
