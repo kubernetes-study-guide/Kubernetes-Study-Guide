@@ -16,7 +16,7 @@ spec:
       volumes:
       - name: tls-files 
         secret:
-          secretName: mysecret
+          secretName: httpd-tls
       containers:
         - name: cntr-httpd
           image: httpd:latest
