@@ -37,10 +37,10 @@ spec:
                   conf/httpd.conf
               
               cp conf/extra/httpd-ssl.conf conf/extra/httpd-ssl.conf-orig
-              sed -i \
-                  -e 's:/usr/local/apache2/conf/server.crt:/usr/local/apache2/tls/tls.crt:' \
-                  -e 's:/usr/local/apache2/conf/server.key:/usr/local/apache2/tls/tls.key:' \ 
-                  conf/extra/httpd-ssl.conf
+#              sed -i \
+#                  -e 's:/usr/local/apache2/conf/server.crt:/usr/local/apache2/tls/tls.crt:' \
+#                  -e 's:/usr/local/apache2/conf/server.key:/usr/local/apache2/tls/tls.key:' \ 
+#                  conf/extra/httpd-ssl.conf
               
               /bin/echo "You've hit httpd - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
               /usr/local/bin/httpd-foreground
