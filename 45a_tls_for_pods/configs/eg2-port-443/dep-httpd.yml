@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-httpd
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      component: httpd_webserver
+  template:
+    metadata:
+      labels:
+        component: httpd_webserver
+    spec:
+      volumes:
+      - name: tls-files 
+        secret:
+          secretName: httpd-tls
+      containers:
+        - name: cntr-httpd
+          image: httpd:latest
+          volumeMounts:
+            - name: tls-files
+              mountPath: /usr/local/apache2/tls        # this folder will get created
+              readOnly: true
+          ports:
+            - containerPort: 80
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              # this sed command was taken from https://hub.docker.com/_/httpd
+              sed -i \
+                  -e 's/^#\(Include .*httpd-ssl.conf\)/\1/' \
+                  -e 's/^#\(LoadModule .*mod_ssl.so\)/\1/' \
+                  -e 's/^#\(LoadModule .*mod_socache_shmcb.so\)/\1/' \
+                  conf/httpd.conf
+              
+              cp conf/extra/httpd-ssl.conf conf/extra/httpd-ssl.conf-orig
+              sed -i \
+                  -e 's:/usr/local/apache2/conf/server.crt:/usr/local/apache2/tls/tls.crt:' \
+                  -e 's:/usr/local/apache2/conf/server.key:/usr/local/apache2/tls/tls.key:' \
+                  conf/extra/httpd-ssl.conf
+              
+              /bin/echo "You've hit httpd - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
+              /usr/local/bin/httpd-foreground

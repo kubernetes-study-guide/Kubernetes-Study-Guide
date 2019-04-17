@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-curl-client
+  labels:
+    app: curl_client 
+spec:
+  containers:
+    - name: cntr-centos
+      image: centos
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          while true ; do
+            echo "#############################################################"
+            date
+            echo "Attempting connection to httpd:"
+            curl --silent --show-error --connect-timeout 10 http://svc-clusterip-httpd.default.svc.cluster.local 2>&1
+            echo "Attempting connection to caddy:"
+            curl --silent --show-error --connect-timeout 10 http://svc-clusterip-caddy.codingbee.svc.cluster.local 2>&1
+            sleep 10
+          done
