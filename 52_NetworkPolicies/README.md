@@ -257,7 +257,7 @@ spec:
         cidr: 172.17.0.0/16
         except:
         - 172.17.1.0/24
-    - namespaceSelector:   # here we grant access at the namespace level
+    - namespaceSelector:   # here we grant access at the namespace level, based on a namespace's label.
         matchLabels:
           project: codingbee
     - podSelector:
@@ -265,9 +265,25 @@ spec:
           app: curl_client 
 ```
 
-This results in granting access to all pods in the 'codingbee' namespace.
+This results in granting access to all pods from all namespaces that has the matching label. The codingbee namespace has this label.
 
+```bash
+$ kubectl get namespaces --show-labels
+NAME              STATUS   AGE   LABELS
+codingbee         Active   15h   project=codingbee
+default           Active   16h   <none>
+kube-node-lease   Active   16h   <none>
+kube-public       Active   16h   <none>
+kube-system       Active   16h   <none>
+```
 
+Now the caddy pods have access to httpd too:
+
+```bash
+$ kubectl exec dep-caddy-5b6ff8d5fb-dbw68 -it --namespace=codingbee -- sh
+/srv # curl --silent --show-error --connect-timeout 10 http://svc-clusterip-httpd.default.svc.cluster.local
+You've hit httpd - dep-httpd-6f45c8fd4c-cf4vw
+```
 
 
 

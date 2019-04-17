@@ -18,7 +18,7 @@ spec:
         - name: cntr-caddy
           image: abiosoft/caddy 
           ports:
-            - containerPort: 2015       # this particular image listens on this port by default. 
+            - containerPort: 2015
           command: ["/bin/sh", "-c"]
           args:
             - |
