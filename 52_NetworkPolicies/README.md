@@ -241,7 +241,6 @@ curl: (28) Connection timed out after 5001 milliseconds
 
 Here's an example of giving a whole namespace access to your pods, by editing an existing networkpolicy:
 
-
 ```yaml
 ---
 apiVersion: networking.k8s.io/v1
@@ -254,20 +253,23 @@ spec:
     matchLabels:
       component: httpd_webserver  
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
-  - from:
-    - ipBlock:               
-        cidr: 172.17.0.0/16
-        except:
-        - 172.17.1.0/24
-    - namespaceSelector:   # here we grant access at the namespace level
-        matchLabels:
-          project: codingbee
-    - podSelector:
-        matchLabels:
-          app: curl_client 
+    - from:
+      - ipBlock:               
+          cidr: 172.17.0.0/16
+          except:
+          - 172.17.1.0/24
+      - namespaceSelector:   # here we grant access at the namespace level
+          matchLabels:
+            project: codingbee
+      - podSelector:
+          matchLabels:
+            app: curl_client 
+      ports:
+        - protocol: TCP
+          port: 80
 ```
 
 This results in granting access to all pods from all namespaces that has the matching label. The codingbee namespace has this label.
