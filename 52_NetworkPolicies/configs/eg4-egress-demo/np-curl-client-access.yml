@@ -12,11 +12,11 @@ spec:
     - Egress
   egress:
     - to:
- #     - podSelector:
- #         matchLabels:
- #           component: caddy_pod
-      - ipBlock:
-          cidr: 192.168.0.0/16
+      - podSelector:
+          matchLabels:
+            component: caddy_pod
+#      - ipBlock:
+#          cidr: 192.168.0.0/16
 #      ports:
 #        - protocol: TCP
 #          port: 80
