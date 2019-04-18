@@ -6,6 +6,6 @@ metadata:
 spec:
   containers:
     - name: cntr-httpd
-      image: codingbee/httpd:0.1
+      image: https://index.docker.io/v1/codingbee/httpd:0.1
       ports:
         - containerPort: 80

@@ -91,7 +91,7 @@ c9591a4dbc31: Mounted from library/httpd
 Now lets create a pod that makes use of this secret to pull down a private repo:
 
 
-```bash
+```yaml
 
 
 ```
