@@ -49,7 +49,7 @@ Data
 .dockerconfigjson:  172 bytes
 ```
 
-At the moment I don't have a private image. So let's create a new private image using the official httpd image as a starting point:
+At the moment I don't have a private image. Normally building a new image involves writing Dockerfiles, which is a course in it's own write. So we'll cheat and instead create a new private image by simply cloning the official httpd image as a starting point:
 
 ```bash
 # docker image ls
@@ -138,14 +138,16 @@ metadata:
   name: pod-httpd
 spec:
   imagePullSecrets:                               # we add this section
-    - name: rdocker-hub-credentials
+    - name: docker-hub-credentials
   containers:
     - name: cntr-httpd
-      image: index.docker.io/v1/codingbee/httpd:0.1
-      imagePullPolicy: always
+      image: index.docker.io/codingbee/httpd:0.1   # note, we omit 'v1', I think because authentication is not done in v1
+      imagePullPolicy: Always
       ports:
         - containerPort: 80
 ```
+
+This time it is successful.
 
 
 
