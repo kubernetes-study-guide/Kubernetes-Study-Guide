@@ -137,12 +137,12 @@ kind: Pod
 metadata:
   name: pod-httpd
 spec:
+  imagePullSecrets:                               # we add this section
+    - name: rdocker-hub-credentials
   containers:
     - name: cntr-httpd
       image: index.docker.io/v1/codingbee/httpd:0.1
       imagePullPolicy: always
-      imagePullSecrets:                               # we add this section
-        - name: rdocker-hub-credentials
       ports:
         - containerPort: 80
 ```
