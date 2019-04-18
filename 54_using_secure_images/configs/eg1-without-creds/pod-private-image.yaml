@@ -5,7 +5,7 @@ metadata:
   name: pod-smashing
 spec:
   containers:
-    - name: cntr_smashing
+    - name: cntr-smashing
       image: codingbee/smashing_image:tagname
       ports:
         - containerPort: 3030
