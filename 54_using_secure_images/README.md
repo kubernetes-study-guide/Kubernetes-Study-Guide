@@ -88,13 +88,44 @@ c9591a4dbc31: Mounted from library/httpd
 
 
 
-Now lets create a pod that makes use of this secret to pull down a private repo:
-
+Now lets see what happens when our pod descriptor tries to pull this image without using encryption:
 
 ```yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-httpd
+spec:
+  containers:
+    - name: cntr-httpd
+      image: index.docker.io/v1/codingbee/httpd:0.1      # here we used an image's fqdn
+      ports:
+        - containerPort: 80
+```
 
+We usually omit 'index.docker.io/v1/' part in the image name since that's what kubernetes uses by default. However we're explicit this time to show what you would need to use if you decided to use another docker registry, such as aws's ECR, or [quay](https://quay.io/search). This ends up failing, because it tries to pull the image like a public image:
+
+```bash
+$ kubectl get pods -o wide
+NAME        READY   STATUS             RESTARTS   AGE     IP             NODE           NOMINATED NODE   READINESS GATES
+pod-httpd   0/1     ImagePullBackOff   0          2m51s   192.168.1.71   kube-worker1   <none>           <none>
+
+$ kubectl describe pods pod-httpd
+....
+Events:
+  Type     Reason     Age               From                   Message
+  ----     ------     ----              ----                   -------
+  Normal   Scheduled  20s               default-scheduler      Successfully assigned default/pod-httpd to kube-worker1
+  Normal   BackOff    18s               kubelet, kube-worker1  Back-off pulling image "index.docker.io/v1/codingbee/httpd:0.1"
+  Warning  Failed     18s               kubelet, kube-worker1  Error: ImagePullBackOff
+  Normal   Pulling    6s (x2 over 20s)  kubelet, kube-worker1  Pulling image "index.docker.io/v1/codingbee/httpd:0.1"
+  Warning  Failed     4s (x2 over 19s)  kubelet, kube-worker1  Failed to pull image "index.docker.io/v1/codingbee/httpd:0.1": rpc error: code = Unknown desc = Error response from daemon: pull access denied for v1/codingbee/httpd, repository does not exist or may require 'docker login'
+  Warning  Failed     4s (x2 over 19s)  kubelet, kube-worker1  Error: ErrImagePull
 
 ```
+
+
 
 
 
