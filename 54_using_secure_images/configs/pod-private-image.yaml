@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-smashing
+spec:
+  containers:
+    - name: cntr_smashing
+      image: codingbee/smashing_image:tagname
+      ports:
+        - containerPort: 3030
