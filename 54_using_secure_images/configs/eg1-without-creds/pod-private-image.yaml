@@ -6,6 +6,6 @@ metadata:
 spec:
   containers:
     - name: cntr-smashing
-      image: codingbee/smashing_image:tagname
+      image: codingbee/smashing_image
       ports:
         - containerPort: 3030
