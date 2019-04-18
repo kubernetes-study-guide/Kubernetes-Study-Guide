@@ -49,6 +49,44 @@ Data
 .dockerconfigjson:  172 bytes
 ```
 
+At the moment I don't have a private image. So let's create a new private image using the official httpd image as a starting point:
+
+```bash
+# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+
+# docker pull httpd
+Using default tag: latest
+latest: Pulling from library/httpd
+27833a3ba0a5: Pull complete 
+7df2f4a2bf95: Pull complete 
+bbda6f884d14: Pull complete 
+4d3dcf503f89: Pull complete 
+b2f11da8a23e: Pull complete 
+Digest: sha256:b4096b744d92d1825a36b3ace61ef4caa2ba57d0307b985cace4621139c285f7
+Status: Downloaded newer image for httpd:latest
+
+# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+httpd               latest              d4a07e6ce470        2 weeks ago         132MB
+
+# docker tag httpd codingbee/httpd:0.1$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+codingbee/httpd     0.1                 d4a07e6ce470        2 weeks ago         132MB
+httpd               latest              d4a07e6ce470        2 weeks ago         132MB
+
+# docker push codingbee/httpd:0.1
+The push refers to repository [docker.io/codingbee/httpd]
+3109d31e7c8d: Mounted from library/httpd 
+c9591a4dbc31: Mounted from library/httpd 
+9b4799ea4c4c: Mounted from library/httpd 
+2bca991cdc4d: Mounted from library/httpd 
+5dacd731af1b: Mounted from library/httpd 
+0.1: digest: sha256:4ac9ce655eb83ea44e08cb9446564a8a8e2f05fe02d7c69ac4b15f22db4b1bcf size: 1367
+```
+
+
+
 
 Now lets create a pod that makes use of this secret to pull down a private repo:
 
