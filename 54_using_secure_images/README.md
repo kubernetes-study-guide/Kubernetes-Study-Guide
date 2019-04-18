@@ -100,11 +100,12 @@ spec:
   containers:
     - name: cntr-httpd
       image: index.docker.io/v1/codingbee/httpd:0.1      # here we used an image's fqdn
+      imagePullPolicy: always                       # this is to avoids using cached images
       ports:
         - containerPort: 80
 ```
 
-We usually omit 'index.docker.io/v1/' part in the image name since that's what kubernetes uses by default. However we're explicit this time to show what you would need to use if you decided to use another docker registry, such as aws's ECR, or [quay](https://quay.io/search). This ends up failing, because it tries to pull the image like a public image:
+We usually omit 'index.docker.io/v1/' part in the image name since that's what kubernetes uses by default. However we're explicit this time to show what you would need to do if you decided to use another docker registry, [quay](https://quay.io/search), AWC ECR,...etc. This ends up failing, because it tries to pull the image like a public image:
 
 ```bash
 $ kubectl get pods -o wide
@@ -112,7 +113,7 @@ NAME        READY   STATUS             RESTARTS   AGE     IP             NODE   
 pod-httpd   0/1     ImagePullBackOff   0          2m51s   192.168.1.71   kube-worker1   <none>           <none>
 
 $ kubectl describe pods pod-httpd
-....
+...
 Events:
   Type     Reason     Age               From                   Message
   ----     ------     ----              ----                   -------
@@ -124,6 +125,28 @@ Events:
   Warning  Failed     4s (x2 over 19s)  kubelet, kube-worker1  Error: ErrImagePull
 
 ```
+
+We also used `pod.spec.containers.imagePullPolicy` that's because kubernetes by default would try to use cached images. The index.docker.io/v1/codingbee/httpd:0.1 was originally a public image, before I made it private. Back when it was public I did pull make use of it in my kube cluster, and consequently kubernetes cached that image for future use. Having this set to 'always' does mean a slight performance cost though. 
+
+Now let's try again, but this time using our login credentials:
+
+```yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-httpd
+spec:
+  containers:
+    - name: cntr-httpd
+      image: index.docker.io/v1/codingbee/httpd:0.1
+      imagePullPolicy: always
+      imagePullSecrets:                               # we add this section
+        - name: rdocker-hub-credentials
+      ports:
+        - containerPort: 80
+```
+
 
 
 

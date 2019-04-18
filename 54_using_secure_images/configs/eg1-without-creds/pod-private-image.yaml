@@ -6,6 +6,7 @@ metadata:
 spec:
   containers:
     - name: cntr-httpd
-      image: index.docker.io/v1/codingbee/httpd:0.1
+      image: index.docker.io/v1/codingbee/httpd:0.1      # here we used an image's fqdn
+      imagePullPolicy: always                       # this is to avoids using cached images
       ports:
         - containerPort: 80
