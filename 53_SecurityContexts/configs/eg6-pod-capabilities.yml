@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pod-privileged
+  name: pod-capabilities
 spec:
   containers:
     - name: cntr-alpine
@@ -11,6 +11,9 @@ spec:
         capabilities:                     # We add this line. 
           add:                           
             - SYS_TIME
+            - NET_ADMIN
+          drop:
+            - CHOWN
       command: ["sh", "-c"]
       args:
         - |

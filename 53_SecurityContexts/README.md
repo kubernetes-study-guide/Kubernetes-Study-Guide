@@ -237,7 +237,7 @@ For example to give the container the ability to change it's own time, we do:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pod-privileged
+  name: pod-capabilities
 spec:
   containers:
     - name: cntr-alpine
@@ -246,6 +246,9 @@ spec:
         capabilities:                     # We add this line. 
           add:                           
             - SYS_TIME
+            - NET_ADMIN
+          drop:
+            - CHOWN
       command: ["sh", "-c"]
       args:
         - |
@@ -261,12 +264,34 @@ This results in:
 
 
 ```bash
+$ kubectl exec pod-capabilities -- date 
+Fri Apr 19 19:06:21 UTC 2019
+
 $ kubectl exec pod-capabilities -- date +%T -s "12:00:00"
 12:00:00
 
 $ kubectl exec pod-capabilities -- date 
 Fri Apr 19 12:00:02 UTC 2019
 ```
+
+You can also remove capabilities, like the way we removed the ability to use the chown command:
+
+
+```bash
+$ kubectl exec pod-capabilities -it -- sh
+/ # cd /home/
+/home # touch testfile.txt
+/home # ls -l
+total 0
+-rw-r--r--    1 root     root             0 Apr 19 19:09 testfile.txt
+
+/home # cat /etc/passwd | grep guest
+guest:x:405:100:guest:/dev/null:/sbin/nologin
+
+/home # chown guest testfile.txt 
+chown: testfile.txt: Operation not permitted
+```
+
 
 
 ## Node level capabilities
