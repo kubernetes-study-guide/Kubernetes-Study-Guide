@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pod-centos
+  name: pod-alpine-default
 spec:
   containers:
-    - name: cntr-centos
-      image: centos
-      command: ["/bin/bash", "-c"]
+    - name: cntr-alpine
+      image: alpine
+      command: ["sh", "-c"]
       args:
         - |
           while true ; do

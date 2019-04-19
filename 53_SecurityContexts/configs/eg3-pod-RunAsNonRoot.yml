@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-alpine-runasnonroot
+spec:
+  containers:
+    - name: cntr-alpine
+      image: alpine
+      securityContext:
+        runAsNonRoot: true           # we set this boolean
+      command: ["sh", "-c"]
+      args:
+        - |
+          while true ; do
+            date
+            id 
+            whoami
+            sleep 10 
+          done

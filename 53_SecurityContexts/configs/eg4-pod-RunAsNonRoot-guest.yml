@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-runasnonroot-guest
+spec:
+  containers:
+    - name: cntr-alpine
+      image: alpine
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 405
+      command: ["sh", "-c"]
+      args:
+        - |
+          while true ; do
+            date
+            id 
+            whoami
+            sleep 10 
+          done

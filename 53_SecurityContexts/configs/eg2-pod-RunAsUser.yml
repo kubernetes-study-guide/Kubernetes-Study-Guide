@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-alpine-runasuser
+spec:
+  containers:
+    - name: cntr-alpine
+      image: alpine
+      securityContext:                # we add this section.
+        runAsUser: 405             # this value depends on the image you use. 
+      command: ["sh", "-c"]
+      args:
+        - |
+          while true ; do
+            date
+            id 
+            whoami
+            sleep 10 
+          done

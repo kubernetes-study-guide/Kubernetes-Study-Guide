@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-privileged
+spec:
+  containers:
+    - name: cntr-alpine
+      image: alpine
+      securityContext:
+        capabilities:                     # We add this line. 
+          add:                           
+            - SYS_TIME
+      command: ["sh", "-c"]
+      args:
+        - |
+          while true ; do
+            date
+            sleep 10 
+          done
