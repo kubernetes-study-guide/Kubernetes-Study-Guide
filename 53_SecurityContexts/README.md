@@ -348,11 +348,66 @@ Some settings are pod level specific security contexts. For example when 2 conta
 
 
 ```yaml
-
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-fsgroup
+spec:
+  securityContext:                                   # we add this section
+    fsGroup: 3000
+  volumes: 
+    - name: webcontent
+      emptyDir: {}
+  containers:
+    - name: cntr-httpd
+      image: httpd
+      volumeMounts: 
+        - name: webcontent
+          mountPath: /usr/local/apache2/htdocs
+      ports:
+        - containerPort: 80
+    - name: cntr-centos
+      image: centos
+      volumeMounts:
+        - name: webcontent
+          mountPath: /tmp/reports
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          while true ; do
+            echo "You've hit $(hostname)" >> /tmp/reports/index.html
+            date >> /tmp/reports/index.html
+            sleep 20
+          done
 ```
 
 
-This setting only takes effect when working with files inside a mounted volume. 
+This setting only takes effect when working with files/folders inside a mounted volume:
+
+```bash
+$ kubectl exec pod-fsgroup -it -c cntr-httpd  -- bash 
+root@pod-fsgroup:/usr/local/apache2# touch /tmp/testfile.txt                 
+root@pod-fsgroup:/usr/local/apache2# ls -l /tmp/testfile.txt
+-rw-r--r-- 1 root root 0 Apr 20 12:58 /tmp/testfile.txt
+
+
+root@pod-fsgroup:/usr/local/apache2# touch /usr/local/apache2/htdocs/testfile.txt
+root@pod-fsgroup:/usr/local/apache2# ls -l /usr/local/apache2/htdocs/testfile.txt
+-rw-r--r-- 1 root 3000 0 Apr 20 12:59 /usr/local/apache2/htdocs/testfile.txt
+```
+
+It shows 3000 here, rather than a group name because we don't have a group with the gid value of 3000, so the group is simply the gid value:
+
+```bash
+root@pod-fsgroup:/usr/local/apache2# cat /etc/group | grep 3000
+root@pod-fsgroup:/usr/local/apache2#
+
+root@pod-fsgroup:/usr/local/apache2# id
+uid=0(root) gid=0(root) groups=0(root),3000
+```
+
+
 
 
 
