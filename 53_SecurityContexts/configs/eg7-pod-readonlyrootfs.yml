@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pod-privileged
+  name: pod-readonlyrootfs
 spec:
   containers:
     - name: cntr-alpine
       image: alpine
       securityContext:
-        privileged: true                  # Add this line
+        readOnlyRootFilesystem: true                 # We add this line
       command: ["sh", "-c"]
       args:
         - |

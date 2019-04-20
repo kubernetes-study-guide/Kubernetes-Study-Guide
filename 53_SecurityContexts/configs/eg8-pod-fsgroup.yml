@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-fsgroup
+spec:
+  securityContext:        # we add this section
+    fsGroup: 3000
+  volumes: 
+    - name: webcontent
+      emptyDir: {}
+  containers:
+    - name: cntr-httpd
+      image: httpd
+      volumeMounts: 
+        - name: webcontent
+          mountPath: /usr/local/apache2/htdocs
+      ports:
+        - containerPort: 80
+    - name: cntr-centos
+      image: centos
+      volumeMounts:
+        - name: webcontent
+          mountPath: /tmp/reports
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          while true ; do
+            echo "You've hit $(hostname)" >> /tmp/reports/index.html
+            date >> /tmp/reports/index.html
+            sleep 20
+          done

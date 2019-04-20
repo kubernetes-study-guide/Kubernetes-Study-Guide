@@ -48,9 +48,14 @@ In our demo we created the following containers:
 
 ```bash
 $ kubectl get pods
-NAME                   READY   STATUS    RESTARTS   AGE
-pod-alpine-default     1/1     Running   0          92s
-pod-alpine-runasuser   1/1     Running   0          71s
+NAME                      READY   STATUS                       RESTARTS   AGE
+pod-alpine-default        1/1     Running                      0          3h32m
+pod-alpine-runasnonroot   0/1     CreateContainerConfigError   0          3h32m
+pod-alpine-runasuser      1/1     Running                      0          3h32m
+pod-capabilities          1/1     Running                      0          3h21m
+pod-privileged            1/1     Running                      0          3h32m
+pod-readonlyrootfs        1/1     Running                      0          9s
+pod-runasnonroot-guest    1/1     Running                      0          3h32m
 ```
 
 pod-alpine-default is a pod without any Security contexts. 
@@ -291,6 +296,64 @@ guest:x:405:100:guest:/dev/null:/sbin/nologin
 /home # chown guest testfile.txt 
 chown: testfile.txt: Operation not permitted
 ```
+
+## readOnlyRootFilesystem
+
+The readOnlyRootFilesystem setting, as the name implies make the container's filesystem readonly. This forces your container to make use of volumes and persistent volumes for storing data. 
+
+
+```yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-readonlyrootfs
+spec:
+  containers:
+    - name: cntr-alpine
+      image: alpine
+      securityContext:
+        readOnlyRootFilesystem: true                 # We add this line
+      command: ["sh", "-c"]
+      args:
+        - |
+          while true ; do
+            date
+            sleep 10 
+          done
+```
+
+This results in the following behaviour:
+
+```bash
+$ kubectl exec pod-alpine-default -it -- sh
+/ # touch /home/testfile.txt
+/ # ls -l /home/testfile.txt 
+-rw-r--r--    1 root     root             0 Apr 19 23:05 /home/testfile.txt
+/ # exit
+
+$ kubectl exec pod-readonlyrootfs -it -- sh
+/ # touch /home/testfile.txt
+touch: /home/testfile.txt: Read-only file system
+```
+
+This is handy setting to use if you want to avoid accidently writing data to your container's root filesystem that then ends up getting deleted, when the container gets deleted/recreated. 
+
+
+## Pod level Security Contexts
+
+This features is useful in a couple of ways. Firstly it can be used to cut down on duplicate lines. E.g. if you have multiple containers in a pod, and you want all these containers to have the same runAsUser setting, then specify it using `pod.spec.securityContext.runAsUser`.
+
+Some settings are pod level specific security contexts. For example when 2 containers mounts the a shared volume, then the files/folders created in the shared volume need to have the same group ownership. Otherwise you can end up with situation where one pod's contaienr creates files/folders that are not accessible by another one of the pod's container. To solve this problem you can use the 'filesystem group' setting, `pod.spec.securityContext.fsGroup`. 
+
+
+```yaml
+
+```
+
+
+This setting only takes effect when working with files inside a mounted volume. 
+
 
 
 
