@@ -55,9 +55,36 @@ NAME        READY   STATUS    RESTARTS   AGE
 pod-httpd   1/1     Running   3          3m31s
 ```
 
+The httpGet test is essentially to running a curl test. However you can also do other liveness tests such as running a command (exec) test, or doing a simple telnet/nc (tcpSocket) test:
+
+```bash
+$ kubectl explain pod.spec.containers.livenessProbe --recursive
+...
+FIELDS:
+   exec <Object>
+      command   <[]string>
+   failureThreshold     <integer>
+   httpGet      <Object>
+      host      <string>
+      httpHeaders       <[]Object>
+         name   <string>
+         value  <string>
+      path      <string>
+      port      <string>
+      scheme    <string>
+   initialDelaySeconds  <integer>
+   periodSeconds        <integer>
+   successThreshold     <integer>
+   tcpSocket    <Object>
+      host      <string>
+      port      <string>
+   timeoutSeconds       <integer>
+```
+
+
 ## The readinessProbe
 
-Sometimes a pod only malfunctions because it's under a lot of load and becomes temporarily unresponsive. In that situation you might want to give the pod some time to recover, and also help it to recover by temporarily stop sending it anymore traffic. That's possible to setup by setting the pod.spec.containers.readinessProbe setting:
+Sometimes a pod only malfunctions because it's under a lot of load and becomes temporarily unresponsive. In that situation you might want to give the pod some time to recover, and you can help it to recover by temporarily stop sending it traffic. That's possible to setup by setting the pod.spec.containers.readinessProbe setting:
 
 ```yaml
 ---
@@ -100,6 +127,32 @@ spec:
 ```
 Here we're using both healthchecks together. When the readinessProbe healthcheck fails the kubernetes take the pod out of service to give it a chance to heal before reaching the livenessProbe. But if the pod doesn't heal by the time the livenessProbe threshold is reached then kubernetes will kill and rebuild the pod. 
 
+Like livenessProbe, readinessProbe also has exec and tcpSocket tests. 
+
+```bash
+$ kubectl explain pod.spec.containers.readinessProbe --recursive
+...
+
+FIELDS:
+   exec <Object>
+      command   <[]string>
+   failureThreshold     <integer>
+   httpGet      <Object>
+      host      <string>
+      httpHeaders       <[]Object>
+         name   <string>
+         value  <string>
+      path      <string>
+      port      <string>
+      scheme    <string>
+   initialDelaySeconds  <integer>
+   periodSeconds        <integer>
+   successThreshold     <integer>
+   tcpSocket    <Object>
+      host      <string>
+      port      <string>
+   timeoutSeconds       <integer>
+```
 
 
 ## Reference

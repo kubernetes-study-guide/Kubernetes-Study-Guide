@@ -214,6 +214,10 @@ spec:
 ```
 
 
+You can also access this service from your web browser, but you need to add in the ca.crt file to your google chrome browser as a trusted cert. In a company where everyone uses Microsoft windows company laptops/workstations, this task can be done centrally, using [group policy](https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/deployment/distribute-certificates-to-client-computers-by-using-group-policy).
+
+Also the fact that we created a secret of the type 'tls'. That's actually syntax sugar. You could have achieved the same task by just creating normal generic secrets to store your .crt and .key files. In fact it makes more sense to store the .crt file in a configmap instead, since it's not really a secret. 
+
 
 
 
