@@ -1,11 +1,67 @@
 # architecture
 
-Let's say you want to run all your containers ona single docker server. Then you have two problems:
 
-- The more containers you run the more powerful vm you need. So will have to do vertical scaling. 
-- No HA. If docker server crashes then all containers die. 
+At a fundamental level, Kubernetes is used for running containers. Docker can also do the same so might wonder, why Kubernetes when you have Docker?  
 
-That's why a better approach is to run all your containers using kubernetes. There's actually lots of different way to install kubernetes. One of the simplest ways is to use minikube. 
+Theres a lot of reasons why, but let's take a look at one of those reason using the following example:
+
+
+![docker-server](images/Docker-Server-Architecture.png)
+
+In this scenario we have a IT Admin who uses the docker cli to create a collection of containers on a docker server. The Docker server could a be on anything, a physical server, a VM on an on premise Data Center, a EC2 instance in AWS,..etc. These containers delibers a online ecommerce website that online shoppers can use to make purchases. Thre are 2 problems with this setup:
+
+- You can only scale vertical, i.e. if the docker server is running out of cpu and ram, then you can only increase the cpu and ram of the existing docker server.  
+- No HA. If docker server crashes then all containers die with it, and it can take several minutes to build a replacement docker server.
+
+There are workarounds to this by building multiple docker servers and put them behind a Load balancer. However that will bring it's own set of problems, because Docker hasn't been designed to run work that way. What's needed is a container orchestration software, such as Docker swarm, our in our case Kubernetes. 
+
+The Kubernetes software is made up over [several smaller self-contained components](https://kubernetes.io/docs/concepts/overview/components/) that all working together to deliver the Kubernetes solution.
+
+
+![kubernetes-server](images/kubernetes-components.png)
+
+
+There's actually lots of different way to install kubernetes. One of the option is is to install all the components one a single node:
+
+
+
+![Single-node-kubecluster.png](images/Single-node-kubecluster.png)
+
+
+In Kubernetes, your containers run inside a Kubernetes construct called pods. 
+
+This setup suffers from the same problems as our docker setup that we saw earlier, i.e. can only scale vertically, and no HA. That's why Kubernetes was developed with a modular design so that you can install a single Kubernetes instance that spans across multiple nodes, aka a **Kube Cluster**.
+
+
+![multi-worker-kubecluster.png](images/multi-worker-kubecluster.png)
+
+The **Kube Master** node houses all the components that manages the kube cluster as a whole. Whereas, the **kube worker** nodes houses the components that are responsible for the actual running of the pods.
+
+This setup now allows for horizontal scaling, you just need to add another Kube worker to the cluster. Also if one of the kube worker dies, then the kube master will create pods in the other worker nodes to compensate for the lost pods. 
+
+However this setup still has a single point of failure, which is the kube master itself. That's why in order to achieve HA you need to have multiple kube masters:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+In fact that's how it's done when setting Kubernetes locally on your using minikube. 
+
+
+
 
 
 However minikube presents the same problem. 
@@ -42,6 +98,13 @@ Along with those, you also have:
 - loadbalancer - used to loadbalance kube-api data traffic to master nodes. In particular is forwards traffic to the kube-apiserver component. the traffic may originate from:
   - local workstations - when someone uses the kubectl command to perform tasks
   - The kubelet or kube-proxy components that are running inside worker nodes. 
+
+
+In the container world, all (big) applications should be broken into smaller independent more moduler applications (aka microservice) which can communicated with one another using API calls. These microservices should run inside containers. Kubernetes software software itself.
+
+
+
+When it comes to installing Kubernetes, 
 
 
 ### Terminology
