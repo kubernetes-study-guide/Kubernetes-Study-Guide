@@ -41,6 +41,7 @@ This setup now allows for horizontal scaling, you just need to add another Kube 
 
 However this setup still has a single point of failure, which is the kube master itself. That's why in order to achieve HA you need to have multiple kube masters:
 
+![ha-kubecluster.png](images/ha-kubecluster.png)
 
 
 
