@@ -87,6 +87,14 @@ Kubernetes is smart enough to identify which objects have been created by a part
 
 ## View entire yaml definition including implicit values. 
 
+What if you have a pod, e.g. called pod-httpd, but lost it's yaml descriptor file? In that case you can regenerate the yaml descriptor from the existing pod:
+
+
+```bash
+kubectl get pod pod-httpd -o yaml --export > regenerated-descriptor.yaml
+```
+
+
 
 
 ## References
