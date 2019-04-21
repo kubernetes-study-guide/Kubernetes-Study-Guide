@@ -133,6 +133,24 @@ NAME                                    TYPE       CLUSTER-IP      EXTERNAL-IP  
 service/svc-nodeport-apache-webserver   NodePort   10.107.98.250   <none>        3050:31000/TCP   62s   app=apache_webserver
 ```
 
+## Cluster level objects
+
+Not all kubernetes objects are 'namespaced', i.e. can be organised into a namespace, because they are cluster level objects.
+
+```bash
+NAME                              SHORTNAMES   APIGROUP                       NAMESPACED   KIND                             VERBS
+bindings                                                                      true         Binding                          [create]
+componentstatuses                 cs                                          false        ComponentStatus                  [get list]
+configmaps                        cm                                          true         ConfigMap                        [create delete deletecollection get list patch update watch]
+endpoints                         ep                                          true         Endpoints                        [create delete deletecollection get list patch update watch]
+events                            ev                                          true         Event                            [create delete deletecollection get list patch update watch]
+limitranges                       limits                                      true         LimitRange                       [create delete deletecollection get list patch update watch]
+namespaces                        ns                                          false        Namespace                        [create delete get list patch update watch]
+nodes                             no                                          false        Node                             [create delete deletecollection get list patch update watch]
+...
+```
+
+## Persistently Setting the namesapce
 Specifying namespaces on the command line can get quite tedious, which might put you off from using namespaces. However you can persistantly change namespaces by running:
 
 ```bash
