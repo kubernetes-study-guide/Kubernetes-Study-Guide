@@ -54,7 +54,7 @@ kubectl edit services kubernetes # see example files
 
 kubectl create configmap...
 
-kubectl get pod podname -o yaml  # use kube-system namespace objects as templates. 
+kubectl get pod podname -o yaml --export > podtemplate.yaml  # use kube-system namespace objects as templates. 
 
 
 kubectl explain pod.spec.containers --recursive   # really good way to see a quick overall yaml structure. 

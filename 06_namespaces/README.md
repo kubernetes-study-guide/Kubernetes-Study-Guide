@@ -7,7 +7,7 @@ $ kubectl get pods
 No resources found.
 ```
 
-This is not strictly true. In Kubernetes we have a feature called namespaces that lets us segment/organise all our objects into a construct known as namespaces. Here's the current list of namespaces:
+This is not strictly true. In Kubernetes we have a feature called namespaces that lets us segment/organise all our objects into a construct known as **namespaces**. Here's the current list of namespaces:
 
 ```bash
 $ kubectl get namespaces
@@ -65,7 +65,7 @@ rs/coredns-86c58d9df4               2         2         2         11h
 rs/kubernetes-dashboard-ccc79bfc9   1         1         1         11h
 ```
 
-You can organise your objects in various ways using namespace. For example, you can create namespaces called 'Prod' and 'Dev', although it's best to segment prod/dev by having seperate kubernetes cluster altogether. Alternatively, have namespaces based on project/programme name. Here's how to create a new namespace imperitively:
+You can organise your objects in various ways using namespace. For example, we can create namespaces called 'Prod' and 'Dev'. Alternatively, have namespaces based on project/programme name. Here's how to create a new namespace imperitively:
 
 ```bash
 $ kubectl create namespace codingbee-hello-world
@@ -138,6 +138,7 @@ service/svc-nodeport-apache-webserver   NodePort   10.107.98.250   <none>       
 Not all kubernetes objects are 'namespaced', i.e. can be organised into a namespace, because they are cluster level objects.
 
 ```bash
+$ kubectl api-resources -o wide
 NAME                              SHORTNAMES   APIGROUP                       NAMESPACED   KIND                             VERBS
 bindings                                                                      true         Binding                          [create]
 componentstatuses                 cs                                          false        ComponentStatus                  [get list]
@@ -150,7 +151,7 @@ nodes                             no                                          fa
 ...
 ```
 
-## Persistently Setting the namesapce
+## Set the namespace persistently
 Specifying namespaces on the command line can get quite tedious, which might put you off from using namespaces. However you can persistantly change namespaces by running:
 
 ```bash

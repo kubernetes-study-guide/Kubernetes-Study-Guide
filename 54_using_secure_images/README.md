@@ -1,6 +1,32 @@
 # Using secure images
 
-Up until now, all the images we used were public images that we pulled down from docker hub. We didn't need to configure docker hub, since kubernetes uses docker hub as the default repo. 
+
+## The image setting
+Up until now, all the images we used were public images from official [Docker hub](https://hub.docker.com/) image registry, since kubernetes uses docker hub as the default registry, if we don't specify the image's full name. But if you did explicitly specify an images full name, it would look like this:
+
+```yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-httpd
+spec:
+  containers:
+    - name: cntr-httpd
+      image: docker.io/codingbee/httpd:0.1      # here we used an image's fqdn
+      ports:
+        - containerPort: 80
+```
+
+
+The images full name is made up of 4 parts:
+
+> {registry url}/{image's owner name}/{image's name}:{tag}
+
+The 'resistry url' defaults to 'docker.io' if it's not specified. Also the tag defaults to 'Latest'. If you're using one of the [official images](https://docs.docker.com/docker-hub/official_images/), then you can omit the image's owner name, just spefify the image name. At the moment there are about [150 official images](https://hub.docker.com/search?q=&type=image&image_filter=official).
+
+
+## Using private images
 
 However it's likely that you'll want to build your own private images, and host them on a private registry. Setting up and authenticating with private registries varies from one cloud platform to the next. So in our example, we'll keep it simple by still using docker hub, but this time we'll pull down private images. 
 
