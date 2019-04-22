@@ -55,7 +55,9 @@ This course will be closely following the following git repo: xxxxxx
 most of the demos are done on a minikube based kubecluster. But some demo requires a multi-node cluster so we used a
 
 
-# Course Structure 
+## How to follow this course
+
+First create a fork of this repo. Then clone it. Then set up a vs code. 
 
 How to follow this course,
 

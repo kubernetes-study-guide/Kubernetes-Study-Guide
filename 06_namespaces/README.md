@@ -80,8 +80,9 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: codingbee-hello-world
-spec: {}
 ```
+
+> Notice that we didn't need to specify a namespace.spec section. 
 
 
 You can then specify what namespace objects are created in by adding the following line in the metadata section:
