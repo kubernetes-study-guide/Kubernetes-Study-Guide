@@ -4,7 +4,7 @@ kind: Pod
 metadata:
   name: pod-httpd
   labels:
-    component: httpd
+    app: httpd
 spec:
   containers:
     - name: cntr-httpd

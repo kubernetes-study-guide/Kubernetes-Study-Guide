@@ -2,6 +2,14 @@
 
 In Kubernetes, 'services' is actually all about networking. In Docker world, when you use docker-compose, all the networking is done for you automatically behind the scenes. However that's not the case when it comes to kubernetes. To setup networking in Kubernetes, you need to create 'service' objects.
 
+
+A single pod exists inside a single node. So if the node dies, then the pod dies with it. However that's not the case case with services. A service exists cluster-wide. 
+
+
+
+
+
+
 There are [4 main types of services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types).
 
 In this example let's just spin up the following pods for now:
