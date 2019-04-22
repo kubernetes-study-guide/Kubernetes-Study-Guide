@@ -5,6 +5,7 @@ In Kubernetes, 'services' is actually all about networking. In Docker world, whe
 
 A single pod exists inside a single node. So if the node dies, then the pod dies with it. However that's not the case case with services. A service exists cluster-wide. 
 
+![nodeport.png](images/nodeport.png)
 
 
 
