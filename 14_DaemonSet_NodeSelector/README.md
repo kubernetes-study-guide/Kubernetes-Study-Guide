@@ -63,7 +63,45 @@ Note, the nodeSelector is specified at the pod-spec level. That means you can us
 
 ## nodeName
 
-The ``pod.spec.nodeName`` setting works in a very similar way, but this setting restricts pods to be deployed on single worker node. 
+The ``pod.spec.nodeName`` setting works in a very similar way, but this setting restricts pods to be deployed on single worker node, e.g. to deploy all my deployment's pods to kube-worker2:
+
+```bash
+NAME           STATUS   ROLES    AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+kube-master    Ready    master   8m33s   v1.14.1   10.2.5.110    <none>        Ubuntu 16.04.5 LTS   4.4.0-131-generic   docker://18.6.1
+kube-worker1   Ready    <none>   6m      v1.14.1   10.2.5.111    <none>        Ubuntu 16.04.5 LTS   4.4.0-131-generic   docker://18.6.1
+kube-worker2   Ready    <none>   4m33s   v1.14.1   10.2.5.112    <none>        Ubuntu 16.04.5 LTS   4.4.0-131-generic   docker://18.6.1
+```
+
+I would use this setting:
+
+```yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-httpd
+  labels:
+    app: httpd_webserver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: httpd_webserver
+  template:
+    metadata:
+      labels:
+        app: httpd_webserver
+    spec:
+      nodeName: kube-worker2      # Added this line
+      containers:
+        - name: cntr-httpd
+          image: httpd:latest 
+          ports:
+            - containerPort: 80
+```
+
+
+
 
 
 

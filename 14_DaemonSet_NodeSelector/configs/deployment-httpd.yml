@@ -15,7 +15,7 @@ spec:
       labels:
         app: httpd_webserver
     spec:
-      nodeName: kube_worker2       # Added this line
+      nodeName: kube-worker2      # Added this line
       containers:
         - name: cntr-httpd
           image: httpd:latest 
