@@ -100,7 +100,15 @@ spec:
             - containerPort: 80
 ```
 
+This results in:
 
+```bash
+# kubectl get pods -o wide
+NAME                         READY   STATUS              RESTARTS   AGE   IP       NODE           NOMINATED NODE   READINESS GATES
+dep-httpd-6c9c5c4984-drjfc   0/1     ContainerCreating   0          11s   <none>   kube-worker2   <none>           <none>
+dep-httpd-6c9c5c4984-hm8rv   0/1     ContainerCreating   0          11s   <none>   kube-worker2   <none>           <none>
+dep-httpd-6c9c5c4984-kptzb   0/1     ContainerCreating   0          11s   <none>   kube-worker2   <none>           <none>
+```
 
 
 
