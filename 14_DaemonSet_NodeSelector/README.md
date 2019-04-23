@@ -1,6 +1,6 @@
-# Deploying DaemonSet to some nodes using nodeSelector
+# Pod nodeSelector and nodeName
 
-You may want to deploy a particular daemonset on a subset of worker nodes, e.g. all nodes of ec2 instance type of M3. You can do that by assigning arbitrary labels to your pods:
+You may want to deploy your pods to a particular subset of worker nodes, e.g. all nodes of ec2 instance type of M3. You can do that by assigning arbitrary labels to your nodes:
 
 
 ```bash
@@ -15,7 +15,7 @@ kube-worker2   Ready    <none>   75m   v1.13.4   beta.kubernetes.io/arch=amd64,b
 
 ```
 
-Then use the ds.spec.template.spec.nodeSelector setting in your yaml file to apply the restriction:
+Then use the ``pod.spec.nodeSelector`` setting in your yaml file to apply the restriction:
 
 ```yaml
 ---
@@ -43,17 +43,28 @@ spec:
             - containerPort: 80
 ```
 
-This results in:
+We used a daemonset here to show that you can override a deamonset's default behaviour. This results in:
 
 
 ```bash
-# kubectl get daemonsets
+$ kubectl get daemonsets
 NAME       DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR        AGE
 ds-httpd   1         1         1       1            1           ec2InstanceType=M3   22s
-# kubectl get pods -o wide
+
+
+$ kubectl get pods -o wide
 NAME             READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
 ds-httpd-h7t6q   1/1     Running   0          26s   192.168.2.3   kube-worker2   <none>           <none>
 ```
 
 Note, the nodeSelector is specified at the pod-spec level. That means you can use nodeSelector in lots of other objects, e.g. pods, replicaSets, Deployments,...etc. There are other ways to [assign pods to particular worker nodes](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/).
 
+
+
+## nodeName
+
+The ``pod.spec.nodeName`` setting works in a very similar way, but this setting restricts pods to be deployed on single worker node. 
+
+
+
+This setting essentially overrides the kube-scheduler and let's you manually assign pods to nodes. 

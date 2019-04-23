@@ -15,7 +15,14 @@ In this scenario we have a IT Admin who uses the docker cli to create a collecti
 
 There are workarounds to this by building multiple docker servers and put them behind a Load balancer. However that will bring it's own set of problems, because Docker hasn't been designed to run work that way. What's needed is a container orchestration software, such as Docker swarm, our in our case Kubernetes. 
 
-The Kubernetes software is made up over [several smaller self-contained components](https://kubernetes.io/docs/concepts/overview/components/) that all working together to deliver the Kubernetes solution.
+The Kubernetes software is made up over [several smaller self-contained components](https://kubernetes.io/docs/concepts/overview/components/) that all working together to deliver the Kubernetes solution. These components falls in of 2 categories, Master Components and Node Components.
+
+
+
+The master components manakes the kube cluster as a whole, whereas Node components are responsible for the actual running of the pods. 
+
+
+
 
 
 ![kubernetes-server](images/kubernetes-components.png)

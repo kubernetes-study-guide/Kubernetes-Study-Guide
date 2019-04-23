@@ -12,6 +12,7 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |
+          yum install -y bind-utils
           while true ; do
             date 
             # curl http://??????
