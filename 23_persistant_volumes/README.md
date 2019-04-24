@@ -44,40 +44,12 @@ spec:
 
 However, there is a problem with this approach, the developers who are packaging their apps into docker-images and pods are likely to not be familiar with the underlying platform that the kubecluster relies on. In fact it's not in their remit to have that kind of knowledge because Kubernetes is supposed to allow developers to develop without having to worry about whether their app is running in AWS, Azure,....etc.
 
-So filling in things like NFS server ip address in their yaml files becomes an undesired burden on the developers. A better solution would be for the Kubernetes Administrators to create the PV's as standalone Kubernetes Objects that are then available for the developers to reference in their pod yaml definitions.
+So filling in things like NFS server ip address in their yaml files becomes an undesired burden on the developers. A better solution would be for the Kubernetes Administrators to create the PV's as standalone Kubernetes Objects that are then available for the developers to reference in their pod yaml definitions. That's possible, thats to **Persistent Volume Claims (aka PVCs)**. PVC can
 
-
-
-That's exactly the purpose of Persistant Volume Claims. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- - statically 
- - dynamically (by using persistantVolumeClaims)
+ - use existing PVs 
+ - dynamically provisions PVs
  
-  Let's take a look at both these approaches using AWS's AWSElasticBlockStore as an example.
+ Let's take a look at both these approaches using AWS's AWSElasticBlockStore as an example.
 
 
 ## Statically Provisioned Persistant Volumes
@@ -117,7 +89,6 @@ spec:
 This approach has a few pros and cons, depending on individual's permissions/roles/responsibilities in a workplace. For example a pod creator may need to seek company approval to get an EBS block created (since they cost money). Once their request is approved, the request could then be passed on to an AWS administrator to be actioned. The AWS administrator would then inform the pod creator of the volume id to use. 
 
 However in other workplaces, the pod ceator may have full rights+approvals to create EBS volumes. In which case, manually creating ebs then copy+pasting volume id into the yaml file is not an elegant solution. Instead it may be better to dynamically provision it. 
-
 
 
 ## Dynamically Provision Persistant Volumes
