@@ -226,7 +226,7 @@ Commercial support is available at
 
 However we can't rely on IP addresses because they are prone to changing, e.g. when a pod is rebuilt. So hard coding ip addresses in various places is not an option. The conventional way address this problem is giving each pod a human-readable dns name, which is kept up to date dynamically, that's where kube-dns comes to the rescue
 
-DNS Service
+## DNS Service
 
 Kubernetes comes with a builtin internal dns service, kube-dns ([soon to be coredn](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/)).
 
