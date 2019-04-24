@@ -44,7 +44,7 @@ ds-httpd   2         2         2       2            2           <none>          
 In our example we want to disable kube-worker1. before making a node offline. The best way to do this is to move all pods out of kube-worker1 and place them in the other worker nodes, i.e. we want to drain kube-worker1:
  
 ```bash
-# kubectl drain kube-worker1 --ignore-daemonsets
+$ kubectl drain kube-worker1 --ignore-daemonsets
 node/kube-worker1 cordoned
 WARNING: ignoring DaemonSet-managed Pods: default/ds-httpd-jbrn4, kube-system/calico-node-4qcf7, kube-system/kube-proxy-qxb8f
 evicting pod "dep-httpd-8678c9bdd8-wfw72"
@@ -70,7 +70,7 @@ ds-httpd-jbrn4               1/1     Running   0          9m17s   192.168.1.4   
 The only exception being one of the daemonset pods, since we used the --ignore-daemonsets flag. That's because we shouldn't have more than one deamonset pod (from the same daemonset) running on a worker node. If we view our nodes again we should see that scheduling of pods to kube-worker1 has been disabled:
 
 ```bash
-# kubectl get nodes -o wide
+$ kubectl get nodes -o wide
 NAME           STATUS                     ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
 kube-master    Ready                      master   53m   v1.14.1   10.2.5.110    <none>        Ubuntu 16.04.5 LTS   4.4.0-131-generic   docker://18.6.1
 kube-worker1   Ready,SchedulingDisabled   <none>   51m   v1.14.1   10.2.5.111    <none>        Ubuntu 16.04.5 LTS   4.4.0-131-generic   docker://18.6.1
@@ -80,7 +80,7 @@ kube-worker2   Ready                      <none>   20m   v1.14.1   10.2.5.112   
 Now it's safe to poweroff and/or do maintenance work on kube-worker1. Once kube-worker1 node is ready to be added back to the kubecluster, you just to need to run:
 
 ```bash
-kubectl uncordon kube-worker1
+$ kubectl uncordon kube-worker1
 node/kube-worker1 uncordoned
 ```
 
