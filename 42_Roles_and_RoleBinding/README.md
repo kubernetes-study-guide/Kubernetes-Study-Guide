@@ -26,7 +26,7 @@ This creates:
 
 
 ```bash
-# kubectl get role -o wide
+$ kubectl get role -o wide
 NAME            AGE
 employee-role   74s
 ```
