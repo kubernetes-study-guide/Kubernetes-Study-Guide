@@ -6,11 +6,11 @@ In Kubernetes, it's possible to run kubectl commands (e.g. kubectl get pods), fr
 When humans use the kubectl command, we establish our identity with the kube-apiserver using TLS certificates. However for non-humans, i.e. pods, the pods identifies itself to the kube-apiserver by using Service Account objects. A ServiceAccount is an identity that's attached to a pod. Each namespace comes with a default serviceaccount:
 
 ```bash
-# kubectl get serviceaccounts
+$ kubectl get serviceaccounts
 NAME      SECRETS   AGE
 default   1         3d1h
 
-# kubectl get serviceaccounts default -o yaml
+$ kubectl get serviceaccounts default -o yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -23,7 +23,7 @@ metadata:
 secrets:
 - name: default-token-z8ffc
 
-# kubectl get secrets
+$ kubectl get secrets
 NAME                  TYPE                                  DATA   AGE
 default-token-z8ffc   kubernetes.io/service-account-token   3      3d1h
 
@@ -89,10 +89,10 @@ Error from server (Forbidden): pods is forbidden: User "system:serviceaccount:de
 Here we can see that we got a forbidden error message, rather than an invalid credentials message, which means we've successfully authenticated. So let's say we want to give this pod fill clusterwide admin privileges, then we can do this by attaching cluster-admin priveleges to the default sa:
 
 ```bash
-# kubectl create clusterrolebinding cluster-admin-for-default-SA --clusterrole=cluster-admin --serviceaccount=default:default
+$ kubectl create clusterrolebinding cluster-admin-for-default-SA --clusterrole=cluster-admin --serviceaccount=default:default
 clusterrolebinding.rbac.authorization.k8s.io/cluster-admin-for-default-SA created
 
-# kubectl describe clusterrolebindings cluster-admin-for-default-SA
+$ kubectl describe clusterrolebindings cluster-admin-for-default-SA
 Name:         cluster-admin-for-default-SA
 Labels:       <none>
 Annotations:  <none>
@@ -108,7 +108,7 @@ Subjects:
 Now our pod has full access:
 
 ```bash
-# kubectl exec pod-centos -it -- /bin/bash
+$ kubectl exec pod-centos -it -- /bin/bash
 [root@pod-centos /]# kubectl get pods
 NAME         READY   STATUS    RESTARTS   AGE
 pod-centos   1/1     Running   1          11h
@@ -136,11 +136,11 @@ metadata:
 This creates:
 
 ```
-# kubectl get sa basic-access
+$ kubectl get sa basic-access
 NAME           SECRETS   AGE
 basic-access   1         81s
 
-# kubectl describe sa basic-access
+$ kubectl describe sa basic-access
 Name:                basic-access
 Namespace:           default
 Labels:              <none>
@@ -156,7 +156,7 @@ Also notice that a secret object is created for each ServiceAccount that you cre
 
 
 ```bash
-# kubectl get secrets basic-access-token-nlrc4
+$ kubectl get secrets basic-access-token-nlrc4
 NAME                       TYPE                                  DATA   AGE
 basic-access-token-nlrc4   kubernetes.io/service-account-token   3      23m
 ```
@@ -197,7 +197,7 @@ spec:
 Note, for convenience we're installing kubectl as part of the startup command. This ends up creating:
 
 ```bash
-# kubectl get pods pod-centos -o yaml
+$ kubectl get pods pod-centos -o yaml
 spec:
 ...
   serviceAccount: basic-access
@@ -285,7 +285,7 @@ Subjects:
 Now we'll see that kubectl now works from inside the pod:
 
 ```bash
-# kubectl exec pod-centos -it -- /bin/bash
+$ kubectl exec pod-centos -it -- /bin/bash
 [root@pod-centos /]# kubectl get svc
 NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          3d23h
