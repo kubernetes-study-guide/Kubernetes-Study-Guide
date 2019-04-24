@@ -179,9 +179,9 @@ tmpfs                         497M     0  497M   0% /sys/firmware
 ```
 
 
+## Dynamically provisions PVs
 
-
-
+This is covered when we cover StorageClasses. 
 
 
 ## IGNORE THE REST OF THIS ARTICLE
