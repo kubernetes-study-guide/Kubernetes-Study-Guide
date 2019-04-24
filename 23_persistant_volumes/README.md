@@ -46,10 +46,12 @@ However, there is a problem with this approach, the developers who are packaging
 
 So filling in things like NFS server ip address in their yaml files becomes an undesired burden on the developers. A better solution would be for the Kubernetes Administrators to create the PV's as standalone Kubernetes Objects that are then available for the developers to reference in their pod yaml definitions. That's possible, thats to **Persistent Volume Claims (aka PVCs)**. PVC can
 
- - use existing PVs 
- - dynamically provisions PVs
- 
- Let's take a look at both these approaches using AWS's AWSElasticBlockStore as an example.
+ 1. use existing PVs if there is a suitable PV that meets the requirements.  
+ 2. dynamically provisions PVs
+
+In both scenarios, the application developer doesn't need to create PVs. instead they just create PVCs instead. 
+
+Let's take a look at both these approaches using AWS's AWSElasticBlockStore as an example.
 
 
 ## Statically Provisioned Persistant Volumes
@@ -60,36 +62,14 @@ In this approach we manually create an EBS volume:
 aws ec2 create-volume --availability-zone=eu-west-1a --size=10 --volume-type=gp2
 ```
 
-This volume needs to be in the same AWS AZ as the worker node that it will be attached to. Then you use the ebs volume like this:
+This volume needs to be in the same AWS AZ as the worker node that it will be attached to. Then the Kubernetes Administrator creates the PV:
 
 ```yaml
 ---
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pod-httpd
-  labels:
-    component: apache_webserver
-spec:
-  volumes:
-    - name: webcontent
-      awsElasticBlockStore:
-        volumeID: <volume-id>             # need to hardcode the volume id in. 
-        fsType: ext4
-  containers:
-    - name: cntr-httpd
-      image: httpd
-      volumeMounts:
-        - name: webcontent
-          mountPath: /usr/local/apache2/htdocs
-      ports:
-        - containerPort: 80
+xxxx
 ```
 
-This approach has a few pros and cons, depending on individual's permissions/roles/responsibilities in a workplace. For example a pod creator may need to seek company approval to get an EBS block created (since they cost money). Once their request is approved, the request could then be passed on to an AWS administrator to be actioned. The AWS administrator would then inform the pod creator of the volume id to use. 
-
-However in other workplaces, the pod ceator may have full rights+approvals to create EBS volumes. In which case, manually creating ebs then copy+pasting volume id into the yaml file is not an elegant solution. Instead it may be better to dynamically provision it. 
-
+The app developer then creates a PVC that references this PV. 
 
 ## Dynamically Provision Persistant Volumes
 
