@@ -113,6 +113,7 @@ $ kubectl exec pod-centos -it -- /bin/bash
 NAME         READY   STATUS    RESTARTS   AGE
 pod-centos   1/1     Running   1          11h
 pod-httpd    1/1     Running   1          14h
+
 [root@pod-centos /]# kubectl get nodes
 NAME           STATUS     ROLES    AGE     VERSION
 kube-master    Ready      master   3d12h   v1.14.0
@@ -290,6 +291,7 @@ $ kubectl exec pod-centos -it -- /bin/bash
 NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          3d23h
 svc-nodeport-httpd   NodePort    10.109.105.25   <none>        3050:31000/TCP   25h
+
 [root@pod-centos /]# kubectl get pods
 NAME         READY   STATUS    RESTARTS   AGE
 pod-centos   1/1     Running   0          45m
@@ -300,15 +302,17 @@ However other commands don't work even though they are permitted in the 'view' C
 ```bash
 [root@pod-centos /]# kubectl get nodes
 Error from server (Forbidden): nodes is forbidden: User "system:serviceaccount:default:basic-access" cannot list resource "nodes" in API group "" at the cluster scope
+
 [root@pod-centos /]# kubectl get PersistentVolumes
 Error from server (Forbidden): persistentvolumes is forbidden: User "system:serviceaccount:default:basic-access" cannot list resource "persistentvolumes" in API group "" at the cluster scope
+
 [root@pod-centos /]# kubectl get pods --namespace=kube-system
 Error from server (Forbidden): pods is forbidden: User "system:serviceaccount:default:basic-access" cannot list resource "pods" in API group "" in the namespace "kube-system"
 ```
 
-That's because we've done something a little different this time so that we can demo this behaviour. We referenced a clusterRole in a rolebinding (instead of clusterrolebinding) object. This has the effect of limiting all accesses to the pod's namespace and it also means the pod can't access to things that arent namespace specific, e.g. nodes. If you want the SA do have cluster level permissions, then create a clusterrolebinding instead.
+That's because we've done something a little different this time so that we can demo this behaviour. We referenced a clusterRole in a rolebinding (instead of clusterrolebinding) object. This has the effect of limiting all accesses to the pod's namespace and it also means the pod can't access to things that arent namespace specific, e.g. nodes. This is a handy techniques that saves you the trouble fo creating your own 'Role' objects. 
 
-Another option is that you might want all pods across the cluster to have access to resources in a particular namespace, if you then you can achieve this by creating a ClusterRoleBinding that associates to a Role. 
+Another option is that you might want all pods across the cluster to have access to resources in a particular namespace, if so, then you can achieve this by creating a ClusterRoleBinding that associates to a Role. 
 
 
 ## Use curl instead of kubectl
