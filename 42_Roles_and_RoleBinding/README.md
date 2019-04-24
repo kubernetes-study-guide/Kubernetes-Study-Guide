@@ -97,7 +97,7 @@ To overcome these limitiation, you can create cluster wide roles and rolebinding
 
 ## Reference
 
-[# https://kubernetes.io/docs/reference/access-authn-authz/rbac/](# https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+[https://kubernetes.io/docs/reference/access-authn-authz/rbac/](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 
 [https://medium.com/containerum/configuring-permissions-in-kubernetes-with-rbac-a456a9717d5d](https://medium.com/containerum/configuring-permissions-in-kubernetes-with-rbac-a456a9717d5d)
 
