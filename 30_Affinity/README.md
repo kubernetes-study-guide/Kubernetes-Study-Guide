@@ -263,7 +263,7 @@ spec:
 ```
 
 
-The 'matchLabels' section is used to identify which pod you want your pod to be co-located with, the topologyKey setting specifies to which extent you want to what extent you want the co-location to be. In our case we used one of the builtin node labels to specify that we want to co-locate on the exact same node (based on hostname) that the mysql pod is currently on. If there was a 'zone' label available then we could have specified all nodes in the same AZ. 
+The 'matchLabels' section is used to identify which pod you want your pod to be co-located with, the **topologyKey** setting specifies to what extent you want the co-location to be. In our case we used one of the builtin node labels to specify that we want to co-locate on the exact same node (based on hostname) that the mysql pod is currently on. If there was a 'zone' label available then we could have specified all nodes in the same AZ. 
 
 So applying this results in:
 
