@@ -98,7 +98,7 @@ This approach also has the added benefit of separating out data from the yaml fi
 To check if that has worked, we do:
 
 ```bash
-$ kubectl exec pod-centos -c cntr-centos -it /bin/bash
+$ kubectl exec pod-centos -c cntr-centos -it -- /bin/bash
 [root@pod-centos /]# env | grep Fruit
 FruitName=banana
 FruitColor=yellow
