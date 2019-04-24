@@ -54,9 +54,10 @@ pod/dep-caddy-856475bcb9-ghsdc evicted
 node/kube-worker1 evicted
 ```
 
-```bash
 This results in all the pods being moved out of kube-worker1, and placed on the remaining worker nodes, which in this case is just kube-worker2. 
 
+```bash
+$ kubectl get oids -o wide
 NAME                         READY   STATUS    RESTARTS   AGE     IP            NODE           NOMINATED NODE   READINESS GATES
 dep-caddy-856475bcb9-mbdgt   1/1     Running   0          3m12s   192.168.2.5   kube-worker2   <none>           <none>
 dep-caddy-856475bcb9-tbl9r   1/1     Running   0          12m     192.168.2.3   kube-worker2   <none>           <none>
@@ -65,8 +66,6 @@ dep-httpd-8678c9bdd8-sbv4r   1/1     Running   0          13m     192.168.2.2   
 ds-httpd-9cxng               1/1     Running   0          9m17s   192.168.2.4   kube-worker2   <none>           <none>
 ds-httpd-jbrn4               1/1     Running   0          9m17s   192.168.1.4   kube-worker1   <none>           <none>
 ```
-
-
 The only exception being one of the daemonset pods, since we used the --ignore-daemonsets flag. That's because we shouldn't have more than one deamonset pod (from the same daemonset) running on a worker node. If we view our nodes again we should see that scheduling of pods to kube-worker1 has been disabled:
 
 ```bash
