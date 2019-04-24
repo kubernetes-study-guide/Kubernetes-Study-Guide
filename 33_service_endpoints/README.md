@@ -9,6 +9,24 @@ Earlier we saw how ClusterIP service objects are used:
 However what if you want your pods to access an external server which is accessible by an external IP address? You can feed in the external IP addreess into your pods via environment variables, but what if the IP address then changes? Luckily you can solve this problem using ClusterIP service objects again, but this time you omit specifying a selector section:
 
 ```yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-external-service
+spec:
+  type: ClusterIP
+#  selector:                 # don't include selector section
+#    app: myapp
+  ports:
+  - port: 443
+    targetPort: 443
+```
+
+So that we end up with:
+
+
+```bash
 $ kubectl describe service my-external-service | grep -i endpoint
 ```
 
@@ -22,8 +40,12 @@ NAME                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
 kubernetes            ClusterIP   10.96.0.1        <none>        443/TCP   111s
 my-external-service   ClusterIP   10.111.236.124   <none>        80/TCP    65s
 
-$ kubectl describe service my-external-service | grep endpoint
-$
+$ kubectl describe service my-external-service | grep -i endpoint
+Endpoints:         <none>
+
+$ kubectl get endpoints
+NAME         ENDPOINTS             AGE
+kubernetes   192.168.99.113:8443   108m
 ```
 
 To fix this, we create an Endpoint object:
