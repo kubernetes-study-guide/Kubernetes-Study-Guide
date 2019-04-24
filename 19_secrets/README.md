@@ -37,12 +37,78 @@ default-token-p5k7f   kubernetes.io/service-account-token   3      28m  # this c
 mysql-secrets        Opaque                                1      10s
 ```
 
-Here, the word 'generic' means refers to the type of secret. The 'generic' type simply meants to create a secret from the contents from local file, directory or literal value. Other options are 'docker-registry' and 'tls'. The '--from-literal' means, use the key=value pair specified on the command line. --from-literal, is only useful for simply secrets, e.g. passwords. But if your secrets comes in the form of a file, e.g. ssh private keys, then use '--from-file' instead, e.g.:
+Here, the word 'generic' means refers to the type of secret. There are 3 different types available:
 
 ```bash
-kubectl create secret generic my-secret --from-file=ssh-privatekey=~/.ssh/id_rsa
+$ kubectl create secret --help
+Create a secret using specified subcommand.
+
+Available Commands:
+  docker-registry Create a secret for use with a Docker registry
+  generic         Create a secret from a local file, directory or literal value
+  tls             Create a TLS secret
+
+Usage:
+  kubectl create secret [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
 ```
 
+
+The 'generic' type simply meants to create a secret from the contents from local file, directory or literal value. The '--from-literal' means, use the key=value pair specified on the command line. --from-literal, is only useful for simply secrets, e.g. passwords. But if your secrets comes in the form of a file, e.g. ssh private keys, then use '--from-file' instead, e.g.:
+
+```bash
+kubectl create secret generic my-private-ssh-key --from-file=ssh-privatekey=/path/to/.ssh/id_rsa
+```
+
+Here we specified the key's name is 'ssh-privatekey' and this secret key-value pair gets stored in the secret called my-private-ssh-key:
+
+```bash
+$ kubectl get secrets
+NAME                  TYPE                                  DATA   AGE
+default-token-6lgxt   kubernetes.io/service-account-token   3      3d23h
+my-private-ssh-key    Opaque                                1      3m43s
+
+$ kubectl describe secret my-private-ssh-key
+Name:         my-private-ssh-key
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Type:  Opaque
+
+Data
+====
+ssh-privatekey:  1692 bytes
+```
+
+We specified the secret key's name in the `--from-file`, but that's optional and can be left out:
+
+```bash
+kubectl create secret generic my-private-ssh-key --from-file=/path/to/.ssh/id_rsa
+```
+
+In this scenario, the secret's key name defaults to the file name:
+
+```bash
+$ kubectl get secrets
+NAME                  TYPE                                  DATA   AGE
+default-token-6lgxt   kubernetes.io/service-account-token   3      3d23h
+my-private-ssh-key    Opaque                                1      3m43s
+my-secret             Opaque                                1      9m11s
+$ kubectl describe secret my-private-ssh-key
+Name:         my-private-ssh-key
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Type:  Opaque
+
+Data
+====
+id_rsa:  1692 bytes
+```
 
 
 
