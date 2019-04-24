@@ -251,7 +251,9 @@ A pod's dns configuration is stored in `/etc/resolv.conf`. Kubernetes autogenera
 
 At the moment our httpd pods are not externally accessible, which is fine if they are solely intended to be used inside the kube cluster.
 
-However if you want the httpd pods to be externally accessible, then just setting up ClusterIP objects alone won't be enough to give you that ability. The recommended way of doing this is by 'Ingress' objects. We'll cover that next. 
+However if you want the httpd pods to be externally accessible, then just setting up ClusterIP objects alone won't be enough to give you that ability. We could create a nodePort service but we want to avoid using non-standard ports. We could hide the non-standard ports, by putting external loadbalancers (e.g. AWS ELB) in front of the worker nodes that does port forwarding. But that approach means we would end up with lots of loadbalancers which can get expensive. 
+
+The recommended way of doing this is by 'Ingress' objects. We'll cover that next. 
 
 
 ### Further Reading
