@@ -3,7 +3,7 @@
 
 Compared to Roles and RoleBindings, these can be easier to setup. Mainly because a Kubernetes install comes with a set of default:
 
-```bash
+```sh
 $ kubectl get clusterrole
 NAME                                                                   AGE
 admin                                                                  2d22h
