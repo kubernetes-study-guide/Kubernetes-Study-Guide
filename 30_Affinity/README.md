@@ -1,6 +1,6 @@
 # Affinity and Anti-Affinity
 
-We came across nodeSelector as part of looking at deamonsets. [Affinity/Anti-Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) can do the same thing as a nodeSelector but also has more capabilities:
+Earlier we saw how to assign pods to particular node(s) using nodeSelector and nodename settings. [Affinity/Anti-Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) can do the same thing as a nodeSelector but also has more capabilities:
 
 1. More versatile label selection method - e.g. instead of a simple key=value label match. You can just specify deploy/dont-deploy on nodes that has a key with a certain and ignoring what the key's value is. Or you can specify a list of valid values for a given key.  See `pod.spec.affinity.nodeAffinity`
 2. Specify preference (rather than hard rules) - So if no suitable deployment target is found, kubernetes will deploy it anyway to non-mathing targets, since it's more important for the pod(s) to exist than having those pods running on non-preferred worker, see `pod.spec.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution`
