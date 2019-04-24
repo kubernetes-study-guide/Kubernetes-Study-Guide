@@ -1,8 +1,8 @@
 # StorageClass
 
-Earlier we saw that in order for an App Developer to create a PVC, the KA needs to first create a PV object manually. Manually creating the same type of PV over and over again can become tedious. That's why in Kubernetes you can dynamically provisions VM on-demand by making use of [StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/) objects.
+Earlier we saw that in order for an App Developer to create a PVC, the KA needs to first manually create a suitable PV object beforehand. Manually creating the same type of PV over and over again can become tedious. That's why in Kubernetes you can automate this so that a PV is automically creates as an when a new PVC requests for it, i.e. dynamically provisions VM on-demand. That's done by making use of [StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/) objects.
 
-Like PVs, StorageClass objects exists at the kube cluster level as opposed to the namespace level. So objects in any namespace can make use of it. A PVC can submit a request to a StorageClass and the StorageClass can create a PV upon requests.
+Like PVs, StorageClass are cluster level objects. So objects in any namespace can make use of it. A PVC can submit a request to a StorageClass and the StorageClass can create a PV upon requests.
 
 [StorageClasses doesn't support all PV types (e.g. NFS) yet](https://kubernetes.io/docs/concepts/storage/storage-classes/#provisioner).
 
