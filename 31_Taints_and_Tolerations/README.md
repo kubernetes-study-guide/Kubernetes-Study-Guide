@@ -44,9 +44,10 @@ Then the Dev team performs their tests, and if it passes, then you untaint the n
 After a node has been tainted, if you try doing a standard 3-pod-deployment, you'll find:
 
 ```bash
-# kubectl apply -f configs/eg1-taints/
+$ kubectl apply -f configs/eg1-taints/
 deployment.apps/dep-httpd created
-# kubectl get pods -o wide
+
+$ kubectl get pods -o wide
 NAME                         READY   STATUS    RESTARTS   AGE   IP             NODE           NOMINATED NODE   READINESS GATES
 dep-httpd-78f54cc967-2r7p8   1/1     Running   0          23s   192.168.2.13   kube-worker2   <none>           <none>
 dep-httpd-78f54cc967-blznk   1/1     Running   0          23s   192.168.2.12   kube-worker2   <none>           <none>
