@@ -1,5 +1,7 @@
 # Pod nodeSelector and nodeName
 
+
+## nodeSelector
 You may want to deploy your pods to a particular subset of worker nodes, e.g. all nodes of ec2 instance type of M3. You can do that by assigning arbitrary labels to your nodes:
 
 
