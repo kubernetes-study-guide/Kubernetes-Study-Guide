@@ -129,7 +129,7 @@ $ kubectl exec -it pod-httpd -c cntr-httpd -- nc -v localhost 80
 localhost [127.0.0.1] 80 (?) open
 ```
 
-In this example if we omitted the '--', then kubectl would have failed because it would have thought that that '-v' is a kubectl flag rather than a netcat flag.
+The '--' is used to tell kubectl that everythign after '--' is a command to run inside the container. In this example if we omitted the '--', then kubectl would have failed because it would have thought that that '-v' flag is a kubectl flag rather than nc's flag. However you can omit the '--' as long as the exec command doesn't contain any flags of its. 
 
 
 ### Validate from inside the kube master/worker node
