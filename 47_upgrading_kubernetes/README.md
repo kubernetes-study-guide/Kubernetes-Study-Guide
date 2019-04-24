@@ -160,7 +160,6 @@ kube-worker1   Ready    <none>   82m   v1.13.5
 
 ## Upgrading by downloading the binary
 
-# upgrading the master
 First choose which version you want to install by selecting the changelog file. 
 
 E.g. we want to upgrade to version 1.14. So we choose the [CHANGELOG-1.14.md](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md). Then select the patch version, in our case we want, [v1.14.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1140). This has the client binaries (which has kubectl binary) and server binaries (which has the kubeadm, kubelet binary...etc). Next download these binaries using curl, and then extract the tar file:
