@@ -91,6 +91,7 @@ These are virtual network interfaces that exists as part of the pod. These same 
 ```bash
 [root@pod-centos /]# curl http://127.0.0.1
 <html><body><h1>It works!</h1></body></html>
+
 [root@pod-centos /]# curl http://172.17.0.7
 <html><body><h1>It works!</h1></body></html>
 ```
