@@ -96,6 +96,8 @@ spec:
       storage: 1Gi
   volumeName: pv-db-data-storage
 ```
+Notice, how much easier this is to write for the App Developer, there's no need specify to specify any technology related settings, e.g. nfs IP addresses. 
+
 
 As soon as you apply the above yaml, we don't explicitly refer to a particular PV object, instead it specifies some of the storage requirements. Kubernetes will therefore cross-reference this PVC's requirements against all available PVs to find a suitable match. In particular the PV needs to:
 
@@ -103,7 +105,7 @@ As soon as you apply the above yaml, we don't explicitly refer to a particular P
 - Offer equal to or more storage requested by the PVC
 - If 'volumeName' is used then pv name needs to match too. So may be convenient to omit this. 
 
-In our case our PV meeds the needs of the PVC so the PVC successfully bounds itself to the PVC, i.e. the PVC successfully claimed the PV:
+In our case our PV meeds the needs of the PVC so the PVC successfully 'bounds' itself to the PVC, i.e. the PVC successfully claimed the PV:
 
 ```bash
 # kubectl get pvc
