@@ -1,6 +1,36 @@
 # Affinity and Anti-Affinity
 
-Earlier we saw how to assign pods to particular node(s) using nodeSelector and nodename settings. [Affinity/Anti-Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) can do the same thing as a nodeSelector but also has more capabilities:
+Earlier we saw how to assign pods to particular node(s) using nodeSelector and nodename settings. [Affinity/Anti-Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity), is another feature that does the same kind of thing:
+
+
+```bash
+$ kubectl explain pod.spec.affinity 
+KIND:     Pod
+VERSION:  v1
+
+RESOURCE: affinity <Object>
+
+DESCRIPTION:
+     If specified, the pod's scheduling constraints
+
+     Affinity is a group of affinity scheduling rules.
+
+FIELDS:
+   nodeAffinity <Object>
+     Describes node affinity scheduling rules for the pod.
+
+   podAffinity  <Object>
+     Describes pod affinity scheduling rules (e.g. co-locate this pod in the
+     same node, zone, etc. as some other pod(s)).
+
+   podAntiAffinity      <Object>
+     Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod
+     in the same node, zone, etc. as some other pod(s)).
+```
+
+
+
+Affinity settings has additional capabilities:
 
 1. More versatile label selection method - e.g. instead of a simple key=value label match. You can just specify deploy/dont-deploy on nodes that has a key with a certain and ignoring what the key's value is. Or you can specify a list of valid values for a given key.  See `pod.spec.affinity.nodeAffinity`
 2. Specify preference (rather than hard rules) - So if no suitable deployment target is found, kubernetes will deploy it anyway to non-mathing targets, since it's more important for the pod(s) to exist than having those pods running on non-preferred worker, see `pod.spec.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution`
@@ -24,7 +54,7 @@ kube-worker2   Ready    <none>   75m   v1.13.4   beta.kubernetes.io/arch=amd64,b
 
 ```
 
-then our affinity setting is going to be:
+Then our affinity setting is going to be:
 
 
 ```yaml
