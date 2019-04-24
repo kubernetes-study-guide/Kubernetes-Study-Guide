@@ -108,12 +108,12 @@ As soon as you apply the above yaml, we don't explicitly refer to a particular P
 In our case our PV meeds the needs of the PVC so the PVC successfully 'bounds' itself to the PVC, i.e. the PVC successfully claimed the PV:
 
 ```bash
-# kubectl get pvc
+$ kubectl get pvc
 NAME                  STATUS   VOLUME               CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 pvc-db-data-storage   Bound    pv-db-data-storage   1Gi        RWO                           68s
 
 
-# kubectl describe pvc pvc-db-data-storage
+$ kubectl describe pvc pvc-db-data-storage
 Name:          pvc-db-data-storage
 Namespace:     default
 StorageClass:
