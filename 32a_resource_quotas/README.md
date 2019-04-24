@@ -32,7 +32,7 @@ So to make optimal use of these resources, we have to set quotas.
 
 # Pod Quotas
 
-The containers pod might need a minimum amount of cpu+ram in order to work properly. If so then you can specify them with the `pod.spec.containers.resources.requests` settings. Also you can set the maximum amount of cpu+ram your pod's containers are allowed to use, with the `pod.spec.containers.resources.limits` setting, in case your container unexpected and starts using too much hardware resources which in turn could have a knock on impact on other things running on your kube cluster. 
+The containers pod might need a minimum amount of cpu+ram in order to work properly. If so then you can specify them with the `pod.spec.containers.resources.requests` settings. Also you can set the maximum amount of cpu+ram your pod's containers are allowed to use, with the `pod.spec.containers.resources.limits` setting, in case your container unexpected starts using too much hardware resources which in turn could have a knock on impact on other things running on your kube cluster. 
 
 ```yaml
 ---
