@@ -64,7 +64,7 @@ pod-httpd   1/1     Running   0          114s   172.17.0.8   minikube   <none>  
 Here we can see tha the new pod has been created. The pod's name is 'pod-httpd' which is exactly the name we asked for in our pod descriptor's metadata.name setting. The pod has it's very own private IP auto-assigned to it. To get more detailed info about our pod, we use the 'describe' subcommand:
 
 ```bash
-kubectl describe pods pod-httpd
+$ kubectl describe pods pod-httpd
 Name:               pod-httpd
 Namespace:          default
 Priority:           0

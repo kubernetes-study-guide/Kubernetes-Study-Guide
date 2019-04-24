@@ -57,11 +57,16 @@ most of the demos are done on a minikube based kubecluster. But some demo requir
 
 ## How to follow this course
 
-First create a fork of this repo. Then clone it. Then set up a vs code. 
+First create a fork of this repo. Then clone it. Then set up a vs project. 
 
 How to follow this course,
 
-This course is heavily focused helping you get familiar with the official kubernetes documentation, so that you know your way around it. Since you will have access to the docs during the exam. 
+Use 'grep -ir "xxx"'
+
+This course is heavily focused helping you get familiar with the official kubernetes documentation, so that you know your way around it. Since you will have access to the docs during the exam.
+
+
+At the end of this course we'll review the exam objectives and see which topic is covered. 
 
 
 ## Notations.
