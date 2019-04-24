@@ -86,7 +86,7 @@ If pod has tolerations to override the taints.
 ### 6. Pod Affinity
 
 
-### 7. Node Anti-Affinity
+### 7. Pod Anti-Affinity
 
 ### 8. HostPorts
 
