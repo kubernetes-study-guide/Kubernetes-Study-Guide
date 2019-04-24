@@ -59,9 +59,8 @@ configmaps                        cm                                          tr
 endpoints                         ep                                          true         Endpoints
 ...
 ```
-Also notice that this table species which objects are namespace level objects, and which are cluster-wide
 
-This replicaset in turn creates the following pods:
+Also notice that this table species which objects are namespace level objects, and which are cluster-wide. This replicaset in turn creates the following pods:
 
 ```bash
 $ kubectl get pods -o wide --show-labels
@@ -80,6 +79,10 @@ NAME                           TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S) 
 svc-nodeport-httpd-webserver   NodePort   10.110.27.161   <none>        3050:31000/TCP   10m   component=httpd_webserver
 $ kubectl describe svc svc-nodeport-httpd-webserver | grep Endpoint
 Endpoints:                172.17.0.7:80,172.17.0.8:80
+
+$ kubectl get endpoints svc-nodeport-httpd-webserver
+NAME                           ENDPOINTS                     AGE
+svc-nodeport-httpd-webserver   172.17.0.2:80,172.17.0.8:80   10m
 ```
 
 The nodePort service isn't aware that the replicaset created the pods. All it's interested in is forwarding traffic to pods with labels that matches the Nodeport object's selector:
