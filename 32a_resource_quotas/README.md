@@ -98,9 +98,9 @@ It's best practice to always include requests+limit setting in all pod definitio
 Note: If you exec into your containers, and then run `top` or `free -m`. Then you'll only see your worker node's cpu and ram. That's becuase these limits are applied to your pods externally by kubernetes. 
 
 
-## Namespace Quota
+## ResourceQuota
 
-It's best practice to always specify pod requests+limits for the optimal running of your kube cluster. You can force all pod definitions to require limit+requests settings, so that if they are omitted then kubernetes will throw error message. That's done by creating a ResourceQuota object. A resource quota is somethig that gets applied at the namespace level:
+It's best practice to always specify pod requests+limits in your pod specs for the optimal running of your kube cluster. In fact you can force all pod definitions to require limit+requests settings to be explicitly set, so that if they are omitted then kubernetes will throw error messages. That's done by creating a **ResourceQuota** object. A resource quota set the limits at the namespace level:
 
 
 ```yaml
@@ -118,6 +118,7 @@ spec:
     limits.memory: 2Gi
 ```
 
+Although it doesn't explicitly say here that pod requests+limits are now mandatory. It is implied, since kubernetes now needs explicit pod resource requests/limits specs in order to perform it's calculatation. 
 
 You can also use ResourceQuota to set limits on the number of different types of Kubernetes objects that are allowed to exist in a namespace: 
 
@@ -137,7 +138,7 @@ spec:
     services.loadbalancers: 0
 ```
 
-For examplem, here we're saying that you can't have more than 2 pods running inside the 'codingbee' namespace. After we apply these 2 ResourceQuotas, we end up with:
+For example, here we're saying that you can't have more than 2 pods running inside the 'codingbee' namespace. After we apply these 2 ResourceQuotas, we end up with:
 
 ```bash
 $ kubectl get ResourceQuota
@@ -168,7 +169,7 @@ services.loadbalancers  0     0
 services.nodeports      0     0
 ```
 
-Objects limits is a powerful way to disable certain features in your namespace. E.g. If you want Terraform to be responsible for building loadbalancers, then you set services.loadbalancers to 0, and if you want Hashicorp Vault as your central secrets manager, then set secrets to 0. 
+Setting objects limits is a powerful way to disable certain features in your namespace. E.g. If you want Terraform to be responsible for building your loadbalancers, then you set services.loadbalancers to 0, and if you want Hashicorp Vault as your central secrets manager, then set secrets to 0. 
 
 Let's now try to breach a limit, let's try to exeed the pod limit, by scaling our current deployment to 3 pods:
 
@@ -227,7 +228,7 @@ Events:
 
 ## LimitRange
 
-When you have ResourceQuota object with limits in place for cpu+ram, it meant that it has become mandatory for all pods definitons to specify cpu+ram limits as well. So the following will no longer work:
+When you have ResourceQuota object with limits in place for cpu+ram, it means that it has now become mandatory for all pods definitons to specify cpu+ram limits as well. So the following will no longer work:
 
 ```yaml
 ---
