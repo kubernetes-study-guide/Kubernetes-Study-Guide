@@ -124,7 +124,7 @@ dep-httpd-7b9d4f7ccf   2         2         2       6m18s
 dep-httpd-95466f584    1         1         1       149m
 ```
 
-The net result is that all the old pods gets replaced by the new pods one at a time (also you can further customise the rolling update strategy using maxSurge+maxUnavailable yaml settings so that you can replace pods 2 or more pods at a time). 
+The net result is that all the old pods gets replaced by the new pods one at a time (also you can further customise the rolling update strategy using maxSurge+maxUnavailable yaml settings so that you can replace pods 2 or more pods at a time).
 
 ## Perform rollbacks
 
