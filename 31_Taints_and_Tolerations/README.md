@@ -57,6 +57,7 @@ None of the pods ended up on the tainted node, kube-worker1.
 
 
 **Question**: How will the Dev Team perform test on the tainted node if the tainted node repels all pod objects?
+
 **Answer**: You can add a 'toleration' setting in your pod yaml spec to override taint setting.  
 
 
