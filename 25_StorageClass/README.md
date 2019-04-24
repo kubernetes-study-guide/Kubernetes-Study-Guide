@@ -114,7 +114,7 @@ standard (default)   k8s.io/minikube-hostpath   51m
 standard-persist     k8s.io/minikube-hostpath   4s
 ```
 
-Now in our PVC yaml file, we need to specifically request for this storageclass, to avoid it from usng the default. 
+Now in our PVC yaml file, we need to specifically request for this storageclass,`pvc.spec.storageClassName`, to avoid it from using the default. 
 
 
 ```yaml
@@ -149,7 +149,7 @@ Looks like a [bug](https://github.com/kubernetes/minikube/issues/3955).
 
 ## Disabling Dynamic Provisioning
 
-If you want your PVC to only use pre-provisioned PVs, and not use any storage classed, then you do that by setting storageClassName to an empty string:
+If you want your PVC to only use pre-provisioned PVs, and not use the default storage class, then you do that by setting storageClassName to an empty string:
 
 ```yaml
 ---
@@ -176,12 +176,3 @@ pvc-db-data-storage   Pending                                                   
 $ kubectl get pv
 No resources found.
 ```
-
-
-
-
-
-
-
-
-
