@@ -125,9 +125,24 @@ The pod, dep-httpd-597fc5f696-6ttn4 is displaying this page.
 The pod, dep-httpd-597fc5f696-qw4pf is displaying this page.
 ```
 
-This time we managed to curl to our pods using a dns name rather than ip address. Also we didn't need to use an non-standard port either (although that option is available for use, if we need it). 
+This time we managed to curl to our pods using a dns name rather than ip address. Also we didn't need to use an non-standard port either, unlike when using nodePort Services (although that option is available for use, if we need it). 
 
 So now we no longer need to worry about a pods IP address changing. Also we don't need to worry about how one pod can work out the ip address of another pod that it's trying to reach. We can now just use the static dns name instead for pod-to-pod communication. 
+
+Also as you can see from the above curl commands, by running curl a few times, we can also see the ClusterIP's loadbalancing feature in action. By the way we're also running this curl command inside a while loop, as part of the centos pods primary command. You can view this output in the logs:
+
+```bash
+$ kubectl logs pod-centos -c cntr-centos
+Wed Mar 13 12:19:02 UTC 2019
+The pod, dep-httpd-597fc5f696-qw4pf is displaying this page.
+Wed Mar 13 12:19:12 UTC 2019
+The pod, dep-httpd-597fc5f696-6ttn4 is displaying this page.
+Wed Mar 13 12:19:22 UTC 2019
+The pod, dep-httpd-597fc5f696-6ttn4 is displaying this page.
+Wed Mar 13 12:19:32 UTC 2019
+The pod, dep-httpd-597fc5f696-qw4pf is displaying this page.
+```
+
 
 
 ## DNS Entry structure
@@ -186,25 +201,6 @@ SVC_CLUSTERIP_HTTPD_PORT_80_TCP=tcp://10.99.158.152:80
 ```
 
 Note: any hyphens in service names gots converted to underscores, and all letters are switched to upper case.
-
-
-
-Also as you can see from the above curl commands, by running curl a few times, we can also see the ClusterIP's loadbalancing feature in action. By the way we're also running this curl command inside a while loop, as part of the centos pods primary command. You can view this output in the logs:
-
-```bash
-$ kubectl logs pod-centos
-Wed Mar 13 12:19:02 UTC 2019
-The pod, dep-httpd-597fc5f696-qw4pf is displaying this page.
-Wed Mar 13 12:19:12 UTC 2019
-The pod, dep-httpd-597fc5f696-6ttn4 is displaying this page.
-Wed Mar 13 12:19:22 UTC 2019
-The pod, dep-httpd-597fc5f696-6ttn4 is displaying this page.
-Wed Mar 13 12:19:32 UTC 2019
-The pod, dep-httpd-597fc5f696-qw4pf is displaying this page.
-```
-
-
-
 
 
 ### Some background info
