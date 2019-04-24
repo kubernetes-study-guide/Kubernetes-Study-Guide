@@ -174,7 +174,9 @@ The important thing here is that we:
 - We can now externally access the pods, and have them loadbalanced as well.   
 
 
+## Missing section: ingress tls
 
+Need to talk about how you would setup ingress to accept https connections. Also see `ingress.spec.tls`.
 
 ### Further Reading
 
