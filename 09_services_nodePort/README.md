@@ -2,19 +2,13 @@
 
 In Kubernetes, 'services' is actually all about networking. In Docker world, when you use docker-compose, all the networking is done for you automatically behind the scenes. However that's not the case when it comes to kubernetes. To setup networking in Kubernetes, you need to create 'service' objects.
 
-
 A single pod exists inside a single node. So if the node dies, then the pod dies with it. However that's not the case case with services. A service exists cluster-wide. 
 
 ![nodeport.png](images/nodeport.png)
 
-
-
-
-
 There are [4 main types of services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types).
 
 In this example let's just spin up the following pods for now:
-
 
 ```bash
 $ kubectl apply -f configs/pod-centos.yml
@@ -33,7 +27,7 @@ pod-httpd    1/1     Running   0          4s    172.17.0.8   minikube   <none>  
 At this stage we have created 2 pods, pod-httpd is an apache webserver listening on port 80, and pod-centos is a generic centos container. Kubernetes automatically assigns an IP address to each pod. These ip address makes it possible for all the pods in a kubecluster to reach each other:
 
 ```bash
-$ kubectl exec pod-centos -it -c cntr-centos -- /bin/bash 
+$ kubectl exec pod-centos -it -c cntr-centos -- /bin/bash
 [root@pod-centos /]# curl http://172.17.0.8
 <html><body><h1>It works!</h1></body></html>
 ```
@@ -133,10 +127,11 @@ When you create a nodeport service, than all worker nodes in the kubecluster is 
 
 Nodeport is actually rarely used in production, and is mainly used for development purposes only. That's because:
 
-- url endpoint needs to explicitly end with ':{port number}'. That looks ugly, doesn't scale well, and keep tracking of lots of pod numbers would be a nightmare. 
+- url endpoint needs to explicitly end with ':{port number}'. That looks ugly, doesn't scale well, and keep tracking of lots of pod numbers would be a nightmare. One way around this is by putting a load balacner (e.g. aws ELB) in front of the worker nodes, that does portforwarding internally. In which case you would need one loadbalancer for each non-standard port number, which can get pricey. 
 - You'll end up using a lot of non-standard ports. 
 - all the port numbers requires extra work on the cloud platfrom.
 - To set up HA, you need to create an ELB for each nodeport service.
 
 
 That's why there are other types of service objects such as Ingress and ClusterIP service objects which we'll cover later.
+

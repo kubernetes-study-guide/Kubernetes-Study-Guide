@@ -91,7 +91,7 @@ You can scale deployments up/down by simply updating the `deployment.spec.replic
 
 
 ```bash
-kubectl edit deployments deploymentname
+kubectl edit deployments DeploymentName
 ```
 
 You can also do it imperatively using the scale subcommand:
@@ -126,7 +126,7 @@ dep-httpd-95466f584    1         1         1       149m
 
 The net result is that all the old pods gets replaced by the new pods one at a time (also you can further customise the rolling update strategy using maxSurge+maxUnavailable yaml settings so that you can replace pods 2 or more pods at a time).
 
-## Perform rollbacks
+## Perform rollbacks
 
 The cool thing about this approach is that if you decide to do a rollback, then you simply need to revert the yaml file back to it's old image and reapply it, but this time the deployment won't create a new replicaset, instead it would just scale up the existing replicaset, and scale down the now redundant replicaset. However if want need to rollback in rush and don't have time to update the yaml file, then you can use the 'rollout' to achieve the same effect:
 
