@@ -1,19 +1,19 @@
 # Upgrading Kubernetes
 
 
-This article uses the following repo as a demo (using kubeadm-upgrade-demo branch): https://github.com/Sher-Chowdhury/kubernetes-the-kubeadm-way-vagrant/tree/kubeadm-upgrade-demo
+> This article uses the following repo as a demo (using kubeadm-upgrade-demo branch): https://github.com/Sher-Chowdhury/kubernetes-the-kubeadm-way-vagrant/tree/kubeadm-upgrade-demo
 
 Newer versions Kubernetes are released every few months. So it's best to stay up to date by regularly upgrading your kube clusters. If you provisioned your cluster with kubeadm, then you can use also use kubeadm to perform the upgrades too. For this article we'll assume that kubeadm.
 
 Let's first check what version we have of everything. We have the following version of kubelet:
 
 ```bash
-# kubectl version --short
+$ kubectl version --short
 Client Version: v1.13.5
 Server Version: v1.13.5
 
 # Thee above doesn't specify kubelet version, for the kubelet version you need to run:
-# kubectl get nodes
+$ kubectl get nodes
 NAME           STATUS   ROLES    AGE    VERSION
 kube-master    Ready    master   102m   v1.14.0
 kube-worker1   Ready    <none>   100m   v1.13.5
