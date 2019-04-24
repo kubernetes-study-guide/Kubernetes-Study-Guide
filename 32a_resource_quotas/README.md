@@ -1,6 +1,6 @@
 # Quotas
 
-Each worker node has a limited amount of cpu+ram available, you can get info aobut how much cpu+ram a worker node has, and how much of that is allocatable, and how much of that is used by pods so far:
+Earlier we saw how you can find out how much cpu+ram each pod is using using the `kubectl top` command. You can even drill down to a pods container level.  Each worker node has a limited amount of cpu+ram available, you can get info about how much cpu+ram a worker node has, and how much of that is allocatable, and how much of that is used by pods so far:
 
 ```bash
 $ kubectl describe nodes kube-worker1
@@ -35,7 +35,6 @@ So to make optimal use of these resources, we have to set quotas.
 The containers pod might need a minimum amount of cpu+ram in order to work properly. If so then you can specify them with the `pod.spec.containers.resources.requests` settings. Also you can set the maximum amount of cpu+ram your pod's containers are allowed to use, with the `pod.spec.containers.resources.limits` setting, in case your container unexpected and starts using too much hardware resources which in turn could have a knock on impact on other things running on your kube cluster. 
 
 ```yaml
----
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -92,7 +91,7 @@ CURRENT   NAME                 CLUSTER                      AUTHINFO            
 
 
 
-The requests value is not necessarily how much of the resource that's actually used, it's just how much resource that should be reserved in case the pod needs it. the pod can however 
+The requests value is not necessarily how much of the resource that's actually used, it's just how much resource that should be reserved in case the pod needs it.
 
 It's best practice to always include requests+limit setting in all pod definition, that's because it will help the kube-scheduler figure out which nodes to place the pods.
 
