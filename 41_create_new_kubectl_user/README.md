@@ -31,7 +31,6 @@ total 4
 -rw-rw-r-- 1 lisa lisa 1704 Apr  7 13:45 lisa.pem
 
 # Lisa creates the csr file
-```bash
 $ openssl req -new -key lisa.pem -out lisa.csr -subj "/CN=lisa/O=restricted/O=employee"
 $ ls -l lisa.csr
 -rw-rw-r-- 1 lisa lisa 940 Apr  7 13:48 lisa.csr
