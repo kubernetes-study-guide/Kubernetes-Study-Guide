@@ -44,7 +44,7 @@ spec:
 
 However, there is a problem with this approach, the developers who are packaging their apps into docker-images and pods are likely to not be familiar with the underlying platform that the kubecluster relies on. In fact it's not in their remit to have that kind of knowledge because Kubernetes is supposed to allow developers to develop without having to worry about whether their app is running in AWS, Azure,....etc.
 
-So filling in things like NFS server ip address in their yaml files becomes an undesired burden on the developers. A better solution would be for the Kubernetes Administrators to create the PV's as standalone Kubernetes Objects that are then available for the developers to reference in their pod yaml definitions. That's possible, thats to **Persistent Volume Claims (aka PVCs)**. PVC can
+So filling in things like NFS server ip address in their yaml files becomes an undesired burden on the developers. A better solution would be for the Kubernetes Administrators to create the PV's as standalone Kubernetes Objects that are then available for the developers to reference in their pod yaml definitions. That's possible, thanks to **Persistent Volume Claims (aka PVCs)**. PVC can
 
  1. use existing PVs if there is a suitable PV that meets the requirements.  
  2. dynamically provisions PVs
@@ -56,7 +56,7 @@ Let's take a look at both these approaches using AWS's AWSElasticBlockStore as a
 
 ## Statically Provisioned Persistant Volumes
 
-In this approach we manually create an EBS volume:
+~In this approach we manually create an EBS volume:~
 
 ```bash
 aws ec2 create-volume --availability-zone=eu-west-1a --size=10 --volume-type=gp2
