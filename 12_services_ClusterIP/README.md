@@ -92,6 +92,7 @@ Another way to confirm this is:
 $ kubectl get endpoints svc-clusterip-httpd 
 NAME                  ENDPOINTS                                   AGE
 svc-clusterip-httpd   172.17.0.2:80,172.17.0.8:80,172.17.0.9:80   108s
+
 $ kubectl describe endpoints svc-clusterip-httpd
 Name:         svc-clusterip-httpd
 Namespace:    default
