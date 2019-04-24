@@ -11,8 +11,7 @@ So filling in things like NFS server ip address in their yaml files becomes an u
 
 In both scenarios, the application developer doesn't need to create PVs. instead they just create PVC objects instea. 
 
-
-## Use existing PVCs
+## Use existing PVs
 
 Let's take a look at both these approaches using AWS's AWSElasticBlockStore as an example. Following on from the previous NFS example, the Kubernetes Administrator (KA) is the person who not only builds+maintains the kubecluster, but also manages the underlying infrastructure, e.g. AWS, Azure, On-Premise,...etc. In this scenario, the KA could also be the person who built the NFS server too. Once the NFS server is available, the KA would then create the PV:
 
