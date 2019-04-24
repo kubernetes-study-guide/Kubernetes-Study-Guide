@@ -7,7 +7,7 @@ We came across nodeSelector as part of looking at deamonsets. [Affinity/Anti-Aff
 3. Prevent particular pods from running on the same worker node (co-locating), based on labels. See `pod.spec.affinity.podAntiAffinity`.
 
 
-## NodeAffinity Preference (eg1-node-affinity)
+## NodeAffinity Preference (eg1-node-affinity)
 
 For this demo we'll create the following node label:
 
