@@ -127,7 +127,7 @@ The pod, dep-httpd-597fc5f696-qw4pf is displaying this page.
 
 This time we managed to curl to our pods using a dns name rather than ip address. Also we didn't need to use an non-standard port either (although that option is available for use, if we need it). 
 
-So now we no longer need to worry about a pods IP address changing. Also we don't need to worry about how one pod can work out the ip address of another pod that's it trying to reach. We can now just use the static dns name instead for pod-to-pod communication. 
+So now we no longer need to worry about a pods IP address changing. Also we don't need to worry about how one pod can work out the ip address of another pod that it's trying to reach. We can now just use the static dns name instead for pod-to-pod communication. 
 
 
 ## DNS Entry structure
