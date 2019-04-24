@@ -53,10 +53,10 @@ In both scenarios, the application developer doesn't need to create PVs. instead
 
 Let's take a look at both these approaches using AWS's AWSElasticBlockStore as an example.
 
-
+~
 ## Statically Provisioned Persistant Volumes
 
-~In this approach we manually create an EBS volume:~
+In this approach we manually create an EBS volume:
 
 ```bash
 aws ec2 create-volume --availability-zone=eu-west-1a --size=10 --volume-type=gp2
@@ -357,6 +357,6 @@ mysql> show databases;
 
 mysql> 
 ```
-
+~
 
 
