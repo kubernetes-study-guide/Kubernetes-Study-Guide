@@ -1,11 +1,20 @@
 # Persistant Volume Claims
 
-I've created a [/kubernetes-NFS-Persistant-Volume-Vagrant](https://github.com/Sher-Chowdhury/kubernetes-NFS-Persistant-Volume-Vagrant-Demo) for this article so that you can follow along this demo. 
+> I've created a [kubernetes-NFS-Persistant-Volume-Vagrant](https://github.com/Sher-Chowdhury/kubernetes-NFS-Persistant-Volume-Vagrant-Demo) for this article so that you can follow along this demo. 
 
-Following on from the previous NFS example, the Kubernetes Administrator (KA) is the person who not only builds+maintains the kubecluster, but also manages the underlying infrastructure, e.g. AWS, Azure, On-Premise,...etc. 
+So far we've covered how an Application App Developer can use persistent volumes by adding the necessary section under their pod spec. However, there is a problem with this approach, the developers (who are packaging their apps into docker-images and pods are) likely to have only a basic understanding of the kubernete cluster's underlying cloud/on-premise infrastructure. In fact as developers, it's not in their remit to have that kind of knowledge because Kubernetes is supposed to allow developers to develop without having to worry about whether their app is running in AWS, Azure,....etc.
+
+So filling in things like NFS server ip address in their yaml files becomes an undesired burden on the developers. A better solution would be for the Kubernetes Administrators to create the PV's as standalone Kubernetes Objects that are then available for the developers to reference in their pod yaml definitions. That's possible, thanks to **Persistent Volume Claims (aka PVCs)**. PVC can
+
+ 1. use existing PVs if there is a suitable PV that meets the requirements.  
+ 2. dynamically provisions PVs
+
+In both scenarios, the application developer doesn't need to create PVs. instead they just create PVC objects instea. 
 
 
-In this scenario, the KA could also be the person who built the NFS server too. Once the NFS server is available, the KA would then create the PV:
+## Use existing PVCs
+
+Let's take a look at both these approaches using AWS's AWSElasticBlockStore as an example. Following on from the previous NFS example, the Kubernetes Administrator (KA) is the person who not only builds+maintains the kubecluster, but also manages the underlying infrastructure, e.g. AWS, Azure, On-Premise,...etc. In this scenario, the KA could also be the person who built the NFS server too. Once the NFS server is available, the KA would then create the PV:
 
 ```yaml
 ---
