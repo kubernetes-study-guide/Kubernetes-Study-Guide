@@ -10,7 +10,7 @@ If you just turn off the worker node, the kubecluster will assume it just tempor
 Let's say we have the following cluster:
 
 ```bash
-# kubectl get nodes
+$ kubectl get nodes
 NAME           STATUS   ROLES    AGE   VERSION
 kube-master    Ready    master   33m   v1.14.1
 kube-worker1   Ready    <none>   31m   v1.14.1
@@ -20,7 +20,7 @@ kube-worker2   Ready    <none>   55s   v1.14.1
 And this cluster has the following pods running:
 
 ```bash
-# kubectl get pods -o wide
+$ kubectl get pods -o wide
 NAME                         READY   STATUS    RESTARTS   AGE     IP            NODE           NOMINATED NODE   READINESS GATES
 dep-caddy-856475bcb9-ghsdc   1/1     Running   0          3m37s   192.168.1.3   kube-worker1   <none>           <none>
 dep-caddy-856475bcb9-tbl9r   1/1     Running   0          3m37s   192.168.2.3   kube-worker2   <none>           <none>
@@ -34,7 +34,7 @@ ds-httpd-jbrn4               1/1     Running   0          19s     192.168.1.4   
 Here we have 6 pods running across 2 worker nodes, kube-worker1 and kube-worker2. The last 2 pods in the lease, are actually deamonset pods:
 
 ```bash
-# kubectl get daemonsets
+$ kubectl get daemonsets
 NAME       DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
 ds-httpd   2         2         2       2            2           <none>          2m45s
 ```
