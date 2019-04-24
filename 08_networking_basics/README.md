@@ -12,7 +12,7 @@ In Docker world, when you use docker-compose, all the networking is done for you
   
 ## A pod's internal networking (eg1-networking-inside-pods)
 
-If you have 2+ containers inside a single pod, then these containers can reach each other via localhost. Let's say we create the following pod:
+If you have 2+ containers inside a single pod, then these containers can reach each other via localhost. Let's say we create the following 2-container pod:
 
 ```yaml
 ---
@@ -98,9 +98,8 @@ These are virtual network interfaces that exists as part of the pod. These same 
 Here our pod routes this curl request internally to the cntr-httpd container.
 
 **Question:** If our pod had several other containers, then how would our pod know which container to route the curl request to?
+
 **Answer:** Our yaml descriptor specifies which port each container is listening on (if any). Therefore our pod knows that requests destined to port 80 should be routed to cntr-httpd container.
-
-
 
 You also find that the following works as well:
 
@@ -227,8 +226,7 @@ Commercial support is available at
 
 However we can't rely on IP addresses because they are prone to changing, e.g. when a pod is rebuilt. So hard coding ip addresses in various places is not an option. The conventional way address this problem is giving each pod a human-readable dns name, which is kept up to date dynamically, that's where kube-dns comes to the rescue
 
-
-## DNS Service
+DNS Service
 
 Kubernetes comes with a builtin internal dns service, kube-dns ([soon to be coredn](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/)).
 

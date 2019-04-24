@@ -6,14 +6,14 @@ The primary function of a docker container is to run an executable (e.g. a binar
 - [CMD](https://docs.docker.com/engine/reference/builder/#cmd) - There's three ways to use this settng - the 2nd approach, which is to use CMD in conjunction with the ENTRYPOINT is the recommended way. This may look untuitively but it ensures that the primary process (PID 1) inside the container isn't the bash/sh session wrapper, but is the primary executable. 
 
 
-This entrypoint binary/command/script can be to run:
+This entrypoint's binary/command/script can be used to run:
 
 - **shortlived workloads** - if the container is supposed to perform a specific task.
 - **ongoing workloads** - E.g. running the apache httpd binary to provide an ongoing web service. 
 
 
 ## Shortlived Workloads (eg1-shortlived)
-Pods are designed for running containers with ongoing workloads. If your pod is built from an image, whose entrypoint is a shortlived (e.g. centos):
+Pods are designed for running containers with ongoing workloads. However, if your pod is built from an image, whose entrypoint is a shortlived (e.g. centos):
 
 ```bash
 ---
@@ -53,7 +53,7 @@ pod-centos   0/1     Completed   2          26s
 $ 
 ```
 
-Here the pods ran for less than a second before shutting down, kubernetes thought something went wrong and restart the container, and keeps restarting it in an endless cycle:
+Here the pods ran for less than a second before shutting down, kubernetes thought something went wrong and restarted the container, and keeps restarting it in an endless cycle:
 
 ```bash
 $ kubectl describe pod pod-centos
@@ -70,7 +70,7 @@ Events:
 
 ```
 
-To run containers that have shortlived workloads, you should run them as Kubernetes jobs or cronjobs objeect. We'll cover them later.
+To run containers that have shortlived workloads, you should run them as Kubernetes a **jobs** or **cronjobs** object. We'll cover them later.
 
 
 ## Ongoing Workloads (eg2-ongoing)
@@ -156,6 +156,8 @@ In this demo we use an image with an shortlived workload. However you can use th
 
 
 ## Other workloads
-There could be times when you want to run commands/scripts in addition to the docker image's backed in CMD/Entrypoint, rather than over-riding it. Luckily there are other ways to inject commands/shellscripts into pods, using [Poststart/PreStop](https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/) hooks. We'll cover them later.
+There could be times when you want to run commands/scripts in addition to the docker image's CMD/Entrypoint, rather than over-riding it. Luckily there are other ways to inject commands/shellscripts into pods, using [Poststart/PreStop](https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/) hooks. We'll cover them later.
 
-You can also run non-primary containers with shortlived workloads using `pod.spec.initContainers`, which will cover later. 
+You can also run non-primary containers with shortlived workloads using `pod.spec.initContainers`, which will cover later.
+
+You can also run other commands that periodically monitors the health of your pod's containers. These are known as [liveness and readiness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/). We'll cover these later too. 

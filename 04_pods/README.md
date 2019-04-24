@@ -180,9 +180,7 @@ spec:
     app: apache_webserver  # this says it will forward traffic to object that has metadata.label entry with key/value pair of 'app: apache_webserver' that's how this object and the pod object links together. 
 ```
 
-There are different types of service objects, in our case we are creating a NodePort type service. NodePort services are quite crude and isn't recommended for production, but we're using it here because it's the easiest service type to understand for a beginner. Before we create our service object.
-
- Now let's create the service object:
+There are different types of service objects, in our case we are creating a NodePort type service. NodePort services are quite crude and isn't recommended for production, but we're using it here because it's the easiest service type to understand for a beginner. Now let's create the service object:
 
 ```bash
 $ kubectl apply -f configs/svc-nodeport-descriptor.yml
@@ -194,8 +192,7 @@ kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          
 svc-nodeport-httpd   NodePort    10.107.181.71   <none>        3050:31000/TCP   117s   app=apache_webserver
 ```
 
-The 'kubernetes' service comes included in an Kubernetes install and is used for internal purposes only. Therefore you can ignore this service.
-
+> The 'kubernetes' service comes included as part of the Kubernetes itself and is used for internal purposes only.
 
 
 **Handy Tip**: So far we had to run the apply command twice so far, once for each yaml file. Luckily there's a way to apply all the configs in one command by simply specifying the directory that houses all your configs, e.g.:
@@ -225,7 +222,7 @@ $ minikube ip
 192.168.99.100
 ```
 
-Now you know the ip number and port number that you should be using, you can now test the endpoint either via a web browser, or with curl:
+Now you know the ip number and port number that you should be using, you can now test the endpoint right from your macbook, with curl:
 
 ```bash
 $ curl http://192.168.99.100:31000
@@ -242,7 +239,7 @@ $ curl $(minikube service svc-nodeport-httpd --url)
 <html><body><h1>It works!</h1></body></html>
 ```
 
-Or to open it up in a web browser, just do:
+You can also test this endpoint by opening it up in your Macbook's web browser, just do:
 
 ```bash
 $ minikube service svc-nodeport-httpd 
@@ -250,7 +247,7 @@ $ minikube service svc-nodeport-httpd
 ```
 
 
-## Troubleshooting pods
+## Troubleshooting pods cheatlist
 
 If a pod is failing to enter running mode, then there's a few ways to investigate that:
 
@@ -281,6 +278,11 @@ pod "pod-httpd" deleted
 service "svc-nodeport-apache-webserver" deleted
 ```
 
+This might take a minute or 2 to complete, but you can speed it by setting the grace-period to something short, e.g. 2 seconds:
+
+```bash
+kubectl delete -f ./configs--grace-period=2
+```
 
 ## More about Pods
 

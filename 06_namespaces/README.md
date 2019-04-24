@@ -160,7 +160,7 @@ $ kubectl config set-context $(kubectl config current-context) --namespace=codin
 Context "minikube" modified.
 ```
 
-The above command essentially makes a one-line change in your `~/.kube/config` file. 
+This command is setting the user+cluster details via the current-context setting, and the sets the namespace to go with it. This command essentially makes a one-line change in your `~/.kube/config` file. 
 
 ```bash
 $ diff ~/.kube/config ~/.kube/config-orig
