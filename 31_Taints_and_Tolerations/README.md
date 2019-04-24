@@ -24,9 +24,9 @@ kubectl taint node nodename key=value:Taint-type
 
 There are a few different types of taints:
 
-**NoSchedule**: Don't deploy anymore pods on in future. But existing pods can stay
-**PreferNoSchedule**: Soft rule equivalent of NoSchedule
-**NoExecute**: Evict any existing pods from the node. This ends up deleting the pods and recreating them on other available worker nodes. 
+- **NoSchedule**: Don't deploy anymore pods on in future. But existing pods can stay
+- **PreferNoSchedule**: Soft rule equivalent of NoSchedule
+- **NoExecute**: Evict any existing pods from the node. This ends up deleting the pods and recreating them on other available worker nodes. 
 
 
 
