@@ -3,7 +3,6 @@
 This article follows on from the previous article where we created a new user, called Lisa. We want to give List view access to pods. 
 
 
-
 To do this we need to make use of Role objects. At the moment we don't have any roles, so let's create a new role:
 
 ```yaml
@@ -53,12 +52,12 @@ subjects:
 You can associate multiple users/groups to a single role. Here we attached our role to the 'employee' group:
 
 ```bash
-# kubectl get rolebindings -o wide
+$ kubectl get rolebindings -o wide
 NAME      AGE   ROLE             USERS   GROUPS     SERVICEACCOUNTS
 rb-read   8s    Role/role-read           employee
 ```
 
-Also notice that in kubernetes we don't create 'groups'. the concept of groups works in a similar way to selectors+labels. The tls certificate specifies a Organisation in the subject section, which kubernetes uses as a group's name, and matches to rolebindings, which have a matching name in `rolebindings.subjects.name`.
+Also notice that in kubernetes we don't create a group called 'employee'. the concept of groups works in a similar way to selectors+labels. The tls certificate specifies a Organisation in the subject section, which kubernetes uses as a group's name, and matches to rolebindings, which have a matching name in `rolebindings.subjects.name`.
 
 Note: You can also attach ServiceAccounts to roles. We'll cover ServiceAccounts later. 
 
