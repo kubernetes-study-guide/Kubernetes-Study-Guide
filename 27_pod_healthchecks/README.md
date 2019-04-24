@@ -82,7 +82,7 @@ FIELDS:
 ```
 
 
-## The readinessProbe
+## The readinessProbe
 
 Sometimes a pod only malfunctions because it's under a lot of load and becomes temporarily unresponsive. In that situation you might want to give the pod some time to recover, and you can help it to recover by temporarily stop sending it traffic. That's possible to setup by setting the pod.spec.containers.readinessProbe setting:
 
