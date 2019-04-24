@@ -128,7 +128,7 @@ Although this is just a demo, a possible usecase for this kind of setup, is to h
 
 ## initContainers
 
-In a pod, you can have multiple containers, a primary container, and optionally 1 or more secondary (sidecar) containers. Howevever there's another type of container can add in, called [initContainers](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-initialization/). initContainers (aka initialisation containers) are shortlived containers that are launched at a pod's launch time, as soon as the initContainers stops, the main primary container is then started up.
+In a pod, you can have multiple containers, a primary container, and optionally 1 or more secondary (sidecar) containers. Howevever there's another type of container that you can add in, called [initContainers](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-initialization/). initContainers (aka initialisation containers) are shortlived containers that are launched at a pod's launch time, as soon as the initContainers stops, the main primary container is then started up.
 
 One possible usecase for this is to use it populate a emptyDir non-persistant volume with website files, e.g. by git cloning a repo. Then the primary httpd container can mount that volume and display it. You can setup initcontianers using the pod.spec.initContainers yaml setting:
 
