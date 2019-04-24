@@ -53,6 +53,41 @@ In both scenarios, the application developer doesn't need to create PVs. instead
 
 Let's take a look at both these approaches using AWS's AWSElasticBlockStore as an example.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## IGNORE THE REST OF THIS ARTICLE
+## IGNORE THE REST OF THIS ARTICLE
+## IGNORE THE REST OF THIS ARTICLE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ~~
 ## Statically Provisioned Persistant Volumes
 
