@@ -32,7 +32,7 @@ There are a few features to highlight abou this yaml file:
   - **ReadWriteOnce** – the volume can be mounted as read-write by a single node
   - **ReadOnlyMany** – the volume can be mounted read-only by many nodes
   - **ReadWriteMany** – the volume can be mounted as read-write by many nodes
-- [persistentVolumeReclaimPolicy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaim-policy) - This defines what to do with a PV's content want's it getes released by a PVC.
+- **[persistentVolumeReclaimPolicy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaim-policy)**: This defines what to do with a PV's content want's it getes released by a PVC.
   - **Retain** – manual reclamation. The PV's data is retained after it's associated PVC is deleted. However the PV status becomes 'pending' rather than available. That's to give the KA a chance to (if necessary) to backup the PV's content and then make it available, be recreating the PV. 
   - **Recycle** – Delete all data stored inside the PV, so that it can be used as a clean PV.
   - **Delete** – Delete the whole PV
