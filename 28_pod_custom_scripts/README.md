@@ -161,9 +161,6 @@ spec:
 Straight after applying the above we get the following output:
 
 ```bash
-$ kubectl apply -f configs/eg3-initContainers
-pod/pod-httpd created
-service/svc-nodeport-httpd created
 $ kubectl get pod
 NAME        READY   STATUS     RESTARTS   AGE
 pod-httpd   0/1     Init:0/1   0          30s
@@ -174,6 +171,7 @@ Notice that the output is a little different to indicate that the init container
 ```bash
 $ kubectl logs pod-httpd
 Error from server (BadRequest): container "cntr-httpd" in pod "pod-httpd" is waiting to start: PodInitializing
+
 $ kubectl logs pod-httpd -c init
 INFO: sleep for 1 minute
 ```
