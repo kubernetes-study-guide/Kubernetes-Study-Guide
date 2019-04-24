@@ -64,7 +64,7 @@ preferences: {}
 users: []
 ```
 
-Notice that my `~/.kube/config` file now references the ca.crt. So our config file now dependes on this ca.crt file to be present at this location for this config file to work properly. If you want to avoid having these dependencies, then you can use the '--embed-certs=true' flag. This will end copy and pasting the ca.crts content into the config file in base64 encoded form. If we now retry:
+Notice that my `~/.kube/config` file now references the ca.crt. So our config file now dependes on this ca.crt file to be present at this location at all time. If you want to avoid having these dependencies, then you can use the `--embed-certs=true` flag. This will end up copying and pasting the ca.crts content into the config file in base64 encoded form. If we now retry:
 
 ```bash
 $ kubectl get nodes
@@ -204,7 +204,7 @@ CURRENT   NAME                     CLUSTER            AUTHINFO   NAMESPACE
 *         minikube-default-admin   minikube-cluster   minikube
 ```
 
-the kubectl defaults to the default namespace, if we don't specify otherwise. But it's best practice to explicitly set the namespace as well:
+the kubectl defaults to the 'default' namespace, if we don't specify otherwise. But it's best practice to explicitly set the namespace as well:
 
 ```bash
 $ kubectl config set-context minikube-default-admin --cluster=minikube-cluster --user=admin-user --namespace=default
@@ -266,7 +266,7 @@ kubectl config use-context minikube-default-admin
 
 ## usernames
 
-Notice we deviated a little from in this example. In our original config file, the username was 'minikube', but we changed it to 'admin-user' and it still worked. That's becuase kube-apiserver doesnt use this username, and it's actually something we use for our reference only. Instead kubectl uses the certificates subject's CN name as the username:
+Notice we deviated a little from in this example. In our original config file, the username was 'minikube', but we changed it to 'admin-user' and it still worked. That's because kube-apiserver doesnt use this username, and it's actually something we use for our reference only. Instead kubectl uses the certificates subject's CN name as the username:
 
 
 ```bash
