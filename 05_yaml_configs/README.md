@@ -94,6 +94,12 @@ What if you have a pod, e.g. called pod-httpd, but lost it's yaml descriptor fil
 kubectl get pod pod-httpd -o yaml --export > regenerated-descriptor.yaml
 ```
 
+## Imperative vs Declaritive approaches
+
+https://kubernetes.io/docs/concepts/overview/object-management-kubectl/declarative-config/
+
+https://kubernetes.io/docs/concepts/overview/object-management-kubectl/imperative-config/
+
 
 
 

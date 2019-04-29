@@ -65,16 +65,9 @@ rs/coredns-86c58d9df4               2         2         2         11h
 rs/kubernetes-dashboard-ccc79bfc9   1         1         1         11h
 ```
 
-You can organise your objects in various ways using namespace. For example, we can create namespaces called 'Prod' and 'Dev'. Alternatively, have namespaces based on project/programme name. Here's how to create a new namespace imperitively:
+You can organise your objects in various ways using namespace. For example, we can create namespaces called 'Prod' and 'Dev'. Alternatively, have namespaces based on project/programme name. Here's a yaml example for a namespace:
 
-```bash
-$ kubectl create namespace codingbee-hello-world
-namespace "codingbee-hello-world" created
-```
-
-Alternatively we can create it via the yaml approach:
-
-```bash
+```yaml
 ---
 apiVersion: v1
 kind: Namespace
@@ -84,8 +77,13 @@ metadata:
 
 > Notice that we didn't need to specify a namespace.spec section. 
 
+Writing out the above yaml code by hand can be tedious and error-proone, so you can quickly generate a yaml boilerplate template, which you can then use to tweak:
 
-You can then specify what namespace objects are created in by adding the following line in the metadata section:
+```bash
+$ kubectl create namespace codingbee-hello-world -o yaml --dry-run > namespace.yaml
+```
+
+You can then create objects in your new namespace by using the `kubectl apply --namespace -f ...`. However I prefer the declaritive approach, by specifing what namespace objects belong to using the `xxx.metadata.namespace` setting:
 
 ```yaml
 ---
@@ -104,7 +102,7 @@ spec:
         - containerPort: 80
 ```
 
-And for the service we have:
+And for our service we have:
 
 ```yaml
 ---
@@ -123,6 +121,8 @@ spec:
     app: apache_webserver
 ```
 
+
+
 We can apply them using the usual apply commands. And then we can check that they have been created by running:
 
 ```bash
@@ -136,7 +136,7 @@ service/svc-nodeport-apache-webserver   NodePort   10.107.98.250   <none>       
 
 ## Cluster level objects
 
-Not all kubernetes objects are 'namespaced', i.e. can be organised into a namespace, because they are cluster level objects.
+Some objects are cluster level objects and therefore can't be namespaced (i.e. organised into namespaces):
 
 ```bash
 $ kubectl api-resources -o wide
@@ -153,7 +153,7 @@ nodes                             no                                          fa
 ```
 
 ## Set the namespace persistently
-Specifying namespaces on the command line can get quite tedious, which might put you off from using namespaces. However you can persistantly change namespaces by running:
+Specifying namespaces on the command line can get quite tedious. However you can persistantly change namespaces by running:
 
 ```bash
 $ kubectl config set-context $(kubectl config current-context) --namespace=codingbee-hello-world
