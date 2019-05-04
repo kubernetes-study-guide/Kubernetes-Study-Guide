@@ -95,7 +95,7 @@ kubectl get deployments,pods
 After finishing a topic, you should delete everything you created, here's a quick one-liner to do this:
 
 ```bash
-$ kubectl delete all --all
+kubectl delete all --all
 ```
 
 Note: don't worry if it deletes the kubernetes service, that will just get recreated again.
