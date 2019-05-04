@@ -1,4 +1,4 @@
-# Hands-On Kubernetes
+# About this course
 
 The course takes a learn-by-doing approach. And the focus is to get you acquainted with as many of the kubernetes features as quickly as possible, so that you get comfortable with using Kubernetes without really understanding what happens behind the scenes. The theory and best practices (e.g. kubecluster HA) can come later.
 
