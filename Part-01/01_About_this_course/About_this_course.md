@@ -88,7 +88,7 @@ In this case, we'll refer to what to put in here, using a dot like notation e.g.
 
 Also some commands have a long output, so we only show an extract inside 3-dot notation:
 
-```bash
+```
 ...
 output of interest
 ...
@@ -97,7 +97,7 @@ output of interest
 We'll be using shorthands where we can, to cut down typing:
 
 ```bash
- kubectl get deployments,pods
+kubectl get deployments,pods
 ```
 
 ## post topic cleanup
