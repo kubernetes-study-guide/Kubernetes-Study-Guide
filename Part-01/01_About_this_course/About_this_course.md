@@ -111,9 +111,6 @@ $ kubectl delete all --all
 
 Note: don't worry if it deletes the kubernetes service, that will just get recreated again.
 
-## Disclaimer
-
-I have not taken my KCA exam yet. 
 
 
 ## Reference
