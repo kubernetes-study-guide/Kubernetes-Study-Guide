@@ -9,18 +9,18 @@ kind: ReplicaSet
 metadata:
   name: rs-httpd
 spec:
-  replicas: 2   # This sets the number of pods that needs to exist. 
+  replicas: 2   # This sets the number of pods that needs to exist.
   selector:
     matchLabels:
       component: httpd_webserver  # The rs object manages all pods that has this label
-  template:  # this is used to nest a pode descriptor inside this rs descriptor. 
+  template:  # this is used to nest a pode descriptor inside this rs descriptor.
     metadata:
       labels:
         component: httpd_webserver  # this needs to be match with matchLabels above.
-    spec: 
+    spec:
       containers:
         - name: cntr-httpd
-          image: httpd:latest 
+          image: httpd:latest
           ports:
             - containerPort: 80
           command: ["/bin/bash", "-c"]     # We have performed a command override here for testing purposes.
@@ -71,7 +71,7 @@ rs-httpd-sn5mt   1/1     Running   0          12m   172.17.0.8   minikube   <non
 
 As you can see, a single yaml file ended up creating multiple objects. Notice that the pods name inherits the replicaset's name followed by '-randomstring', in order for the pods to have unique name.  
 
-We've also created a NodePort service that points to all the pods created by the replicaset. 
+We've also created a NodePort service that points to all the pods created by the replicaset.
 
 ```bash
 $ kubectl get service -o wide
@@ -100,12 +100,11 @@ You've hit - rs-httpd-sn5mt
 
 ## matchExpressions
 
-In the above example we used 'matchLabels', however as an alternative you can use `rs.spec.selector.matchExpressions` which is more flexible, than matchLabels. 
-
+In the above example we used 'matchLabels', however as an alternative you can use `rs.spec.selector.matchExpressions` which is more flexible, than matchLabels.
 
 ## Controllers
 
-The word 'controller' is used in Kubernetes to refer to objects that doesn't actually to any heavy-lifting low level work, e.g. it doesn't run any containers like pods do, or route traffic, like nodeport service objects do. Instead a controller object creates other objects that does all the legwork, and it ensures the state of those objects. Therefore a controller builds other objects to reach a desired state, and then constantly monitors+maintains that desired state. 
+The word 'controller' is used in Kubernetes to refer to objects that doesn't actually to any heavy-lifting low level work, e.g. it doesn't run any containers like pods do, or route traffic, like nodeport service objects do. Instead a controller object creates other objects that does all the legwork, and it ensures the state of those objects. Therefore a controller builds other objects to reach a desired state, and then constantly monitors+maintains that desired state.
 
 Objects like replicasets are referred to as 'Controller objects'. A controller object is an object that controls the creation/deletion of other objects, and monitors the health of those objects. So in the case of replicaset objects, Replicasets creates/deletes/maintains pod objects, as per the spec.replicas setting. For example if we have 2 pods created/monitored by a replicaset,and we simulate a pod failure by deleting one of them, then the replicaset will automatically build another pod in order to reach the desired state:
 
@@ -133,15 +132,8 @@ $ kubectl get pods
 No resources found.
 ```
 
-On the kube master there is a dedicated systemd service that runs the [kube-controller-manager](https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/08-bootstrapping-kubernetes-controllers.md#configure-the-kubernetes-controller-manager). That component is responsible for looking after all the controller objects. 
-
+On the kube master there is a dedicated systemd service that runs the [kube-controller-manager](https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/08-bootstrapping-kubernetes-controllers.md#configure-the-kubernetes-controller-manager). That component is responsible for looking after all the controller objects.
 
 ## Use Deployments instead of ReplcaSets
 
 There are lots of other types of controller objects, e.g. Deployments, StatefulSets,...etc, we'll cover all them later. In reality [you will never need to create ReplicaSets](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/#when-to-use-a-replicaset), you would create Deployment objects instead.
-
-
-
-
-
-

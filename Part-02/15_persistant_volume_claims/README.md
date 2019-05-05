@@ -1,6 +1,6 @@
 # Persistant Volume Claims
 
-> I've created a [kubernetes-NFS-Persistant-Volume-Vagrant](https://github.com/Sher-Chowdhury/kubernetes-NFS-Persistant-Volume-Vagrant-Demo) for this article so that you can follow along this demo. 
+> I've created a [kubernetes-NFS-Persistant-Volume-Vagrant](https://github.com/Sher-Chowdhury/kubernetes-NFS-Persistant-Volume-Vagrant-Demo) for this article so that you can follow along this demo.
 
 So far we've covered how an Application App Developer can use persistent volumes by adding the necessary section under their pod spec. However, there is a problem with this approach, the developers (who are packaging their apps into docker-images and pods are) likely to have only a basic understanding of the kubernete cluster's underlying cloud/on-premise infrastructure. In fact as developers, it's not in their remit to have that kind of knowledge because Kubernetes is supposed to allow developers to develop without having to worry about whether their app is running in AWS, Azure,....etc.
 
@@ -9,7 +9,7 @@ So filling in things like NFS server ip address in their yaml files becomes an u
  1. use existing PVs if there is a suitable PV that meets the requirements.  
  2. dynamically provisions PVs
 
-In both scenarios, the application developer doesn't need to create PVs. instead they just create PVC objects instea. 
+In both scenarios, the application developer doesn't need to create PVs. instead they just create PVC objects instea.
 
 ## Use existing PVs
 
@@ -20,13 +20,13 @@ Let's take a look at both these approaches using AWS's AWSElasticBlockStore as a
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-db-data-storage 
+  name: pv-db-data-storage
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce    # aka RWO
-    - ReadOnlyMany     # aka ROX 
+    - ReadOnlyMany     # aka ROX
     - ReadWriteMany    # aka RWX
   persistentVolumeReclaimPolicy: retain
   nfs:
@@ -41,11 +41,9 @@ There are a few features to highlight abou this yaml file:
   - **ReadOnlyMany** – the volume can be mounted read-only by many nodes
   - **ReadWriteMany** – the volume can be mounted as read-write by many nodes
 - **[persistentVolumeReclaimPolicy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaim-policy)**: This defines what to do with a PV's content want's it getes released by a PVC.
-  - **Retain** – manual reclamation. The PV's data is retained after it's associated PVC is deleted. However the PV status becomes 'pending' rather than available. That's to give the KA a chance to (if necessary) to backup the PV's content and then make it available, be recreating the PV. 
+  - **Retain** – manual reclamation. The PV's data is retained after it's associated PVC is deleted. However the PV status becomes 'pending' rather than available. That's to give the KA a chance to (if necessary) to backup the PV's content and then make it available, be recreating the PV.
   - **Recycle** – Delete all data stored inside the PV, so that it can be used as a clean PV.
   - **Delete** – Delete the whole PV
-
-
 
 The above yaml ends up creating:
 
@@ -81,7 +79,6 @@ Events:        <none>
 
 Persistant Volumes are actually kube cluster level objects, i.e. they don't belong to any namespaces. That means that objects in any namespaces can make use of it. After creating the PV, the KA would then notify the Developer that the PV is now ready. The Developer then 'claims' the PV by creating a PVC:
 
-
 ```yaml
 ---
 apiVersion: v1
@@ -96,14 +93,14 @@ spec:
       storage: 1Gi
   volumeName: pv-db-data-storage
 ```
-Notice, how much easier this is to write for the App Developer, there's no need specify to specify any technology related settings, e.g. nfs IP addresses. 
 
+Notice, how much easier this is to write for the App Developer, there's no need specify to specify any technology related settings, e.g. nfs IP addresses.
 
 As soon as you apply the above yaml, we don't explicitly refer to a particular PV object, instead it specifies some of the storage requirements. Kubernetes will therefore cross-reference this PVC's requirements against all available PVs to find a suitable match. In particular the PV needs to:
 
 - Support the accessMode requested by the PVC
 - Offer equal to or more storage requested by the PVC
-- If 'volumeName' is used then pv name needs to match too. So may be convenient to omit this. 
+- If 'volumeName' is used then pv name needs to match too. So may be convenient to omit this.
 
 In our case our PV meeds the needs of the PVC so the PVC successfully 'bounds' itself to the PVC, i.e. the PVC successfully claimed the PV:
 
@@ -142,8 +139,8 @@ metadata:
   name: pod-mysql-db
   labels:
     component: mysql_db
-spec: 
-  volumes: 
+spec:
+  volumes:
     - name: db-data-storage
       persistentVolumeClaim:
         claimName: pvc-db-data-storage
@@ -178,34 +175,22 @@ tmpfs                         497M     0  497M   0% /proc/scsi
 tmpfs                         497M     0  497M   0% /sys/firmware
 ```
 
-
 ## Dynamically provisions PVs
 
-This is covered when we cover StorageClasses. 
+This is covered when we cover StorageClasses.
 
-
 ## IGNORE THE REST OF THIS ARTICLE
-## IGNORE THE REST OF THIS ARTICLE
-## IGNORE THE REST OF THIS ARTICLE
-## IGNORE THE REST OF THIS ARTICLE
-## IGNORE THE REST OF THIS ARTICLE
-## IGNORE THE REST OF THIS ARTICLE
-
-
-
 
 --------------------------------------
 
 Persistant volumes are volumes that stores a container's data outside of a pod. So that when a pod dies, then the data still persists and get's used by a replacement container. hostpath volumes is an example of a persistant volume. However it has some limitations, in that:
 
-- hostPath volumes are only accessible by pods that are on the same worker node. 
-- If worker nodes gets terminated then all hostPath volumes gets deleted. 
+- hostPath volumes are only accessible by pods that are on the same worker node.
+- If worker nodes gets terminated then all hostPath volumes gets deleted.
 
-
- There are lots of other [Persistant Volume Plugins](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes) available, some of which are cloud platform specific. 
+ There are lots of other [Persistant Volume Plugins](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes) available, some of which are cloud platform specific.
 
  There's a few ways to create PersistentVolumes. The first way is to define as part of the pod definition:
-
 
  ```yaml
  ---
@@ -215,12 +200,12 @@ metadata:
   name: pod-mysql-db
   labels:
     component: mysql_db
-spec: 
-  volumes: 
+spec:
+  volumes:
     - name: db-data-storage
       nfs:                      # here we are using nfs specification for the Persistent Volume
         path: /nfs/export_rw
-        server: 10.3.5.109 
+        server: 10.3.5.109
         readOnly: false
   containers:
     - name: cntr-mysql-db
@@ -235,35 +220,9 @@ spec:
         - containerPort: 3306
  ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- - statically 
- - dynamically (by using persistantVolumeClaims)
- 
+ -statically
+ -dynamically (by using persistantVolumeClaims)
   Let's take a look at both these approaches using AWS's AWSElasticBlockStore as an example.
-
 
 ## Statically Provisioned Persistant Volumes
 
@@ -287,7 +246,7 @@ spec:
   volumes:
     - name: webcontent
       awsElasticBlockStore:
-        volumeID: <volume-id>             # need to hardcode the volume id in. 
+        volumeID: <volume-id>             # need to hardcode the volume id in.
         fsType: ext4
   containers:
     - name: cntr-httpd
@@ -299,22 +258,19 @@ spec:
         - containerPort: 80
 ```
 
-This approach has a few pros and cons, depending on individual's permissions/roles/responsibilities in a workplace. For example a pod creator may need to seek company approval to get an EBS block created (since they cost money). Once their request is approved, the request could then be passed on to an AWS administrator to be actioned. The AWS administrator would then inform the pod creator of the volume id to use. 
+This approach has a few pros and cons, depending on individual's permissions/roles/responsibilities in a workplace. For example a pod creator may need to seek company approval to get an EBS block created (since they cost money). Once their request is approved, the request could then be passed on to an AWS administrator to be actioned. The AWS administrator would then inform the pod creator of the volume id to use.
 
-However in other workplaces, the pod ceator may have full rights+approvals to create EBS volumes. In which case, manually creating ebs then copy+pasting volume id into the yaml file is not an elegant solution. Instead it may be better to dynamically provision it. 
-
-
+However in other workplaces, the pod ceator may have full rights+approvals to create EBS volumes. In which case, manually creating ebs then copy+pasting volume id into the yaml file is not an elegant solution. Instead it may be better to dynamically provision it.
 
 ## Dynamically Provision Persistant Volumes
 
 In this approach, you can get kubernetes to create an EBS volume for you on-demand, i.e. [dynamic provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/). This involves creating 3 types of Kubernetes objects:
 
-- [StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/) object - this object is specifically used by PVC to help create PV. If you manually create the PV, then you can attach the PV to the PVC and skip needing the StorageClass. 
+- [StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/) object - this object is specifically used by PVC to help create PV. If you manually create the PV, then you can attach the PV to the PVC and skip needing the StorageClass.
 - [Persistent Volume Claim (PVC)](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) object
 - Persistant Volume object
 
-PVC has a 1-2-1 mapping to a PV. 
-
+PVC has a 1-2-1 mapping to a PV.
 
 Here's the steps involved:
 
@@ -328,10 +284,10 @@ metadata:
   name: pod-mysql-db
   labels:
     component: mysql_db
-spec: 
-  volumes: 
-    - name: db-data-storage 
-      persistentVolumeClaim:       
+spec:
+  volumes:
+    - name: db-data-storage
+      persistentVolumeClaim:
         claimName: pvc-mysql-db   # here we specify which PVC should request for this pod's PV
   containers:
     - name: cntr-mysql-db
@@ -346,7 +302,7 @@ spec:
         - containerPort: 3306
 ```
 
-2. PVC object - Sends a request to the StorageClass object for a new PV. This essentially means that a PVC is a controller object. The PVC references the storage class. 
+2.PVC object - Sends a request to the StorageClass object for a new PV. This essentially means that a PVC is a controller object. The PVC references the storage class.
 
 ```yaml
 ---
@@ -363,7 +319,7 @@ spec:
       storageClassName: standard  # This specifies which the StorageClass's name. It defaults to 'standard' if you omit this line
 ```
 
-3. StorageClass - This in effect is a controller object. This creates the EBS volume as per the PVC's request, and publishes in the form of a persistent volume. 
+3.StorageClass - This in effect is a controller object. This creates the EBS volume as per the PVC's request, and publishes in the form of a persistent volume.
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -383,12 +339,12 @@ reclaimPolicy: Delete
 volumeBindingMode: Immediate
 ```
 
-The 'standard' storageClass object actually comes included with a kubernetes installation. 
+The 'standard' storageClass object actually comes included with a kubernetes installation.
 
 ```bash
 $ kubectl get storageclass
 NAME                 TYPE
-standard (default)   k8s.io/minikube-hostpath   
+standard (default)   k8s.io/minikube-hostpath
 
 
 $ kubectl describe storageclass standard
@@ -401,7 +357,6 @@ Events:         <none>
 ```
 
 The Kubernetes install is smart enough to know which platform it is running on and will create a default 'standard' StorageClass object that's native to that platform. In our case our platform is minikube, so the storageclass.provisioner is minikube-hostpath shown above. We managed to get the above yaml content by running `kubectl edit storageclasses standard`.
-
 
 When we apply the above yamls, we get:
 
@@ -457,10 +412,10 @@ Containers:
       /var/run/secrets/kubernetes.io/serviceaccount from default-token-ghr5j (ro)
 Conditions:
   Type              Status
-  Initialized       True 
-  Ready             True 
-  ContainersReady   True 
-  PodScheduled      True 
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
 Volumes:
   db-data-storage:
     Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
@@ -484,17 +439,15 @@ Events:
   Normal  Started    20m   kubelet, minikube  Started container
 ```
 
-## Testing our Persistant Volume. 
+## Testing our Persistant Volume
 
-On the surface it looks like our mysql data will now be persistant. Let's now try to test this. We'll test this by creating a mysql session, create a new dummy db, then exit out, rebuild the pod, then see if that dummy db still exists. 
+On the surface it looks like our mysql data will now be persistant. Let's now try to test this. We'll test this by creating a mysql session, create a new dummy db, then exit out, rebuild the pod, then see if that dummy db still exists.
 
 Now lets test this, first we install mysql client on our macbook:
 
 ```bash
 brew install mysql-client
 ```
-
-
 
 Now check if we can reach that port using nc or telnet:
 
@@ -561,7 +514,6 @@ Bye
 
 Now let's rebuild our pod, and then see if our dummy db still exists:
 
-
 ```bash
 $ mysql -h 192.168.99.106 -P 31306 -u root -p'password123'
 mysql: [Warning] Using a password on the command line interface can be insecure.
@@ -589,8 +541,5 @@ mysql> show databases;
 +--------------------+
 5 rows in set (0.00 sec)
 
-mysql> 
+mysql>
 ```
-
-
-

@@ -1,8 +1,8 @@
 # Kubernetes Hello World
 
-
 ## Hello world - Part 1
-In this walkthrough we will get an Apache web server (container) running inside our kube cluster. In Kubernetes we build objects. There are different types (aka kind) of objects, Pods, Services, Deployments,....etc. In our hello-world example we'll start by building a Pod object. 
+
+In this walkthrough we will get an Apache web server (container) running inside our kube cluster. In Kubernetes we build objects. There are different types (aka kind) of objects, Pods, Services, Deployments,....etc. In our hello-world example we'll start by building a Pod object.
 
 **Pod:** A pod main purpose is to house one or more containers. In kubernetes you can only run container inside pods. That makes pods the fundamental building block in Kubernetes. At the moment, we don't have any pods in our kubecluster:
 
@@ -11,9 +11,9 @@ $ kubectl get pods
 No resources found.
 ```
 
-You create an object by first writing a yaml config file that defines the object, and then feeding that config file into the kubectl command. 
+You create an object by first writing a yaml config file that defines the object, and then feeding that config file into the kubectl command.
 
-From this point forward we'll refer to these files as yaml descriptors. We'll store these yaml descriptors in a folder called 'configs' which sits alongside the article that your currently viewing. 
+From this point forward we'll refer to these files as yaml descriptors. We'll store these yaml descriptors in a folder called 'configs' which sits alongside the article that your currently viewing.
 
 So here's our pod's yaml descriptor:
 
@@ -22,14 +22,14 @@ So here's our pod's yaml descriptor:
 apiVersion: v1      # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/
 kind: Pod           # type of object that's defined in this file
 metadata:
-  name: pod-httpd   # the name displayed in the first column of 'kubectl get pods' 
+  name: pod-httpd   # the name displayed in the first column of 'kubectl get pods'
   labels:
-    app: apache_webserver  # this tag is added to help this object to link to the service object. 
+    app: apache_webserver  # this tag is added to help this object to link to the service object.
 spec:
   containers:
     - name: cntr-httpd      # name of the container that will reside in the pod
       image: httpd:latest      # using the official apache image from docker hub, along with a tag
-      ports:                # this bit is purely for informational purposes only and can be omitted. 
+      ports:                # this bit is purely for informational purposes only and can be omitted.
         - containerPort: 80   # what port the container will be listening on
 
 ```
@@ -44,7 +44,6 @@ We'll cover how to construct these yaml files from scratch in the anatomy tutori
 6. Assign an arbitrary key/value label to the pod of key=component and value=apache_webserver. This label will come in useful later on.
 
 We wrote this yaml content into a file called, pod-httpd-descriptor.yml. It doesn't matter what you call the file, as long as it's meaningful to you. and ends with the .yml/.yaml suffix. Now let's create the object, using the apply command:
-
 
 ```bash
 $ kubectl apply -f configs/pod-httpd-obj-def.yml
@@ -73,18 +72,23 @@ PriorityClassName:  <none>
 ```
 
 ### Sanity check our pod
+
 So far we've created a single-container pod. This container is supposed to have the apache webserver running inside it. But how to do we verify that container's web service is definitely working? E.g. we could do a 2-step verification process:
 
-1. Verify that our container (and consequently our pod) is listening on the correct port.
+1.verify that our container (and consequently our pod) is listening on the correct port.
+
 ```bash
 nc -v pod-ip 80
+
 ```
-2. Try and access our containers homepage, e.g. using curl:
+
+1.Try and access our containers homepage, e.g. using curl:
+
 ```bash
 curl http://pod-ip
 ```
 
-If you open up a bash terminal on your macbook and tried these nc and curl commands you'll find that they fail. That's because Kubernetes only comes with some basic networking features out-of-the-box. Those networking features only makes pods accessible by: 
+If you open up a bash terminal on your macbook and tried these nc and curl commands you'll find that they fail. That's because Kubernetes only comes with some basic networking features out-of-the-box. Those networking features only makes pods accessible by:
 
 - Internally by logging into the primary container itself, and then use localhost
 - Internally by logging into the pods secondary container, if any
@@ -121,7 +125,6 @@ root@pod-httpd:/usr/local/apache2# curl http://localhost
 
 Success!
 
-
 You can also use 'kubectl exec' to directly run commands without needing to first creating a bash session inside the container:
 
 ```bash
@@ -129,11 +132,9 @@ $ kubectl exec -it pod-httpd -c cntr-httpd -- nc -v localhost 80
 localhost [127.0.0.1] 80 (?) open
 ```
 
-The '--' is used to tell kubectl that everythign after '--' is a command to run inside the container. In this example if we omitted the '--', then kubectl would have failed because it would have thought that that '-v' flag is a kubectl flag rather than nc's flag. However you can omit the '--' as long as the exec command doesn't contain any flags of its. 
-
+The '--' is used to tell kubectl that everythign after '--' is a command to run inside the container. In this example if we omitted the '--', then kubectl would have failed because it would have thought that that '-v' flag is a kubectl flag rather than nc's flag. However you can omit the '--' as long as the exec command doesn't contain any flags of its.
 
 ### Validate from inside the kube master/worker node
-
 
 You can run the telnet+curl command from inside the minikube vm:
 
@@ -144,8 +145,8 @@ pod-httpd   1/1     Running   0          28m   172.17.0.7   minikube   <none>   
 
 
 $ minikube ssh
-                         _             _            
-            _         _ ( )           ( )           
+                         _             _
+            _         _ ( )           ( )
   ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __  
 /' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
 | ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
@@ -155,12 +156,11 @@ $ curl http://172.17.0.7
 <html><body><h1>It works!</h1></body></html>
 ```
 
-
 ## Hello World - Part 2
 
 We're now going to improve this hello-world example by making our pod accessible directly from our macbook's web browser. That's done by creating a 'service' object.
 
-**Service:** A service object is used to setup networking in our kube cluster. E.g. if a running pod exposes a web based gui, then a service object needs to be set up to make that pod's gui externally accessible. 
+**Service:** A service object is used to setup networking in our kube cluster. E.g. if a running pod exposes a web based gui, then a service object needs to be set up to make that pod's gui externally accessible.
 
 So in our hello-world example, we've created a new yaml file with the content:
 
@@ -171,13 +171,13 @@ kind: Service
 metadata:
   name: svc-nodeport-httpd
 spec:
-  type: NodePort   # there are 4 types of Services. ClusterIP, NodePort, LoadBalancer, Ingress. https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types. NodePort should only be used for dev environments. 
+  type: NodePort   # there are 4 types of Services. ClusterIP, NodePort, LoadBalancer, Ingress. https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types. NodePort should only be used for dev environments.
   ports:
-    - port: 3050  # this is used by other pods to access assets that's avialable in our demo conainer 
-      targetPort: 80 # port number of the pod's primary container is listening on. So needs to mirror containerPort setting as defined in the object config file. 
+    - port: 3050  # this is used by other pods to access assets that's avialable in our demo conainer
+      targetPort: 80 # port number of the pod's primary container is listening on. So needs to mirror containerPort setting as defined in the object config file.
       nodePort: 31000  # this ranges between 30000-32767. Our worker node VM will be listening on this port. It's actually the kube-proxy component on worker nodes that will start listening on this port. This is the port number we need to enter into our web browser. That's one of the drawbacks in using nodePort service type, i.e. have to explicitly specify ugly port numbers in the url
   selector:
-    app: apache_webserver  # this says it will forward traffic to object that has metadata.label entry with key/value pair of 'app: apache_webserver' that's how this object and the pod object links together. 
+    app: apache_webserver  # this says it will forward traffic to object that has metadata.label entry with key/value pair of 'app: apache_webserver' that's how this object and the pod object links together.
 ```
 
 There are different types of service objects, in our case we are creating a NodePort type service. NodePort services are quite crude and isn't recommended for production, but we're using it here because it's the easiest service type to understand for a beginner. Now let's create the service object:
@@ -193,7 +193,6 @@ svc-nodeport-httpd   NodePort    10.107.181.71   <none>        3050:31000/TCP   
 ```
 
 > The 'kubernetes' service comes included as part of the Kubernetes itself and is used for internal purposes only.
-
 
 **Handy Tip**: So far we had to run the apply command twice so far, once for each yaml file. Luckily there's a way to apply all the configs in one command by simply specifying the directory that houses all your configs, e.g.:
 
@@ -242,21 +241,19 @@ $ curl $(minikube service svc-nodeport-httpd --url)
 You can also test this endpoint by opening it up in your Macbook's web browser, just do:
 
 ```bash
-$ minikube service svc-nodeport-httpd 
+$ minikube service svc-nodeport-httpd
 🎉  Opening kubernetes service default/svc-nodeport-httpd in default browser...
 ```
-
 
 ## Troubleshooting pods cheatlist
 
 If a pod is failing to enter running mode, then there's a few ways to investigate that:
 
-
 ```bash
 
 kubectl logs podname -c container_name
 
-kubectl logs podname  -c container_name --previous   # view previous crashed pod's log. 
+kubectl logs podname  -c container_name --previous   # view previous crashed pod's log.
 
 kubectl describe pods podname   # this has a history session, which could give more info
 
@@ -286,7 +283,7 @@ kubectl delete -f ./configs--grace-period=2
 
 ## More about Pods
 
-This is just a quick intro to pods. We'll cover more about pods as we work through the rest of this course. 
+This is just a quick intro to pods. We'll cover more about pods as we work through the rest of this course.
 
 ## References
 

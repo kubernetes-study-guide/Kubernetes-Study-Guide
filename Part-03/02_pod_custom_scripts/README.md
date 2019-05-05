@@ -1,13 +1,10 @@
 # running custom commands/scripts inside your pod
 
-
 Earlier we saw how we can run custom commands in a pod's container by using the pod.spec.containers.command setting, which effectively overrides the image's default command. However there could be times when you want to run commands/scripts in addition to the docker image's baked-in CMD/Entrypoint scripts, rather than overriding it. That's possible by using the pod.spec.containers.lifecycle.postStart and pod.spec.containers.lifecycle.postStart and pod.spec.containers.lifecycle.preStop settings, aka [Poststart/PreStop hooks](https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/).
-
 
 ## postStart
 
 postStart is used for running scripts during a container's launch time. postStart scripts runs in parrallel to the image's default CMD/Entrypoint. postStart scripts are added under the pod.spec.containers.lifecycle.postStart.exec yaml setting:
-
 
 ```bash
 ---
@@ -21,7 +18,7 @@ spec:
   containers:
     - name: cntr-httpd
       image: httpd
-      lifecycle:          # we add in the lifecycle section which houses the 
+      lifecycle:          # we add in the lifecycle section which houses the
         postStart:             # podStart section
           exec:
             command:
@@ -34,8 +31,7 @@ spec:
         - containerPort: 80
 ```
 
-
-# preStop
+## preStop
 
 There could be various tasks (e.g. cleanup tasks) that you may want to run as part of terminating a pod. That's possible using the pod.spec.containers.lifecycle.preStop.exec yaml setting:
 
@@ -105,8 +101,8 @@ Now let's check if the termination created the flag file:
 
 ```bash
 $ minikube ssh
-                         _             _            
-            _         _ ( )           ( )           
+                         _             _
+            _         _ ( )           ( )
   ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __  
 /' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
 | ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
@@ -124,7 +120,7 @@ the date is Tue Mar 12 09:15:35 UTC 2019
 the pod pod-httpd has been terminated
 ```
 
-Although this is just a demo, a possible usecase for this kind of setup, is to have a single pod per node (setup via daemon set) which specialise in performing cleanup task. This pod can be used to constantly poll for the hostPath for new pod deletion and then perform cleanup tasks associated with thos pods. 
+Although this is just a demo, a possible usecase for this kind of setup, is to have a single pod per node (setup via daemon set) which specialise in performing cleanup task. This pod can be used to constantly poll for the hostPath for new pod deletion and then perform cleanup tasks associated with thos pods.
 
 ## initContainers
 
@@ -156,7 +152,6 @@ spec:
       ports:
         - containerPort: 80
 ```
-
 
 Straight after applying the above we get the following output:
 
@@ -197,6 +192,3 @@ pod-httpd   1/1     Running   0          78s
 $ curl $(minikube service svc-nodeport-httpd --url)
 <html><body><h1>It works!</h1></body></html>
 ```
-
-
-

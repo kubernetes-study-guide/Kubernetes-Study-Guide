@@ -1,5 +1,4 @@
-# Monitoring cpu and ram. 
-
+# Monitoring cpu and ram
 
 In this article we're going to demo how you can view how much ram+cpu is being used by your nodes, pods, and containers. You can get these metrics using the 'top' command:
 
@@ -8,14 +7,12 @@ $ kubectl top nodes
 Error from server (NotFound): the server could not find the requested resource (get services http:heapster:)
 ```
 
-
-
 However the monitoring capabilities doesn't come include with a kubernetes installm which is why we get the above error message. You need to install add this capability in by installing the [metrics-server](https://kubernetes.io/docs/tasks/debug-application-cluster/resource-metrics-pipeline/#metrics-server). On a minikube, you just have to enable it:
 
 ```bash
 $ minikube addons enable metrics-server
 ✅  metrics-server was successfully enabled
-``` 
+```
 
 Otherwise you would need to run:
 
@@ -44,12 +41,9 @@ clusterrole.rbac.authorization.k8s.io/system:metrics-server created
 clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server created
 ```
 
-Notice that this repo is the 'kubernetes-incubator' github project, which means that this metric-server project is still a work in progress. I think that this also means that it's unlikely you will be asked to install metrics-server in the CKA exam. Instead it will be already installed for you. 
+Notice that this repo is the 'kubernetes-incubator' github project, which means that this metric-server project is still a work in progress. I think that this also means that it's unlikely you will be asked to install metrics-server in the CKA exam. Instead it will be already installed for you.
 
-
-
-
-After this install, you should now get: 
+After this install, you should now get:
 
 ```bash
 $ kubectl top pods
@@ -60,42 +54,40 @@ error: metrics not available yet
 
 Now you need to wait a few minutes.
 
-
 ```bash
 $ kubectl top nodes
-NAME       CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
-minikube   163m         8%     1448Mi          76%   
+NAME       CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
+minikube   163m         8%     1448Mi          76%
 
 $ kubectl top pods
-NAME                     CPU(cores)   MEMORY(bytes)   
-pod-alpine-default       0m           0Mi             
-pod-alpine-runasuser     0m           0Mi             
-pod-capabilities         0m           0Mi             
-pod-fsgroup              0m           7Mi             
-pod-privileged           0m           0Mi             
-pod-readonlyrootfs       0m           0Mi             
-pod-runasnonroot-guest   0m           0Mi                 
+NAME                     CPU(cores)   MEMORY(bytes)
+pod-alpine-default       0m           0Mi
+pod-alpine-runasuser     0m           0Mi
+pod-capabilities         0m           0Mi
+pod-fsgroup              0m           7Mi
+pod-privileged           0m           0Mi
+pod-readonlyrootfs       0m           0Mi
+pod-runasnonroot-guest   0m           0Mi
 ```
-
 
 To see how much cpu+mem is being used by kubernetes itself:
 
 ```bash
 $ kubectl top pods --namespace=kube-system
-NAME                                        CPU(cores)   MEMORY(bytes)   
-coredns-fb8b8dccf-hq87w                     2m           17Mi            
-coredns-fb8b8dccf-rm7b7                     2m           7Mi             
-default-http-backend-6864bbb7db-6t24l       0m           1Mi             
-etcd-minikube                               18m          30Mi            
-kube-addon-manager-minikube                 11m          4Mi             
-kube-apiserver-minikube                     28m          209Mi           
-kube-controller-manager-minikube            12m          44Mi            
-kube-proxy-vj825                            1m           13Mi            
-kube-scheduler-minikube                     1m           10Mi            
-kubernetes-dashboard-79dd6bfc48-fpq52       0m           18Mi            
-metrics-server-77fddcc57b-cvvnx             0m           20Mi            
-nginx-ingress-controller-586cdc477c-nkrz4   3m           79Mi            
-storage-provisioner                         0m           31Mi          
+NAME                                        CPU(cores)   MEMORY(bytes)
+coredns-fb8b8dccf-hq87w                     2m           17Mi  
+coredns-fb8b8dccf-rm7b7                     2m           7Mi
+default-http-backend-6864bbb7db-6t24l       0m           1Mi
+etcd-minikube                               18m          30Mi
+kube-addon-manager-minikube                 11m          4Mi
+kube-apiserver-minikube                     28m          209Mi
+kube-controller-manager-minikube            12m          44Mi
+kube-proxy-vj825                            1m           13Mi
+kube-scheduler-minikube                     1m           10Mi
+kubernetes-dashboard-79dd6bfc48-fpq52       0m           18Mi
+metrics-server-77fddcc57b-cvvnx             0m           20Mi
+nginx-ingress-controller-586cdc477c-nkrz4   3m           79Mi
+storage-provisioner                         0m           31Mi
 ```
 
 If a pod has multiple containers then you can also see how much cpu+ram each container is using:
@@ -114,12 +106,11 @@ pod-runasnonroot-guest    1/1     Running                      0          7m33s
 
 
 $ kubectl top pods pod-fsgroup
-NAME          CPU(cores)   MEMORY(bytes)   
-pod-fsgroup   0m           7Mi             
+NAME          CPU(cores)   MEMORY(bytes)
+pod-fsgroup   0m           7Mi
 
 $ kubectl top pods pod-fsgroup --containers
-POD           NAME          CPU(cores)   MEMORY(bytes)   
-pod-fsgroup   cntr-httpd    0m           6Mi             
-pod-fsgroup   cntr-centos   0m           1Mi             
+POD           NAME          CPU(cores)   MEMORY(bytes)
+pod-fsgroup   cntr-httpd    0m           6Mi
+pod-fsgroup   cntr-centos   0m           1Mi
 ```
-

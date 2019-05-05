@@ -20,14 +20,13 @@ main exam homepage: [https://www.cncf.io/certification/cka/](https://www.cncf.io
 
 Allowed websites to access during exam:
 
- [https://kubernetes.io/docs/](https://kubernetes.io/docs/) and its subdomains, 
- [https://github.com/kubernetes/](https://github.com/kubernetes/) and its subdomains, 
+ [https://kubernetes.io/docs/](https://kubernetes.io/docs/) and its subdomains,
+ [https://github.com/kubernetes/](https://github.com/kubernetes/) and its subdomains,
  or [https://kubernetes.io/blog/](https://kubernetes.io/blog/)
 
 Need to purchase exam via the cncf website, to be eligible for a free retake. (see retake policy section in pdf)
 
-
- # exam tips:
+## exam tips
 
 1. Always start by running the following to get autocompletion working:
 
@@ -49,21 +48,21 @@ kubectl edit services kubernetes # see example files
 
 kubectl create configmap...
 
-kubectl get pod podname -o yaml --export > podtemplate.yaml  # use kube-system namespace objects as templates. 
+kubectl get pod podname -o yaml --export > podtemplate.yaml  # use kube-system namespace objects as templates.
 
 
-kubectl explain pod.spec.containers --recursive   # really good way to see a quick overall yaml structure. 
+kubectl explain pod.spec.containers --recursive   # really good way to see a quick overall yaml structure.
 ```
 
-3. If pods keeps dying, run the following command to see the previously failed pod's main container log:
+3.If pods keeps dying, run the following command to see the previously failed pod's main container log:
 
 ```bash
 kubectl logs podname --previous
 ```
 
-4. Know where to find kubernetes component logs. 
+4.Know where to find kubernetes component logs.
 
-The location to find kubernetes internal component logs, depends on how kubernetes was installed. 
+The location to find kubernetes internal component logs, depends on how kubernetes was installed.
 
 If you installed kubernetes using kubeadm, then a lot kubernetes components are in the form of pods, e.g. kube-proxy:
 
@@ -76,9 +75,9 @@ kubectl log kube-scheduler-kube-master --namespace=kube-system
 kubectl log kube-controller-manager-kube-master --namespace=kube-system
 ```
 
-You can exec into all these pods, and run `ps -ef | less` This will show where the configs are located. Or do `kubectl describe pods podname` to see the entrypoint command.   
+You can exec into all these pods, and run `ps -ef | less` This will show where the configs are located. Or do `kubectl describe pods podname` to see the entrypoint command.
 
-A lot of these pods also sends logs to the master/worker node's /var/log/containers directory, using hostPath. 
+A lot of these pods also sends logs to the master/worker node's /var/log/containers directory, using hostPath.
 
 Other components are run as systemctl services:
 
@@ -87,8 +86,6 @@ systemctl status docker
 systemctl status kubelet
 ```
 
-
-
 You can also find samples in the api documentations:
 
-https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#service-v1-core
+[https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#service-v1-core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#service-v1-core)

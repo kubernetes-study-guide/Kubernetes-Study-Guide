@@ -2,14 +2,11 @@
 
 This article isn't about Kubernetes. It's how to use ubuntu/debian native package manager for installing packages from the official repos. This is a crash course if you are new to apt.
 
-
 Update local apt repo index (run this command regularly to stay up to date):
 
 ```bash
 apt-get update
 ```
-
-
 
 It makes use of files in `/etc/apt/sources.list.d/`. Here's an example:
 
@@ -26,7 +23,6 @@ apt list --installed
 
 [List all available packages](https://askubuntu.com/a/160899/848501):
 
-
 ```bash
 
 apt-cache search .
@@ -35,11 +31,9 @@ apt-cache search .
 
 Install a package:
 
-
 ```bash
 apt-get install --only-upgrade kubeadm
 ```
-
 
 [Find which package provides file](https://askubuntu.com/a/1912/848501) called 'etcdctl':
 
@@ -58,8 +52,7 @@ etcd: /usr/bin/etcdctl
 
 List all versions of a particular package:
 
-
-```bash 
+```bash
 $ apt-cache madison kubeadm
    kubeadm |  1.14.1-00 | https://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
    kubeadm |  1.14.0-00 | https://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
@@ -76,9 +69,8 @@ Install a particular version of a package:
 ```bash
 apt-get install kubeadm=1.14.0-00
 ```
-Notice that we used the "=" sign for specify a version. 
 
-
+Notice that we used the "=" sign for specify a version.
 
 If you want to change a version of an installed package to a particular version:
 
@@ -93,18 +85,13 @@ dpkg-query -L kubeadm
 
 ```
 
-[List all files that would be installed by installing a package]():
-
+[List all files that would be installed by installing a package]:
 
 ```bash
 apt-get install apt-file
 apt-file update
 apt-file list etcd
 ```
-
-
-
-
 
 Get info about a particular package:
 

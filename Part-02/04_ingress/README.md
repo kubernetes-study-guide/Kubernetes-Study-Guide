@@ -1,13 +1,12 @@
 # Ingress
 
-Earlier we covered service objects which sets up networking between pods in the same kubecluster, by creating a ClusterIP service, and also how we can make a pod externally accessible by creating a NodePort service. However as mentioned, Nodeport shouldn't be used in a production environment. 
+Earlier we covered service objects which sets up networking between pods in the same kubecluster, by creating a ClusterIP service, and also how we can make a pod externally accessible by creating a NodePort service. However as mentioned, Nodeport shouldn't be used in a production environment.
 
-The ideal solution would be to have your worker nodes only listening to standard ports, e.g. port 443 for https. That's possible by setting up Ingress objects. 
+The ideal solution would be to have your worker nodes only listening to standard ports, e.g. port 443 for https. That's possible by setting up Ingress objects.
 
 Ingress ojects are used to make pods externally accessible. Before you can start creating ingress objects, you first need to setup an [Ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/). Ingress controllers provides Forward Proxy, 'Edge router' and 'Loadbalancing' features. One popular choice is [Traefik](https://github.com/containous/traefik). However in our case we'll use [ingress-nginx github repo](https://github.com/kubernetes/ingress-nginx), which essentially makes use of an internal nginx forward-proxy pod behind the scenes.
 
-The way you set up the ingres-nginx controller depends on what underlying platfrom you're using, which in our case is minikube. 
-
+The way you set up the ingres-nginx controller depends on what underlying platfrom you're using, which in our case is minikube.
 
 ## Setting up Ingress Controller on Minikube
 
@@ -53,8 +52,6 @@ Next we following the instructions to [enable ingress for minkube](https://kuber
 $ minikube addons enable ingress
 ✅  ingress was successfully enabled
 ```
-
-
 
 Now we create our test environment.
 
@@ -134,9 +131,7 @@ Events:
   Normal  UPDATE  60m   nginx-ingress-controller  Ingress default/ingress-service
 ```
 
-
 This shows that we have to now use a dns names to access our pods externally. So we can mimic this by adding entries to our macbooks hosts file:
-
 
 ```bash
 sudo echo "$(minikube ip)   caddy-demo.com" >> /etc/hosts
@@ -169,10 +164,11 @@ $ curl http://$(minikube ip) -H "Host: httpd-demo.com"
 You've hit httpd pod, dep-httpd-699cccd58d-bm499
 ```
 
-The important thing here is that we: 
-- no longer need to specify a port number in the url, since we're now using standard port numbers. 
-- We can now externally access the pods, and have them loadbalanced as well.   
+The important thing here is that we:
 
+- no longer need to specify a port number in the url, since we're now using standard port numbers.
+
+- We can now externally access the pods, and have them loadbalanced as well.
 
 ## Missing section: ingress tls
 
@@ -182,20 +178,18 @@ Need to talk about how you would setup ingress to accept https connections. Also
 
 This is to do with:
 
+[https://github.com/kubernetes/ingress-nginx](https://github.com/kubernetes/ingress-nginx)
 
-https://github.com/kubernetes/ingress-nginx
+[https://kubernetes.github.io/ingress-nginx/](https://kubernetes.github.io/ingress-nginx/)
 
-https://kubernetes.github.io/ingress-nginx/
+[https://www.joyfulbikeshedding.com/blog/2018-03-26-studying-the-kubernetes-ingress-system.html](https://www.joyfulbikeshedding.com/blog/2018-03-26-studying-the-kubernetes-ingress-system.html)
 
+[https://itnext.io/an-illustrated-guide-to-kubernetes-networking-part-1-d1ede3322727](https://itnext.io/an-illustrated-guide-to-kubernetes-networking-part-1-d1ede3322727)
+[https://itnext.io/an-illustrated-guide-to-kubernetes-networking-part-2-13fdc6c4e24c](https://itnext.io/an-illustrated-guide-to-kubernetes-networking-part-2-13fdc6c4e24c)
+[https://itnext.io/an-illustrated-guide-to-kubernetes-networking-part-3-f35957784c8e](https://itnext.io/an-illustrated-guide-to-kubernetes-networking-part-3-f35957784c8e)
 
-https://www.joyfulbikeshedding.com/blog/2018-03-26-studying-the-kubernetes-ingress-system.html
+[https://medium.com/@awkwardferny/getting-started-with-kubernetes-ingress-nginx-on-minikube-d75e58f52b6c](https://medium.com/@awkwardferny/getting-started-with-kubernetes-ingress-nginx-on-minikube-d75e58f52b6c)
 
-https://itnext.io/an-illustrated-guide-to-kubernetes-networking-part-1-d1ede3322727
-https://itnext.io/an-illustrated-guide-to-kubernetes-networking-part-2-13fdc6c4e24c
-https://itnext.io/an-illustrated-guide-to-kubernetes-networking-part-3-f35957784c8e
+[https://www.reddit.com/r/kubernetes/comments/8x1am5/get_automatic_https_with_lets_encrypt_and/](https://www.reddit.com/r/kubernetes/comments/8x1am5/get_automatic_https_with_lets_encrypt_and/)
 
-https://medium.com/@awkwardferny/getting-started-with-kubernetes-ingress-nginx-on-minikube-d75e58f52b6c
-
-https://www.reddit.com/r/kubernetes/comments/8x1am5/get_automatic_https_with_lets_encrypt_and/
-
-https://kubedex.com/ingress/
+[https://kubedex.com/ingress/](https://kubedex.com/ingress/)

@@ -7,9 +7,6 @@ In Docker world, when you use docker-compose, all the networking is done for you
 - IP based kube-node-to-pod networking
 - dns-service (kube-dns)
 
-
-  
-  
 ## A pod's internal networking (eg1-networking-inside-pods)
 
 If you have 2+ containers inside a single pod, then these containers can reach each other via localhost. Let's say we create the following 2-container pod:
@@ -66,7 +63,7 @@ pod-demo
 You'll find is that each container is attached to 2 network interfaces:
 
 ```bash
-[root@pod-centos /]# yum install -q -y net-tools      # we have to install ifconfig before we can use it. 
+[root@pod-centos /]# yum install -q -y net-tools      # we have to install ifconfig before we can use it.
 
 [root@pod-centos /]# ifconfig
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
@@ -133,7 +130,6 @@ So far we did a **cntr-centos**-->**cntr-httpd**, where both containers are in t
 ## IP based kube-node-to-pod networking
 
 The container's eth0 interface is on the same network as the the kube masters/worker nodes. This means that you can also curl from inside the master/worker nodes:
-
 
 ```bash
 $ minikube ssh
@@ -231,7 +227,6 @@ However we can't rely on IP addresses because they are prone to changing, e.g. w
 
 Kubernetes comes with a builtin internal dns service, kube-dns ([soon to be coredn](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/)).
 
-
 ```bash
 $ kubectl get svc kube-dns --namespace=kube-system -o wide
 NAME       TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)         AGE    SELECTOR
@@ -247,9 +242,7 @@ search default.svc.cluster.local svc.cluster.local cluster.local
 options ndots:5
 ```
 
-So all we need to do to use this dns service, is create dns entries in our internal dns server (kube-dns). That's done by creating service objects. There are different types of service objects, such as nodePort, and ClusterIP service. We'll cover them later. 
-
-
+So all we need to do to use this dns service, is create dns entries in our internal dns server (kube-dns). That's done by creating service objects. There are different types of service objects, such as nodePort, and ClusterIP service. We'll cover them later.
 
 ## The 'kubectl expose' command
 

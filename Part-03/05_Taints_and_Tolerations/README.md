@@ -1,9 +1,8 @@
 # Taints and Tolerations (eg1-taints)
 
-Earlier we saw how we can use nodeSelector, and Pod/Node Affinity to attract new pod deployments to certain worker nodes. 
+Earlier we saw how we can use nodeSelector, and Pod/Node Affinity to attract new pod deployments to certain worker nodes.
 
 We also looked at `podAntiAffinity` which is a mechanism to deploy new pod deployments away from a group of other existing pods, i.e. it repels them. Taints and Tolerations are other mechanisms for repelling pods from being deployed to certain kube nodes.
-
 
 ## Taints
 
@@ -26,9 +25,7 @@ There are a few different types of taints:
 
 - **NoSchedule**: Don't deploy anymore pods on in future. But existing pods can stay
 - **PreferNoSchedule**: Soft rule equivalent of NoSchedule
-- **NoExecute**: Evict any existing pods from the node. This ends up deleting the pods and recreating them on other available worker nodes. 
-
-
+- **NoExecute**: Evict any existing pods from the node. This ends up deleting the pods and recreating them on other available worker nodes.
 
 The key-value is something you are free to choose. For example you added a new worker node (running on with special hardware) to your cluster and you want your Dev Team want to assess whether it is suitable to use, before making it widely available. In that scenario you will want to taint it with something like this:
 
@@ -54,20 +51,17 @@ dep-httpd-78f54cc967-blznk   1/1     Running   0          23s   192.168.2.12   k
 dep-httpd-78f54cc967-gwth2   1/1     Running   0          23s   192.168.2.14   kube-worker2   <none>           <none>
 ```
 
-None of the pods ended up on the tainted node, kube-worker1. 
-
+None of the pods ended up on the tainted node, kube-worker1.
 
 **Question**: How will the Dev Team perform test on the tainted node if the tainted node repels all pod objects?
 
 **Answer**: You can add a 'toleration' setting in your pod yaml spec to override taint setting.  
 
-
-Note: Daemonsets ignore taints altogether. So tainted nodes end up with daemonset pods. Need to create a demo of this. 
+Note: Daemonsets ignore taints altogether. So tainted nodes end up with daemonset pods. Need to create a demo of this.
 
 ## Toleration
 
 Toleration is setting you can apply to our pods using `pod.spec.tolerations`. Here's an example:
-
 
 ```yaml
 ---
@@ -84,11 +78,11 @@ spec:
     metadata:
       labels:
         app: nginx_webserver
-    spec: 
+    spec:
       tolerations:                    # add toleration here.
-        - key: TrialNode                     # All this info is used to 
-          operator: Equal                    # match particular taint 
-          value: SpecialNodeForDevTeam       # setting. 
+        - key: TrialNode                     # All this info is used to
+          operator: Equal                    # match particular taint
+          value: SpecialNodeForDevTeam       # setting.
           effect: NoSchedule
       containers:
         - name: cntr-nginx
@@ -97,8 +91,7 @@ spec:
             - containerPort: 80
 ```
 
-Notice we had to add some matching condtions. That's because you can apply multiple taints to a node. This toleration basically cancel's out one-of the node's taint if there is a match. 
-
+Notice we had to add some matching condtions. That's because you can apply multiple taints to a node. This toleration basically cancel's out one-of the node's taint if there is a match.
 
 ```bash
 kubectl get pods -o wide
@@ -109,27 +102,5 @@ dep-httpd-78f54cc967-m22th   1/1     Running   0          75s   192.168.2.16   k
 dep-nginx-7579cddb84-cfn7x   1/1     Running   0          46s   192.168.1.10   kube-worker1   <none>           <none>
 dep-nginx-7579cddb84-nv4xb   1/1     Running   0          46s   192.168.2.19   kube-worker2   <none>           <none>
 ```
-If a node has multiple taints, then your pod spec needs to have multiple tolerations in order to cancel them all out. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+If a node has multiple taints, then your pod spec needs to have multiple tolerations in order to cancel them all out.

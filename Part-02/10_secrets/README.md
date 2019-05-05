@@ -1,6 +1,6 @@
 # Secrets
 
-In the previous example, our config file had a big flaw in respect to the fact that we stored passwords in plain text. Which is worse if you store your kube object files in a git repo. The recommended approach is to make use of [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/). 
+In the previous example, our config file had a big flaw in respect to the fact that we stored passwords in plain text. Which is worse if you store your kube object files in a git repo. The recommended approach is to make use of [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/).
 
 ## Creating Secrets
 
@@ -11,7 +11,7 @@ Secrets are just another type of kubernetes objects, so you can create secrets d
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysql-secrets 
+  name: mysql-secrets
 data:
   MysqlRootPassword: cGFzc3dvcmQxMjM=    # This entry must be given in base64 format:  echo -n 'password123' | base64
 ```
@@ -23,7 +23,6 @@ $ echo 'cGFzc3dvcmQxMjM=' | base64 --decode
 password123
 ```
 
-
 In fact, for secrets, it could be argued that it's better to create secrets imperatively (i.e. manually from the command line):
 
 ```bash
@@ -33,7 +32,7 @@ secret/mysql-secrets created
 
 $ kubectl get secrets
 NAME                  TYPE                                  DATA   AGE
-default-token-p5k7f   kubernetes.io/service-account-token   3      28m  # this comes included in kube cluster. 
+default-token-p5k7f   kubernetes.io/service-account-token   3      28m  # this comes included in kube cluster.
 mysql-secrets        Opaque                                1      10s
 ```
 
@@ -54,7 +53,6 @@ Usage:
 Use "kubectl <command> --help" for more information about a given command.
 Use "kubectl options" for a list of global command-line options (applies to all commands).
 ```
-
 
 The 'generic' type simply meants to create a secret from the contents from local file, directory or literal value. The '--from-literal' means, use the key=value pair specified on the command line. --from-literal, is only useful for simply secrets, e.g. passwords. But if your secrets comes in the form of a file, e.g. ssh private keys, then use '--from-file' instead, e.g.:
 
@@ -110,8 +108,6 @@ Data
 id_rsa:  1692 bytes
 ```
 
-
-
 We've named our secrets object as 'mysql-secrets'. Secrets objects can house multipe key-value pairs for storing secrets. At the moment we're only storing once key-value pair inside this secret. After you've created the secret, you can still view the base64 encoded format of the secret:
 
 ```bash
@@ -141,6 +137,7 @@ There's 2 main ways to inject secrets into your pods:
 - Inject secrets as files into pods - this approach requires creatng [secret volumes](https://kubernetes.io/docs/concepts/storage/volumes/#secret).
 
 ### Inject secrets as Environment Variables
+
 Now we modify our pod yaml file so that it now looks like:
 
 ```yaml
@@ -161,8 +158,8 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-secrets      # this is the name of the object that holds one or more key-value pairs. 
-              key: MysqlRootPassword   # this is the name of the key, whose value we're interested in. 
+              name: mysql-secrets      # this is the name of the object that holds one or more key-value pairs.
+              key: MysqlRootPassword   # this is the name of the key, whose value we're interested in.
       ports:
         - containerPort: 3306
 ```
@@ -191,7 +188,6 @@ Success!
 
 In this mysql example, everytime you delete the mysql pod, all data stored inside the mysql database get's deleted as well, which isn't good. That's why you should use Kubernetes Persistent Volumes for storing persistant data. Will cover more about Kubernetes Volumes later.
 
-
 ### Inject secrets as files
 
 In this method, each key-name in a key/value secret pair, becomes the name of a text file, and the content of that file just contains the actual secret and nothing else. The yaml looks like this:
@@ -203,7 +199,7 @@ kind: Pod
 metadata:
   name: pod-centos
 spec:
-  volumes:                  # this approach requires the use of volumes, of the type 'secret'. 
+  volumes:                  # this approach requires the use of volumes, of the type 'secret'.
     - name: my-secrets
       secret:
         secretName: mysecrets
@@ -212,18 +208,17 @@ spec:
       image: centos
       volumeMounts:
         - name: my-secrets
-          mountPath: /etc/secrets      # this folder will house one or more files, one for each key/value secret pair. 
+          mountPath: /etc/secrets      # this folder will house one or more files, one for each key/value secret pair.
       command: ["/bin/bash", "-c"]
       args:
         - |
           while true ; do
             date
-            sleep 10 
+            sleep 10
           done
 ```
 
 Once the pod is created, we can see if the secrets are stored inside:
-
 
 ```bash
 $ kubectl exec pod-centos -it /bin/bash -c cntr-centos
@@ -235,7 +230,7 @@ lrwxrwxrwx 1 root root 20 Mar 12 13:22 password2.txt -> ..data/password2.txt
 
 [root@pod-centos secrets]# cat password1.txt
 password123[root@pod-centos secrets]# cat password2.txt
-passwordxyz[root@pod-centos secrets]# 
+passwordxyz[root@pod-centos secrets]#
 ```
 
-Note: the cat outputs looks a bit messy becuase the files content doesnt include any new-line charaacters, which is as it should be. 
+Note: the cat outputs looks a bit messy becuase the files content doesnt include any new-line charaacters, which is as it should be.

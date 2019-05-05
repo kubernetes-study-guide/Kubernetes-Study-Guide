@@ -4,7 +4,7 @@ The course takes a learn-by-doing approach. And the focus is to get you acquaint
 
 ## The aim of this course
 
-This course is a follow-along hands-on guide to Kubernetes and cover as much of the kubernetes feature as possible, so that you get comfortable using kubernetes for usual day-to-day work. 
+This course is a follow-along hands-on guide to Kubernetes and cover as much of the kubernetes feature as possible, so that you get comfortable using kubernetes for usual day-to-day work.
 
 This course is also a good companion for those who are planning on taking the [Certified Kubernetes Administrator](https://www.cncf.io/certification/cka/) certification.
 
@@ -16,8 +16,8 @@ This is an intermediate level course. You need to know the following:
 - git
 - linux, bash, vim
 - yaml syntax
-- basic networking knowledge, e.g. subnets, netmasks, also things like http is port 80. 
-- already have basic kubernetes knowledge - This isn't a kubernetes beginners course. 
+- basic networking knowledge, e.g. subnets, netmasks, also things like http is port 80.
+- already have basic kubernetes knowledge - This isn't a kubernetes beginners course.
 
 ## what software you need to follow along
 
@@ -34,7 +34,7 @@ This is an intermediate level course. You need to know the following:
 
 ## Study guide
 
-This course comes with it's very own study guide, so you can follow along all the examples. 
+This course comes with it's very own study guide, so you can follow along all the examples.
 
 This course will be closely following the following git repo: xxxxxx
 
@@ -50,7 +50,7 @@ Use 'grep -ir "xxx"'
 
 This course is heavily focused helping you get familiar with the official kubernetes documentation, so that you know your way around it. Since you will have access to the docs during the exam.
 
-At the end of this course we'll review the exam objectives and see which topic is covered. 
+At the end of this course we'll review the exam objectives and see which topic is covered.
 
 ## Notations
 
@@ -66,7 +66,7 @@ Also you can access a lot more info by running:
 kubectl explain xxxxx
 ```
 
-In this case, we'll refer to what to put in here, using a dot like notation e.g. 'pod.spec'. 
+In this case, we'll refer to what to put in here, using a dot like notation e.g. 'pod.spec'.
 
 Also some commands have a long output, so we only show an extract inside 3-dot notation:
 
