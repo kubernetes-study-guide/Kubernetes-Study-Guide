@@ -9,9 +9,8 @@ This means that the number of deamonset pods goes up/down every time you add/rem
 There are a few use-cases for these:
 
 - log aggregators - Have one filebeat pod per worker node, to collect logs of all other pods
-- monitor - a pod that monitors the worker node itself. 
+- monitor - a pod that monitors the worker node itself.
 - loadbalancers/Rev proxies/API Gateways
-
 
 It's not easy to demo deamonsets on Minikube since it's only a single node cluster. That's why I've created a [kubernetes vagrant project](https://github.com/Sher-Chowdhury/kubernetes-the-kubeadm-way-vagrant) that spins up a 3-node kube cluster, 1 master and 2 workers.
 
@@ -24,7 +23,6 @@ kube-worker2   Ready    <none>   2m56s   v1.13.4   10.0.2.15     <none>        U
 ```
 
 Daemonsets are also used by the kubecluster internally:
-
 
 ```bash
 
@@ -58,8 +56,7 @@ kube-worker2   Ready    <none>   2m59s   v1.13.4   10.0.2.15     <none>        U
 
 The daemonset yaml file looks like this, it looks a lot like a replicaset:
 
-
-```yaml 
+```yaml
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -75,14 +72,13 @@ spec:
     metadata:
       labels:
         app: httpd_webserver
-    spec: 
+    spec:
       containers:
         - name: cntr-httpd
           image: httpd:latest
           ports:
             - containerPort: 80
 ```
-
 
 Since our kubecluster has 2 worker nodes, it results in 2 pods being created even though we didn't specify any replicas:
 
@@ -98,14 +94,9 @@ ds-httpd-mtqcc   1/1     Running   0          62s   192.168.2.2   kube-worker2  
 
 ```
 
-
-
-
-
-# Deploying DaemonSet to some nodes using nodeSelector
+## Deploying DaemonSet to some nodes using nodeSelector
 
 You may want to deploy a particular daemonset on a subset of worker nodes, e.g. all nodes of ec2 instance type of M3. You can do that by assigning arbitrary labels to your pods:
-
 
 ```bash
 $ kubectl label nodes kube-worker2 ec2InstanceType=M3
@@ -142,13 +133,12 @@ spec:
         ec2InstanceType: M3     # specify the node label to match with.
       containers:
         - name: cntr-httpd
-          image: httpd:latest 
+          image: httpd:latest
           ports:
             - containerPort: 80
 ```
 
 This results in:
-
 
 ```bash
 # kubectl get daemonsets
@@ -160,4 +150,3 @@ ds-httpd-h7t6q   1/1     Running   0          26s   192.168.2.3   kube-worker2  
 ```
 
 Note, the nodeSelector is specified at the pod-spec level. That means you can use nodeSelector in lots of other objects, e.g. pods, replicaSets, Deployments,...etc. There are other ways to [assign pods to particular worker nodes](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/).
-

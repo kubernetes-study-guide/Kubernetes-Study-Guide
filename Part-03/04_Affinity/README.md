@@ -2,9 +2,8 @@
 
 Earlier we saw how to assign pods to particular node(s) using nodeSelector and nodename settings. [Affinity/Anti-Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity), is another feature that does the same kind of thing:
 
-
 ```bash
-$ kubectl explain pod.spec.affinity 
+$ kubectl explain pod.spec.affinity
 KIND:     Pod
 VERSION:  v1
 
@@ -28,19 +27,15 @@ FIELDS:
      in the same node, zone, etc. as some other pod(s)).
 ```
 
-
-
 Affinity settings has additional capabilities:
 
 1. More versatile label selection method - e.g. instead of a simple key=value label match. You can just specify deploy/dont-deploy on nodes that has a key with a certain and ignoring what the key's value is. Or you can specify a list of valid values for a given key.  See `pod.spec.affinity.nodeAffinity`
 2. Specify preference (rather than hard rules) - So if no suitable deployment target is found, kubernetes will deploy it anyway to non-mathing targets, since it's more important for the pod(s) to exist than having those pods running on non-preferred worker, see `pod.spec.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution`
 3. Prevent particular pods from running on the same worker node (co-locating), based on labels. See `pod.spec.affinity.podAntiAffinity`.
 
-
 ## NodeAffinity Preference (eg1-node-affinity)
 
 For this demo we'll create the following node label:
-
 
 ```bash
 $ kubectl label nodes kube-worker2 ec2InstanceType=M3
@@ -56,7 +51,6 @@ kube-worker2   Ready    <none>   75m   v1.13.4   beta.kubernetes.io/arch=amd64,b
 
 Then our affinity setting is going to be:
 
-
 ```yaml
 ---
 apiVersion: v1
@@ -71,7 +65,7 @@ spec:
       preferredDuringSchedulingIgnoredDuringExecution: # this means decision is made at scheduling stage only, so won't self correct if rule is met in the future
         - weight: 10
           preference:
-            matchExpressions: 
+            matchExpressions:
               - key: ec2InstanceType
                 operator: In
                 values:
@@ -84,8 +78,7 @@ spec:
         - containerPort: 80
 ```
 
-
-Notice here that our Kube-worker1 node is the closest match with label value is M3, but yaml file will match for either M1 or M2. So no match is made. However a pod is still created, since it's more important for the pod(s) to exist on non-ideal worker nodes, than not have any pod(s) at all. 
+Notice here that our Kube-worker1 node is the closest match with label value is M3, but yaml file will match for either M1 or M2. So no match is made. However a pod is still created, since it's more important for the pod(s) to exist on non-ideal worker nodes, than not have any pod(s) at all.
 
 ```bash
 # kubectl get pods -o wide --show-labels
@@ -111,9 +104,7 @@ pod-httpd   1/1     Running   0          24m   192.168.1.3   kube-worker1   <non
 
 ```
 
-
 Even reapplying wont make a difference since the pod already exists:
-
 
 ```bash
 $ kubectl apply -f configs/eg1-node-affinity/
@@ -127,7 +118,6 @@ pod-httpd   1/1     Running   0          25m   192.168.1.3   kube-worker1   <non
 
 The only way to fix this is by rebuilding the pod:
 
-
 ```bash
 # kubectl delete -f configs/eg1-node-affinity/ ; kubectl apply -f configs/eg1-node-affinity/
 pod "pod-httpd" deleted
@@ -139,14 +129,13 @@ pod-httpd   1/1     Running   0          7s    192.168.2.4   kube-worker2   <non
 
 If you have created a pod cluster via a controller, e.g. deployment, then you can trigger a rebuild by manually deleting one pod at a time.
 
-
 ### preferredDuringSchedulingIgnoredDuringExecution weights
 
 The 'weight' setting is something specific to soft/preference rules. For each preference rule a node matches, it receives a score equal to the weight. So if a certain node matches multiple preferences then it scores higher, and is more likely to have the pods deployed to them.
 
 ## Hard rules (eg2-hard-node-affinity)
 
-We just saw a soft rule (preference) in action. But if you increased the replica to 2, then it gets deployed on matching and non matching worker nodes. That's because we only have 2 worker nodes and pods needs to be on both for HA. I.e. need for HA overrides the soft rule. If you want more powerful rules, the you need to make use of hard rules. 
+We just saw a soft rule (preference) in action. But if you increased the replica to 2, then it gets deployed on matching and non matching worker nodes. That's because we only have 2 worker nodes and pods needs to be on both for HA. I.e. need for HA overrides the soft rule. If you want more powerful rules, the you need to make use of hard rules.
 
 For hard rules you use `pod.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution` . This does the same job as nodeSelector but with more advanced customisation. The syntax also looks similar to soft rules:
 
@@ -170,9 +159,9 @@ spec:
     spec:
       affinity:
         nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:   # notice, no weight setting. 
+          requiredDuringSchedulingIgnoredDuringExecution:   # notice, no weight setting.
             nodeSelectorTerms:                                  # notice 'preference' replaced by 'nodeSelectorTerms'
-              -  matchExpressions: 
+              -  matchExpressions:
                    - key: ec2InstanceType
                      operator: In
                      values:
@@ -196,9 +185,6 @@ dep-httpd-69779b8c84-cjmnt   1/1     Running   0          5m52s   192.168.2.8   
 
 I.e. both nodes are on the same worker node, even though there is another worker node available.
 
-
-
-
 ## Built-in node labels
 
 If you take a look at the node labels again:
@@ -212,7 +198,6 @@ kube-worker2   Ready    <none>   16h   v1.13.4   beta.kubernetes.io/arch=amd64,b
 ```
 
 You'll see that the nodes are already tagged with a few labels by default. You can use these built-in labels as part of your Affinity/Anti-Affinity definitions if they meet your needs. These builtin node labels are often used in conjunction with podAffinity
-
 
 ## podaffinity
 
@@ -262,8 +247,7 @@ spec:
             - containerPort: 80
 ```
 
-
-The 'matchLabels' section is used to identify which pod you want your pod to be co-located with, the **topologyKey** setting specifies to what extent you want the co-location to be. In our case we used one of the builtin node labels to specify that we want to co-locate on the exact same node (based on hostname) that the mysql pod is currently on. If there was a 'zone' label available then we could have specified all nodes in the same AZ. 
+The 'matchLabels' section is used to identify which pod you want your pod to be co-located with, the **topologyKey** setting specifies to what extent you want the co-location to be. In our case we used one of the builtin node labels to specify that we want to co-locate on the exact same node (based on hostname) that the mysql pod is currently on. If there was a 'zone' label available then we could have specified all nodes in the same AZ.
 
 So applying this results in:
 
@@ -277,11 +261,9 @@ pod-mysql-db                 1/1     Running   0          52m   192.168.1.6   ku
 
 so both httpd pods ends up on the same node as the mysql pod.
 
-
-
 ## podAntiAffinity
 
-podAntiAffinity is the reverse of podaffinity, i.e. deploy your pods away from another set of pods. 
+podAntiAffinity is the reverse of podaffinity, i.e. deploy your pods away from another set of pods.
 
 ```yaml
 ---
@@ -316,7 +298,6 @@ spec:
 ```
 
 Applying this results in:
-
 
 ```bash
 $ kubectl get pods -o wide --show-labels

@@ -75,12 +75,12 @@ metadata:
   name: codingbee-hello-world
 ```
 
-> Notice that we didn't need to specify a namespace.spec section. 
+> Notice that we didn't need to specify a namespace.spec section.
 
 Writing out the above yaml code by hand can be tedious and error-proone, so you can quickly generate a yaml boilerplate template, which you can then use to tweak:
 
 ```bash
-$ kubectl create namespace codingbee-hello-world -o yaml --dry-run > namespace.yaml
+kubectl create namespace codingbee-hello-world -o yaml --dry-run > namespace.yaml
 ```
 
 You can then create objects in your new namespace by using the `kubectl apply --namespace -f ...`. However I prefer the declaritive approach, by specifing what namespace objects belong to using the `xxx.metadata.namespace` setting:
@@ -121,8 +121,6 @@ spec:
     app: apache_webserver
 ```
 
-
-
 We can apply them using the usual apply commands. And then we can check that they have been created by running:
 
 ```bash
@@ -153,6 +151,7 @@ nodes                             no                                          fa
 ```
 
 ## Set the namespace persistently
+
 Specifying namespaces on the command line can get quite tedious. However you can persistantly change namespaces by running:
 
 ```bash
@@ -160,7 +159,7 @@ $ kubectl config set-context $(kubectl config current-context) --namespace=codin
 Context "minikube" modified.
 ```
 
-This command is setting the user+cluster details via the current-context setting, and the sets the namespace to go with it. This command essentially makes a one-line change in your `~/.kube/config` file. 
+This command is setting the user+cluster details via the current-context setting, and the sets the namespace to go with it. This command essentially makes a one-line change in your `~/.kube/config` file.
 
 ```bash
 $ diff ~/.kube/config ~/.kube/config-orig
@@ -189,6 +188,3 @@ CURRENT   NAME                 CLUSTER                      AUTHINFO            
 ```
 
 This command essentially displays some of the the content extracted from `~/.kube/config` in a more readable form. As you can see, the command we use to configure which kubecluster our kubectl command should connect (i.e. the context) to also lets you set the namespace (i.e. namespace to use when not explicitly specified on the command line).
-
-
-

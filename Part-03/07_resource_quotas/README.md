@@ -28,11 +28,11 @@ Allocated resources:
 ...
 ```
 
-So to make optimal use of these resources, we have to set quotas. 
+So to make optimal use of these resources, we have to set quotas.
 
-# Pod Quotas
+## Pod Quotas
 
-The containers pod might need a minimum amount of cpu+ram in order to work properly. If so then you can specify them with the `pod.spec.containers.resources.requests` settings. Also you can set the maximum amount of cpu+ram your pod's containers are allowed to use, with the `pod.spec.containers.resources.limits` setting, in case your container unexpected starts using too much hardware resources which in turn could have a knock on impact on other things running on your kube cluster. 
+The containers pod might need a minimum amount of cpu+ram in order to work properly. If so then you can specify them with the `pod.spec.containers.resources.requests` settings. Also you can set the maximum amount of cpu+ram your pod's containers are allowed to use, with the `pod.spec.containers.resources.limits` setting, in case your container unexpected starts using too much hardware resources which in turn could have a knock on impact on other things running on your kube cluster.
 
 ```yaml
 ---
@@ -50,11 +50,11 @@ spec:
     metadata:
       labels:
         app: centos_os
-    spec: 
+    spec:
       containers:
         - name: cntr-centos
           image: centos:latest
-          resources:             # requests are used for minimum requirements. 
+          resources:             # requests are used for minimum requirements.
             requests:
               memory: "64Mi"
               cpu: "100m"    # 1000m = 1 cpu core. So here we're requesting just 10%.
@@ -65,17 +65,14 @@ spec:
           args:
             - |
               while true ; do
-                date 
-                sleep 10 
+                date
+                sleep 10
               done
           ports:
             - containerPort: 80
 ```
 
-
-
 Since we're using a new namespace, codingbee, we'll switch over to that namespace for now:
-
 
 ```bash
 $ kubectl config set-context  $(kubectl config current-context) --namespace=codingbee
@@ -83,25 +80,20 @@ Context "minikube" modified.
 
 $ kubectl config get-contexts
 CURRENT   NAME                 CLUSTER                      AUTHINFO             NAMESPACE
-          default              kubernetes                   chowdhus             
-          docker-for-desktop   docker-for-desktop-cluster   docker-for-desktop   
+          default              kubernetes                   chowdhus
+          docker-for-desktop   docker-for-desktop-cluster   docker-for-desktop
 *         minikube             minikube                     minikube             codingbee
 ```
-
-
-
 
 The requests value is not necessarily how much of the resource that's actually used, it's just how much resource that should be reserved in case the pod needs it.
 
 It's best practice to always include requests+limit setting in all pod definition, that's because it will help the kube-scheduler figure out which nodes to place the pods.
 
-Note: If you exec into your containers, and then run `top` or `free -m`. Then you'll only see your worker node's cpu and ram. That's becuase these limits are applied to your pods externally by kubernetes. 
-
+Note: If you exec into your containers, and then run `top` or `free -m`. Then you'll only see your worker node's cpu and ram. That's becuase these limits are applied to your pods externally by kubernetes.
 
 ## ResourceQuota
 
 It's best practice to always specify pod requests+limits in your pod specs for the optimal running of your kube cluster. In fact you can force all pod definitions to require limit+requests settings to be explicitly set, so that if they are omitted then kubernetes will throw error messages. That's done by creating a **ResourceQuota** object. A resource quota set the limits at the namespace level:
-
 
 ```yaml
 ---
@@ -118,10 +110,9 @@ spec:
     limits.memory: 2Gi
 ```
 
-Although it doesn't explicitly say here that pod requests+limits are now mandatory. It is implied, since kubernetes now needs explicit pod resource requests/limits specs in order to perform it's calculatation. 
+Although it doesn't explicitly say here that pod requests+limits are now mandatory. It is implied, since kubernetes now needs explicit pod resource requests/limits specs in order to perform it's calculatation.
 
-You can also use ResourceQuota to set limits on the number of different types of Kubernetes objects that are allowed to exist in a namespace: 
-
+You can also use ResourceQuota to set limits on the number of different types of Kubernetes objects that are allowed to exist in a namespace:
 
 ```yaml
 ---
@@ -169,7 +160,7 @@ services.loadbalancers  0     0
 services.nodeports      0     0
 ```
 
-Setting objects limits is a powerful way to disable certain features in your namespace. E.g. If you want Terraform to be responsible for building your loadbalancers, then you set services.loadbalancers to 0, and if you want Hashicorp Vault as your central secrets manager, then set secrets to 0. 
+Setting objects limits is a powerful way to disable certain features in your namespace. E.g. If you want Terraform to be responsible for building your loadbalancers, then you set services.loadbalancers to 0, and if you want Hashicorp Vault as your central secrets manager, then set secrets to 0.
 
 Let's now try to breach a limit, let's try to exeed the pod limit, by scaling our current deployment to 3 pods:
 
@@ -223,9 +214,6 @@ Events:
   Warning  FailedCreate      4m57s (x8 over 10m)  replicaset-controller  (combined from similar events): Error creating: pods "dep-centos-55989c5c59-drsmm" is forbidden: exceeded quota: codingbee-object-quota, requested: pods=1, used: pods=2, limited: pods=2
 ```
 
-
-
-
 ## LimitRange
 
 When you have ResourceQuota object with limits in place for cpu+ram, it means that it has now become mandatory for all pods definitons to specify cpu+ram limits as well. So the following will no longer work:
@@ -256,9 +244,9 @@ Error from server (Forbidden): error when creating "configs/pod-httpd.yml": pods
 So this presents 2 problems:
 
 - You might have lots of existing yaml files that now needs to be updated
-- What if definitions are set too excessive, e.g. requests.cpu is set something ridiculously high is 10. 
+- What if definitions are set too excessive, e.g. requests.cpu is set something ridiculously high is 10.
 
-To address this you need to create a LimitRange object. 
+To address this you need to create a LimitRange object.
 
 ```yaml
 ---
@@ -289,7 +277,6 @@ spec:
       default:            # default limit values
         cpu: 200m
         memory: 100Mi
-        
 ```
 
 After applying this, you'll end up with:
@@ -313,7 +300,6 @@ Container   cpu       50m   400m   100m             200m           -
 
 You'll now be able to keep using your pod defs, and defaults are used:
 
-
 ```bash
 $ kubectl describe pod pod-httpd
 ...
@@ -325,13 +311,3 @@ $ kubectl describe pod pod-httpd
       memory:     50Mi
 ...
 ```
-
-
-
-
-
-
-
-
-
-

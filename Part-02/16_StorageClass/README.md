@@ -12,7 +12,6 @@ Also the type of storage class you can create depends on the underlying infrastr
 
 One cool feature is that during a kubernetes installation, Kubernetes identifies what infrastructure it is being installed on and automatically create a default StorageClass object, e.g. Minikube creates a storageclass using Minikube's own bespoke [provisioner](https://kubernetes.io/docs/concepts/storage/storage-classes/#provisioner), which is based on hostPath PV type.
 
-
 ```bash
 $ kubectl get storageclass
 NAME                 PROVISIONER                AGE
@@ -75,14 +74,12 @@ pvc-8a36c914-4ef5-11e9-8cda-0800271f16b7   1Gi        RWO            Delete     
 
 Notice here that the reclaim policy is 'Delete'. This means if we delete the PVC, then the PV also get's deleted:
 
-
 ```bash
 $ kubectl delete pvc pvc-db-data-storage
 persistentvolumeclaim "pvc-db-data-storage" deleted
 $ kubectl get pvc
 No resources found.
 ```
-
 
 ## Custom StorageClasses
 
@@ -114,8 +111,7 @@ standard (default)   k8s.io/minikube-hostpath   51m
 standard-persist     k8s.io/minikube-hostpath   4s
 ```
 
-Now in our PVC yaml file, we need to specifically request for this storageclass,`pvc.spec.storageClassName`, to avoid it from using the default. 
-
+Now in our PVC yaml file, we need to specifically request for this storageclass,`pvc.spec.storageClassName`, to avoid it from using the default.
 
 ```yaml
 ---
@@ -134,7 +130,6 @@ spec:
 
 Now when we apply this we get:
 
-
 ```bash
 $ kubectl get pvc
 NAME                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
@@ -145,7 +140,6 @@ pvc-5a3887c3-4efc-11e9-8cda-0800271f16b7   1Gi        RWO            Delete     
 ```
 
 Looks like a [bug](https://github.com/kubernetes/minikube/issues/3955).
-
 
 ## Disabling Dynamic Provisioning
 

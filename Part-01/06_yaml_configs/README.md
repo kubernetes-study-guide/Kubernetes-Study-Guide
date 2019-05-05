@@ -1,8 +1,8 @@
 # Anatomy of an Kubernetes object config file
 
-There's 2 main approaches to create/update/delete Kubernetes objects. They are the [imperative and declarative approaches](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/overview/). 
+There's 2 main approaches to create/update/delete Kubernetes objects. They are the [imperative and declarative approaches](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/overview/).
 
-Broadly speaking, the imperative approach involves creating objects solely via the kubectl command line. Whereas the declaritive approach involves writing yaml descriptors and then use the kubectl 'apply' subcommand to create them. It's recommended to use the declaritive approach 
+Broadly speaking, the imperative approach involves creating objects solely via the kubectl command line. Whereas the declaritive approach involves writing yaml descriptors and then use the kubectl 'apply' subcommand to create them. It's recommended to use the declaritive approach
 
 Notice, that all these config files have the following general yaml structure:
 
@@ -29,8 +29,7 @@ Client Version: v1.13.4
 Server Version: v1.14.0
 ```
 
-This shows that the kubectl binary we have installed locally on our macbook is v1.13.4, whereas the kubecluster our kubectl command is talking to is version v1.14.0. 
-
+This shows that the kubectl binary we have installed locally on our macbook is v1.13.4, whereas the kubecluster our kubectl command is talking to is version v1.14.0.
 
 You can also view the api reference data from the cli, using the 'explain' subcommand:
 
@@ -51,9 +50,7 @@ You can get a high-level overview of the entire yaml structure:
 kubectl explain pod --recursive
 ```
 
-
 And you can drill down like this:
-
 
 ```bash
 $ kubectl explain pod.kind
@@ -70,8 +67,7 @@ DESCRIPTION:
 ...
 ```
 
-
-**metadata:** Data that helps uniquely identify the object. metadata.name is used to assign a name to the object. metadata.labels is also another really important feature. It not only lets you organise your resources, but it also offers a means to filter your resources, and can be used as a way to refer to a group of resources. 
+**metadata:** Data that helps uniquely identify the object. metadata.name is used to assign a name to the object. metadata.labels is also another really important feature. It not only lets you organise your resources, but it also offers a means to filter your resources, and can be used as a way to refer to a group of resources.
 
 **spec:** The content of this depends on the kind of object in question. Api specifies what structure+content this section should hold.
 
@@ -79,16 +75,13 @@ DESCRIPTION:
 
 In this walkthrough we ended up with 2 config files. However you can store 2 or more objects in a single config file. All you need to do is to copy all the definitions into a single file, and seperate them out using by inserting the yaml-new-document-syntax '---' between them. It's really a preference on whether or not to use this approach.
 
-
 ## Updating objects
 
-Kubernetes is smart enough to identify which objects have been created by a particular config file. It does so by using the configs about the 'kind' and metadata.name info. The yaml descriptor's filename itself doesn't matter, as long as it ends with the .yml/.yaml extension. You can make changes to the yaml files (as long as it isn't changing the 'kind' or 'metadata.name' fields) and just apply them again for the changes to take affect. 
+Kubernetes is smart enough to identify which objects have been created by a particular config file. It does so by using the configs about the 'kind' and metadata.name info. The yaml descriptor's filename itself doesn't matter, as long as it ends with the .yml/.yaml extension. You can make changes to the yaml files (as long as it isn't changing the 'kind' or 'metadata.name' fields) and just apply them again for the changes to take affect.
 
-
-## View entire yaml definition including implicit values. 
+## View entire yaml definition including implicit values
 
 What if you have a pod, e.g. called pod-httpd, but lost it's yaml descriptor file? In that case you can regenerate the yaml descriptor from the existing pod:
-
 
 ```bash
 kubectl get pod pod-httpd -o yaml --export > regenerated-descriptor.yaml
@@ -96,12 +89,9 @@ kubectl get pod pod-httpd -o yaml --export > regenerated-descriptor.yaml
 
 ## Imperative vs Declaritive approaches
 
-https://kubernetes.io/docs/concepts/overview/object-management-kubectl/declarative-config/
+[https://kubernetes.io/docs/concepts/overview/object-management-kubectl/declarative-config/](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#service-v1-core)
 
-https://kubernetes.io/docs/concepts/overview/object-management-kubectl/imperative-config/
-
-
-
+[https://kubernetes.io/docs/concepts/overview/object-management-kubectl/imperative-config/](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/imperative-config/)
 
 ## References
 

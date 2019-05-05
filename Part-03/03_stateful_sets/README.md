@@ -1,9 +1,7 @@
 # Stateful Sets
 
-Earlier we came across deployments which are used to manage stateless pods, i.e. pods that don't need any persistant data. 
+Earlier we came across deployments which are used to manage stateless pods, i.e. pods that don't need any persistant data.
 We also saw that deployments can also manage stateful pods, by taking advantage of Persistant Volumes for externally storing a pod's persistant data. However what if that persistant data relies on the pod's hostname (which in turn is the pod's name) to be static as well as the container's ip address (which in turn is the pods ip addresss) to be static too? Deployment provisioned (and rebuilt) pods have deploymentname-randomstring naming convention. They also gets randomly assigned ip address during rebuilds.
-
-
 
 That's where Statefull Sets comes into the picture. StatefullSets are like deployments, but with a few important differences:
 
@@ -11,12 +9,10 @@ That's where Statefull Sets comes into the picture. StatefullSets are like deplo
 - stateful sets pods comes with builtin persistant storage. The volumes exists even after scaling down
 - stateful sets pods always stays on the same worker node that originally hosted them, even if you rebuild them.
 - Each stateful set pods comes included with static dns entries, which are of the format:
-  podname-number.statefulsetname.namespace.svc.cluster.local 
-- pods are created in order. podname-0, podname-1, podname-2....etc. and when scaling down, it does it in reverse order. 
-
+  podname-number.statefulsetname.namespace.svc.cluster.local
+- pods are created in order. podname-0, podname-1, podname-2....etc. and when scaling down, it does it in reverse order.
 
 Let's demo this feature by creating the following sts:
-
 
 ```yaml
 ---
@@ -28,7 +24,7 @@ metadata:
     app: httpd_webserver
 spec:
   serviceName: httpd-service     # Need to add this in stateful sets
-  replicas: 2 
+  replicas: 2
   selector:
     matchLabels:
       app: httpd_webserver
@@ -38,7 +34,7 @@ spec:
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
-          requests:                 
+          requests:
             storage: 10Mi
   template:
     metadata:
@@ -105,9 +101,7 @@ sts-httpd-1   1/1     Running   0          15m
 
 ```
 
-
 You'll also see that the timestamp is the same:
-
 
 ```bash
 $ curl $(minikube service svc-nodeport-httpd --url)
@@ -131,11 +125,11 @@ pvc-c6e52bd8-490c-11e9-8c2d-0800274b67c2   10Mi       RWO            Delete     
 These pvc and pv persist even after deleting the pods, and even if you delete everything:
 
 ```bash
-$ kubectl delete -f configs
+
+kubectl delete -f configs
 ```
 
 the only way to delete the pvc+pv, is to do it manually:
-
 
 ```bash
 $ kubectl delete pvc httpd-data-storage-sts-httpd-0
@@ -147,5 +141,3 @@ No resources found.
 $ kubectl get pv
 No resources found.
 ```
-
-

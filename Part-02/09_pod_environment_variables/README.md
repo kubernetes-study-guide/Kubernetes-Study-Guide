@@ -3,12 +3,13 @@
 The images on docker hub comes with a set of default configurations baked into the image. So when you create a container from the image, that container runs with those default configs. However it's very likely that these default configs won't meet your needs, and so you'll want to provision your containers to run with a different set of configs. There are a few ways to do this:
 
 - Build child images with custom configs baked in - not best practice, since your effectively hardcoding configs.
-- Environment Variables - Feed data in as environment variables. 
+- Environment Variables - Feed data in as environment variables.
 - ConfigMaps - Covered later
 - Volumes - covered later
-- Secrets - Used for feeding in sensitive data (e.g. passwords) into your containers. Covered later. 
+- Secrets - Used for feeding in sensitive data (e.g. passwords) into your containers. Covered later.
 
 ## Configurable Images (eg1-mysql)
+
 Some Docker images, e.g. the [official mysql image](https://hub.docker.com/_/mysql) let's you feed in [docker image environment variables](https://hub.docker.com/_/mysql#environment-variables) into the the container. These environment variables are usually optional, but some can be mandatory. In the case of the mysql image, the MYSQL_ROOT_PASSWORD variable is mandatory. These environment variables are usually used by an [entrypoint](https://github.com/docker-library/mysql/blob/master/8.0/docker-entrypoint.sh) script during a container's launch time.
 
 Here we're going to look at how we feed in environment variables into a container using kubernetes. We'll use the official mysql image for this demo.
@@ -126,5 +127,3 @@ mysql>
 ```
 
 Success! however note that dummy_db was created because of the env variables we fed in via the yaml configurations. if dummy_db contained data, then that data would get wiped out if you rebuild the pod, leaving you with a empty dummy_db db again. To make the db and it's data persistant, we need to make use of persistant volumes, covered later.
-
-
