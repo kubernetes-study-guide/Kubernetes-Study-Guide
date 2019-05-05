@@ -11,7 +11,7 @@ For example, let's say we have 2 pods, a httpd pod, and a centos pod. Let's say 
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-clusterip-httpd   # this is the service endpoint that has a dns entry that we can curl for. 
+  name: svc-clusterip-httpd   # this is the service endpoint that has a dns entry that we can curl for.
 spec:
   type: ClusterIP
   ports:
@@ -108,8 +108,6 @@ Subsets:
 
 Events:  <none>
 ```
-
-
 
 Now we can test out the ClusterIP dns and loadbalancing from our centos test pod. 
 

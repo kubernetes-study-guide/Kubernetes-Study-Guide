@@ -17,7 +17,7 @@ metadata:
   labels:
     component: httpd_webserver
 spec:
-  replicas: 2 
+  replicas: 2
   minReadySeconds: 10 # This is one of the features Deployments have that enhances replicasets
   selector:
     matchLabels:
@@ -26,7 +26,7 @@ spec:
     metadata:
       labels:
         component: httpd_webserver
-    spec: 
+    spec:
       containers:
         - name: cntr-httpd
           image: httpd:2.4.37
@@ -37,7 +37,7 @@ spec:
           args:
             - |
               /bin/echo "You've hit - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
-              /usr/local/bin/httpd-foreground 
+              /usr/local/bin/httpd-foreground
 ```
 
 This descriptor ends up creating the following deployment object:
@@ -66,7 +66,6 @@ deployment-httpd-648756c8dd-hcc7f   1/1       Running   0          1m        172
 
 So a deployment object created another controller object (replicaset), which in turn created the pod objects. That means if we manually delete the RS then the deployment would automatically recreate it again, which in turn will recreate the pods. Going back to the description yaml file, you'll notice that it's content is essentially 3 object definitions in a nested fashion. At the top we have the deployment, followed by the replicaset, and finally the pod definition. If you want to increase the number of pods running under this deployment, then just update the replicas setting in the yaml file and re-apply. You can check the sequence of tasks that kubernetes performed behind the scenes using the 'events' subcommand:
 
-
 ```bash
 $ kubectl get events
 LAST SEEN   TYPE     REASON              KIND         MESSAGE
@@ -88,7 +87,6 @@ LAST SEEN   TYPE     REASON              KIND         MESSAGE
 ## Scaling Deployments
 
 You can scale deployments up/down by simply updating the `deployment.spec.replicas` value to the desired number of pods and then re-apply. In case you can't locate the deployment yaml descriptor, you can instead edit it:
-
 
 ```bash
 kubectl edit deployments DeploymentName
@@ -146,7 +144,7 @@ If you want to roll back several revisions back then first track down which revi
 
 ```bash
 $ kubectl rollout history deployment dep-httpd
-deployment.extensions/dep-httpd 
+deployment.extensions/dep-httpd
 REVISION  CHANGE-CAUSE
 4         <none>
 5         <none>
@@ -185,10 +183,9 @@ You can also change a pod/pod-templates image from the command line using the ku
 kubectl set image deployment/dep-httpd cntr-httpd=httpd:latest
 ```
 
-Note, the '/' is just an alternation notation you can use. Although in most of this course I've used space. 
+Note, the '/' is just an alternation notation you can use. Although in most of this course I've used space.
 
-Here we specified which deployment to update, and which pod's container's image to update. 
-
+Here we specified which deployment to update, and which pod's container's image to update.
 
 ## Deleting Deployments
 
