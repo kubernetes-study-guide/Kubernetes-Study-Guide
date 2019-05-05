@@ -3,16 +3,15 @@
 The primary function of a docker container is to run an executable (e.g. a binary, command, or shell script) along with some optional arguments. The executable+arguments are both specified in the Dockerfile with the following settings:
 
 - [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint)
-- [CMD](https://docs.docker.com/engine/reference/builder/#cmd) - There's three ways to use this settng - the 2nd approach, which is to use CMD in conjunction with the ENTRYPOINT is the recommended way. This may look untuitively but it ensures that the primary process (PID 1) inside the container isn't the bash/sh session wrapper, but is the primary executable. 
-
+- [CMD](https://docs.docker.com/engine/reference/builder/#cmd) - There's three ways to use this settng - the 2nd approach, which is to use CMD in conjunction with the ENTRYPOINT is the recommended way. This may look untuitively but it ensures that the primary process (PID 1) inside the container isn't the bash/sh session wrapper, but is the primary executable.
 
 This entrypoint's binary/command/script can be used to run:
 
 - **shortlived workloads** - if the container is supposed to perform a specific task.
-- **ongoing workloads** - E.g. running the apache httpd binary to provide an ongoing web service. 
-
+- **ongoing workloads** - E.g. running the apache httpd binary to provide an ongoing web service.
 
 ## Shortlived Workloads (eg1-shortlived)
+
 Pods are designed for running containers with ongoing workloads. However, if your pod is built from an image, whose entrypoint is a shortlived (e.g. centos):
 
 ```bash
@@ -23,7 +22,7 @@ metadata:
   name: pod-centos
   labels:
     component: centos
-spec: 
+spec:
   containers:
     - name: cntr-centos
       image: centos
@@ -50,7 +49,7 @@ pod-centos   0/1     CrashLoopBackOff   1          21s
 $ kubectl get pods
 NAME         READY   STATUS      RESTARTS   AGE
 pod-centos   0/1     Completed   2          26s
-$ 
+$
 ```
 
 Here the pods ran for less than a second before shutting down, kubernetes thought something went wrong and restarted the container, and keeps restarting it in an endless cycle:
@@ -71,7 +70,6 @@ Events:
 ```
 
 To run containers that have shortlived workloads, you should run them as Kubernetes a **jobs** or **cronjobs** object. We'll cover them later.
-
 
 ## Ongoing Workloads (eg2-ongoing)
 
@@ -102,8 +100,6 @@ Here we used the following settings:
 
 - `pod.spec.containers.command` - This overrides/adds the docker images 'ENTRYPOINT' setting.
 - `pod.spec.containers.args` - This override/adds the docker images 'CMD' setting
-
-
 
 Here we're feeding an infinite while loop to keep the pod running continuously:
 
@@ -152,12 +148,12 @@ Mon Mar 11 12:22:31 UTC 2019
 Mon Mar 11 12:22:41 UTC 2019
 ```
 
-In this demo we use an image with an shortlived workload. However you can use this approach to replace a ongoing workload with another ongoing workload. 
-
+In this demo we use an image with an shortlived workload. However you can use this approach to replace a ongoing workload with another ongoing workload.
 
 ## Other workloads
+
 There could be times when you want to run commands/scripts in addition to the docker image's CMD/Entrypoint, rather than over-riding it. Luckily there are other ways to inject commands/shellscripts into pods, using [Poststart/PreStop](https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/) hooks. We'll cover them later.
 
 You can also run non-primary containers with shortlived workloads using `pod.spec.initContainers`, which will cover later.
 
-You can also run other commands that periodically monitors the health of your pod's containers. These are known as [liveness and readiness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/). We'll cover these later too. 
+You can also run other commands that periodically monitors the health of your pod's containers. These are known as [liveness and readiness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/). We'll cover these later too.

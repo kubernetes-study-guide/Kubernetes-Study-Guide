@@ -1,10 +1,8 @@
 # useful links
 
-
 [curriculum mapping](https://github.com/walidshaari/Kubernetes-Certified-Administrator)
 
 main exam homepage: [https://www.cncf.io/certification/cka/](https://www.cncf.io/certification/cka/)
-
 
 - [KubernetesByExample](http://kubernetesbyexample.com/)
 
@@ -16,20 +14,15 @@ main exam homepage: [https://www.cncf.io/certification/cka/](https://www.cncf.io
 [https://medium.com/@pmvk/tips-to-crack-certified-kubernetes-administrator-cka-exam-c949c7a9bea1](https://medium.com/@pmvk/tips-to-crack-certified-kubernetes-administrator-cka-exam-c949c7a9bea1)
 [https://medium.com/akena-blog/k8s-admin-exam-tips-22961241ba7d](https://medium.com/akena-blog/k8s-admin-exam-tips-22961241ba7d)
 
-
 [https://medium.com/@krystiannowaczyk/how-i-passed-the-cka-certified-kubernetes-administrator-exam-f94b11566528](https://medium.com/@krystiannowaczyk/how-i-passed-the-cka-certified-kubernetes-administrator-exam-f94b11566528k)
-[.“How to Pass Certified Kubernetes Administrator (CKA) exam on first Attempt.” by Prudhvi Godithi https://link.medium.com/vZfmibZtbW ]()
-[]()
-[]()
 
-“How to Pass Certified Kubernetes Administrator (CKA) exam on first Attempt.” by Prudhvi Godithi https://link.medium.com/vZfmibZtbW
+“How to Pass Certified Kubernetes Administrator (CKA) exam on first Attempt.” by Prudhvi Godithi [How to pass the Certified Kubernetes Administrator (CKA) exam on the first attempt - medium.com](https://link.medium.com/vZfmibZtbW)
 
 Allowed websites to access during exam:
 
  [https://kubernetes.io/docs/](https://kubernetes.io/docs/) and its subdomains, 
  [https://github.com/kubernetes/](https://github.com/kubernetes/) and its subdomains, 
  or [https://kubernetes.io/blog/](https://kubernetes.io/blog/)
-
 
 Need to purchase exam via the cncf website, to be eligible for a free retake. (see retake policy section in pdf)
 
