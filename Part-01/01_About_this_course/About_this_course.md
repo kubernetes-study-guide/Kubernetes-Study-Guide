@@ -1,6 +1,6 @@
 # Kubernetes By Examples
 
-The course takes a learn-by-doing approach. And the focus is to get you acquainted with as many of the kubernetes features as quickly as possible. About 80% of day-to-day kubernetes work working with managing yaml config files, and using the **kubectl** command. 
+The course takes a learn-by-doing approach. And the focus is to get you acquainted with as many of the kubernetes features as quickly as possible. About 80% of day-to-day kubernetes work working with managing yaml config files, and using the `kubectl` command.
 
 ## The aim of this course
 
