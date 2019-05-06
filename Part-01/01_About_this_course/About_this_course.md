@@ -79,7 +79,9 @@ output of interest
 We'll be using shorthands where we can, to cut down typing:
 
 ```bash
-kubectl get deployments,pods
+$ kubectl get deployments,pods
+NAME          READY   STATUS    RESTARTS   AGE
+pod/podname   1/1     Running   0          10d
 ```
 
 ## post topic cleanup
