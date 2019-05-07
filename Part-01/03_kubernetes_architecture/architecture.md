@@ -1,10 +1,8 @@
 # Kubernetes Architecture
 
-
 At a fundamental level, Kubernetes is used for running containers. Docker can also do the same so might wonder, why Kubernetes when you have Docker?  
 
 Theres a lot of reasons why, but let's take a look at one of those reason using the following example:
-
 
 ![docker-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/Docker-Server-Architecture.png)
 
@@ -13,17 +11,11 @@ In this scenario we have a IT Admin who uses the docker cli to create a collecti
 - You can only scale vertical, i.e. if the docker server is running out of cpu and ram, then you can only increase the cpu and ram of the existing docker server.  
 - No HA. If docker server crashes then all containers die with it, and it can take several minutes to build a replacement docker server.
 
-There are workarounds to this by building multiple docker servers and put them behind a Load balancer. However that will bring it's own set of problems, because Docker hasn't been designed to run work that way. What's needed is a container orchestration software, such as Docker swarm, our in our case Kubernetes. 
+There are workarounds to this by building multiple docker servers and put them behind a Load balancer. However that will bring it's own set of problems, because Docker hasn't been designed to run work that way. What's needed is a container orchestration software, such as Docker swarm, our in our case Kubernetes.
 
 The Kubernetes software is made up over [several smaller self-contained components](https://kubernetes.io/docs/concepts/overview/components/) that all working together to deliver the Kubernetes solution. These components falls in of 2 categories, Master Components and Node Components.
 
-
-
-The master components manakes the kube cluster as a whole, whereas Node components are responsible for the actual running of the pods. 
-
-
-
-
+The master components manakes the kube cluster as a whole, whereas Node components are responsible for the actual running of the pods.
 
 ![kubernetes-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/kubernetes-components.png)
 
@@ -35,7 +27,7 @@ There's actually lots of different way to install kubernetes. One of the option 
 ![Single-node-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/Single-node-kubecluster.png)
 
 
-In Kubernetes, your containers run inside a Kubernetes construct called pods. 
+In Kubernetes, your containers run inside a Kubernetes construct called pods.
 
 This setup suffers from the same problems as our docker setup that we saw earlier, i.e. can only scale vertically, and no HA. That's why Kubernetes was developed with a modular design so that you can install a single Kubernetes instance that spans across multiple nodes, aka a **Kube Cluster**.
 
@@ -43,55 +35,19 @@ This setup suffers from the same problems as our docker setup that we saw earlie
 
 The **Kube Master** node houses all the components that manages the kube cluster as a whole. Whereas, the **kube worker** nodes houses the components that are responsible for the actual running of the pods.
 
-This setup now allows for horizontal scaling, you just need to add another Kube worker to the cluster. Also if one of the kube worker dies, then the kube master will create pods in the other worker nodes to compensate for the lost pods. 
+This setup now allows for horizontal scaling, you just need to add another Kube worker to the cluster. Also if one of the kube worker dies, then the kube master will create pods in the other worker nodes to compensate for the lost pods.
 
 However this setup still has a single point of failure, which is the kube master itself. That's why in order to achieve HA you need to have multiple kube masters:
 
 ![ha-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/ha-kubecluster.png)
 
+In fact that's how it's done when setting Kubernetes locally on your using minikube.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-In fact that's how it's done when setting Kubernetes locally on your using minikube. 
-
-
-
-
-
-However minikube presents the same problem. 
-
-
-Draw diagram based on this info:
+However minikube presents the same problem.
 
 [https://kubernetes.io/docs/setup/independent/install-kubeadm/#check-required-ports](https://kubernetes.io/docs/setup/independent/install-kubeadm/#check-required-ports).
 
-
-
-
-The Kubernetes software is not a single software, it is in fact a highly modular software that's made up of several independent components, this design is based on the microservice concept. Some of these components controls the actual internal runnings of kubernetes, whereas other components are responsible for running the actual containers. 
-
-. You can install all these components on a single vm. Which is the case of minikube. 
-
-
-However for Horizontal scaling and HA, it's best to run the ac
-
-
-You can install all these components on a single machine, which is the case with minikube. But for better redundancies, HA, scalability it is better to install the components a cluster of vms. 
-
-
+Kubernetes is not a single software, in fact it's  made up of several independent components, this design is based on the microservice concept. Some of these components controls the actual internal runnings of kubernetes, whereas other components are responsible for running the actual containers. You can install all these components on a single machine, which is the case with minikube. But for better redundancies, HA, scalability it is better to install the components a cluster of vms. 
 
 A production ready kuberenetes setup is made up of several servers. they are either:
 
@@ -114,7 +70,7 @@ In the container world, all (big) applications should be broken into smaller ind
 When it comes to installing Kubernetes, 
 
 
-### Terminology
+## Terminology
 
 master nodes are also known be other names, controllers, ... For the rest of this study guide I'll use the phrase master nodes, worker nodes, and kube cluster. 
 

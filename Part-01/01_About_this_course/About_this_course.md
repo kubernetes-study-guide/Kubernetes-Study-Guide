@@ -1,12 +1,12 @@
 # Kubernetes By Examples
 
-The course takes a learn-by-doing approach. And the focus is to get you acquainted with as many of the kubernetes features as quickly as possible. About 80% of day-to-day kubernetes work working with managing yaml config files, and using the `kubectl` command.
+The course takes a learn-by-doing approach so that you get acquainted with as many of the kubernetes features as quickly as possible. About 80% of day-to-day kubernetes work involces `kubectl` command.
 
 ## The aim of this course
 
-This course is a follow-along hands-on guide to Kubernetes and cover as much of the kubernetes feature as possible, so that you get comfortable using kubernetes for usual day-to-day work.
+This course is a follow along hands-on guide to Kubernetes and cover as much of the kubernetes feature as possible, so that you get comfortable using kubernetes for usual day-to-day work. This course is also a good companion guide for those who are planning on taking the [Certified Kubernetes Administrator](https://www.cncf.io/certification/cka/) certification.
 
-This course is also a good companion for those who are planning on taking the [Certified Kubernetes Administrator](https://www.cncf.io/certification/cka/) certification.
+This course is also heavily focused helping you get familiar with the official kubernetes documentation, so that you know your way around it. Since you will have access to the docs during the exam.
 
 ## Requirements
 
@@ -17,40 +17,43 @@ This is an intermediate level course. You need to know the following:
 - linux, bash, vim
 - yaml syntax
 - basic networking knowledge, e.g. subnets, netmasks, also things like http is port 80.
-- already have basic kubernetes knowledge - This isn't a kubernetes beginners course.
 
-## what software you need to follow along
+## Software requirements
 
-- vscode
-- brew
-- git
-- virtualbox
+In this course I'll be using a Apple Macbook. So if you're a macbook user and you want to follow along then I recommend that you install the following on your macbook:
+
+
+- [git](https://git-scm.com/downloads)
+- [virtualbox](https://www.virtualbox.org/wiki/Downloads)
+
+
+ Argubly the easiest way to install these sofware is with [brew](https://brew.sh/), which itself needs to be installed. Here's an example:
+
+```bash
+brew update
+brew cask install visual-studio-code
+brew install git
+brew cask install virtualbox
+brew cask install vagrant
+```
+
+In case you're using a windows laptop, then you'll need to track down and install these software if you don't already have them, you can also try using [chocolatey](https://chocolatey.org/) which is the windows equivalent of brew. 
+
+There are some other softwares that you need to install, we'll cover them later in the course.
+
+As part of this course we'll be running 
 
 ## scope
 
-- We don't spend that much time going over concepts and theories. The hope is that you'll understand and learn kubernetes faster by seeing it in action.
+We don't spend that much time going over concepts and theories. The hope is that you'll understand and learn kubernetes faster by seeing it in action.
 - Kubernetes installation - only focusing no minikube on macs
 - docker, this course won't cover a lot about docker
 
 ## Study guide
 
-This course comes with it's very own study guide, so you can follow along all the examples.
-
-This course will be closely following the following git repo: xxxxxx
+This course comes with it's very own study guide, that has everything you need to follow along.
 
 most of the demos are done on a minikube based kubecluster. But some demo requires a multi-node cluster so we used a
-
-## How to follow this course
-
-First create a fork of this repo. Then clone it. Then set up a vs project.
-
-How to follow this course,
-
-Use 'grep -ir "xxx"'
-
-This course is heavily focused helping you get familiar with the official kubernetes documentation, so that you know your way around it. Since you will have access to the docs during the exam.
-
-At the end of this course we'll review the exam objectives and see which topic is covered.
 
 ## Notations
 
