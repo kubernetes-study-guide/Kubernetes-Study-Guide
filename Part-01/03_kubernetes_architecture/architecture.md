@@ -1,6 +1,6 @@
 # Kubernetes Architecture
 
-At a fundamental level, Kubernetes is used for running containers. Docker can also do the same so might wonder, why Kubernetes when you have Docker?  
+At a fundamental level, Kubernetes is used for running containers. Docker can also do the same so might wonder, why Kubernetes when you have Docker?
 
 Theres a lot of reasons why, but let's take a look at one of those reason using the following example:
 
