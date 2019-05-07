@@ -6,7 +6,7 @@ At a fundamental level, Kubernetes is used for running containers. Docker can al
 Theres a lot of reasons why, but let's take a look at one of those reason using the following example:
 
 
-![docker-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/blob/master/Part-01/03_kubernetes_architecture/images/Docker-Server-Architecture.png)
+![docker-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/Docker-Server-Architecture.png)
 
 In this scenario we have a IT Admin who uses the docker cli to create a collection of containers on a docker server. The Docker server could a be on anything, a physical server, a VM on an on premise Data Center, a EC2 instance in AWS,..etc. These containers delibers a online ecommerce website that online shoppers can use to make purchases. Thre are 2 problems with this setup:
 
@@ -25,21 +25,21 @@ The master components manakes the kube cluster as a whole, whereas Node componen
 
 
 
-![kubernetes-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/blob/master/Part-01/03_kubernetes_architecture/images/kubernetes-components.png)
+![kubernetes-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/kubernetes-components.png)
 
 
 There's actually lots of different way to install kubernetes. One of the option is is to install all the components one a single node:
 
 
 
-![Single-node-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/blob/master/Part-01/03_kubernetes_architecture/images/Single-node-kubecluster.png)
+![Single-node-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/Single-node-kubecluster.png)
 
 
 In Kubernetes, your containers run inside a Kubernetes construct called pods. 
 
 This setup suffers from the same problems as our docker setup that we saw earlier, i.e. can only scale vertically, and no HA. That's why Kubernetes was developed with a modular design so that you can install a single Kubernetes instance that spans across multiple nodes, aka a **Kube Cluster**.
 
-![multi-worker-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/blob/master/Part-01/03_kubernetes_architecture/images/multi-worker-kubecluster.png)
+![multi-worker-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/multi-worker-kubecluster.png)
 
 The **Kube Master** node houses all the components that manages the kube cluster as a whole. Whereas, the **kube worker** nodes houses the components that are responsible for the actual running of the pods.
 
@@ -47,7 +47,7 @@ This setup now allows for horizontal scaling, you just need to add another Kube 
 
 However this setup still has a single point of failure, which is the kube master itself. That's why in order to achieve HA you need to have multiple kube masters:
 
-![ha-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/blob/master/Part-01/03_kubernetes_architecture/images/ha-kubecluster.png)
+![ha-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/ha-kubecluster.png)
 
 
 
