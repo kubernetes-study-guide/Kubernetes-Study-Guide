@@ -19,13 +19,9 @@ The master components manakes the kube cluster as a whole, whereas Node componen
 
 ![kubernetes-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/kubernetes-components.png)
 
-
 There's actually lots of different way to install kubernetes. One of the option is is to install all the components one a single node:
 
-
-
 ![Single-node-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/Single-node-kubecluster.png)
-
 
 In Kubernetes, your containers run inside a Kubernetes construct called pods.
 
@@ -47,36 +43,27 @@ However minikube presents the same problem.
 
 [https://kubernetes.io/docs/setup/independent/install-kubeadm/#check-required-ports](https://kubernetes.io/docs/setup/independent/install-kubeadm/#check-required-ports).
 
-Kubernetes is not a single software, in fact it's  made up of several independent components, this design is based on the microservice concept. Some of these components controls the actual internal runnings of kubernetes, whereas other components are responsible for running the actual containers. You can install all these components on a single machine, which is the case with minikube. But for better redundancies, HA, scalability it is better to install the components a cluster of vms. 
+Kubernetes is not a single software, in fact it's  made up of several independent components, this design is based on the microservice concept. Some of these components controls the actual internal runnings of kubernetes, whereas other components are responsible for running the actual containers. You can install all these components on a single machine, which is the case with minikube. But for better redundancies, HA, scalability it is better to install the components a cluster of vms.
 
 A production ready kuberenetes setup is made up of several servers. they are either:
 
 - master nodes, aka controller nodes, control plane
 - worker nodes - runs pods
 
-
 Along with those, you also have:
 
-- local workstation - this has kubectl installed on it. 
+- local workstation - this has kubectl installed on it.
 - loadbalancer - used to loadbalance kube-api data traffic to master nodes. In particular is forwards traffic to the kube-apiserver component. the traffic may originate from:
   - local workstations - when someone uses the kubectl command to perform tasks
-  - The kubelet or kube-proxy components that are running inside worker nodes. 
-
+  - The kubelet or kube-proxy components that are running inside worker nodes.
 
 In the container world, all (big) applications should be broken into smaller independent more moduler applications (aka microservice) which can communicated with one another using API calls. These microservices should run inside containers. Kubernetes software software itself.
 
-
-
-When it comes to installing Kubernetes, 
-
+When it comes to installing Kubernetes,
 
 ## Terminology
 
-master nodes are also known be other names, controllers, ... For the rest of this study guide I'll use the phrase master nodes, worker nodes, and kube cluster. 
-
-
-
-
+master nodes are also known be other names, controllers, ... For the rest of this study guide I'll use the phrase master nodes, worker nodes, and kube cluster.
 
 ## master nodes
 
@@ -87,11 +74,10 @@ Master nodes have the following components installed on them:
 - kube-controller-manager
 - kube-scheduler
 
-
 ## worker nodes
 
 - containerd - main runtime engine used for runnng containers
 - kubelet - receives instructions from master nodes about what pods should be running then sends instructions to containerd
 - kube-proxy - manages networking across all worker nodes. It does:
-  - dns 
+  - dns
   - Creates network overlay, so that each pod has it's own unique ip address

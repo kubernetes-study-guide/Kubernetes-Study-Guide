@@ -8,6 +8,8 @@ This course is a follow along hands-on guide to Kubernetes and cover as much of 
 
 This course is also heavily focused helping you get familiar with the official kubernetes documentation, so that you know your way around it. Since you will have access to the docs during the exam.
 
+This course is demo oriented so we'll go over key kubenetes concepts as part of the demos. The hope is that you'll understand and learn kubernetes faster by seeing it in action and following along.
+
 ## Requirements
 
 This is an intermediate level course. You need to know the following:
@@ -22,12 +24,14 @@ This is an intermediate level course. You need to know the following:
 
 In this course I'll be using a Apple Macbook. So if you're a macbook user and you want to follow along then I recommend that you install the following on your macbook:
 
-
-- [git](https://git-scm.com/downloads)
+- [vscode](https://code.visualstudio.com/)
+- [git](https://git-scm.com/downloads) - chances are you already have this installed
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)
+- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+- [vagrant](https://www.vagrantup.com/downloads.html)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
-
- Argubly the easiest way to install these sofware is with [brew](https://brew.sh/), which itself needs to be installed. Here's an example:
+Argubly the easiest way to install these sofware is with [brew](https://brew.sh/), which itself needs to be installed. Here's an example:
 
 ```bash
 brew update
@@ -35,25 +39,19 @@ brew cask install visual-studio-code
 brew install git
 brew cask install virtualbox
 brew cask install vagrant
+brew install kubectl
+brew cask install minikube
 ```
 
-In case you're using a windows laptop, then you'll need to track down and install these software if you don't already have them, you can also try using [chocolatey](https://chocolatey.org/) which is the windows equivalent of brew. 
+In case you're using a windows laptop, then you'll need to track down and install these software, you can also try using [chocolatey](https://chocolatey.org/) which is the windows equivalent of brew. There are some other softwares that you need to install, we'll cover them later in the course.
 
-There are some other softwares that you need to install, we'll cover them later in the course.
-
-As part of this course we'll be running 
-
-## scope
-
-We don't spend that much time going over concepts and theories. The hope is that you'll understand and learn kubernetes faster by seeing it in action.
-- Kubernetes installation - only focusing no minikube on macs
-- docker, this course won't cover a lot about docker
+As part of this course we'll be running virtual machines on your workstation so you need to have a have reasonably specced workstation to do that, ideally 16GB of RAM and a quad core processor. Also about 10 GB of disk available disk storage.
 
 ## Study guide
 
-This course comes with it's very own study guide, that has everything you need to follow along.
+This course comes with it's very own study guide, that has everything you need to follow along, including the example yaml descriptors:
 
-most of the demos are done on a minikube based kubecluster. But some demo requires a multi-node cluster so we used a
+[https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide)
 
 ## Notations
 
@@ -69,22 +67,14 @@ Also you can access a lot more info by running:
 kubectl explain xxxxx
 ```
 
-In this case, we'll refer to what to put in here, using a dot like notation e.g. 'pod.spec'.
+Where 'xxxxx', is set to something like 'pod.spec'.
 
-Also some commands have a long output, so we only show an extract inside 3-dot notation:
+The output of some commands are quite long, on those occasions we'll only show an extract using 3-dot notation:
 
 ```text
 ...
 output of interest
 ...
-```
-
-We'll be using shorthands where we can, to cut down typing:
-
-```bash
-$ kubectl get deployments,pods
-NAME          READY   STATUS    RESTARTS   AGE
-pod/podname   1/1     Running   0          10d
 ```
 
 ## post topic cleanup
@@ -95,7 +85,7 @@ After finishing a topic, you should delete everything you created, here's a quic
 kubectl delete all --all
 ```
 
-Note: don't worry if it deletes the kubernetes service, that will just get recreated again.
+This command will make more sense once we get started.
 
 ## Reference
 
