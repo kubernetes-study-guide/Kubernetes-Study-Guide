@@ -1,4 +1,4 @@
-# Kubernetes By Examples
+# Kubernetes By Example
 
 The course takes a learn-by-doing approach so that you get acquainted with as many of the kubernetes features as quickly as possible. At it's core, Kubernetes is all about using the  `kubectl` command along with yaml files that you feed into it. That's why this course is primarily focused on how to write these yaml files and then feeding them into the `kubectl`. 
 
