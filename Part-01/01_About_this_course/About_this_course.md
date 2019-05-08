@@ -11,7 +11,7 @@ In case you're interested, you can get certified by taking the [Certified Kubern
 
 I should point out that the [exam curriculum](https://github.com/cncf/curriculum) is regularly updated, and this course doesn't quite cover the whole curriculum. However I am planning to create further courses to cover the missing parts in upcoming courses.
 
-In the exam you will be allowed to access all web pages under the [https://kubernetes.io/docs/](https://kubernetes.io/docs/). As well as all pages under [https://github.com/kubernetes/kubernetes](https://github.com/kubernetes/kubernetes). That's why in this course I will regularly refer to these two sources, so that you become familiar with them.
+In the exam you will be allowed to access all web pages under the [https://kubernetes.io/docs/](https://kubernetes.io/docs/). As well as all pages under [https://github.com/kubernetes/kubernetes](https://github.com/kubernetes/kubernetes). That's why in this course I will regularly refer to these two sources, so that you can find your around them.
 
 ## What's not covered
 
@@ -27,10 +27,10 @@ I'm hoping to cover some of these areas in a future upcoming courses.
 
 Kubernetes is quite an technical tool and it's not something you should start using if you are unfamiliar with any of these:
 
-- docker and concept of containers
-- git
 - Linux, Bash, Vim
+- docker and concept of containers
 - yaml files
+- git
 - basic networking knowledge, e.g. subnets, netmasks, also things like http is port 80.
 
 ## Software requirements
