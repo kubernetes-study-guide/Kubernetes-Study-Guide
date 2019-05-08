@@ -28,10 +28,12 @@ I'm hoping to cover some of these areas in a future upcoming courses.
 Kubernetes is a really powerful software and it's also quite complex. That's why you need to some of the basics before you start learning Kubernetes:
 
 - Linux, Bash, Vim
-- docker and concept of containers
+- Hands-on Docker, so that you understand the concept of containers and images
 - yaml files
 - git
 - basic networking knowledge, e.g. subnets, netmasks, also things like http is port 80.
+
+This isn't a complete list. But it should give you some idea of what level you should be before starting this course. 
 
 ## Software requirements
 
