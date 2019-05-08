@@ -23,9 +23,9 @@ In the exam you will be allowed to access all web pages under the [https://kuber
 I'm hoping to cover some of these areas in a future upcoming courses.
 
 
-## Requirements
+## User requirements
 
-Kubernetes is quite an technical tool and it's not something you should start using if you are unfamiliar with any of these:
+Kubernetes is a really powerful software and it's also quite a sophisticated software. That's why you need to some of the basics before you start learning Kubernetes:
 
 - Linux, Bash, Vim
 - docker and concept of containers
