@@ -25,7 +25,7 @@ I'm hoping to cover some of these areas in a future upcoming courses.
 
 ## User requirements
 
-Kubernetes is a really powerful software and it's also quite a sophisticated software. That's why you need to some of the basics before you start learning Kubernetes:
+Kubernetes is a really powerful software and it's also quite complex. That's why you need to some of the basics before you start learning Kubernetes:
 
 - Linux, Bash, Vim
 - docker and concept of containers
