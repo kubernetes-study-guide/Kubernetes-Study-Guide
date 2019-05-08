@@ -7,9 +7,9 @@ This course is a follow along hands-on guide to Kubernetes and cover as much of 
 
 ## Certified Kubernetes Administrator
 
-In case you're interested, you can get certified by taking the [Certified Kubernetes Administrator](https://www.cncf.io/certification/cka/) exam. This isn't a multiple choice exam, it's actually a hands-on exam where you perform Kubernetes task on a live Kubernetes environment. And since this course is a hands-on course, it makes it a good companion guide to help you prepare for the exam.
+In case you're interested, you can get certified by taking the [Certified Kubernetes Administrator](https://www.cncf.io/certification/cka/) exam. This isn't a multiple choice exam, it's actually a hands-on exam where you perform tasks on a live Kubernetes environment. And since this course is a hands-on course, it makes it a good companion guide to help you prepare for the exam.
 
-I should point out that the [exam curriculum](https://github.com/cncf/curriculum) is regularly updated, and this course doesn't quite cover all of it. However I'm planning to create further courses to cover the missing parts.
+I should point out that the [exam curriculum](https://github.com/cncf/curriculum) is regularly updated, and this course doesn't quite cover the whole curriculum. However I am planning to create further courses to cover the missing parts in upcoming courses.
 
 In the exam you will be allowed to access all web pages under the [https://kubernetes.io/docs/](https://kubernetes.io/docs/). As well as all pages under [https://github.com/kubernetes/kubernetes](https://github.com/kubernetes/kubernetes). That's why in this course I will regularly refer to these two sources, so that you become familiar with them.
 
