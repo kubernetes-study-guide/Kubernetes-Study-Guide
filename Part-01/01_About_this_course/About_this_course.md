@@ -1,23 +1,36 @@
 # Kubernetes By Examples
 
-The course takes a learn-by-doing approach so that you get acquainted with as many of the kubernetes features as quickly as possible. About 80% of day-to-day kubernetes work involces `kubectl` command.
+The course takes a learn-by-doing approach so that you get acquainted with as many of the kubernetes features as quickly as possible. At it's core, Kubernetes is all about using the  `kubectl` command along with yaml files that you feed into it. That's why this course is primarily focused on how to write these yaml files and then feeding them into the `kubectl`. 
 
-## The aim of this course
+This course is a follow along hands-on guide to Kubernetes and cover as much of the kubernetes feature as possible. The hope is that you'll understand and learn kubernetes faster by seeing it in action and following along.
 
-This course is a follow along hands-on guide to Kubernetes and cover as much of the kubernetes feature as possible, so that you get comfortable using kubernetes for usual day-to-day work. This course is also a good companion guide for those who are planning on taking the [Certified Kubernetes Administrator](https://www.cncf.io/certification/cka/) certification.
 
-This course is also heavily focused helping you get familiar with the official kubernetes documentation, so that you know your way around it. Since you will have access to the docs during the exam.
+## Certified Kubernetes Administrator
 
-This course is demo oriented so we'll go over key kubenetes concepts as part of the demos. The hope is that you'll understand and learn kubernetes faster by seeing it in action and following along.
+If you're interested in getting certified then you can do so by taking the [Certified Kubernetes Administrator](https://www.cncf.io/certification/cka/) exam. This isn't a multiple choice exam, it's actually a hands-on exam where you perform Kubernetes task on a live Kubernetes environment. And since this course is a hands-on course, it makes it a good companion guide to help you prepare for the exam.
+
+I should point out that the [exam curriculum](https://github.com/cncf/curriculum) is regularly updated, and this course doesn't quite cover all of it. However I'm planning to create further courses to cover the missing parts.
+
+In the exam you will be allowed to access all web pages under the [https://kubernetes.io/docs/](https://kubernetes.io/docs/). As well as all pages under [https://github.com/kubernetes/kubernetes](https://github.com/kubernetes/kubernetes). That's why in this course I will regularly refer to these two sources, so that you become familiar with them.
+
+## What's not covered
+
+- Various ways of installing Kubernetes, we only show the minikube approach.
+- Other tools that are also used in the Kubernetes ecosystem, e.g. [helm](https://helm.sh/), [traefik](https://traefik.io/),...etc. This course is going to be long enough with just covering Kubernetes on it's own!
+- Kubernetes Administration, e.g. updating existing Kubernetes install to a newer version. 
+- Cloud platform specific technologies, such as [AWS EKS](https://aws.amazon.com/eks/). This course is going to be cloud agnostic, meaning that what we'll cover should work on most, if not all cloud platforms, whether it is AWS, Azure, GKE...etc.
+
+I'm hoping to cover some of these areas in a future upcoming courses.
+
 
 ## Requirements
 
-This is an intermediate level course. You need to know the following:
+Kubernetes is quite an technical tool and it's not something you should start using if you are unfamiliar with any of these:
 
 - docker and concept of containers
 - git
-- linux, bash, vim
-- yaml syntax
+- Linux, Bash, Vim
+- yaml files
 - basic networking knowledge, e.g. subnets, netmasks, also things like http is port 80.
 
 ## Software requirements
@@ -26,12 +39,17 @@ In this course I'll be using a Apple Macbook. So if you're a macbook user and yo
 
 - [vscode](https://code.visualstudio.com/)
 - [git](https://git-scm.com/downloads) - chances are you already have this installed
-- [virtualbox](https://www.virtualbox.org/wiki/Downloads)
-- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
-- [vagrant](https://www.vagrantup.com/downloads.html)
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- [virtualbox](https://www.virtualbox.org/wiki/Downloads) - Dependency for the minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) software 
+- [vagrant](https://www.vagrantup.com/downloads.html) - only needed in a few topics
 
-Argubly the easiest way to install these sofware is with [brew](https://brew.sh/), which itself needs to be installed. Here's an example:
+This above are general purpose and as opposed to Kubernetes specific software. So I'm not going to dwell on how to use them. 
+
+However the following are the main kubernetes software that you need to install. 
+
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+
+Argubly the easiest way to install these software on a Mac is with [brew](https://brew.sh/), which itself needs to be installed. Here's an example:
 
 ```bash
 brew update
@@ -45,13 +63,15 @@ brew cask install minikube
 
 In case you're using a windows laptop, then you'll need to track down and install these software, you can also try using [chocolatey](https://chocolatey.org/) which is the windows equivalent of brew. There are some other softwares that you need to install, we'll cover them later in the course.
 
-As part of this course we'll be running virtual machines on your workstation so you need to have a have reasonably specced workstation to do that, ideally 16GB of RAM and a quad core processor. Also about 10 GB of disk available disk storage.
+In a small number of videos I will be using  Vagrant to run multiple virtual machines on my workstation. So you need to have a have reasonably specced workstation if you want to follow along, ideally 16GB of RAM and a quad core processor. Also about 10 GB of disk available disk storage.
 
 ## Study guide
 
 This course comes with it's very own study guide, that has everything you need to follow along, including the example yaml descriptors:
 
 [https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide)
+
+This study guide is constantly evolving and  is being regularly updated with improvements and new content. Also if you have any suggestions about making changes then please raise an issue or submit a pull request.
 
 ## Notations
 
@@ -69,7 +89,7 @@ kubectl explain xxxxx
 
 Where 'xxxxx', is set to something like 'pod.spec'.
 
-The output of some commands are quite long, on those occasions we'll only show an extract using 3-dot notation:
+The output of some commands are quite long, on those occasions we'll only show an extract using 3-dot notation, and truncate out the rest:
 
 ```text
 ...
