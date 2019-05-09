@@ -278,7 +278,13 @@ service "svc-nodeport-apache-webserver" deleted
 This might take a minute or 2 to complete, but you can speed it by setting the grace-period to something short, e.g. 2 seconds:
 
 ```bash
-kubectl delete -f ./configs--grace-period=2
+kubectl delete -f ./configs --grace-period=2
+```
+
+If you want to delete everything, you can do:
+
+```bash
+kubectl delete all --all
 ```
 
 ## More about Pods

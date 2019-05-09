@@ -28,12 +28,12 @@ I'm hoping to cover some of these areas in a future upcoming courses.
 Kubernetes is a really powerful software and it's also quite complex. That's why you need to some of the basics before you start learning Kubernetes:
 
 - Linux, Bash, Vim
-- Hands-on Docker, so that you understand the concept of containers and images
+- Hands-on Docker experience, so that you understand the concept of containers and images
 - yaml files
 - git
 - basic networking knowledge, e.g. subnets, netmasks, also things like http is port 80.
 
-This isn't a complete list. But it should give you some idea of what level you should be before starting this course. 
+This isn't a complete list. But it should give you some idea of the level you should be at before starting this course.
 
 ## Software requirements
 
@@ -41,7 +41,7 @@ In this course I'll be using a Apple Macbook. So if you're a macbook user and yo
 
 - [vscode](https://code.visualstudio.com/)
 - [git](https://git-scm.com/downloads) - chances are you already have this installed
-- [virtualbox](https://www.virtualbox.org/wiki/Downloads) - Dependency for the minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) software 
+- [virtualbox](https://www.virtualbox.org/wiki/Downloads) - Dependency for the minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) software
 - [vagrant](https://www.vagrantup.com/downloads.html) - only needed in a few topics
 
 This above are general purpose and as opposed to Kubernetes specific software. So I'm not going to dwell on how to use them. 
@@ -99,15 +99,7 @@ output of interest
 ...
 ```
 
-## post topic cleanup
 
-After finishing a topic, you should delete everything you created, here's a quick one-liner to do this:
-
-```bash
-kubectl delete all --all
-```
-
-This command will make more sense once we get started.
 
 ## Reference
 
