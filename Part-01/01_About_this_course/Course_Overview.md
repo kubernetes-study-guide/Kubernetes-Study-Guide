@@ -34,7 +34,6 @@ In this course you will learn and create:
 - networkpolicies
 - ...and much much more!
 
-
 ## Study guide
 
 This course comes with it's very own study guide which I strongly recommend that you clone to your workstation:
