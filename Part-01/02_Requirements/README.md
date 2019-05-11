@@ -15,12 +15,11 @@ This isn't a complete list. But it should give you some idea of the level you sh
 
 In this course I'll be using a Apple Macbook. So if you're a macbook user and you want to follow along then I recommend that you install the following on your macbook:
 
-- [vscode](https://code.visualstudio.com/)
-- [git](https://git-scm.com/downloads) - chances are you already have this installed
-- [virtualbox](https://www.virtualbox.org/wiki/Downloads) - Dependency for the minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) software
-- [vagrant](https://www.vagrantup.com/downloads.html) - only needed in a few topics
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+- [vscode](https://code.visualstudio.com/) - Text editor for writing our code. 
+- [virtualbox](https://www.virtualbox.org/wiki/Downloads) - Used for building Virtual Machines on your local workstation
+- [vagrant](https://www.vagrantup.com/downloads.html) - Used for spinning 1 or more virtual machines by runing a single command
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - The main tool for interacting with Kubernetes clusters
+- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - Used for building a Kubernetes cluster right on your local workstation
 
 Most of these are general purpose tools used for software development. The only exception being the last 2, kubectl and minikube, these 2 are Kubernetes specific.
 
@@ -38,6 +37,6 @@ brew cask install minikube
 
 In case you're using a windows laptop, then you'll need to track down and install these software, you can also try using [chocolatey](https://chocolatey.org/) which is the windows equivalent of brew. There are some other softwares that you need to install, we'll cover them later in the course.
 
-## Workstation harware requirements
+## Workstation hardware requirements
 
 In a small number of videos I will be using  Vagrant to run multiple virtual machines on my workstation. So you need to have a have reasonably specced workstation if you want to follow along, ideally 16GB of RAM and a quad core processor. Also about 10 GB of disk available disk storage.
