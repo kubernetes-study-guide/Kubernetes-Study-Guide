@@ -1,8 +1,6 @@
 # Kubernetes By Example
 
-The course takes a learn-by-doing approach so that you get acquainted with as many of the kubernetes features as quickly as possible. At it's core, Kubernetes is all about using the  `kubectl` command along with yaml files that you feed into it. That's why this course is primarily focused on how to write these yaml files and then feeding them into the `kubectl`. 
-
-This course is a follow along hands-on guide to Kubernetes and cover as much of the kubernetes feature as possible. The hope is that you'll understand and learn kubernetes faster by seeing it in action and following along.
+The course takes a learn-by-doing approach so that you get acquainted with as many of the kubernetes features as quickly as possible. At it's core, Kubernetes is all about using the  `kubectl` command along with yaml files that you feed into it. That's why this course is primarily focused on how to write these yaml files and then feeding them into the `kubectl`. The hope is that you'll understand and learn kubernetes faster by seeing it in action and following along.
 
 
 ## Certified Kubernetes Administrator
@@ -30,10 +28,19 @@ Kubernetes is a really powerful software and it's also quite complex. That's why
 - Linux, Bash, Vim
 - Hands-on Docker experience, so that you understand the concept of containers and images
 - yaml files
-- git
 - basic networking knowledge, e.g. subnets, netmasks, also things like http is port 80.
 
 This isn't a complete list. But it should give you some idea of the level you should be at before starting this course.
+
+## Study guide
+
+This course comes with it's very own study guide which I strongly recommend that you clone to your workstation:
+
+[https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide)
+
+This guide has all the sample commands and files that I'll using in course. This will save you from having to manually type out everything I do. I've broken this course down into number of parts. 
+
+This study guide is constantly evolving and is being regularly updated with improvements and new content. Also if you have any suggestions about making changes then please raise an issue or submit a pull request.
 
 ## Software requirements
 
@@ -43,15 +50,12 @@ In this course I'll be using a Apple Macbook. So if you're a macbook user and yo
 - [git](https://git-scm.com/downloads) - chances are you already have this installed
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads) - Dependency for the minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) software
 - [vagrant](https://www.vagrantup.com/downloads.html) - only needed in a few topics
-
-This above are general purpose and as opposed to Kubernetes specific software. So I'm not going to dwell on how to use them. 
-
-However the following are the main kubernetes software that you need to install. 
-
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 
-Argubly the easiest way to install these software on a Mac is with [brew](https://brew.sh/), which itself needs to be installed. Here's an example:
+Most of these are general purpose tools used for software development. The only exception being the last 2, kubectl and minikube, these 2 are Kubernetes specific.
+
+Probably the easiest way to install these software on a Mac is with [brew](https://brew.sh/), which itself needs to be installed. Here's an example:
 
 ```bash
 brew update
@@ -66,14 +70,6 @@ brew cask install minikube
 In case you're using a windows laptop, then you'll need to track down and install these software, you can also try using [chocolatey](https://chocolatey.org/) which is the windows equivalent of brew. There are some other softwares that you need to install, we'll cover them later in the course.
 
 In a small number of videos I will be using  Vagrant to run multiple virtual machines on my workstation. So you need to have a have reasonably specced workstation if you want to follow along, ideally 16GB of RAM and a quad core processor. Also about 10 GB of disk available disk storage.
-
-## Study guide
-
-This course comes with it's very own study guide, that has everything you need to follow along, including the example yaml descriptors:
-
-[https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide)
-
-This study guide is constantly evolving and  is being regularly updated with improvements and new content. Also if you have any suggestions about making changes then please raise an issue or submit a pull request.
 
 ## Notations
 
@@ -106,3 +102,5 @@ output of interest
 [https://towardsdatascience.com/key-kubernetes-concepts-62939f4bc08e?sk=d46386ce56c00701dbf41aa8d308a14d](https://towardsdatascience.com/key-kubernetes-concepts-62939f4bc08e?sk=d46386ce56c00701dbf41aa8d308a14d)
 
 [https://github.com/ramitsurana/awesome-kubernetes](https://github.com/ramitsurana/awesome-kubernetes)
+
+[https://kubectl.docs.kubernetes.io/pages/kubectl_book/getting_started.html](https://kubectl.docs.kubernetes.io/pages/kubectl_book/getting_started.html)
