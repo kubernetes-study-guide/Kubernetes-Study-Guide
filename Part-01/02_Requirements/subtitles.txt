@@ -1,0 +1,29 @@
+ok now let's look at what you need to know before starting this course. Kubernetes is a really powerful piece 
+of software and it's also quite complex that's why you need to know some of the basics 
+
+such as knowing your way round a Linux operating system and how to use the bash command prompt. The Linux distro 
+doesn't matter that much but I'll be using Centos and Ubuntu in this course
+
+
+you need hands on docker experience - mainly so that you understand the concept of containers and what docker images.
+
+You need to be familiar with yaml files and how to write them.
+
+you need to have some basic networking knowledge such so that you know what are IP addresses, 
+network ports, network interfaces,...and etc 
+
+
+This isn't a complete list of things you need to know but it does give you some idea of what 
+level of knowledge you should have before continuing with this course 
+
+
+now let's take a look at software requirements. You local workstation needs to have all the following software.
+
+
+Most of these are general purpose tools used for software development. The only exception being the last 2, kubectl and minikube, 
+these 2 are Kubernetes specific.
+
+Probably the easiest way to install these software on a Mac is with [brew](https://brew.sh/), which itself needs to be installed. Here's an example:
+
+
+

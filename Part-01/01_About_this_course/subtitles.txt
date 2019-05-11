@@ -1,0 +1,41 @@
+Hi there my name is Sher Chowdhury are welcome to my course Kubernetes by example
+
+first of all a little bit about me, I'm based in the UK and I've been working in it for about 15 years, 
+in that time I've worked for big central government departments as well as in the private sector. 
+
+In 2019 I passed the CKA exam and I'm now a certified kubernetes administrator. In my spare time I run my website at codingbee.net. 
+
+
+Ok enough about me let's now move on to the course itself this course takes a learn by doing approach so that 
+you get comfortable using Kubernetes as quick as possible. 
+
+At its core kubernetes is all about using the kubectl command along with yaml files that you feed into it.
+ that's why this course is primarily focused on learning how to write these Kubernetes yml files and then applying them using kubectl
+ 
+my hope is that you'll understand and learn more effectively by seeing Kubernetes in action and following along.
+  
+  
+in case you're interested you can get certified by taking the certified kubernetes administrator exam like me.  The exam is
+a hands-on exam where you perform tasks on a real Kubernetes environment. So since this course is a hands-on course it 
+makes it is a really good course to help prepare for the exam. This course doesn't cover the whole exam syllabus, however the appendix
+section at the end of this course shows exactly what parts this course satisfies. 
+   
+   
+During the exam you're allowed to access a couple of websites one of them is official kubernetes website, but only web pages 
+under the docs section. 
+   
+The other being the official Kubernetes github project, and all the git repo under it. 
+
+That's why in this course we'll regularly refer to these sources so that you'll become familiar 
+with their content, and know your way around them. 
+
+
+
+
+
+
+
+
+
+
+

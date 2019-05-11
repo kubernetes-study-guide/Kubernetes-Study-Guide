@@ -11,67 +11,27 @@ I should point out that the [exam curriculum](https://github.com/cncf/curriculum
 
 In the exam you will be allowed to access all web pages under the [https://kubernetes.io/docs/](https://kubernetes.io/docs/). As well as all pages under [https://github.com/kubernetes/kubernetes](https://github.com/kubernetes/kubernetes). That's why in this course I will regularly refer to these two sources, so that you can find your around them.
 
-## What's not covered
-
-- Various ways of installing Kubernetes, we only show the minikube approach.
-- Other tools that are also used in the Kubernetes ecosystem, e.g. [helm](https://helm.sh/), [traefik](https://traefik.io/),...etc. This course is going to be long enough with just covering Kubernetes on it's own!
-- Kubernetes Administration, e.g. updating existing Kubernetes install to a newer version. 
-- Cloud platform specific technologies, such as [AWS EKS](https://aws.amazon.com/eks/). This course is going to be cloud agnostic, meaning that what we'll cover should work on most, if not all cloud platforms, whether it is AWS, Azure, GKE...etc.
-
-I'm hoping to cover some of these areas in a future upcoming courses.
-
-
-## User requirements
-
-Kubernetes is a really powerful software and it's also quite complex. That's why you need to some of the basics before you start learning Kubernetes:
-
-- Linux, Bash, Vim
-- Hands-on Docker experience, so that you understand the concept of containers and images
-- yaml files
-- basic networking knowledge, e.g. subnets, netmasks, also things like http is port 80.
-
-This isn't a complete list. But it should give you some idea of the level you should be at before starting this course.
-
 ## Study guide
 
 This course comes with it's very own study guide which I strongly recommend that you clone to your workstation:
 
 [https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide)
 
-This guide has all the sample commands and files that I'll using in course. This will save you from having to manually type out everything I do. I've broken this course down into number of parts. 
+This Study guide has all the sample commands and files that I'll be using in course. This will save you from having to manually type out everything I do. I've broken this course down into number of easier-to-digest parts. 
 
 This study guide is constantly evolving and is being regularly updated with improvements and new content. Also if you have any suggestions about making changes then please raise an issue or submit a pull request.
 
-## Software requirements
 
-In this course I'll be using a Apple Macbook. So if you're a macbook user and you want to follow along then I recommend that you install the following on your macbook:
+## What's not covered
 
-- [vscode](https://code.visualstudio.com/)
-- [git](https://git-scm.com/downloads) - chances are you already have this installed
-- [virtualbox](https://www.virtualbox.org/wiki/Downloads) - Dependency for the minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) software
-- [vagrant](https://www.vagrantup.com/downloads.html) - only needed in a few topics
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+- Various ways of installing Kubernetes, we only show the minikube approach.
+- Other tools that are also used in the wider Kubernetes ecosystem, e.g. [helm](https://helm.sh/), [traefik](https://traefik.io/),...etc. This course is going to be long enough as it is just with me just covering Kubernetes on it own!
+- Kubernetes Administration, e.g. updating existing Kubernetes install to a newer version. 
+- Cloud platform specific technologies, such as [AWS EKS](https://aws.amazon.com/eks/). This course is going to be cloud agnostic, meaning that what we'll cover should work on most, if not all cloud platforms, whether it is AWS, Azure, GKE...etc.
 
-Most of these are general purpose tools used for software development. The only exception being the last 2, kubectl and minikube, these 2 are Kubernetes specific.
+I'm hoping to cover some of these areas in a future upcoming courses.
 
-Probably the easiest way to install these software on a Mac is with [brew](https://brew.sh/), which itself needs to be installed. Here's an example:
-
-```bash
-brew update
-brew cask install visual-studio-code
-brew install git
-brew cask install virtualbox
-brew cask install vagrant
-brew install kubectl
-brew cask install minikube
-```
-
-In case you're using a windows laptop, then you'll need to track down and install these software, you can also try using [chocolatey](https://chocolatey.org/) which is the windows equivalent of brew. There are some other softwares that you need to install, we'll cover them later in the course.
-
-In a small number of videos I will be using  Vagrant to run multiple virtual machines on my workstation. So you need to have a have reasonably specced workstation if you want to follow along, ideally 16GB of RAM and a quad core processor. Also about 10 GB of disk available disk storage.
-
-## Notations
+## Notations and where to find help
 
 Throughout this course we'll be using the kubectl command. kubectl is the main command used for performing day-to-day kubernetes work. kubectl has a lot of built in reference docs. That includes lots of man pages:
 
@@ -90,14 +50,13 @@ Where 'xxxxx', is set to something like 'pod.spec'.
 The output of some commands are quite long, on those occasions we'll only show an extract using 3-dot notation, and truncate out the rest:
 
 ```text
+$ kubectl describe pods
 ...
 output of interest
 ...
 ```
 
-
-
-## Reference
+## Bookmarks
 
 [https://towardsdatascience.com/key-kubernetes-concepts-62939f4bc08e?sk=d46386ce56c00701dbf41aa8d308a14d](https://towardsdatascience.com/key-kubernetes-concepts-62939f4bc08e?sk=d46386ce56c00701dbf41aa8d308a14d)
 
