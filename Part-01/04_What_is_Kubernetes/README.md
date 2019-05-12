@@ -51,9 +51,9 @@ There's actually lots of different way to install kubernetes. One option is to i
 
 In Kubernetes, your containers run inside a Kubernetes construct called pods.
 
-This setup suffers from the same problems as the Docker setup that we saw earlier, i.e. you can only scale vertically, and there's no HA. 
+This setup suffers from the same problems as the Docker setup that we saw earlier, i.e. you can only scale vertically, and there's no HA.
 
-That's why a single node setup is only appropriate building a Kubernetes development environmont, because it's quick and cheap to setup. There's a tool called Minikube that specifically used create a Kubernetes instances that' in the form of a single VM that's running locally on your macbook/laptop.  
+That's why a single node setup is only appropriate building a Kubernetes development environmont, because it's quick and cheap to setup. There's a tool called Minikube that specifically used create a single-VM Kubernetes instances that's running locally on your macbook/laptop.  
 
 ## Kubernetes Multi Node Setup
 

@@ -1,6 +1,6 @@
 # Install Kubernetes on MacOS
 
-To run a kubecluster locally on your macbook, you need to install a software called [Minikube](https://kubernetes.io/docs/setup/minikube/). This.
+To run a kubecluster locally on your macbook, we will provisione our kube cluster using [Minikube](https://kubernetes.io/docs/setup/minikube/). There are lots of other ways to build a kube cluster, such as [kubeadm](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/), or my favourite, [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way). However I should point that all the things I'll demo in this course will work the same way irrespective of what you used to provision your kube cluster with. 
 
 There are a few steps involved in this process:
 

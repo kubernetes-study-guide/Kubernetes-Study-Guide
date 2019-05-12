@@ -18,6 +18,7 @@ In this course I'll be using a Apple Macbook. So if you're a macbook user and yo
 - [vscode](https://code.visualstudio.com/) - Text editor for writing our code. 
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads) - Used for building Virtual Machines on your local workstation
 - [vagrant](https://www.vagrantup.com/downloads.html) - Used for spinning 1 or more virtual machines by runing a single command
+- [docker](https://www.docker.com/get-started)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - The main tool for interacting with Kubernetes clusters
 - [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - Used for building a Kubernetes cluster right on your local workstation
 
