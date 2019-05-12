@@ -4,9 +4,15 @@ This course comes with it's very own study guide which I strongly recommend that
 
 [https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide)
 
+You can download this course by doing a git clone:
+
+```bash
+git clone git@github.com:Sher-Chowdhury/Kubernetes-Study-Guide.git
+```
+
 I've structured this course into a number of parts. Each part contains a list of numbered folders. Each of these numbered folder corresponds to a video on the course. For example the video you're watching now corresponds to the '02_The_Kubernetes_Study_Guide' video.
 
-Each of these folders contains a README file that covers each topic and includes the commands demoed for that video. Most of these folders contains a configs folder, which contains sample config files that are demoed in the videos. This will save you the trouble of manually typing out everything I do.  
+Each of these folders contains a README file that covers each topic and includes the commands demoed for that video. Most of these folders contains a configs folder. This contains sample yaml files that are demoed in the corresponding videos. This will save you the trouble of manually typing out everything I do.  
 
 This study guide is constantly evolving and is being regularly updated with improvements and new content. Also if you have any suggestions about making changes then please raise an issue or submit a pull request.
 

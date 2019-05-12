@@ -1,9 +1,11 @@
 Hi there my name is Sher Chowdhury and welcome to Kubernetes by example
 
-first of all a little bit about me, I'm based in the UK and I've been working in it for about 15 years, 
-in that time I've worked for big central government departments as well as in the private sector. 
+first of all a little bit about me, I'm based in the UK and I've been working in IT for about 15 years, 
+in that time I've worked for big government departments as well as in the private sector. 
 
-In 2019 I passed the CKA exam and I'm now a certified kubernetes administrator. In my spare time I run my website at codingbee.net. 
+In 2019 I passed the Kubernetes exam and I'm now a certified kubernetes administrator. 
+
+In my spare time I like to write articles for my website, codingbee.net. 
 
 
 Ok enough about me let's now move on to the course itself this course takes a learn by doing approach so that 
