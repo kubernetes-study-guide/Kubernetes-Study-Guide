@@ -1,4 +1,4 @@
-Hi there my name is Sher Chowdhury and welcome to Kubernetes by example
+Hello Everyone, my name is Sher Chowdhury and welcome to my course Kubernetes by example
 
 first of all a little bit about me, I'm based in the UK and I've been working in IT for about 15 years, 
 in that time I've worked for big government departments as well as in the private sector. 
@@ -18,9 +18,9 @@ That way you'll learn more effectively by seeing Kubernetes in action and follow
   
   
 in case you're interested you can get certified by taking the certified kubernetes administrator exam like me.  The exam is
-a hands-on exam where you perform tasks on a real Kubernetes environment. So since this course is a hands-on course it 
-makes it a really good course to help prepare for the exam. This course doesn't cover the whole exam syllabus, however the appendix
-section at the end of this course gives a mapping. 
+a hands-on exam where you perform tasks on a real Kubernetes environment. So since this course takes a hands-on approach it 
+makes it a really good course to help prepare for the exam. This course doesn't cover the whole exam syllabus, 
+however the appendix section at the end of this course gives a mapping. 
    
    
 During the exam you're allowed to access a couple of websites one of them is official kubernetes website, but only web pages 
@@ -38,7 +38,7 @@ how to run containers by creating pods,
 how to set up networking for the pods by creating services
 how to create a number of identical pods using replicasets
 how to replace existing pods with newer pods using deployments
-how to make pods externally accessible by creating by setting up ingress and creating ingress rules
+how to make pods externally accessible by setting up ingress and creating ingress rules
 How to create namespaces and organise your kubernetes objectes into them. 
 
 

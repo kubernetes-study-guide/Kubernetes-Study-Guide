@@ -1,6 +1,6 @@
 # The Kubernetes Study Guide
 
-This course comes with it's very own study guide which I strongly recommend that you clone to your workstation:
+This course comes with it's very own study guide which I strongly recommend that you download to your workstation:
 
 [https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide)
 

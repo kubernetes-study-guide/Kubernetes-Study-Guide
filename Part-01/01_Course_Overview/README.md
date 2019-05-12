@@ -44,7 +44,7 @@ Kubernetes is a big software and there are some topics that I haven't included i
 - Kubernetes Administration, e.g. updating existing Kubernetes install to a newer version.
 - Cloud platform specific technologies, such as [AWS EKS](https://aws.amazon.com/eks/). This course is going to be platform agnostic, meaning that what we'll cover should work on most, if not all platforms, whether it is On-promise, AWS, Azure, GKE...etc.
 
-I'm hoping create more courses in future to cover these areas.
+I'm planning create more courses in future to cover these areas.
 
 
 ## Bookmarks
