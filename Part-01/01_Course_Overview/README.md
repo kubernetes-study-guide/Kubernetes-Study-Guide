@@ -15,17 +15,17 @@ In the exam you will be allowed to access all web pages under the [https://kuber
 In this course you will learn and create:
 
 - Pods
-- replicasets
+- Services
+- Replicasets
+- Deploymments
+- Ingress rules
+- Namespaces
+- Jobs and Cronjobs
 - Persistant Volumes
 - Persistant Volume Claims
-- deploymments
 - deamonsets
 - statefulsets
-- services
-- ingress
-- namespaces
 - Service Accounts
-- jobs and cronjobs
 - configmaps
 - secrets
 - resourcequotas
@@ -37,15 +37,14 @@ In this course you will learn and create:
 
 ## What's not covered
 
-Kubernetes is a big software and there are some things that I didn't to fit into this course. 
+Kubernetes is a big software and there are some topics that I haven't included in this course, simply because these topics are so big that they need to be a course in their own right. 
 
 - Various ways of installing Kubernetes, we only show how to setup a Kubecluster locally using Minikube (as well as vagrant for a small number of videos).
 - Other tools that are also used in the wider Kubernetes ecosystem, e.g. [helm](https://helm.sh/), [traefik](https://traefik.io/),...etc. This course is going to be long enough as it is just with me just covering Kubernetes on it own!
 - Kubernetes Administration, e.g. updating existing Kubernetes install to a newer version.
-- Cloud platform specific technologies, such as [AWS EKS](https://aws.amazon.com/eks/). This course is going to be cloud agnostic, meaning that what we'll cover should work on most, if not all cloud platforms, whether it is AWS, Azure, GKE...etc.
+- Cloud platform specific technologies, such as [AWS EKS](https://aws.amazon.com/eks/). This course is going to be platform agnostic, meaning that what we'll cover should work on most, if not all platforms, whether it is On-promise, AWS, Azure, GKE...etc.
 
-I'm hoping create more courses in future to cover the above.
-
+I'm hoping create more courses in future to cover these areas.
 
 
 ## Bookmarks

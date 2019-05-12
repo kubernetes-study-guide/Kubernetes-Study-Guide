@@ -2,18 +2,11 @@
 
 To run a kubecluster locally on your macbook, we will provisione our kube cluster using [Minikube](https://kubernetes.io/docs/setup/minikube/). There are lots of other ways to build a kube cluster, such as [kubeadm](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/), or my favourite, [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way). However I should point that all the things I'll demo in this course will work the same way irrespective of what you used to provision your kube cluster with. 
 
-There are a few steps involved in this process:
-
-1. Install [brew](https://brew.sh/) - this is a MacOS based package installer.
-2. run: `brew install kubectl` to install kubectl
-3. run: `brew cask install virtualbox` to install virtualbox
-4. run: `brew cask install minikube` to install minikube
-
-After minikube is installed, next check it's version:
+I've already installed minikube in an earlier video, next lets check it's version:
 
 ```bash
 $ minikube version
-minikube version: v1.0.0
+minikube version: v1.0.1
 ```
 
 Similarly you check it's status:
@@ -83,9 +76,11 @@ Also to see how many nodes are in our kubecluster, run:
 $ kubectl get nodes -o wide
 NAME       STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE            KERNEL-VERSION   CONTAINER-RUNTIME
 minikube   Ready    master   20h   v1.14.0   10.0.2.15     <none>        Buildroot 2018.05   4.15.0           docker://18.6.2
+```
+
 This command lists out all VMs that has the kubelet component running on it. Also the VERSION lists the version of the kubelet. If you built kubernetes the hardway then the masters won't get listed here, since the masters don't have the kubelet running on them.
 
-By design, to stay lightweight, our minikube based kubecluster only has one node, which acts as both the master and worker node. That's fine in a development environment. But in production, you should have multiple master and worker nodes for HA.
+By design, to stay lightweight, our minikube based kubecluster is a single node cluster, which acts as both the master and worker node. That's fine in a development environment. But in production, you should have multiple node cluster for High Availability, better performance, more CPU+RAM capacity,..etc.
 
 ## Configuring the kubectl cli
 

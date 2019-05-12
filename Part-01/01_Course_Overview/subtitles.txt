@@ -11,10 +11,10 @@ In my spare time I like to write articles for my website, codingbee.net.
 Ok enough about me let's now move on to the course itself this course takes a learn by doing approach so that 
 you get comfortable using Kubernetes as quick as possible. 
 
-At its core kubernetes is all about using the kubectl command along with yaml files that you feed into it.
+At its core kubernetes is all about using the kubectl command along with yaml files that you feed into kubectl.
  that's why this course is primarily focused on learning how to write these Kubernetes yml files and then applying them using kubectl
  
-my hope is that you'll understand and learn more effectively by seeing Kubernetes in action and following along.
+That way you'll learn more effectively by seeing Kubernetes in action and following along.
   
   
 in case you're interested you can get certified by taking the certified kubernetes administrator exam like me.  The exam is
@@ -28,8 +28,22 @@ under the docs section.
    
 The other being the official Kubernetes github project, and all the git repo under it. 
 
-That's why in this course we'll regularly refer to these sources so that you'll become familiar 
+That's why in this course we'll regularly refer to these sources so that you get familiarized 
 with their content, and know your way around them. 
+
+
+In this course you will learn and create...
+
+how to run containers by creating pods,
+how to set up networking for the pods by creating services
+how to create a number of identical pods using replicasets
+how to replace existing pods with newer pods using deployments
+how to make pods externally accessible by creating by setting up ingress and creating ingress rules
+How to create namespaces and organise your kubernetes objectes into them. 
+
+
+Kubernetes is a big software and there are some topics that I haven't included in this course, 
+simply because these topics are so big that they need to be a course in their own right. They include 
 
 
 

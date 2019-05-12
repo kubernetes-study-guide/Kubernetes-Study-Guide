@@ -32,6 +32,7 @@ brew cask install visual-studio-code
 brew install git
 brew cask install virtualbox
 brew cask install vagrant
+brew install docker
 brew install kubectl
 brew cask install minikube
 ```
