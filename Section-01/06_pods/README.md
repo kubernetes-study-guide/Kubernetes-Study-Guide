@@ -41,7 +41,7 @@ We'll cover how to construct these yaml files from scratch in the anatomy tutori
 3. name the container 'cntr-httpd',
 4. and name the pod itself, 'pod-httpd'.
 5. note that the container will be listening on port 80
-6. Assign an arbitrary key/value label to the pod of key=component and value=apache_webserver. This label will come in useful later on.
+6. Assign an arbitrary key/value label to the pod of key=app and value=apache_webserver. This label will come in useful later on.
 
 We wrote this yaml content into a file called, pod-httpd-descriptor.yml. It doesn't matter what you call the file, as long as it's meaningful to you. and ends with the .yml/.yaml suffix. Now let's create the object, using the apply command:
 
