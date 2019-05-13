@@ -10,7 +10,7 @@ You can download this guide by doing a git clone:
 git clone git@github.com:Sher-Chowdhury/Kubernetes-Study-Guide.git
 ```
 
-I've structured this course into a number of sections. Each section contains a list of folders. Each of these folders corresponds to a video on the course. For example the video you're watching now corresponds to the '02_The_Kubernetes_Study_Guide' video.
+I've structured this course into a number of sections. Each section contains a list of topics. Each of these folders corresponds to a video on the course. For example the video you're watching now corresponds to the '02_The_Kubernetes_Study_Guide' video.
 
 Each folder contains a README file that covers each topic and includes the commands demoed for that video. Most of these folders contains a configs folder. This contains sample yaml files that are demoed in the corresponding videos. This will save you the trouble of manually typing out everything I do.  
 
@@ -24,13 +24,13 @@ Throughout this course we'll be using the kubectl command. kubectl is the main c
 man kubectl<tab><tab>
 ```
 
-Also you can access a lot more info by running:
+Also you can access more info by running:
 
 ```bash
 kubectl explain xxxxx
 ```
 
-Where 'xxxxx', is set to something like `pod.spec`.
+Where 'xxxxx', is set to something like `pod.spec.containers.name`.
 
 The output of some commands are quite long, on those occasions we'll only show an extract using 3-dot notation, and truncate out the rest:
 

@@ -4,9 +4,20 @@ If you look take a look at the official documentation, you'll find [Kubernetes i
 
 > Kubernetes is a portable, extensible open-source platform for managing containerized workloads and services, that facilitates both declarative configuration and automation.
 
-Now that's quite a mouthful, and the documentation goes into a lot more detail. Ultimately Kubernetes is a solution for managing the running of containers.
+Basically, Kubernetes is a container orchestration platform. In practice that means that Kubernetes is used for things like:
 
-Docker can also do the same so you might wonder, why do you need Kubernetes when you have Docker? Theres a lot of reasons why, but lets take a look at one scenario:
+- Running containers, which in Kubernetes is done by creating pods.
+- Running a group identical pods across multiple servers
+- load balance traffic across these pods
+- Deploying newer pods to replace existing pods
+- Setting up networking so that pods can reach one another
+
+I should point out here that pods are the fundamental building blocks of Kubernetes. The whole purpose of use Kubernetes is to create and run pods.
+
+Kubernetes was originally developed in-house by Google, but in 2014 they open-sourced and made it available to the public.
+
+
+Let's do a quick comparison of Docker and Kubernetes. When running containers using Docker, we have a something like this:
 
 ![docker-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/Docker-Server-Architecture.png)
 
@@ -17,12 +28,11 @@ In this scenario we have a IT Admin who uses the docker cli to create a collecti
 
 One option is to build multiple docker servers and put them behind a Load balancer. But that's a workaround rather than a proper solution. What's needed is a container orchestration solution, such as [Docker Swarm](https://docs.docker.com/engine/swarm/), or in our case Kubernetes.
 
-
 ## Kubernetes Components
 
-The Kubernetes software is made up over [several smaller self-contained inter-connecting components](https://kubernetes.io/docs/concepts/overview/components/) that are all working together to deliver a single instance of a Kubernetes Platform. These components falls in of 2 categories, Master Components and Node Components.
+The Kubernetes software is made up over [several smaller self-contained inter-connecting components](https://kubernetes.io/docs/concepts/overview/components/) that are all working together to deliver a single instance of a Kubernetes Platform. These components are categorised as either Master Components, or Node Components.
 
-The master components manages the Kubernetes platform as a whole, whereas Node components are responsible for the actual running of the containers.
+The master components manages the Kubernetes platform as a whole, whereas Node components are responsible for the actual running of pods.
 
 ![kubernetes-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/kubernetes-components.png)
 
@@ -45,15 +55,13 @@ Here's a brief description of the worker components, Don't worry if these makes 
 
 ## Kubernetes Single Node Setup
 
-There's actually lots of different way to install kubernetes. One option is to install all the components onto a single node:
+There's actually lots of different ways to install kubernetes. One option is to install all the components onto a single node:
 
 ![Single-node-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Part-01/03_kubernetes_architecture/images/Single-node-kubecluster.png)
 
-In Kubernetes, your containers run inside a Kubernetes construct called pods.
-
 This setup suffers from the same problems as the Docker setup that we saw earlier, i.e. you can only scale vertically, and there's no HA.
 
-That's why a single node setup is only appropriate building a Kubernetes development environmont, because it's quick and cheap to setup. There's a tool called Minikube that specifically used create a single-VM Kubernetes instances that's running locally on your macbook/laptop.  
+That's why a single node setup is only appropriate building Kubernetes development environmonts, since it's quick and cheap to setup. Minikube is used for building single-VM Kubernetes instances that runs locally on your macbook/laptop.  
 
 ## Kubernetes Multi Node Setup
 
@@ -68,7 +76,7 @@ Building a Kube Cluster involves building 2 types of servers:
 - **Kube Master** - This server is responsible for managing the Kube Cluster as a whole and it has all the master components installed on it. They are also referred to as 'controller nodes'.
 - **Kube worker** - These servers are repsonsible for running the actual containers (in the form of pods), that the Kube Master instructs them to run. 
 
-This setup now allows for horizontal scaling by simply adding/removing Kube workers as and when needed. Also if one of the kube worker dies, then the kube master will become aware of it and create pods in the remaining worker nodes to compensate for it.
+This setup now allows for horizontal scaling by simply adding/removing Kube workers as and when needed. Also you have HA, because if one of the kube workers die, then the kube master will become aware of it and create new pods in the remaining worker nodes to replace the lost ones.
 
 However this setup still has a single point of failure, which is the kube master itself. That's why in order to achieve HA you need to have multiple kube masters in your kube cluster:
 

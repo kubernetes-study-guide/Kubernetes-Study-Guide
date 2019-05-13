@@ -6,7 +6,6 @@ Kubernetes is a really powerful software and it's also quite complex. That's why
 
 - Linux, Bash, Vim
 - Hands-on Docker experience, so that you understand the concept of containers and images
-- yaml files
 - basic networking knowledge, e.g. subnets, netmasks, also things like http is port 80.
 
 This isn't a complete list. But it should give you some idea of the level you should be at before starting this course.
@@ -27,7 +26,6 @@ Most of these are general purpose tools used for software development. The only 
 Probably the easiest way to install these software on a Mac is with [brew](https://brew.sh/), which itself needs to be installed. Here's an example:
 
 ```bash
-brew update
 brew cask install visual-studio-code
 brew install git
 brew cask install virtualbox
