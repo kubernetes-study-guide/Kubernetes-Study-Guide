@@ -72,7 +72,7 @@ You can organise your objects in various ways using namespace. For example, we c
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: codingbee-hello-world
+  name: ns-dev
 ```
 
 > Notice that we didn't need to specify a namespace.spec section.
@@ -80,7 +80,7 @@ metadata:
 Writing out the above yaml code by hand can be tedious and error-proone, so you can quickly generate a yaml boilerplate template, which you can then use to tweak:
 
 ```bash
-kubectl create namespace codingbee-hello-world -o yaml --dry-run > namespace.yaml
+kubectl create namespace ns-dev -o yaml --dry-run > namespace.yaml
 ```
 
 You can then create objects in your new namespace by using the `kubectl apply --namespace -f ...`. However I prefer the declaritive approach, by specifing what namespace objects belong to using the `xxx.metadata.namespace` setting:
@@ -91,7 +91,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: pod-httpd
-  namespace: codingbee-hello-world       # we add this line.
+  namespace: ns-dev       # we add this line.
   labels:
     app: apache_webserver
 spec:
@@ -109,8 +109,8 @@ And for our service we have:
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-nodeport-apache-webserver
-  namespace: codingbee-hello-world       # we add this line.
+  name: svc-nodeport-apache
+  namespace: ns-dev       # we add this line.
 spec:
   type: NodePort
   ports:
@@ -124,7 +124,7 @@ spec:
 We can apply them using the usual apply commands. And then we can check that they have been created by running:
 
 ```bash
-$ kubectl get all -o wide --namespace=codingbee-hello-world
+$ kubectl get all -o wide --namespace=ns-dev
 NAME            READY   STATUS    RESTARTS   AGE    IP           NODE       NOMINATED NODE   READINESS GATES
 pod/pod-httpd   1/1     Running   0          107s   172.17.0.8   minikube   <none>           <none>
 
@@ -155,7 +155,7 @@ nodes                             no                                          fa
 Specifying namespaces on the command line can get quite tedious. However you can persistantly change namespaces by running:
 
 ```bash
-$ kubectl config set-context $(kubectl config current-context) --namespace=codingbee-hello-world
+$ kubectl config set-context $(kubectl config current-context) --namespace=ns-dev
 Context "minikube" modified.
 ```
 
@@ -164,15 +164,15 @@ This command is setting the user+cluster details via the current-context setting
 ```bash
 $ diff ~/.kube/config ~/.kube/config-orig
 26c26
-<     namespace: codingbee-hello-world
+<     namespace: ns-dev
 ---
 >     namespace: kube-system
 
 
-$ grep 'codingbee-hello-world' ~/.kube/config -A2 -B2
+$ grep 'ns-dev' ~/.kube/config -A2 -B2
 - context:
     cluster: minikube
-    namespace: codingbee-hello-world
+    namespace: ns-dev
     user: minikube
   name: minikube
 ```
@@ -184,7 +184,7 @@ $ kubectl config get-contexts
 CURRENT   NAME                 CLUSTER                      AUTHINFO             NAMESPACE
           default              kubernetes                   chowdhus
           docker-for-desktop   docker-for-desktop-cluster   docker-for-desktop
-*         minikube             minikube                     minikube             codingbee-hello-world
+*         minikube             minikube                     minikube             ns-dev
 ```
 
 This command essentially displays some of the the content extracted from `~/.kube/config` in a more readable form. As you can see, the command we use to configure which kubecluster our kubectl command should connect (i.e. the context) to also lets you set the namespace (i.e. namespace to use when not explicitly specified on the command line).

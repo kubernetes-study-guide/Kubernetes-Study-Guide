@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: pod-httpd
-  namespace: codingbee-hello-world       # we add this line. 
+  namespace: ns-dev       # we add this line. 
   labels:
     app: apache_webserver
 spec: 

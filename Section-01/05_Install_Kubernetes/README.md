@@ -1,8 +1,8 @@
-# Install Kubernetes on MacOS
+# Install Kubernetes using Minikube
 
-To run a kubecluster locally on your macbook, we will provisione our kube cluster using [Minikube](https://kubernetes.io/docs/setup/minikube/). There are lots of other ways to build a kube cluster, such as [kubeadm](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/), or my favourite, [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way). However I should point that all the things I'll demo in this course will work the same way irrespective of what you used to provision your kube cluster with. 
+There are lots of other ways to build a kube cluster, such as [kubeadm](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/), or my favourite, [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way). However, we will create a kube cluster locally on our workstation using [Minikube](https://kubernetes.io/docs/setup/minikube/). I should point that all the things I'll demo in this course will work the same way irrespective of how the Kube Cluster was built.
 
-I've already installed minikube in an earlier video, next lets check it's version:
+Earlier we talked about how to install minikube, lets now if it has really installed by running a minikube command:
 
 ```bash
 $ minikube version
@@ -19,7 +19,7 @@ apiserver:
 kubectl:
 ```
 
-To create a new kubecluster on your macbook, run (note this can take several minutes):
+To create a new kubecluster,  we run (note this can take several minutes):
 
 ```bash
 $ minikube start

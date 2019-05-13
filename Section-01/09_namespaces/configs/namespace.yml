@@ -2,4 +2,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: codingbee-hello-world
+  name: ns-dev

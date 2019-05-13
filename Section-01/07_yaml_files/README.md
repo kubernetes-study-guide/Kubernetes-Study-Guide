@@ -1,8 +1,8 @@
-# Anatomy of an Kubernetes object config file
+# YAML files
 
-There's 2 main approaches to create/update/delete Kubernetes objects. They are the [imperative and declarative approaches](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/overview/).
+In our hello-world demo we created a pod and service object by feeding yaml files into kubectl.
 
-Broadly speaking, the imperative approach involves creating objects solely via the kubectl command line. Whereas the declaritive approach involves writing yaml descriptors and then use the kubectl 'apply' subcommand to create them. It's recommended to use the declaritive approach
+Yaml is just a markup language like xml or json. The Yaml syntax is used for writing data in a structured way. I recommend taking look at the [Ansible website's yaml guide](https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html) if you want to learn about the syntax.
 
 Notice, that all these config files have the following general yaml structure:
 
@@ -17,7 +17,7 @@ spec:
 
 The apiVersion, kind, metadata, and spec, are the [required fields](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/#required-fields), for all kubernetes object files.
 
-**kind:** What type object that you want to make.
+**kind:** What type of object that you want to create.
 
 **apiVersion:** The kubernetes api is rapidly evolving so the api is broken down into various parts. Your version choice depends on what 'kind' of object you want to define.  For example, if the kind is 'Pod' then this field needs to be set to 'v1'.
 
