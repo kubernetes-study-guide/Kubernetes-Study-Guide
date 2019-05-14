@@ -77,7 +77,7 @@ metadata:
 
 > Notice that we didn't need to specify a namespace.spec section.
 
-Writing out the above yaml code by hand can be tedious and error-proone, so you can quickly generate a yaml boilerplate template, which you can then use to tweak:
+Here's a way to generate a namespace boilerplate template:
 
 ```bash
 kubectl create namespace ns-dev -o yaml --dry-run > namespace.yaml

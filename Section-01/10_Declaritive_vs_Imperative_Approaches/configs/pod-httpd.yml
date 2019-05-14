@@ -1,14 +1,16 @@
----
 apiVersion: v1
 kind: Pod
 metadata:
   name: pod-httpd
-  namespace: ns-dev       # we add this line. 
   labels:
     app: apache_webserver
-spec: 
+spec:
   containers:
   - name: cntr-httpd
-    image: httpd
+    image: httpd:latest
     ports:
-      - containerPort: 80
+    - containerPort: 80
+
+
+
+

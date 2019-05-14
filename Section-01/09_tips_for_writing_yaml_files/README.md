@@ -1,6 +1,6 @@
 # Tips of writing YAML files
 
-When writing yaml files, You can refer to the [Kubernetes API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/) to work out what to set for your chosen object type (kind). This reference doc is really useful displays example yaml content for your chosen kind. This link is for version v1.14. But in your case you need go to the link, that's specified with the Major and Minor tag of Server Version in:
+When writing yaml files, You can refer to the [Kubernetes API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/) to work out what to set for your chosen object. This reference doc is really useful and it displays example yaml code. This link is for version v1.14. But in your case you need go to the link, that's specified with the Major and Minor tag of Server Version in:
 
 ```bash
 $ kubectl version --short
@@ -52,7 +52,10 @@ What if you have a pod, e.g. called pod-httpd, but lost it's yaml descriptor fil
 kubectl get pod pod-httpd -o yaml > regenerated-descriptor.yaml
 ```
 
+## Use Kubectl to gernate YAML Boilerplate templates
+
+Kubectl has a really cool feature that lets you generate example yaml files. That's done by running 'imperative' kubectl commands. I'll cover more about this later on, when we cover Imperative and Declaritive approaches
+
 ## References
 
 [kubernetes api concepts](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)
-[kubernetes api reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/)
