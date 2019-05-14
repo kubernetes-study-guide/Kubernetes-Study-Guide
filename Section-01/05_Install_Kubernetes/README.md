@@ -40,7 +40,7 @@ $ minikube start
 🏄  Done! Thank you for using minikube!
 ```
 
-If you open up the virtualbox gui, you should a new vm called minikube running. If you check the status again, you should now see:
+If you open up the virtualbox gui, you should see a new vm called minikube running. If you check the status again, you should now see:
 
 ```bash
 $ minikube status
@@ -82,17 +82,21 @@ This command lists out all VMs that has the kubelet component running on it. Als
 
 By design, to stay lightweight, our minikube based kubecluster is a single node cluster, which acts as both the master and worker node. That's fine in a development environment. But in production, you should have multiple node cluster for High Availability, better performance, more CPU+RAM capacity,..etc.
 
-## Configuring the kubectl cli
-
-When you ran, `minikube start` earlier, what actually happened to configure kubectl cli, is that the yaml file `~/.kube/config` was created (or updated). This file is referred to as a 'kubeconfig' file. The kubectl cli can only interact with one kubecluster at a time. However the `~/.kube/config` can store settings for multiple kubeclusters, and you can switch kubectl to connect to a different kube context by running:
+When your not using minikube, you can shut it down:
 
 ```bash
-kubectl config use-context context-name
+minikube stop
 ```
 
-A [context is basically a selection of info kubectl needs to connect to a kubecluster](https://learnk8s.io/blog/kubectl-productivity/#4-switch-between-clusters-and-namespaces-with-ease), we'll cover more about this later.
+You can also delete your minikube vm:
 
-At the moment our `~/.kube/config` contains connection settings info for 3 contexts:
+```bash
+minikube delete
+```
+
+## Configuring the kubectl cli
+
+When you ran, `minikube start` earlier, what actually happened to configure kubectl cli, is that the yaml file `~/.kube/config` was created (or updated). This file is referred to as a 'kubeconfig' file. The kubectl cli can only interact with one kubecluster at a time. And the cluster kubectl is currently using is specified in the kubectl context. A [context is basically a selection of info kubectl needs to connect to a kubecluster](https://learnk8s.io/blog/kubectl-productivity/#4-switch-between-clusters-and-namespaces-with-ease). At the moment our `~/.kube/config` contains connection settings info for 3 contexts:
 
 ```bash
 $ kubectl config get-contexts
@@ -103,8 +107,13 @@ CURRENT   NAME                 CLUSTER                      AUTHINFO            
 ```
 
 Here we can see that kubectl is currently configured to interact with the 'minikube' cluster.
+You can switch kubectl to connect to a different kube context by running:
 
-'kubeconfigs' is actually a more general terms and is used to refer to any config files used by various kubernetes components (kubelet, kube-proxy, kube-scheduler,...etc). You can [generate all these various types of kubeconfigs using the kubectl command](https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/05-kubernetes-configuration-files.md#the-kubelet-kubernetes-configuration-file).
+```bash
+kubectl config use-context context-name
+```
+
+**kubeconfigs** is actually a more general terms and is used to refer to any config files used by various kubernetes components (kubelet, kube-proxy, kube-scheduler,...etc). You can [generate all these various types of kubeconfigs using the kubectl command](https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/05-kubernetes-configuration-files.md#the-kubelet-kubernetes-configuration-file).
 
 We'll cover more about the `~/.kube/config` kubeconfig file later on.
 

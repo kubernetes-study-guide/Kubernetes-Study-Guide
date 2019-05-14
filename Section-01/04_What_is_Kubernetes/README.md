@@ -12,6 +12,8 @@ Basically, Kubernetes is a container orchestration platform. In practice that me
 - Deploying newer pods to replace existing pods
 - Setting up networking so that pods can reach one another
 
+Don't worry if none of these makes any sense. We'll be covering them as we go through the course. 
+
 I should point out here that pods are the fundamental building blocks of Kubernetes. The whole purpose of use Kubernetes is to create and run pods.
 
 Kubernetes was originally developed in-house by Google, but in 2014 they open-sourced and made it available to the public.
