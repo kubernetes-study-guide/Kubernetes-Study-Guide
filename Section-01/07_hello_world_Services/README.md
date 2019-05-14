@@ -4,6 +4,15 @@ We're now going to improve this hello-world example by making our pod accessible
 
 **Service:** A service object is used to setup networking in our kube cluster. E.g. if a running pod exposes a web based gui, then a service object needs to be set up to make that pod's gui externally accessible.
 
+So far we have only created the hello-pod:
+
+```bash
+$ kubectl get pods -o wide
+NAME        READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+pod-httpd   1/1     Running   0          29m   172.17.0.8   minikube   <none>           <none>
+```
+
+
 So in our hello-world example, we've created a new yaml file with the content:
 
 ```yaml
@@ -22,10 +31,10 @@ spec:
     app: apache_webserver  # this says it will forward traffic to object that has metadata.label entry with key/value pair of 'app: apache_webserver' that's how this object and the pod object links together.
 ```
 
-There are different types of service objects, in our case we are creating a NodePort type service. NodePort services are quite crude and isn't recommended for production, but we're using it here because it's the easiest service type to understand for a beginner. Now let's create the service object:
+There are different types of services, in our case we are creating a NodePort service. NodePort services are quite crude and isn't recommended for production, but we're using it here because it's the easiest service type to understand for a beginner. Now let's create the service object:
 
 ```bash
-$ kubectl apply -f configs/svc-nodeport-descriptor.yml
+$ kubectl apply -f configs/svc-nodeport.yml
 service/svc-nodeport-httpd created
 
 $ kubectl get svc -o wide
