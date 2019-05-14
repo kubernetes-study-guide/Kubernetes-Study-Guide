@@ -6,8 +6,8 @@ Yaml is just a markup language like xml or json. The Yaml syntax is used for wri
 
 Basically YAML is based on a key-value system. Where the key is a string, and the value is essentially a container that can hold all kinds of things, such as:
 
-- a string
-- an array of values (which in turn are containers)
+- A string
+- An array of values (which in turn are containers)
 - Another key value pair
 - A dictionary (a set of key value pairs).
 
@@ -25,7 +25,9 @@ metadata:
 spec:
   {blah blah blah}
 ```
- 
+
+**Watch out**: key names (e.g. apiVersion) are all case sensitive
+
 
 The apiVersion, kind, metadata, and spec, are the [required fields](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/#required-fields), for all kubernetes object files.
 
