@@ -7,6 +7,7 @@ The Declaritive approach is about using the `kubectl apply` command when creatin
 The imperative approach involves using any of the verb based commands, here are some them:
 
 - `kubectl run`
+- `kubectl create`
 - `kubectl expose`
 - `kubectl delete`
 - `kubectl edit`
