@@ -4,7 +4,18 @@ In our hello-world demo we created a pod and service object by feeding yaml file
 
 Yaml is just a markup language like xml or json. The Yaml syntax is used for writing data in a structured way. I recommend taking look at the [Ansible website's yaml guide](https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html) if you want to learn about the syntax.
 
-Notice, that all these config files have the following general yaml structure:
+Basically YAML is based on a key-value system. Where the key is a string, and the value is essentially a container that can hold all kinds of things, such as:
+
+- a string
+- an array of values (which in turn are containers)
+- Another key value pair
+- A dictionary (a set of key value pairs).
+
+One of the nice things about yaml is that it's relatively human readable when compared to xml or json. 
+
+**Watch Out**: Yaml files are space sensitive. So need to always make sure all your indents are correct.
+
+The yaml files we created for Kubernetes had the the following general yaml structure:
 
 ```yaml
 apiVersion: xxx
@@ -14,6 +25,7 @@ metadata:
 spec:
   {blah blah blah}
 ```
+ 
 
 The apiVersion, kind, metadata, and spec, are the [required fields](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/#required-fields), for all kubernetes object files.
 
@@ -73,7 +85,39 @@ DESCRIPTION:
 
 ## Defining multiple objects in a single config file
 
-In this walkthrough we ended up with 2 config files. However you can store 2 or more objects in a single config file. All you need to do is to copy all the definitions into a single file, and seperate them out using by inserting the yaml-new-document-syntax '---' between them. It's really a preference on whether or not to use this approach.
+In this walkthrough we ended up with 2 config files. However you can store 2 or more objects in a single config file. All you need to do is to copy all the definitions into a single file, and seperate them out using by inserting the yaml-new-document-syntax '---' between them. 
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-httpd
+  labels:
+    app: apache_webserver
+spec:
+  containers:
+  - name: cntr-httpd
+    image: httpd:latest
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-nodeport-httpd
+spec:
+  type: NodePort
+  ports:
+  - port: 3050
+    targetPort: 80
+    nodePort: 31000
+  selector:
+    app: apache_webserver
+
+```
+
+It's really a preference on whether or not to use this approach.
+
 
 ## Updating objects
 
@@ -86,12 +130,6 @@ What if you have a pod, e.g. called pod-httpd, but lost it's yaml descriptor fil
 ```bash
 kubectl get pod pod-httpd -o yaml --export > regenerated-descriptor.yaml
 ```
-
-## Imperative vs Declaritive approaches
-
-[https://kubernetes.io/docs/concepts/overview/object-management-kubectl/declarative-config/](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#service-v1-core)
-
-[https://kubernetes.io/docs/concepts/overview/object-management-kubectl/imperative-config/](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/imperative-config/)
 
 ## References
 
