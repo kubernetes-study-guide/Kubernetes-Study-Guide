@@ -1,6 +1,6 @@
 # namespaces
 
-Earlier, when we tried to get a list of all pods, we got:
+When you create a brand new kube cluster, and then get a list of pods, you'll get:
 
 ```bash
 $ kubectl get pods
@@ -19,24 +19,7 @@ kube-system   Active    11h
 
 These 3 namespaces comes included in a fresh kubernetes install.
 
-When we run the `kubectl get pods` earlier, we didn't specify a namespace, so kubectl by default assumed we are only interested in the 'default' namspace. The 'kube-system' namespace store objects that are used by kubernetes internally. For example here's how to view what pods k8s uses internally:
-
-```bash
-$ kubectl get pods --namespace=kube-system
-NAME                                   READY     STATUS    RESTARTS   AGE
-coredns-86c58d9df4-cnqnr               1/1       Running   0          11h
-coredns-86c58d9df4-ct8fx               1/1       Running   0          11h
-etcd-minikube                          1/1       Running   0          11h
-kube-addon-manager-minikube            1/1       Running   0          11h
-kube-apiserver-minikube                1/1       Running   0          11h
-kube-controller-manager-minikube       1/1       Running   0          11h
-kube-proxy-8zwff                       1/1       Running   0          11h
-kube-scheduler-minikube                1/1       Running   0          11h
-kubernetes-dashboard-ccc79bfc9-l66xk   1/1       Running   0          11h
-storage-provisioner                    1/1       Running   0          11h
-```
-
-Or to get all kube-system namespace objects, do:
+When we run the `kubectl get pods` earlier, we didn't specify a namespace, so kubectl by default will use the 'default' namspace. The 'kube-system' namespace store objects that are used by kubernetes internally. For example here's how to view what pods k8s uses internally:
 
 ```bash
 $ kubectl get all --namespace=kube-system
@@ -65,7 +48,7 @@ rs/coredns-86c58d9df4               2         2         2         11h
 rs/kubernetes-dashboard-ccc79bfc9   1         1         1         11h
 ```
 
-You can organise your objects in various ways using namespace. For example, we can create namespaces called 'Prod' and 'Dev'. Alternatively, have namespaces based on project/programme name. Here's a yaml example for a namespace:
+Namespaces lets you can organise your objects in various ways. For example, we can create namespaces called 'Prod' and 'Dev'. Here's a yaml example for a namespace:
 
 ```yaml
 ---
@@ -77,10 +60,21 @@ metadata:
 
 > Notice that we didn't need to specify a namespace.spec section.
 
-Here's a way to generate a namespace boilerplate template:
+By the way, here's a way to generate a namespace boilerplate template:
 
 ```bash
-kubectl create namespace ns-dev -o yaml --dry-run > namespace.yaml
+kubectl create namespace ns-dev -o yaml --dry-run > namespace-boilerplate.yaml
+```
+
+After creating the namespace, we can view it like this:
+
+```bash
+$ kubectl get namespaces
+NAME              STATUS   AGE
+default           Active   5h19m
+kube-node-lease   Active   5h19m
+kube-public       Active   5h19m
+kube-system       Active   5h19m
 ```
 
 You can then create objects in your new namespace by using the `kubectl apply --namespace -f ...`. However I prefer the declaritive approach, by specifing what namespace objects belong to using the `xxx.metadata.namespace` setting:
@@ -124,6 +118,9 @@ spec:
 We can apply them using the usual apply commands. And then we can check that they have been created by running:
 
 ```bash
+$ kubectl get pods
+No resources found.
+
 $ kubectl get all -o wide --namespace=ns-dev
 NAME            READY   STATUS    RESTARTS   AGE    IP           NODE       NOMINATED NODE   READINESS GATES
 pod/pod-httpd   1/1     Running   0          107s   172.17.0.8   minikube   <none>           <none>
@@ -152,7 +149,7 @@ nodes                             no                                          fa
 
 ## Set the namespace persistently
 
-Specifying namespaces on the command line can get quite tedious. However you can persistantly change namespaces by running:
+If you want to perform a lot of tasks against a particular namespace, then specifying namespaces on the command line every time can get quite tedious. However you can persistantly change namespaces by running:
 
 ```bash
 $ kubectl config set-context $(kubectl config current-context) --namespace=ns-dev
@@ -177,6 +174,8 @@ $ grep 'ns-dev' ~/.kube/config -A2 -B2
   name: minikube
 ```
 
+This means the context called 'minikube' is telling kubectl which kubecluster to connect to, as which user, and which namespace to use as the default namespace (if the namespace flag isn't specified on the command line).
+
 This results in:
 
 ```bash
@@ -187,4 +186,4 @@ CURRENT   NAME                 CLUSTER                      AUTHINFO            
 *         minikube             minikube                     minikube             ns-dev
 ```
 
-This command essentially displays some of the the content extracted from `~/.kube/config` in a more readable form. As you can see, the command we use to configure which kubecluster our kubectl command should connect (i.e. the context) to also lets you set the namespace (i.e. namespace to use when not explicitly specified on the command line).
+This command essentially displays some of the the content extracted from `~/.kube/config` in a more readable form.

@@ -4,5 +4,5 @@ metadata:
   name: pod-centos
 spec: 
   containers:
-    - name: cntr-centos
-      image: centos
+  - name: cntr-centos
+    image: centos

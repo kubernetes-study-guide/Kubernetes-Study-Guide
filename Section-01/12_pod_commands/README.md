@@ -3,7 +3,7 @@
 The primary function of a docker container is to run an executable (e.g. a binary, command, or shell script) along with some optional arguments. The executable+arguments are both specified in the Dockerfile with the following settings:
 
 - [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint)
-- [CMD](https://docs.docker.com/engine/reference/builder/#cmd) - There's three ways to use this settng - the 2nd approach, which is to use CMD in conjunction with the ENTRYPOINT is the recommended way. This may look untuitively but it ensures that the primary process (PID 1) inside the container isn't the bash/sh session wrapper, but is the primary executable.
+- [CMD](https://docs.docker.com/engine/reference/builder/#cmd) - There's three ways to use this setting - the 2nd approach, which is to use CMD in conjunction with the ENTRYPOINT is the recommended way. This may look untuitively but it ensures that the primary process (PID 1) inside the container isn't the bash/sh session wrapper, but is the primary executable.
 
 This entrypoint's binary/command/script can be used to run:
 
@@ -14,7 +14,7 @@ This entrypoint's binary/command/script can be used to run:
 
 Pods are designed for running containers with ongoing workloads. However, if your pod is built from an image, whose entrypoint is a shortlived (e.g. centos):
 
-```bash
+```yaml
 ---
 apiVersion: v1
 kind: Pod

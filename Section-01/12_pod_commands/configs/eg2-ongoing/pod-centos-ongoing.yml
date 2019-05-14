@@ -8,8 +8,8 @@ spec:
       image: centos
       command: ["/bin/bash", "-c"]       # this starts a bash terminal and feeds the args content into it
       args:                         # the args section here is used to store a small shell script
-        - |
-          while true ; do
-            date 
-            sleep 10 
-          done
+      - |
+        while true ; do
+          date 
+          sleep 10 
+        done
