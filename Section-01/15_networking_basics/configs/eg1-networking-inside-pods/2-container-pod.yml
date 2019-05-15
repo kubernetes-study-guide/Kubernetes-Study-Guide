@@ -9,7 +9,7 @@ spec:
   - name: cntr-httpd
     image: httpd:latest
     ports:
-      - containerPort: 80
+    - containerPort: 80
   - name: cntr-centos
     image: centos
     command: ["/bin/bash", "-c"]
