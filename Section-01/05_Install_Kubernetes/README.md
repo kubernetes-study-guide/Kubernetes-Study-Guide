@@ -50,7 +50,7 @@ apiserver: Running
 kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100
 ```
 
-Here it says that minikube has also configured kubectl, to check if that's really the case, run:
+Here it says that minikube has also configured kubectl, that's done by making change's to kubectl's config file which by default is located at `~/.kube/config`. To check if that's really the case, we run the following to get info about what cluster kubectl is currently pointing to:
 
 ```bash
 $ kubectl cluster-info
@@ -60,7 +60,15 @@ KubeDNS is running at https://192.168.99.100:8443/api/v1/proxy/namespaces/kube-s
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```
 
-Another command can run to see the health of your kub cluster's control plane:
+The ip address shown here is the Minikube VM's ip address, which you can double check by running:
+
+```bash
+$ minikube ip
+192.168.99.100
+```
+
+
+To check the health of your kub cluster's control plane, you can run:
 
 ```bash
 $ kubectl get componentstatus
