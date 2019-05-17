@@ -61,10 +61,10 @@ One of the main reasons Kubernetes was developed with a modular design, is so th
 
 A collection of kube masters and workers that provides a single working instance of Kubernetes, is referred to as a **Kubernetes Cluster**, or just **Kube Cluster**.
 
-Building a Kube Cluster involves building 2 types of servers:
+Kube Cluster are made up of  2 types of servers:
 
-- **Kube Master** - This server is responsible for managing the Kube Cluster as a whole and it has all the master components installed on it. They are also referred to as 'controller nodes'.
-- **Kube worker** - These servers are repsonsible for running the actual containers (in the form of pods), that the Kube Master instructs them to run. 
+- **Kube Masters** - This server is responsible for managing the Kube Cluster as a whole. It has all the master components installed on it. They are also referred to as 'controller nodes'.
+- **Kube workers** - These servers are responsible for running the actual pods (and consequently containers), that the Kube Master instructs them to run. They have all the worker components installed on them.  
 
 This setup now allows for horizontal scaling by simply adding/removing Kube workers as and when needed. Also you have HA, because if one of the kube workers die, then the kube master will become aware of it and create new pods in the remaining worker nodes to replace the lost ones.
 
