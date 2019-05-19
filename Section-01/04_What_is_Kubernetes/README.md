@@ -21,11 +21,13 @@ Don't worry if none of these makes any sense. We'll be covering them as we go th
 Kubernetes is not a single piece of software, in fact it's made up of [several components](https://kubernetes.io/docs/concepts/overview/components/) that work together to provide a single instance of Kubernetes. These components are categorised into 2 groups:
 
 - **Master Components** - These manages the Kubernetes platform as a whole
-- **Node Components** - These are responsible for the actual running of pods.
+- **Worker Components** - These are responsible for the actual running of pods.
 
 ![kubernetes-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Section-01/04_What_is_Kubernetes/images/kubernetes-components.png)
 
-### master components
+All these components are installed on one or more "nodes". In Kubernetes, a node is an instance of a Linux OS. It doesn't matter what the node's underlying hardware is, it can be a VM running locally on your workstation, a physical server, or even a raspberry pi! 
+
+### Master components
 
 Here's a brief description of the master components, Don't worry if these makes sense to you at this stage, but it will as we progress through the course:
 
@@ -34,7 +36,7 @@ Here's a brief description of the master components, Don't worry if these makes 
 - **kube-controller-manager** - Manages controller objects
 - **kube-scheduler** - Determines which pods should be deployed to which worker node. 
 
-### worker components
+### Worker components
 
 Here's a brief description of the worker components, Don't worry if these makes sense to you at this stage, but it will as we progress through the course:
 
@@ -43,15 +45,23 @@ Here's a brief description of the worker components, Don't worry if these makes 
 - **kube-proxy** - manages networking across all worker nodes. It creates a network overlay, so that each pod has it's own unique ip address
 
 
+### Non-core components
+
+- Network plugin
+
+
 ## Kubernetes Single Node Setup
 
 There's actually lots of different ways to setup kubernetes. One option is to install all the components onto a single node:
 
 ![Single-node-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Section-01/04_What_is_Kubernetes/images/Single-node-kubecluster.png)
 
-This setup suffers from the same problems as the Docker setup that we saw earlier, i.e. you can only scale vertically, and there's no HA.
+This setup isn't recommended for production environments
 
-That's why a single node setup is only appropriate when building Kubernetes development environmonts, since it's quick and cheap to setup. For example, Minikube is used for building a single-VM Kubernetes instance that runs locally on your workstation.  
+- you are limited to vertical scaling - Meaning that you can only increase capacity by adding more cpu power and ram to the existing node. 
+- There's no High Availability - So if the node dies then there will be some downtime until a replacement node is built. 
+
+That's why a single node setup is only appropriate when building Kubernetes development environmonts, since it's quick and easy to setup. For example, Minikube is used for building a single-VM Kubernetes instance that runs locally on your workstation.  
 
 ## Kubernetes Multi Node Setup
 
@@ -61,10 +71,10 @@ One of the main reasons Kubernetes was developed with a modular design, is so th
 
 A collection of kube masters and workers that provides a single working instance of Kubernetes, is referred to as a **Kubernetes Cluster**, or just **Kube Cluster**.
 
-Kube Cluster are made up of  2 types of servers:
+Kube Cluster are made up of  2 types of nodes:
 
 - **Kube Masters** - This server is responsible for managing the Kube Cluster as a whole. It has all the master components installed on it. They are also referred to as 'controller nodes'.
-- **Kube workers** - These servers are responsible for running the actual pods (and consequently containers), that the Kube Master instructs them to run. They have all the worker components installed on them.  
+- **Kube Workers** - These servers are responsible for running the actual pods (and consequently containers), that the Kube Master instructs them to run. They have all the worker components installed on them.  
 
 This setup now allows for horizontal scaling by simply adding/removing Kube workers as and when needed. Also you have HA, because if one of the kube workers die, then the kube master will become aware of it and create new pods in the remaining worker nodes to replace the lost ones.
 

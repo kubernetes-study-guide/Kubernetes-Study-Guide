@@ -85,7 +85,7 @@ NAME       STATUS   ROLES    AGE     VERSION
 minikube   Ready    master   4d10h   v1.14.1
 ```
 
-This command lists out all VMs that has the kubelet component running on it, along with the kubelet's VERSION. If you built kubernetes the hardway then the masters won't get listed here, since the masters don't have the kubelet running on them. We can specify the 'wide' output setting to display a little more info: 
+This command lists out all VMs that has the kubelet component running on it, along with the kubelet's VERSION. If you built kubernetes the hardway then the masters won't get listed here, since the masters don't have the kubelet running on them. We can specify the 'wide' output setting to display a little some more info: 
 
 ```bash
 $ kubectl get nodes -o wide
@@ -93,7 +93,7 @@ NAME       STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAG
 minikube   Ready    master   20h   v1.14.0   10.0.2.15     <none>        Buildroot 2018.05   4.15.0           docker://18.6.2
 ```
 
-Now that we have a kubecluster in place, we can now run the kubectl version command to view the Server version:
+Now that we have a kubecluster in place, we can now run the kubectl version command but this time without the --client filter flag:
 
 ```bash
 $ kubectl version --short

@@ -1,6 +1,6 @@
 # The Kubernetes Study Guide
 
-This course comes with it's very own study guide which you need to download if you want to follow-along:
+This course comes with it's very own study guide which you need to download from Github:
 
 [https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide)
 
