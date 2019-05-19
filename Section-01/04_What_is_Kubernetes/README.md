@@ -1,6 +1,6 @@
 # What is Kubernetes
 
-Kubernetes is a container orchestration platform that was originally developed in-house by Google. In 2014 they open-sourced and made it available to the public. If you take a look at the official documentation, you'll find the following [definition of Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/):
+Kubernetes is a container orchestration platform that was originally developed in-house by Google. In 2014 they open-sourced it and made it available to the public. If you take a look at the official documentation, you'll find the following [definition of Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/):
 
 *Kubernetes is a portable, extensible open-source platform for managing containerized workloads and services, that facilitates both declarative configuration and automation.*
 
