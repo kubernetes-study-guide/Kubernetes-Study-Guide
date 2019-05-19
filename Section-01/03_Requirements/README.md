@@ -72,7 +72,7 @@ echo "source <(kubectl completion bash)" >> ~/.bashrc # add autocomplete permane
 CKA tip: It's really important to do this as the very first thing in the exam. 
 
 For VScode, I'll be using a couple of extensions, which I recommend you also install:
-
+- [installed code cli for VS code](https://code.visualstudio.com/docs/setup/mac)
 - [Project Manager](https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager) - Then save the Kubernetes Study Guide as a project. This acts as a bookmark, that lets you open up the Study Guide with just a couple of click
 - [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) - This is useful for syntax checking yaml files
 - [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) - This displays README.md files in a nice readable format.

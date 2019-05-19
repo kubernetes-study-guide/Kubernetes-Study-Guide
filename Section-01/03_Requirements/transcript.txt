@@ -37,7 +37,12 @@ Minikube needs to make use of a hyper visor to build a VM, and for that we'll be
 
 We also have a few optional extras that you may like to install as well:
 
-We'll be using VS Code as our text editor. Although you can use whatever text editor that you prefer. We've also installed a VS code extension called "Markdown Preview Enhanced", which lets you view README files in a human readable format. 
+We'll be using VS Code as our text editor. 
+Although you can use whatever text editor that you prefer. 
+We've also installed a VS code extension called 
+"Markdown Preview Enhanced",
+ which lets you view README files in a human readable format. 
+ On top of that I have installed vs code's own cli tool, which is called 'code'. 
 
 In some of our demos we'll need to make use of a multinode kube cluster. On those occasions we'll use vagrant to build them. 
 

@@ -2,49 +2,69 @@ Hello Everyone and Welcome back.
 
 So what is Kubernetes?
 
-Kubernetes is a container orchestration platform that was originally developed in-house by Google. In 2014 they open-sourced it and made it available to the public. In the official documentation, [Kubernetes is defined as follows](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/):
+Kubernetes is a container orchestration platform that was originally developed in-house by Google. 
+In 2014 they open-sourced it and made it available to the public. 
+In the official documentation, it is defined as follows:
 
-*Kubernetes is a portable, extensible open-source platform for managing containerized workloads and services, that facilitates both declarative configuration and automation.*
+*Kubernetes is a portable, extensible open-source platform for managing containerized workloads 
+and services, that facilitates both declarative configuration and automation.*
 
-Basically this definition means Kubernetes manages the running of containers. In Kubernetes you're not allowed to have containers running on their own. Instead containers run inside a construct called **Pods**. You can have multiple containers running inside a single pod. This makes Pods the fundamental building block in Kubernetes.
+Basically this definition means Kubernetes manages the running of containers. 
+In Kubernetes you're not allowed to have containers running on their own. 
+Instead containers run inside a construct called **Pods**. You can have 
+multiple containers running inside a single pod. This makes Pods the fundamental building 
+block in Kubernetes.
 
 In practice, Kubernetes is used for things like:
 
 - Creating and running pods.
 - Running a group identical pods across multiple nodes
-- Load balance traffic across these pods
+- Load balancing traffic across these pods
 - Deploying newer pods to replace existing pods
 - Setting up networking so that pods can talk to one another
 
 Don't worry if none of these makes any sense. We'll be covering them as we go through the course. 
 
 
-Kubernetes is a platform that's made up of several smaller components that work together to provide a single instance of Kubernetes. These components fall into 2 groups:
+Kubernetes is a platform that's made up of several smaller components that work together to 
+provide a single instance of Kubernetes. These components fall into 2 groups:
 
 - **Master Components** - which manages the Kubernetes platform as a whole
 - **Worker Components** - which are responsible for the actual running of pods.
 
 ![kubernetes-server](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Section-01/04_What_is_Kubernetes/images/kubernetes-components.png)
 
-All these components are installed on one or more "nodes". In Kubernetes, a node is an instance of a Linux OS. It doesn't matter what the node's underlying hardware is, it can be a VM running locally on your workstation, or a VM in the cloud, or a physical server, or even a raspberry pi! 
+All these components are installed on one or more "nodes". In Kubernetes, a node is an 
+instance of a Linux OS. It doesn't matter what the node's underlying hardware is, 
+it can be a VM running locally on your workstation, or a VM in the cloud, 
+or a physical server, or even a raspberry pi! 
 
 
 So what are the master components? they are:
 
-- etcd - this is a key/value datastore to store the current state. Kubernetes uses this like it's own internal database.
-- kube-apiserver - This is the front facing part of kubernetes. It is what teh kubectl cli tool interacts with
-- kube-controller-manager - The Manages controller objects
-- kube-scheduler - Determines which pods should be deployed to which worker node. 
+- etcd - this is a key/value datastore to store Kubernetes's current state. It's a bit like Kubernetes's own internal database.
+- kube-apiserver - This is the front facing part of kubernetes. It is component that kubectl interacts with
+- kube-controller-manager - This  Manages the controller objects
+- kube-scheduler - This Determines which pods should be deployed to which worker node. 
 
-Don't worry if this doesnt make much sense to you. We'll cover them as we go through the course. 
+Again, don't worry if this doesnt make much sense to you. We'll cover them as we go through the course. 
 
 
 So what are the worker components? they are:
 
 
-- Container Runtime Engine - This component is responsible for the actual running of containers. There are a few options available, such as Containerd and Docker.
-- kubelet - receives instructions from master components about what pods should be running then sends instructions to the Container Runtime Engine. 
-- kube-proxy - manages networking across all worker nodes. It creates a network overlay, so that each pod has it's own unique ip address
+- Container Runtime Engine - This component is responsible for the actual running of the containers. 
+  There are a few Container Runtime Engines to choose from, such as Containerd and Docker. 
+  
+  Next we have the
+
+- kubelet - This receives instructions from master components about what pods should be 
+  running then sends instructions to the Container Runtime Engine to build the required containers. 
+  
+  and finally we have the 
+
+- kube-proxy - manages networking across all worker nodes. It creates a network overlay, 
+  so that each pod has it's own unique ip address
 
 There's actually lots of different ways to setup kubernetes. One option is to install all the components onto a single node:
 
@@ -52,12 +72,16 @@ There's actually lots of different ways to setup kubernetes. One option is to in
 
 This setup isn't recommended for production environments because
 
-- you are limited to vertical scaling - Meaning that you can only increase capacity by adding more cpu and ram to the existing node. 
-- There's no High Availability - So if the node dies then there will be some downtime until a replacement node is built. 
+- you are limited to vertical scaling - Meaning that you can only increase capacity 
+  by adding more cpu and ram to the existing node. 
+- There's no High Availability - So if the node dies then there will be some 
+  downtime until a replacement node is built. 
 
-That's why a single node setup is only appropriate when building Kubernetes development environmonts, since it's quick and easy to setup. Minikube is commonly used for building this type of single-vm setup.  
+That's why a single node setup is only appropriate when building development environmonts, 
+since it's quick and easy to setup. 
+Minikube is commonly used for building this type of single-vm setup.  
 
-With Kubernetes, it's actually recommended to install a single instance of Kubernetes across multiple nodes:
+It's actually recommended to install a single instance of Kubernetes across multiple nodes:
 
 ![multi-worker-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Section-01/04_What_is_Kubernetes/images/multi-worker-kubecluster.png)
 
