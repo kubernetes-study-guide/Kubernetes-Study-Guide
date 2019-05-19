@@ -2,11 +2,11 @@ Hello Everyone and Welcome back.
 
 So what is Kubernetes?
 
-Kubernetes is a container orchestration platform that was originally developed in-house by Google. In 2014 they open-sourced it and made it available to the public. If you take a look at the official documentation, you'll find that [Kubernetes is defined as follows](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/):
+Kubernetes is a container orchestration platform that was originally developed in-house by Google. In 2014 they open-sourced it and made it available to the public. In the official documentation, [Kubernetes is defined as follows](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/):
 
 *Kubernetes is a portable, extensible open-source platform for managing containerized workloads and services, that facilitates both declarative configuration and automation.*
 
-Basically this definition means Kubernetes manages the running of containers. In Kubernetes you're not allowed to have containers running on their own. Instead containers run inside a construct called **Pods**. You can have multiple container running inside a single pod. This makes Pods the fundamental building block in Kubernetes.
+Basically this definition means Kubernetes manages the running of containers. In Kubernetes you're not allowed to have containers running on their own. Instead containers run inside a construct called **Pods**. You can have multiple containers running inside a single pod. This makes Pods the fundamental building block in Kubernetes.
 
 In practice, Kubernetes is used for things like:
 
@@ -63,12 +63,12 @@ With Kubernetes, it's actually recommended to install a single instance of Kuber
 
 A collection of kube masters and workers that provides a single working instance of Kubernetes, is referred to as a **Kubernetes Cluster**, or just **Kube Cluster**.
 
-Kube Cluster are made up of  2 types of nodes:
+Kube Cluster are made up of 2 types of nodes:
 
 - Kube Masters - This server is responsible for managing the Kube Cluster as a whole. It has all the master components installed on it. They are also referred to as 'controller nodes'.
-- Kube Workers - These servers are responsible for running the actual pods (and consequently containers), that the Kube Master instructs them to run. They have all the worker components installed on them.  
+- Kube Workers - These servers are responsible for running the actual pods, that the Kube Master instructs them to run. They have all the worker components installed on them.  
 
-This setup now allows for horizontal scaling by simply adding/removing Kube workers as and when needed. Also you have HA, because if one of the kube worker nodes die, then the kube master will become aware of it and create new pods in the remaining worker nodes to replace the lost ones.
+This setup now allows for horizontal scaling by simply adding/removing Kube workers as and when needed. Also you have HA, in the sense that if one of the kube worker nodes dies, then the kube master will become aware of it and create new pods in the remaining worker nodes to make up for it.
 
 However this setup still has a single point of failure, which is the kube master itself. That's why in order to achieve HA you need to have multiple kube masters in your kube cluster:
 
