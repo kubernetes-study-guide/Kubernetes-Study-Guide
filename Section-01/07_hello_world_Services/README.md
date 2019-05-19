@@ -1,4 +1,4 @@
-# Kubernetes Hello World - Services
+# Hello World - Services
 
 We're now going to improve this hello-world example by making our pod accessible directly from our macbook's web browser. That's done by creating a 'service' object.
 

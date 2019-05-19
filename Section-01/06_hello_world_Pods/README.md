@@ -1,4 +1,4 @@
-# Kubernetes Hello World - Pods
+# Hello World - Pods
 
 In this walkthrough we will get an Apache web server (container) running inside our kube cluster. In Kubernetes we build objects. There are different types (aka kind) of objects, Pods, Services, Deployments,....etc. In our hello-world example we'll start by building a Pod object.
 

@@ -80,12 +80,27 @@ etcd-0               Healthy   {"health":"true"}
 Also to see how many nodes are in our kubecluster, run:
 
 ```bash
+$ kubectl get nodes
+NAME       STATUS   ROLES    AGE     VERSION
+minikube   Ready    master   4d10h   v1.14.1
+```
+
+This command lists out all VMs that has the kubelet component running on it, along with the kubelet's VERSION. If you built kubernetes the hardway then the masters won't get listed here, since the masters don't have the kubelet running on them. We can specify the 'wide' output setting to display a little more info: 
+
+```bash
 $ kubectl get nodes -o wide
 NAME       STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE            KERNEL-VERSION   CONTAINER-RUNTIME
 minikube   Ready    master   20h   v1.14.0   10.0.2.15     <none>        Buildroot 2018.05   4.15.0           docker://18.6.2
 ```
 
-This command lists out all VMs that has the kubelet component running on it. Also the VERSION lists the version of the kubelet. If you built kubernetes the hardway then the masters won't get listed here, since the masters don't have the kubelet running on them.
+Now that we have a kubecluster in place, we can now run the kubectl version command to view the Server version:
+
+```bash
+$ kubectl version --short
+Client Version: v1.14.1
+Server Version: v1.14.1
+```
+
 
 By design, to stay lightweight, our minikube based kubecluster is a single node cluster, which acts as both the master and worker node. That's fine in a development environment. But in production, you should have multiple node cluster for High Availability, better performance, more CPU+RAM capacity,..etc.
 
@@ -113,6 +128,8 @@ $ minikube dashboard
 🤔  Verifying proxy health ...
 🎉  Opening http://127.0.0.1:50387/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/ in your default browser...
 ```
+
+This is a really cool tool that let's you view and manage your Kubecluster visually. I encourage you to explore this tool as we progress through the course. 
 
 ### References
 
