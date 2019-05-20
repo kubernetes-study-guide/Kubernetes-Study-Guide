@@ -60,11 +60,7 @@ metadata:
 
 > Notice that we didn't need to specify a namespace.spec section.
 
-By the way, here's a way to generate a namespace boilerplate template:
 
-```bash
-kubectl create namespace ns-dev -o yaml --dry-run > namespace-boilerplate.yaml
-```
 
 After creating the namespace, we can view it like this:
 
