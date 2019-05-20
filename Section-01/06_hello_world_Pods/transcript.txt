@@ -1,3 +1,0 @@
-In this video we're going to create our first pod. 
-
-To begin with I have opened up a bash terminal inside this video's topic folder. 
