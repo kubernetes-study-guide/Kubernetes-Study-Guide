@@ -42,8 +42,39 @@ here we can only see one node listed, which is expected since minikube only buil
 
 Ok, let's clear the screen now. 
 
+Ok let's go back to minikube because there are a few other things I wanted to show you. 
+If you run minikube-help then you'll see all the available commands. 
 
+```bash
+minikube
+```
 
+Here we can see that if you want to ssh into the minikube vm, you just run:
 
+```bash
+minikube ssh
+```
 
-everything looks good here and now let's check how many nodes make up our cute cluster let me make that put a bit smaller so that everything is easier to read okay see that I can cluster is made up of a long and that's expected because mini cube only build single node key clusters okay I'll just quickly cleared screen when you're not using your mini key provisions to plaster finishes shut it down and you can do that by running mini cube stopAlternatively if you want to delete your keep restaurant to your humidity legally downloaded out right now because I'm still using it another CD can do is that we can necessary into your mini QPRAnd that you can switch to the rotator okay next it out now finally what why favourite calls as it will call keeping it is dashboard it's it graphical web interface that lets you a lot of the things that tipsy ~ the Using this dashboard in this course because it will be focusing on using cutesy TL instead I feel free to experiment here as you go through the courts okay that's it for this video see you in the next one
+After you're logged you can then switch to root user. ok I'll exit out now. 
+
+In kubernetes there is an app you can install called Kubernetes Dashboard, This provides 
+a powerful graphical web interface. And the really cool thing with minikube is that this dashboards comes preinstalled.
+You can access the web ui by running the dashboard command:
+
+```bash
+minikube dashboard
+``` 
+
+Finally once you have finished working, you can run:
+
+```bash
+minikube stop
+```
+
+This will shutdown your minikube vm. However if you want delete it altogether then you use the delete command:
+
+```bash
+minikube delete
+```
+
+That's it for this video see you in the next one. 

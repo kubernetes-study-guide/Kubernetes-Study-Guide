@@ -1,3 +1,5 @@
+# Transcript
+
 Hello Everyone and Welcome back.  
 
 So what is Kubernetes?
@@ -27,7 +29,7 @@ Don't worry if none of these makes any sense. We'll be covering them as we go th
 
 
 Kubernetes is a platform that's made up of several smaller components that work together to 
-provide a single instance of Kubernetes. These components fall into 2 groups:
+provide a single working instance of Kubernetes. These components fall into 2 groups:
 
 - **Master Components** - which manages the Kubernetes platform as a whole
 - **Worker Components** - which are responsible for the actual running of pods.
@@ -53,7 +55,8 @@ Again, don't worry if this doesnt make much sense to you. We'll cover them as we
 So what are the worker components? they are:
 
 
-- Container Runtime Engine - This component is responsible for the actual running of the containers. 
+- Container Runtime Engine - This component is responsible for the 
+  actual running of the containers. 
   There are a few Container Runtime Engines to choose from, such as Containerd and Docker. 
   
   Next we have the
@@ -63,7 +66,7 @@ So what are the worker components? they are:
   
   and finally we have the 
 
-- kube-proxy - manages networking across all worker nodes. It creates a network overlay, 
+- kube-proxy - This manages networking across all worker nodes. It creates a network overlay, 
   so that each pod has it's own unique ip address
 
 There's actually lots of different ways to setup kubernetes. One option is to install all the components onto a single node:

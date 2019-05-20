@@ -58,7 +58,21 @@ NAME        READY   STATUS    RESTARTS   AGE    IP           NODE       NOMINATE
 pod-httpd   1/1     Running   0          114s   172.17.0.8   minikube   <none>           <none>            app=apache_webserver
 ```
 
-Here we can see tha the new pod has been created. The pod's name is 'pod-httpd' which is exactly the name we asked for in our pod descriptor's `pod.metadata.name` setting. The pod has it's very own private IP auto-assigned to it. To get more detailed info about our pod, we use the 'describe' subcommand:
+Here we can see tha the new pod has been created. The pod's name is 'pod-httpd' which is exactly the name we asked for in our pod descriptor's `pod.metadata.name` setting. The pod has it's very own private IP auto-assigned to it. To get more detailed info about our pod, we use the yaml setting for the output flag:
+
+```bash
+$ kubectl get pods pod-httpd -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2019-05-14T19:36:33Z"
+  labels:
+    app: apache_webserver
+  name: pod-httpd
+  namespace: default
+```
+
+You can also use the 'describe' command to get more info too:
 
 ```bash
 $ kubectl describe pods pod-httpd
@@ -68,6 +82,15 @@ Priority:           0
 PriorityClassName:  <none>
 ...
 ```
+
+
+By the way, Whenever you come across a command where you specify an object type following by an objects name, you can actually insert a forward slash in the command as well, e.g.:
+
+```bash
+$ kubectl describe pods/pod-httpd
+```
+
+This is just another way of writing the same command. 
 
 ### Sanity check our pod
 
@@ -86,7 +109,10 @@ nc -v pod-ip 80
 curl http://pod-ip
 ```
 
-If you open up a bash terminal on your macbook and tried these nc and curl commands you'll find that they fail. That's because Kubernetes only comes with some basic networking features out-of-the-box. Those networking features only makes pods accessible by:
+If you open up a bash terminal on your macbook and tried these nc and curl commands you'll find that they fail. That's because the pod's ip address is part of a network that's internal to the kube cluster.
+
+
+Kubernetes only comes with some basic networking features out-of-the-box. Those networking features only makes pods accessible by:
 
 - Internally by logging into the primary container itself, and then use localhost
 - Internally by logging into the pods secondary container, if any
