@@ -1,9 +1,0 @@
-This course comes with is very own study guide. You can find this guide on Github, so you just need to clone this repo to download it. 
-
-This guide is made up of a number of sections and each of these section contains a series of topic folders. These topic folders mirrors the videos on the udemy course. 
-
-For example right you're watching the video for this topic, the Kubernetes study guide. 
-
-Each of these topic folders contains a readme file. And these these files cover everything the videos cover, as well as some extra details and useful links. I recommend that you review these readme files as you watch the videos.
-
-A lot of the videos also demos the use of various configuration files. These files are also available in the study guide and you can find them in the configs folder which sits alongside the readme file. 
