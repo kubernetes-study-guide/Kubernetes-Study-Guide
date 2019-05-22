@@ -1,5 +1,11 @@
 # Course Requirements
 
+This course has 3 sets of requirements:
+
+- User Requirements
+- Software Requirements
+- Hardware Requirements
+
 ## User requirements
 
 Kubernetes is a really powerful software and it's also quite complex. That's why you need to some of the basics before you start learning Kubernetes:
