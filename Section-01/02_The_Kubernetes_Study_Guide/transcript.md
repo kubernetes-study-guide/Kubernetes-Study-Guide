@@ -9,4 +9,4 @@ Each topic folder contains a readme file. These README files cover everything th
 
 In a lot of the videos, we demo the use of various yaml files. You can find these files in the corresponding topic, under a folder called configs.
 
-I will have this Study guide opened up in VS Code text editor during most demos, Whenever a topic has a configs folder, such as the hello worlds pods topic. I will alway start the demo by first going to that topic folder, and then open a bash terminal inside it. 
+I will have this Study guide opened up in VS Code text editor at the start of most demos. In addition to that I'll navigate to the  video's topic folder and then open a bash terminal inside it. I'm doing this so that I can conveniently access the config files from the command line, that's because I need to refer to these files as part of the commands I'll be running.
