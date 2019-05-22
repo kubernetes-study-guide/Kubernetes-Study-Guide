@@ -87,12 +87,12 @@ PriorityClassName:  <none>
 By the way, Whenever you come across a command where you specify an object type following by an objects name, you can actually insert a forward slash in the command as well, e.g.:
 
 ```bash
-$ kubectl describe pods/pod-httpd
+kubectl describe pods/pod-httpd
 ```
 
 This is just another way of writing the same command. 
 
-### Sanity check our pod
+## Sanity check our pod
 
 So far we've created a single-container pod. This container is supposed to have the apache webserver running inside it. But how to do we verify that container's web service is definitely working? E.g. we could do a 2-step verification process:
 
@@ -110,7 +110,6 @@ curl http://pod-ip
 ```
 
 If you open up a bash terminal on your macbook and tried these nc and curl commands you'll find that they fail. That's because the pod's ip address is part of a network that's internal to the kube cluster.
-
 
 Kubernetes only comes with some basic networking features out-of-the-box. Those networking features only makes pods accessible by:
 
@@ -158,7 +157,7 @@ localhost [127.0.0.1] 80 (?) open
 
 The '--' is used to tell kubectl that everythign after '--' is a command to run inside the container. In this example if we omitted the '--', then kubectl would have failed because it would have thought that that '-v' flag is a kubectl flag rather than nc's flag. However you can omit the '--' as long as the exec command doesn't contain any flags of its.
 
-### Validate from inside the kube master/worker node
+## Validate from inside the kube master/worker node
 
 You can run the telnet+curl command from inside the minikube vm:
 
