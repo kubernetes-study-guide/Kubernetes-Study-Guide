@@ -39,6 +39,8 @@ Ok it looks like our pod has now been created. Lets now see if we can view it us
 kubectl get pods 
 ```
 
+If you have a lot of pods, and just want get the info for one pod, then you can specify the pod's name in your command:
+
 I'll set the output flag to 'wide' to print out more info:
 
 ```bash
@@ -57,6 +59,8 @@ However, if we want to get all the info about our pod, then we need to set the o
 ```bash
 kubectl get pods pod-httpd -o yaml
 ```
+
+Also notice that I specified the pod's name in the command. That's to tell kubectl to only retrieve info for that one pod. 
 
 Another command that gives a lot of info is the describe command:
 
