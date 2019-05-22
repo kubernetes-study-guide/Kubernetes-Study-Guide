@@ -4,7 +4,7 @@ https://medium.com/be-a-better-journalist/using-apple-s-dictation-tools-to-trans
 
 Hello Everyone, my name is Sher Chowdhury and welcome to my course, Kubernetes by example
 
-I am based in the UK and I've been working in IT for about 15 years. 
+I am based in the UK and I've been working in IT for about 15 years, both for the Government and in the private sector. 
 
 In 2019 I passed the Kubernetes exam and became a certified kubernetes administrator. 
 
