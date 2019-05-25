@@ -1,12 +1,13 @@
-This course comes with is very own study guide. You can find it on Github, so you just need to clone this repo to download it. 
+This course comes with is very own study guide. You can find it on Github, that means that you can download this  guide by just doing a git clone. 
 
-This guide is made up of a number of sections and each of these 
-section contains a series of topic folders. These sections and topics mirrors the Udemy course. So for each video in this course there is a corresponding topic folder. 
+This guide is made up of a number of sections and each section contains a series of topic folders. This section and topic structure, mirrors the Udemy course itself. So for each video in this course there is a corresponding topic folder. 
 
 For example, right now you're watching the video for this topic, the Kubernetes study guide. 
 
-Each topic folder contains a readme file. These README files cover everything the videos cover, but in more detail, and they contain a lot useful links and sample commands. I recommend that you review these readme files as you progress through the course.
+Each topic folder contains a readme file. These README files cover everything the videos cover, but in more detail, and they contain a lot of useful links and example commands. I recommend that you review the readme files as you go through the course.
 
-In a lot of the videos, we demo the use of various yaml files. You can find these files in the corresponding topic, under a folder called configs.
+In a lot of the videos, we'll make use of various yaml files. You can find these files in the corresponding topic folder, under a folder called configs. So if you want to follow along and copy what I do in a particular demo, then the very first thing you have to do, is open up a bash terminal and then cd to that video's topic folder. This will make it easier to work with these config files from the command line. 
 
-I will have this Study guide opened up in VS Code text editor at the start of most demos. In addition to that I'll navigate to the  video's topic folder and then open a bash terminal inside it. I'm doing this so that I can conveniently access the config files from the command line, that's because I need to refer to these files as part of the commands I'll be running.
+If you're using VS code, then there's a handy shortcut to quickly get this done. All you have to do is use the explorer side bar to navigate to the video's topic folder and then open up a bash terminal inside it.
+
+I'll usually keep the side bar minimised by toggling the explorer icon so that there's more screen space for the actual demo itself. 
