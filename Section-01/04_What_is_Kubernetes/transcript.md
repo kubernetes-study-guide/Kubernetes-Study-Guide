@@ -1,5 +1,10 @@
 # Transcript
 
+slides only
+
+
+
+
 Hello Everyone and Welcome back.  
 
 So what is Kubernetes?

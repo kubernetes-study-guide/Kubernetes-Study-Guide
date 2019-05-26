@@ -2,7 +2,7 @@ Slides -> bash terminal
 
 Hello Everyone and Welcome back.  
 
-Ok, So what are the requirements for this course to get the most out of it? 
+Ok, So what are the requirements for this course in order to get the most out of it? 
 
 
 Well, there are three sets of requirements
@@ -17,7 +17,7 @@ Let's take a look at user requirements first.
 This course is aimed at people who already know their way around Linux. It doesn't matter which distro in particular but I'll be using CentOS and Ubuntu. You should be comftable using a bash terminal and editing files with VIM. 
 
 
-experience with Docker is important as well, that's so that you understand what images and containers are, and how they are used. 
+experience with Docker is important as well, that's because you need to understand what images and containers are, and how they are used in practice. 
 
 
 You should have some basic networking knowledge, for example, you need to be familiar with things like IP addresses and port numbers.
@@ -46,44 +46,52 @@ We've also installed a VS code extension called
  which lets you view README files in a human readable format. 
  On top of that I have installed vs code's own cli tool, which is called 'code'. 
 
-In some of our demos we'll need to make use of a multinode kube cluster. On those occasions we'll use vagrant to build them. 
+In some of our demos we'll need to make use of a multinode kube cluster. On those occasions we'll use vagrant to build them.
+
+
+
 
 
 The quickest way to install all of these software is probably by using a tool called homebrew, This cli tool lets you install all these applications by just running a few commands. 
   
   
-For Windows user you can try using chocolatey instead, chocolatey is like the windows equivalent of homebrew. 
+For Windows users you can try using chocolatey instead, chocolatey is like the windows equivalent of homebrew. 
 
 Alternatively you can always refer to the official install instructions for each software. 
  
 
-okay lets now go over the workstation hardware requirements. Throughout this course I'll only be using my Macbook to run all my Kubernetes test environments. If you want to do the same, then you need a workstation powerful to use minikube. For minikube, you need to set aside at least:
+okay lets now go over the workstation hardware requirements. Throughout this course I'll only be using my local workstation to run all my Kubernetes test environments. If you want to do the same, then you need a workstation powerful enough to run minikube. For minikube, your workstation needs to have enough capacity to set aside at least:
  
 - 2 cpu cores
 - 2 gigs of RAM
 - and 20 gigs of available disk space
 
-Whereas for a vagrant provisioned multi-node kubecluster, you will need set aside at least:
+If you want to follow along some of our vagrant related demos, you will need set aside at least:
 
 - 6 cpu cores
 - 3 gigs of RAM
-- 30 gigs of available disk space
+- 30 gigs of disk space
 
 In case you don't have that, then you can just watch the videos without following along.
 
 
 
+Now lets go back to the software requirements. . 
 
+In my case I have already installed all the required. So I can't show you homebrew in action. Instead I will run some checks to confirm all the software are definitely installed.
 
-In my case I have already installed all the required apps, so I won't be able to demonstrate homebrew. Instead I will confirm all the installs have been successful by running a series of version check commands.
-
-First I'll check virtualbox is installed by checking the VboxManage version.
+First I'll check virtualbox is installed by running VboxManage version. You can also check this by opening up the virtualbox gui interface. 
 
 I'll then perform similar checks for vagrant, docker, minikube, and last but not least Kubectl. 
 
-I've included the --short flag to make the output easier to read. By default the kubectl version outputs two versions. The version of the local kubectl client binary that's installed on your workstation, and the version of the kube cluster that our kubectl is pointing to. So we're using the --client flag to limit the output to just client side since we don't have a kubecluster yet. 
+I've included the --short flag to make the output easier to read. By default the kubectl version commnad outputs two versions. The version of the kubectl client binary that's installed locally on your workstation, and the version of the kube cluster that our kubectl is pointing to. So we're using the --client flag here to limit the output to just client side since we don't have a kubecluster yet. 
 
 As for VS code, to check if that's installed, it's just a case of seeing if you can open it up. 
+
+Ok I'll just clear the screen now. There's one final thing I wanted to do before finishing this video. And that's to enable kubectl's autocomplete feature. To do that we need to run the following source command. After that, you can then try out the autocomplete feature by hitting the tab key twice after your kubectl command. here we can see that kubectl is trying to help us by suggesting what we can write next. 
+
+However this approach only lasts for the current bash terminal. So to make it persistant we add it to our .bashrc profile script
+
 
 Ok we'll take a break here, see you in the next video. 
 
