@@ -1,5 +1,5 @@
 
-In this video we're going to create our first cube cluster using minikube
+In this video we're going to create our first Kube cluster using minikube
 First let's check minikube's status.
 
 Here we can see that we don't have a kube cluster running at the moment. 
@@ -24,7 +24,7 @@ now let's check minikube status again.
 minikube status
 ```
 
-Here it says that our local kubectl client has been configured to point this cluster.
+Here it says that our local kubectl client has been configured to point this new kube cluster.
 
 
 Let's confirm that's the case by now actually trying to use kubectl. First I'll try getting the cluster-info. 
@@ -64,7 +64,9 @@ here we can only see one node listed, which is expected since minikube only buil
 
 Ok, let's clear the screen now. 
 
-Ok let's go back to minikube because there are a few other things I wanted to show you. 
+I think we can now safely say that our kubectl client is definitely pointing to our minkube built kubecluster. There are a few other things I wanted to show you about minikube. 
+
+
 If you run minikube-help then you'll see all the available commands. 
 
 ```bash
@@ -86,7 +88,7 @@ After you're logged in, you can then switch to root user if you want.
 ok I'll exit out now. 
 
 In kubernetes there is a really cool app you can install called Kubernetes Dashboard, This provides 
-a powerful graphical web interface. This dashboard is quite straight forward to install. However the nice thing about minikube is that this dashboards comes preinstalled.
+a powerful graphical web interface that let's you view and manage your kubecluster visually. This dashboard is quite straight forward to install. However the nice thing about minikube is that this dashboards comes preinstalled.
 You can access the web ui by running the dashboard command:
 
 ```bash
@@ -95,13 +97,13 @@ minikube dashboard
 
 I recommend exploring this dashboard as you go through the course. 
 
-Finally once you have finished working with your kube cluster, you can run:
+Finally once you have finished working with your kube cluster, you can run the stop command:
 
 ```bash
 minikube stop
 ```
 
-This will shutdown your minikube vm. However if you want delete it altogether then you use the delete command:
+This will shutdown your minikube vm. However if you want to delete it altogether then you use the delete command:
 
 ```bash
 minikube delete

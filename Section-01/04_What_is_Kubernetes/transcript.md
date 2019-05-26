@@ -9,12 +9,14 @@ Hello Everyone and Welcome back.
 
 So what is Kubernetes?
 
-Kubernetes is a container orchestration platform that was originally developed in-house by Google. 
+Kubernetes is a container orchestration platform,  that was originally developed in-house by Google. 
+
 In 2014 they open-sourced it and made it available to the public. 
+
 In the official documentation, it is defined as follows:
 
-*Kubernetes is a portable, extensible open-source platform for managing containerized workloads 
-and services, that facilitates both declarative configuration and automation.*
+*Kubernetes is a portable, extensible open-source platform for managing containerized workloads and services, 
+that facilitates both declarative configuration and automation.*
 
 Basically this definition means Kubernetes manages the running of containers. 
 In Kubernetes you're not allowed to have containers running on their own. 
@@ -100,7 +102,7 @@ Kube Cluster are made up of 2 types of nodes:
 - Kube Masters - This server is responsible for managing the Kube Cluster as a whole. It has all the master components installed on it. They are also referred to as 'controller nodes'.
 - Kube Workers - These servers are responsible for running the actual pods, that the Kube Master instructs them to run. They have all the worker components installed on them.  
 
-This setup now allows for horizontal scaling by simply adding/removing Kube workers as and when needed. Also you have HA, in the sense that if one of the kube worker nodes dies, then the kube master will become aware of it and create new pods in the remaining worker nodes to make up for it.
+This setup now allows for horizontal scaling by simply adding or removing Kube workers as and when needed. Also you have HA, in the sense that if one of the kube worker nodes dies, then the kube master will become aware of it and create new pods in the remaining worker nodes to make up for it.
 
 However this setup still has a single point of failure, which is the kube master itself. That's why in order to achieve HA you need to have multiple kube masters in your kube cluster:
 

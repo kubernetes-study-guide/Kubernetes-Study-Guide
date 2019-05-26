@@ -60,13 +60,18 @@ However, if we want to get all the info about our pod, then we need to set the o
 kubectl get pods pod-httpd -o yaml
 ```
 
-Also notice that I specified the pod's name in the command. That's to tell kubectl to only retrieve info for that one pod. 
+Also notice that I specified the pod's name in the command. That's to tell kubectl to only retrieve info for that one pod. This command outputs
+
+
+It essentially gives a full form version of the yaml file that we used to build this pod. It shows a lot of the defaults that were used for settings that we didn't explicitly specify in our yaml file. 
 
 Another command that gives a lot of info is the describe command:
 
 ```bash
 kubectl describe pod pod-httpd
 ```
+
+This has a lot of the same output as we saw when using kubectl get. However it does have some other interesting info, such as an event log at the bottom which can be useful for troubleshooting.  
 
 Let's now clear the screen and return back to the get command:
 
