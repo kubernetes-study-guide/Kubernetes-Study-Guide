@@ -6,7 +6,7 @@ For this demo I've opened up a bash terminal inside this video's topic folder.
 pwd
 ```
 
-In this video we're going to create our first hello-world app. This app is going to be a pod with an apache webserver container running inside it. 
+In this video we're going to create our first hello-world pod. This pod is going to have an apache webserver container running inside it. 
 
 To create this pod we first need to create a yaml file the defines the pod's specifiction. So here's the yaml file I'll be using:
 
@@ -31,7 +31,7 @@ Let's now create this pod by feeding this yaml file into the apply command:
 kubectl apply -f configs/pod-httpd.yml
 ```
 
-By the way, it doesn't matter what you set the yaml file's filename as, as long as it's meaningful to you, and it ends with a dot yml extension. 
+By the way, it doesn't matter what the yaml file's filename is, as long as it's meaningful to you, and it ends with a dot yml extension. 
 
 Ok it looks like our pod has now been created. Lets now see if we can view it using the 'get pods' command:
 
@@ -39,19 +39,77 @@ Ok it looks like our pod has now been created. Lets now see if we can view it us
 kubectl get pods 
 ```
 
-If you have a lot of pods, and just want get the info for one pod, then you can specify the pod's name in your command:
+This lists the pod that we've just created. The pod's name is the name that we specified in our yaml file. Our pod houses a total of one container, and here it says that 1 out of 1 container is in a ready state. The Pod is currently in running status and kubernetes hasn't had a need to restart it. 
 
-I'll set the output flag to 'wide' to print out more info:
-
-```bash
-kubectl get pods -o wide 
-```
-
-I can also display the labels using the --show-labels flag:
+I'll set the output flag to 'wide' to print out some more info:
 
 ```bash
-kubectl get pods -o wide --show-labels
+kubectl get pods -o wide
 ```
+
+This shows a bit more info, in particular which worker node the pod is running on, as well as what is the pod's IP address. That leads me onto the next thing we need to start looking at, we need to check if our pod is definitely working. One obvious way to test that is by trying to curl the pod's ip address. 
+
+```bash
+curl http://pod-ip
+curl: (7) Failed to connect to 172.17.0.8 port 80: Operation timed out
+```
+
+However that appears to hang, which for a beginner might be a bit worrying. But before you get concerned, let me try running the curl command again but this time from inside the kube cluster:
+
+```bash
+$ minikube ssh
+$ curl http://172.17.0.8
+```
+
+This time it worked. That's because the pod's ip address is part of the kube cluster's internal network. So this curl command will only work if you run it from inside somewhere inside the kube cluster, such as from another pod in the kube cluster, or from any kube cluster nodes that has the kube-proxy component on it. 
+
+You need to do a bit more work to make the pod accessible from outside the kube cluster. Such as create a service object, which we'll do in the next video.  
+
+In the meantime there's a few other things I wanted to show you. First you can commands inside your pod using the exec command:
+
+```bash
+kubectl exec pod-httpd -c cntr-httpd -- ls -l
+```
+
+Here, the -c flag says which container inside the pod we want to connect to. And everything after the double dash, says what command we want to run inside the container. If we omit the double dash then kubectl could treat the -l flag as a kubectl flag rather than the ls's flag. 
+
+Another important feature of the exec command is that it let's you start an interactive bash session inside your pod:
+
+
+```bash
+$ kubectl exec -it pod-httpd -c cntr-httpd -- /bin/bash
+root@pod-httpd:/usr/local/apache2#
+```
+
+This command is similar to the equivalent docker exec command. The -it flag says that we want to create an interactive terminal. Once your inside, you can run another curl test, but we first need to install curl:
+
+
+```bash
+apt-get -y update
+apt-get install -y curl
+```
+
+Now let's run the curl test:
+
+```bash
+root@pod-httpd:/usr/local/apache2# curl http://localhost
+<html><body><h1>It works!</h1></body></html>
+root@pod-httpd:/usr/local/apache2# curl http://127.0.0.1
+<html><body><h1>It works!</h1></body></html>
+root@pod-httpd:/usr/local/apache2# hostname --ip-address
+172.17.0.8
+root@pod-httpd:/usr/local/apache2# curl http://172.17.0.8
+<html><body><h1>It works!</h1></body></html>
+```
+
+Ok so everything looks good here, let me exit it out now. 
+
+```bash
+exit
+```
+
+
+
 
 However, if we want to get all the info about our pod, then we need to set the output flag to 'yaml':
 
@@ -60,10 +118,10 @@ However, if we want to get all the info about our pod, then we need to set the o
 kubectl get pods pod-httpd -o yaml
 ```
 
-Also notice that I specified the pod's name in the command. That's to tell kubectl to only retrieve info for that one pod. This command outputs
+Also notice that I specified the pod's name in the command. That's to tell kubectl to only retrieve info for that one pod.
 
 
-It essentially gives a full form version of the yaml file that we used to build this pod. It shows a lot of the defaults that were used for settings that we didn't explicitly specify in our yaml file. 
+This yaml output is essentially the full form version of the yaml file that we used to build this pod. It shows a lot of the defaults that were used since we didn't explicitly specify all these setting in our yaml file. 
 
 Another command that gives a lot of info is the describe command:
 
@@ -71,7 +129,7 @@ Another command that gives a lot of info is the describe command:
 kubectl describe pod pod-httpd
 ```
 
-This has a lot of the same output as we saw when using kubectl get. However it does have some other interesting info, such as an event log at the bottom which can be useful for troubleshooting.  
+This has a lot of the same output as we saw with the get command. However it does have some other interesting info, such as an event log at the bottom, this can be useful for troubleshooting.  
 
 Let's now clear the screen and return back to the get command:
 
@@ -88,11 +146,13 @@ One thing you might think of trying, is to curl the pod's ip address:
 curl http://pod-ip
 ```
 
-However that's not going to work, That's because the pod's ip address is part of the kube cluster's internal network. Kubernetes only comes with some basic networking features out-of-the-box. Those networking features lets you curl the pod's ip:
+However that's not going to work, That's because the pod's ip address is part of the kube cluster's internal network. So this curl command will only work if you run it from inside somewhere inside the kube cluster, such as:
 
-- from inside the container itself
+- from inside the pod itself
 - or from another container in the kubecluster
-- or from one of the nodes that make up the kubecluster. 
+- or from one of the worker of master nodes. 
+
+
 
 So let's try performing a curl test from inside the apache container itself. To do that we'll open up a bash session inside the apache container. That's done by using the exec command:
 
@@ -117,9 +177,9 @@ root@pod-httpd:/usr/local/apache2# curl http://localhost
 <html><body><h1>It works!</h1></body></html>
 ```
 
-Here we can see that it's working, so let's exit out of the container. 
+Here we can see that it's working. We curled localhost in this example. so let's exit out of the container. 
 
-By the way, you can also run a command inside a container without going into it first, all you have to do is remove the -it flag, for example here's an exec command that prints out the container's hostname:
+you can also run a command inside a container without going into it first, all you have to do is remove the -it flag, for example here's an exec command that prints out the container's hostname:
 
 ```bash
 $ kubectl exec pod-httpd -c cntr-httpd -- hostname
