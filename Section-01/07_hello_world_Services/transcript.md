@@ -6,7 +6,7 @@ For this demo I've opened up a bash terminal inside this video's topic folder.
 pwd
 ```
 
-We're now going to improve on our previous hello-world example by making our pod accessible directly from our workstation. That's done by creating 'service' objects.
+We're now going to build on our previous hello-world example by making our pod accessible directly from our workstation. That's done by creating 'service' objects.
 
 A service object is used to setup networking in our kube cluster. For example, if a pod exposes a web based gui, then a service object needs to be set up to make that pod's gui externally accessible.
 
