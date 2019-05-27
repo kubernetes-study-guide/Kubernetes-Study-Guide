@@ -1,5 +1,7 @@
 # hello-world pod
 
+Hello everyone and welcome back. 
+
 For this demo I've opened up a bash terminal inside this video's topic folder. 
 
 ```bash
@@ -8,7 +10,7 @@ pwd
 
 In this video we're going to create our first hello-world pod. This pod is going to have an apache webserver container running inside it. 
 
-To create this pod we first need to create a yaml file the defines the pod's specifications. So here's a yaml file that I wrote earlier:
+To create this pod we first need to create a yaml file that defines the pod's specifications. So here's a yaml file that I wrote earlier:
 
 ```bash
 tree configs/
@@ -41,7 +43,7 @@ Ok it looks like our pod has now been created. Lets now see if we can view it us
 kubectl get pods 
 ```
 
-This lists the pod that we've just created. The pod's name is the name that we specified in our yaml file. Our pod houses a total of one container, and here it says that 1 out of 1 container is in a ready state. The Pod is currently in running status and kubernetes hasn't had a need to restart it. 
+This command lists all the pod in our kube cluster. In our case it shows  the pod that we've just created. The pod's name is the name that we specified in our yaml file. Our pod houses a total of one container, and here it says that 1 out of 1 container is in a ready state. The Pod is currently in running status and kubernetes hasn't had a need to restart it. 
 
 I'll set the output flag to 'wide' to print out some more info:
 
@@ -56,24 +58,24 @@ curl http://pod-ip
 curl: (7) Failed to connect to 172.17.0.8 port 80: Operation timed out
 ```
 
-However that appears to hang, which for a beginner might be a bit worrying. But before you get concerned, let me try running the curl command again but this time from inside the kube cluster:
+However that appears to hang, which you might find a bit worrying. But before you get too concerned, let me try running the curl command again but this time from inside the kube cluster:
 
 ```bash
 $ minikube ssh
 $ curl http://172.17.0.8
 ```
 
-This time it worked. That's because the pod's ip address is part of the kube cluster's internal network. So this curl command will only work if you run it from inside somewhere inside the kube cluster, such as from another pod, or from any nodes that has the kube-proxy component running on it. 
+This time it worked. That's because the pod's ip address is part of the kube cluster's internal network. So this curl command will only work if you run it from somewhere inside the kube cluster, such as from another pod, or from any kube worker nodes. 
 
 The main way to make a pod externally accessible, is by creating a service object, we'll do in the next video.  
 
-In the meantime there's a few other things I wanted to show you. First, you can commands inside your pod using the exec command:
+However there are a few other things I wanted to show you in this vidoe before we start creating service objects. First, you can run commands inside your pod using the exec command:
 
 ```bash
 kubectl exec pod-httpd -c cntr-httpd -- ls -l
 ```
 
-Here, the -c flag says which container inside the pod we want to connect to. And everything after the double dash, says what command we want to run inside the container. If we omit the double dash then kubectl could treat the -l flag as a kubectl flag rather than the ls's flag. 
+Here, the -c flag says which container inside the pod we want to connect to. And everything after the double dash, tells kubectl what command we want to run inside the container. If we omit the double dash then kubectl could treat the -l flag as a kubectl flag rather than the a flag for the ls command . 
 
 Another important feature of the exec command is that it let's you start an interactive bash session inside your pod:
 
