@@ -8,9 +8,9 @@ pwd
 
 We're now going to build on our previous hello-world example by making our pod accessible directly from our workstation. That's done by creating 'service' objects.
 
-A service object is used to setup networking in our kube cluster. For example, if a pod exposes a web based gui, then a service object needs to be set up to make that pod's gui externally accessible.
+A service object is used to setup networking in our kube cluster. For example, if a pod exposes a web based gui for the public, then a service object needs to be set up to make that pod's gui externally accessible.
 
-There are different types of services, in our case we are going to create a NodePort service. NodePort services are quite crude and isn't recommended for production, but we're using it here because it's relatively easy to understand.
+There are different types of services, in our case we are going to create a NodePort service. NodePort services are quite crude and isn't recommended for production (we'll explain why in a later video), but we're using it here because it's relatively easy to understand.
 
 So here's the yaml file I'll be using to create the nodeport service:
 
