@@ -24,10 +24,11 @@ Here we're saying:
 - We want to create a service
 - and give that service a name
 - And set the service type to nodeport
-- Next we have three port numbers. the target port is the container's port number that the service will forward traffic to. 
-- The nodePort is the port number that our kubecluster as a whole will start listening on at the node level, and these nodeport traffic will then get forwarded to the target port.
-- Similarly the port number is for receiving traffic from other pods in the kubecluster and forwarding them to the target port.
-- The selector section is another important setting. that's becuase it is the part that links this service to our pod. basically it says only send traffic to pods that have the label, app equal to apache_webserver
+- Next we have three port numbers.
+We'll explain these port numbers later in the video. The 3050 port number is the port number that the service itself will be listening on. 
+- the target port is the container's port number that the service will forward traffic to.
+- The nodePort is the port number that all the kubeworker nodes will start listening on at the node OS level
+- The selector section is another important setting. that's becuase it is the part that links this service to our hello-world pod. basically it says only send traffic to pods that have the label, app equal to apache_webserver
 
 
 
@@ -40,7 +41,7 @@ pod/pod-httpd created
 service/svc-nodeport-httpd created
 ```
 
-Notice this time I just specified the parent folder. This has the effect of applying all the yaml files in that folder, which can be a big time saver. This ends up creating our apache pod from the last demo, and the service object. Now let's view our service:
+Notice this time I just specified the parent folder. This has the effect of applying all the yaml files in that folder. This ends up creating our apache pod from the last demo, and the service object. Now let's view our service:
 
 
 
