@@ -8,7 +8,7 @@ pwd
 
 In this video we're going to create our first hello-world pod. This pod is going to have an apache webserver container running inside it. 
 
-To create this pod we first need to create a yaml file the defines the pod's specifiction. So here's the yaml file I'll be using:
+To create this pod we first need to create a yaml file the defines the pod's specifications. So here's the yaml file that I wrote earlier:
 
 ```bash
 tree configs/
@@ -19,7 +19,7 @@ These yaml files follows a certain structure which I'll go into more detail late
 
 - We want to create a pod
 - The pod's name should be pod-httpd
-- we want to assign a label to the pod of 'app equal to apache_webserver'
+- we want to assign a key/value label to the pod where the key is set to 'app' and the value is set to 'apache_webserver'
 - This pod should only have one container
 - the containers name should be cntr-httpd
 - the container should be built using the latest official httpd image from the docker hub website. 
@@ -109,11 +109,11 @@ exit
 ```
 
 
-Finally I wanted to show you some commands you can use to get more detailed info about your pods. We can get even more info using the get command, but this time we set the output flag to 'yaml':
+Finally I wanted to show you some commands you can use to get more detailed info about your pods. The first one is the 'get pods' command again, but this time we set the output flag to 'yaml':
 
 
 ```bash
-kubectl get pods pod-httpd -o yaml
+kubectl get pods pod-httpd -o yaml | less
 ```
 
 Also notice that I specified the pod's name in the command. That's to tell kubectl to only retrieve info for that one pod.
@@ -124,7 +124,7 @@ This yaml output is essentially the full form version of the yaml file that we u
 Another command that gives a lot of info is the describe command:
 
 ```bash
-kubectl describe pod pod-httpd
+kubectl describe pod pod-httpd | less
 ```
 
 This has a lot of the same output as we saw with the get command. However it does have some other interesting info, such as an event log at the bottom, this can be useful for troubleshooting.  
