@@ -8,14 +8,16 @@ pwd
 
 In this video we're going to create our first hello-world pod. This pod is going to have an apache webserver container running inside it. 
 
-To create this pod we first need to create a yaml file the defines the pod's specifications. So here's the yaml file that I wrote earlier:
+To create this pod we first need to create a yaml file the defines the pod's specifications. So here's a yaml file that I wrote earlier:
 
 ```bash
 tree configs/
 code configs/pod-httpd.yml 
 ```
 
-These yaml files follows a certain structure which I'll go into more detail later. But for now this yaml file is basically saying that:
+These yaml files follows a certain structure and a big part of Kubernetes is to do with writing these files. We'll cover how to write these files later. 
+
+But for now this yaml file is basically saying that:
 
 - We want to create a pod
 - The pod's name should be pod-httpd
