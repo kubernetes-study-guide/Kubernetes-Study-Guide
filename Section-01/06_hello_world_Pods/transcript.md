@@ -61,11 +61,11 @@ $ minikube ssh
 $ curl http://172.17.0.8
 ```
 
-This time it worked. That's because the pod's ip address is part of the kube cluster's internal network. So this curl command will only work if you run it from inside somewhere inside the kube cluster, such as from another pod in the kube cluster, or from any kube cluster nodes that has the kube-proxy component on it. 
+This time it worked. That's because the pod's ip address is part of the kube cluster's internal network. So this curl command will only work if you run it from inside somewhere inside the kube cluster, such as from another pod, or from any nodes that has the kube-proxy component running on it. 
 
-You need to do a bit more work to make the pod accessible from outside the kube cluster. Such as create a service object, which we'll do in the next video.  
+The main way to make a pod externally accessible, is by creating a service object, we'll do in the next video.  
 
-In the meantime there's a few other things I wanted to show you. First you can commands inside your pod using the exec command:
+In the meantime there's a few other things I wanted to show you. First, you can commands inside your pod using the exec command:
 
 ```bash
 kubectl exec pod-httpd -c cntr-httpd -- ls -l
@@ -109,9 +109,7 @@ exit
 ```
 
 
-
-
-However, if we want to get all the info about our pod, then we need to set the output flag to 'yaml':
+Finally I wanted to show you some commands you can use to get more detailed info about your pods. We can get even more info using the get command, but this time we set the output flag to 'yaml':
 
 
 ```bash
@@ -131,82 +129,5 @@ kubectl describe pod pod-httpd
 
 This has a lot of the same output as we saw with the get command. However it does have some other interesting info, such as an event log at the bottom, this can be useful for troubleshooting.  
 
-Let's now clear the screen and return back to the get command:
-
-```bash
-clear
-kubectl get pods -o wide 
-```
-
-So far, we've created a single-container pod. This container is supposed to have the apache webserver running inside it. But how do we check if that web service is definitely working? 
-
-One thing you might think of trying, is to curl the pod's ip address:
-
-```bash
-curl http://pod-ip
-```
-
-However that's not going to work, That's because the pod's ip address is part of the kube cluster's internal network. So this curl command will only work if you run it from inside somewhere inside the kube cluster, such as:
-
-- from inside the pod itself
-- or from another container in the kubecluster
-- or from one of the worker of master nodes. 
-
-
-
-So let's try performing a curl test from inside the apache container itself. To do that we'll open up a bash session inside the apache container. That's done by using the exec command:
-
-```bash
-$ kubectl exec -it pod-httpd -c cntr-httpd -- /bin/bash
-root@pod-httpd:/usr/local/apache2#
-```
-
-This command is similar to the docker exec command. The -it flag says that we want to create an interactive terminal. The -c flag says which container inside the pod we want to connect to. And everything after the double dash, says what command we want to run, which in our case is to start a bash session. 
-
-Once we're inside the container, we then need to install curl, and in our case, we do that by running apt-get:
-
-```bash
-apt-get update
-apt-get install curl
-```
-
-Now let's run the curl test:
-
-```bash
-root@pod-httpd:/usr/local/apache2# curl http://localhost
-<html><body><h1>It works!</h1></body></html>
-```
-
-Here we can see that it's working. We curled localhost in this example. so let's exit out of the container. 
-
-you can also run a command inside a container without going into it first, all you have to do is remove the -it flag, for example here's an exec command that prints out the container's hostname:
-
-```bash
-$ kubectl exec pod-httpd -c cntr-httpd -- hostname
-pod-httpd
-```
-
-Now let's try to curl our web service from inside the minikube vm. First let's remind ourselves what the pods ip address is:
-
-```bash
-kubectl get pods -o wide
-```
-
-Now let's ssh into the minikube vm and curl against this ip address. 
-
-```bash
-$ minikube ssh
-curl http://pod-ip
-exit
-```
-
-So that looks like it's working as well. let's exit out now.
-
-We've now completed all our testing so we'll finish up by deleting the pod.
-
-```bash
-$ kubectl delete pod pod-httpd
-pod "pod-httpd" deleted
-```
 
 Ok that's it for this video see you in the next one.
