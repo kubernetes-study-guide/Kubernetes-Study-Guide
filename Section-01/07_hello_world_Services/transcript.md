@@ -12,7 +12,7 @@ Earlier we built our hello-world pod but we couldn't curl to it from outside the
 
 In Kubernetes, Services are used for configuring networking, such as, make a pod externally accessible. 
 
-There are different types of services, in our case we are going to create a NodePort service. NodePort services are quite crude and isn't recommended for production, we'll explain why that is in a later video, but we're using for this demo because it's relatively easy to understand.
+There are different types of services, in our case we are going to create a NodePort service. NodePort services are quite crude and isn't recommended for production, we'll explain why that is in a later video, but we're using going to create a nodePort service in this demo because it's relatively easy to understand.
 
 So here's the yaml file I'll be using to create the nodeport service:
 
@@ -20,7 +20,8 @@ So here's the yaml file I'll be using to create the nodeport service:
 tree configs/
 code configs/svc-nodeport.yml configs/pod-httpd.yml 
 ```
-Here we have 2 files. The one on the right is the same pod yaml that we used in the previous video. The one on the left is for the new service yaml file. 
+
+Here we have 2 files. The one on the right is the same pod yaml file that we used in the the hello world pod demo earlier. The one on the left is for the new service yaml file. 
 
 
 Here we're saying:
