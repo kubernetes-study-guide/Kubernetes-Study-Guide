@@ -45,7 +45,7 @@ Notice this time I just specified the parent folder. This has the effect of appl
 
 
 
-
+```bash
 $ kubectl get svc -o wide
 NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE    SELECTOR
 kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          8d     <none>
