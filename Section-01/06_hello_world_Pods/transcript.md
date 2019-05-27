@@ -129,5 +129,13 @@ kubectl describe pod pod-httpd | less
 
 This has a lot of the same output as we saw with the get command. However it does have some other interesting info, such as an event log at the bottom, this can be useful for troubleshooting.  
 
+Once you have finished using the pod, you can then delete it by using the 'delete' command:
+
+```bash
+kubectl delete pod pod-httpd
+```
+
+This can take a few seconds to complete. 
+
 
 Ok that's it for this video see you in the next one.
