@@ -9,4 +9,4 @@ spec:
   - name: cntr-httpd
     image: httpd:latest
     ports:
-    - containerPort: 80  
+    - containerPort: 80
