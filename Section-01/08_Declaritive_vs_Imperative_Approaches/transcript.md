@@ -37,11 +37,7 @@ kubectl run pod-httpd --image=httpd --labels="app=apache_webserver" --restart=Ne
 kubectl get pods pod-httpd -o wide --show-labels
 ```
 
-Now to delete the pod we use the delete command, which is actually another imperative command:
-
-```bash
-kubectl delete pods pod-httpd
-```
+Notice I used the show-labels flags. Thats just to display the labels column in the output.
 
 Similarly, to create a service imperatively we can use the expose imperative command:
 
@@ -49,6 +45,14 @@ Similarly, to create a service imperatively we can use the expose imperative com
 kubectl expose pod pod-httpd --name=svc-nodeport-httpd --type=NodePort --target-port=80 --port=3050 --selector="app=apache_webserver"
 kubectl get service -o wide
 ```
+
+Now to delete this pod and service, we use the delete command, which is actually another imperative command:
+
+```bash
+kubectl delete pods pod-httpd
+```
+
+
 
 As you can see, compared to using kubectl apply, imperative commands can get quite long wieldy. That leads me onto some of the drawbacks of the imperative approach:
 
@@ -93,6 +97,5 @@ So far it might sound like I'm telling you to always, always, always, take the d
 ```bash
 $ kubectl delete -f configs/
 ```
-
 
 That's it for this video. See you in the next one. 
