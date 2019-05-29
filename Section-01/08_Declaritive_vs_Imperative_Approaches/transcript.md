@@ -1,6 +1,6 @@
 # Imperative vs Declaritive approaches
 
-Structure: slides -> vscode
+Structure: slides -> vscode -> slides > vscode
 
 There's basically two different approaches to creating objects in Kuberenetes. They are the 'Declaritive' and 'Imperative' approaches.
 
@@ -20,31 +20,35 @@ In our recent hello world demo, we created our pod and nodeport service declarat
 
 ```bash
 kubectl run pod-httpd --image=httpd --labels="app=apache_webserver" --restart=Never
-kubectl get pods
-kubectl delete pods --all
+kubectl get pods pod-httpd -o wide --show-labels
 ```
 
-Similar to create a service imperatively we do something like:
+Now to delete the pod we use the delete command, which is actually another imperative command:
+
+```bash
+kubectl delete pods pod-httpd
+```
+
+Similarly, to create a service imperatively we can use the expose imperative command:
 
 ```bash
 kubectl expose pod pod-httpd --name=svc-nodeport-httpd --type=NodePort --target-port=80 --port=3050 --selector="app=apache_webserver"
 kubectl get service
 ```
 
-Creating objects imperatively without using yaml files does has a few drawbacks:
+As you can see, compared to using kubectl apply, imperative commands can get quite long wieldy. That leads me onto some of the drawbacks of the imperative approach:
 
-- The imperative are long and tedious to write. 
-- The imperative commands can't be tracked. E.g. if you delete a pod by mistake, then it would a pain to figure out what command you wrote to create that pod in the first place. Whereas yaml files can be version controlled and easy to reapply. 
-- Imperative commands are quite restrictive and aren't as versatile. For example in the expose commands I wasn't able to find a node-port port number flag. 
-
-
-That's why it's actually recommended to create objects using the declarative approach, that is, feeding yaml files into the kubectl apply command, like we did in the hello world demo. 
+- The imperative commands are long and tedious to write. 
+- The imperative commands can't be tracked. E.g. if you delete a pod by mistake, then it would a pain to figure out what command you wrote to recreate it. Whereas yaml files can be version controlled and easy to reapply. 
+- Imperative commands are doesn't have all the available settings accessible. For example in the expose command I demoed just now, I wasn't able to find a node-port port number flag, and there's additional work involved in fixing that problem by using other imperitve commands such as kubectl-edit.
 
 
+That's why the declarative approach, is the recommended approach, when creating objects in production. I tend to use imperative commands mainly for experimenting with things. 
 
 
 
-There is also a 3rd approach to kubernetes object management. This is a hybrid aproach where you feed yaml files into into one of the imperative commands. 
+
+There is actually a 3rd approach to kubernetes object management. This is a hybrid aproach where you use yaml files along with imperative commands. That's done by the -f flag to feed yamls to your imerative:
 
 
 ```bash
@@ -61,7 +65,7 @@ $ echo $?
 1
 ```
 
-In this respect the kubectl apply command is more intelligent, because it is designed to bring a request to a desired state, or do nothing if it is already at that stage. Whereas the verb-based commands only attempts to perform the task its meant to perform. 
+In this respect the kubectl apply command is more intelligent, because it ensures a desired state is reached by taking the necessary actions, or do nothing if it is already at that state. Whereas the verb-based commands only attempts to perform the action irrespective it needs to or not. 
 
 
 
@@ -70,7 +74,6 @@ So far it might sound like I'm telling you to always, always, always, take the d
 
 ```bash
 $ kubectl delete pod pod-httpd
-pod "pod-httpd" deleted
 ```
 
 or the hybrid command:
@@ -80,3 +83,4 @@ or the hybrid command:
 $ kubectl delete -f configs/
 ```
 
+However in this course I will stick to the declarative approach when creating files. 
