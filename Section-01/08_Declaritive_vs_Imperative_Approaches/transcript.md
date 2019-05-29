@@ -34,7 +34,7 @@ So to create our hello-world pod imperatively, we can use the run command:
 
 ```bash
 kubectl run pod-httpd --image=httpd --labels="app=apache_webserver" --restart=Never
-kubectl get pods pod-httpd -o wide --show-labels
+kubectl get pods -o wide --show-labels
 ```
 
 Notice I used the show-labels flags. Thats just to display the labels column in the output.
@@ -50,6 +50,7 @@ Now to delete this pod and service, we use the delete command, which is actually
 
 ```bash
 kubectl delete pods pod-httpd
+kubectl delete service svc-nodeport-httpd 
 ```
 
 
