@@ -2,6 +2,11 @@
 
 Structure: slides -> vscode -> slides > vscode
 
+## Slides
+
+Hello everyone, and welcome back. 
+
+
 There's basically two different approaches to creating objects in Kuberenetes. They are the 'Declaritive' and 'Imperative' approaches.
 
 
@@ -15,8 +20,17 @@ The imperative approach on the otherhand lets you create, update, and delete you
 - ...and etc
 
 
-In our recent hello world demo, we created our pod and nodeport service declaratively. However here's the equivalent imperative command for creating our hello world pod:
+In our recent hello world demo, we created our pod and nodeport service declaratively. However here's the equivalent imperative command for creating these objects.
 
+## Vscode
+
+For this demo I've opened up a bash terminal inside this video's topic folder. 
+
+```bash
+pwd
+```
+
+So to create our hello-world pod imperatively, we can use the run command:
 
 ```bash
 kubectl run pod-httpd --image=httpd --labels="app=apache_webserver" --restart=Never
@@ -33,10 +47,12 @@ Similarly, to create a service imperatively we can use the expose imperative com
 
 ```bash
 kubectl expose pod pod-httpd --name=svc-nodeport-httpd --type=NodePort --target-port=80 --port=3050 --selector="app=apache_webserver"
-kubectl get service
+kubectl get service -o wide
 ```
 
 As you can see, compared to using kubectl apply, imperative commands can get quite long wieldy. That leads me onto some of the drawbacks of the imperative approach:
+
+## Slides
 
 - The imperative commands are long and tedious to write. 
 - The imperative commands can't be tracked. E.g. if you delete a pod by mistake, then it would a pain to figure out what command you wrote to recreate it. Whereas yaml files can be version controlled and easy to reapply. 
@@ -46,15 +62,20 @@ As you can see, compared to using kubectl apply, imperative commands can get qui
 That's why the declarative approach, is the recommended approach, when creating objects in production. I tend to use imperative commands mainly for experimenting with things. 
 
 
+## Slide - change page
 
+There is actually a 3rd approach to kubernetes object management. This is a hybrid aproach where you use yaml files along with imperative commands. That's done by using the -f flag to feed yamls to your imerative command. 
 
-There is actually a 3rd approach to kubernetes object management. This is a hybrid aproach where you use yaml files along with imperative commands. That's done by the -f flag to feed yamls to your imerative:
+## VS code
+For example here's the hybrid approach to create objects:
 
 
 ```bash
 $ kubectl create -f configs/
 pod/pod-httpd created
 ```
+
+By the way, these yaml files are just copies of the yaml files that we used in the earlier hello-world videos. 
 
 However if you run the command again it errors out as indicated by the exit code of 1:
 
@@ -65,22 +86,13 @@ $ echo $?
 1
 ```
 
-In this respect the kubectl apply command is more intelligent, because it ensures a desired state is reached by taking the necessary actions, or do nothing if it is already at that state. Whereas the verb-based commands only attempts to perform the action irrespective it needs to or not. 
+That's becuase verb based commands aren't as smart as the apply command, that's because verb-based commands just performs the action without first deciding whether it needs to make changes based on the current state. Whereas declarative approach is designed to focus on bring the existing state to the desired state, if that's not already the case. 
 
-
-
-So far it might sound like I'm telling you to always, always, always, take the declarative approach. However that's not true, imperative commands and hybrid commands do have it's uses. For example, you can't delete objects using kubectl-apply. Instead you have to use kubectl delete:
-
-
-```bash
-$ kubectl delete pod pod-httpd
-```
-
-or the hybrid command:
-
+So far it might sound like I'm telling you to always, always, always, take the declarative approach. However that's not true, imperative commands and hybrid commands do have it's uses. For example, in the documentation it's recommended to delete objects kubectl delete: 
 
 ```bash
 $ kubectl delete -f configs/
 ```
 
-However in this course I will stick to the declarative approach when creating files. 
+
+That's it for this video. See you in the next one. 
