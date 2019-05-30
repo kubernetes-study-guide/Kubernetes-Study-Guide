@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: svc-nodeport-apache
-  namespace: ns-dev       # we add this line. 
+  namespace: ns-dev1 
 spec:
   type: NodePort
   ports:
