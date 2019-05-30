@@ -42,7 +42,13 @@ spec:
   ...
 ```
 
-All kubernetes yaml files needs to have 4 high level sections, apiVersion, kind, and metadata, and spec. However the spec section can be optional, depending on the kind of object you're creating a yaml file for. For example, the spec section is mandatory for a pod yaml file, but is optional for a namespace yaml file. We'll cover namespaces later.  
+For this demo I've opened up a bash terminal inside this video's topic folder. 
+
+```bash
+pwd
+```
+
+All kubernetes yaml files needs to have 4 high level sections, apiVersion, kind, and metadata, and spec. However the spec section can be optional, depending on the kind of object you want to create. For example, the spec section is mandatory for a pod yaml file, but is optional for a namespace yaml file. We'll cover namespaces later.  
 
 Remember that in kubernetes, the keys are case sensitive. That means you can't write apiVersion all in lower case. 
 
