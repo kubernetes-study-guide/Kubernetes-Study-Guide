@@ -143,7 +143,7 @@ One very handy feature with imperative commands is that you can use them to gene
 ```bash
 kubectl run pod-httpd --image=httpd --restart=Never --dry-run -o yaml > pod.yaml
 
-kubectl create service nodeport svc-nodeport-httpd --node-port=31000 --tcp=3050:80 > service.yaml
+kubectl create service nodeport svc-nodeport-httpd --node-port=31000 --tcp=3050:80 --dry-run -o yaml > service.yaml
 ```
 
 **CKA Exam tip:** Your not allowed to copy+paste more than a couple of lines at a time during the exam. You can write them by hand, but that's time consuming and prone to errors, which will use up even more precious seconds. Which is why it's best to use the imperative commands to create the yaml files for you. We'll include a complete list of these commands in the appendix. 

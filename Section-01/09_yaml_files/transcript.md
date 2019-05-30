@@ -119,7 +119,7 @@ However, in my opinion, the coolest way to create these yaml files is to get kub
 ```bash
 kubectl run pod-httpd --image=httpd --restart=Never --dry-run -o yaml > pod.yaml
 
-kubectl create service nodeport svc-nodeport-httpd --node-port=31000 --tcp=3050:80 > service.yaml
+kubectl create service nodeport svc-nodeport-httpd --node-port=31000 --tcp=3050:80 --dry-run -o yaml > service.yaml
 ```
 
 With this approach you get to create boilerplate yaml files which you can then customize to meet your needs. 
