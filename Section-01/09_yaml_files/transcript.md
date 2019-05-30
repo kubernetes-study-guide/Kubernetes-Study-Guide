@@ -60,7 +60,6 @@ Now let's go over these 4 keys.
 
 The 'apiVersion' sets which part of the kubernetes api to access. This depends on the object kind. For example, if the kind is 'Pod' then this field needs to be set to 'v1', You can find out what to set here by using the kubectl-explain command.
 
-## swipe to bash
 ```bash
 $ kubectl explain pod
 KIND:     Pod
@@ -68,10 +67,8 @@ VERSION:  v1
 ...
 ```
 
-## Swipe to vscode
 the 'kind' setting is used to set the object type. So far we have only couple of them, pods and services, but there's a lot more. You can run the api-resources command to get a full list of them:
 
-## swipe to bash
 ```bash
 kubectl api-resources | less
 ```
@@ -85,11 +82,6 @@ $ kubectl get svc -o wide
 
 
 
-
-
-
-
-## swipe to vscode
 the metadata section mainly gets used to store info to help uniquely identify the object, such as the object's name.
 
 The 'spec' section is where you set the object's detailed specifications. Then content under this section varies greatly depending on the type of object your creating. 
@@ -100,14 +92,7 @@ You can write multiple object definitions in a single yaml file.
 
 Ok so now we know what these yaml files are, as well as their highlevel structure. But how do you go about writing them?
 
-First approach is writing them by hand. So you create empty yaml file and then just start writing. In this scenario you would need to use kubectl explain to work out what to write:
-
-```bash
-kubectl explain pod | less
-```
-
-Theres also the recursive flag that gives a handy high level overview of the various settings as well as the type of value they expect:
-
+First approach is writing them by hand. So you create empty yaml file and then just start writing. In this scenario you would need to use kubectl explain to work out what to write. Theres also the recursive flag that gives a handy high level overview of the various settings as well as the type of value they expect:
 
 ```bash
 kubectl explain pod --recursive | less
