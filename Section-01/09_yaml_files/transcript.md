@@ -141,6 +141,20 @@ With this approach you get to create boilerplate yaml files which you can then c
 
 Also, in case you're planning on taking the CKA exam, then this is probably the fastest way to create yaml files during the exam. So it's definitely worth memorising some these commands. The official documentation even has a cheat sheet with a lot of imperative commands that you can use to create these yaml files.  
 
+One final think I wanted to mention is that so far we created one yaml file per object however you can defined multiple objects in a single yaml file, in which you just need to use triple-dash as a delimiter. 
+
+```bash
+code configs/pod-and-service.yml 
+```
+
+Here we have our earlier hello world pod and service in a single file, with the triple-dash delimiter to tell kubernetes when one definition ends and another one starts. 
+
+
+```bash
+kubectl apply -f configs/pod-and-service.yml 
+```
+
+
 That's it for this video, see you in the next one. 
 
 
