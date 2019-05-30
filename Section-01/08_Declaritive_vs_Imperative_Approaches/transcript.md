@@ -7,12 +7,12 @@ Structure: slides -> vscode -> slides > vscode
 Hello everyone, and welcome back. 
 
 
-There's basically two different approaches to creating objects in Kuberenetes. They are the 'Declaritive' and 'Imperative' approaches.
+There's basically two different approaches to create objects in Kuberenetes. They are the 'Declaritive' and 'Imperative' approaches.
 
 
-The Declaritive approach is all about using the `kubectl apply` to create your objects. This in turn means that you have to use yaml files to create your objects. 
+The Declaritive approach is all about using the `kubectl apply` command to create your objects. This in turn means that you have to use yaml files as part of the creaton process. 
 
-The imperative approach on the otherhand lets you create, update, and delete your objects without needing to use any yaml files. The imperative approach involves using any of the verb based commands, such as:
+The imperative approach on the otherhand lets you create, update, and delete your objects without needing to use any yaml files. This approach involves using one of the verb based commands, such as:
 
 - `kubectl run`
 - `kubectl create`
@@ -39,7 +39,7 @@ kubectl get pods -o wide --show-labels
 
 Notice I used the show-labels flags. Thats just to display the labels column in the output.
 
-Similarly, to create a service imperatively we can use the expose imperative command:
+Similarly, to create a service object imperatively we can use the expose command:
 
 ```bash
 kubectl expose pod pod-httpd --name=svc-nodeport-httpd --type=NodePort --target-port=80 --port=3050 --selector="app=apache_webserver"
@@ -49,19 +49,23 @@ kubectl get service -o wide
 Now to delete this pod and service, we use the delete command, which is actually another imperative command:
 
 ```bash
-kubectl delete pods pod-httpd
-kubectl delete service svc-nodeport-httpd 
+$ kubectl delete all --all
+pod "pod-httpd" deleted
+service "kubernetes" deleted
+service "svc-nodeport-httpd" deleted
 ```
 
+Rather than deleting these objects one at a time, I deleted all of them using the 'all' keyword and flag. However by doing that I also inadvertantly ended up deleting the internal kubernetes service. Luckily though, kubernetes will simply recreate that internal service again. 
 
 
-As you can see, compared to using kubectl apply, imperative commands can get quite long wieldy. That leads me onto some of the drawbacks of the imperative approach:
+
+If you take a look at these imperative commands, you'll notice that imperative commands can get quite long wieldy. That leads me onto some of the drawbacks of the imperative approach:
 
 ## Slides
 
 - The imperative commands are long and tedious to write. 
-- The imperative commands can't be tracked. E.g. if you delete a pod by mistake, then it would a pain to figure out what command you wrote to recreate it. Whereas yaml files can be version controlled and easy to reapply. 
-- Imperative commands are doesn't have all the available settings accessible. For example in the expose command I demoed just now, I wasn't able to find a node-port port number flag, and there's additional work involved in fixing that problem by using other imperitve commands such as kubectl-edit.
+- The imperative commands can't be tracked. For example, if you delete a pod by mistake, then you need to figure out what was the original command you ran to create that pod in the first place and then rerun it again.  Whereas if created the objects using yaml files, then it's just a case of tracking down those files in your git repo, and then run kubectly apply against them.
+- Imperative commands doesn't have all the settings available. For example in the expose command I just demoed, I wasn't able to find a node-port port number flag. That means that there's additional work involved in fixing that problem by using other imperitve commands such as kubectl-edit.
 
 
 That's why the declarative approach, is the recommended approach, when creating objects in production. I tend to use imperative commands mainly for experimenting with things. 
@@ -91,7 +95,7 @@ $ echo $?
 1
 ```
 
-That's becuase verb based commands aren't as smart as the apply command, that's because verb-based commands just performs the action without first deciding whether it needs to make changes based on the current state. Whereas declarative approach is designed to focus on bring the existing state to the desired state, if that's not already the case. 
+That's becuase verb based commands aren't as smart as the apply command. They just perform the requested action without first deciding whether it needs doing in the first place. Whereas declarative approach is designed to focus on bring the existing state to the desired state, if that's not already the case. 
 
 So far it might sound like I'm telling you to always, always, always, take the declarative approach. However that's not true, imperative commands and hybrid commands do have it's uses. For example, in the documentation it's recommended to delete objects kubectl delete: 
 

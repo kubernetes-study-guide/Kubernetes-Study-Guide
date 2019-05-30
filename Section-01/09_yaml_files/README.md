@@ -1,6 +1,6 @@
 # YAML files
 
-In our hello-world demo we created a pod and service object by feeding yaml files into kubectl.
+In our hello-world demo we created a pod and service object by feeding yaml files into kubectl. But what is yaml?
 
 Yaml is just a markup language like xml or json. The Yaml syntax is used for writing data in a structured way. I recommend taking look at the [Ansible website's yaml guide](https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html) if you want to learn about the syntax.
 
@@ -21,9 +21,9 @@ The yaml files we created for Kubernetes had the the following general yaml stru
 apiVersion: xxx
 kind: xxxxx
 metadata:
-  {blah blah blah}
+  ...
 spec:
-  {blah blah blah}
+  ...
 ```
 
 **Watch out**: key names (e.g. apiVersion) are all case sensitive
@@ -38,6 +38,9 @@ The apiVersion, kind, metadata, and spec, are the [required fields](https://kube
 **metadata:** Data that helps uniquely identify the object. metadata.name is used to assign a name to the object. metadata.labels is also another really important feature. It not only lets you organise your resources, but it also offers a means to filter your resources, and can be used as a way to refer to a group of resources.
 
 **spec:** The content of this depends on the kind of object in question. Api specifies what structure+content this section should hold.
+
+
+The first three items are mandatory. In most cases spec is mandatory as well. But that really depends on the kind of object you are creating. for example when create namespaces. you can leave out the spec setting. 
 
 ## Defining multiple objects in a single config file
 
@@ -133,15 +136,17 @@ What if you have a pod, e.g. called pod-httpd, but lost it's yaml descriptor fil
 kubectl get pod pod-httpd -o yaml > regenerated-descriptor.yaml
 ```
 
-## Use Kubectl to gernate YAML Boilerplate templates
+## Use Kubectl to generate YAML Boilerplate templates
 
-Kubectl has a really cool feature that lets you generate example yaml files. That's done by running 'imperative' kubectl commands. I'll cover more about this later on, when we cover Imperative and Declaritive approaches
+One very handy feature with imperative commands is that you can use them to generate example yaml files. You can then use these as boilerplate templates to create your own yaml files:
 
-## References
+```bash
+kubectl run pod-httpd --image=httpd --restart=Never --dry-run -o yaml > pod.yaml
 
-[kubernetes api concepts](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)
+kubectl create service nodeport svc-nodeport-httpd --node-port=31000 --tcp=3050:80 > service.yaml
+```
 
-
+**CKA Exam tip:** Your not allowed to copy+paste more than a couple of lines at a time during the exam. You can write them by hand, but that's time consuming and prone to errors, which will use up even more precious seconds. Which is why it's best to use the imperative commands to create the yaml files for you. We'll include a complete list of these commands in the appendix. 
 
 ## References
 
