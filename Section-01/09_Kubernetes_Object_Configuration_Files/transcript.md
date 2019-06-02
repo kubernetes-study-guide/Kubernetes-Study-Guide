@@ -10,23 +10,23 @@ slide
 Hello everyone, and welcome back. 
 
 
-So far we've created objects by feeding yaml files into kubectl. But we haven't yet properly explained what yaml files are. Yaml is just a standard for writing data in a structured way. It's purpose is similar to other standards such xml and json. YAML has become really popular thanks it's human readable syntax. 
+So far we've created objects by feeding yaml files into kubectl. But we haven't yet properly explained what yaml files are. Yaml is just a standard for writing data in a structured way. It's similar  to other standards such xml and json. However  YAML has become really popular thanks it's human readable syntax. 
 
-At it's heart, YAML is based on using key-value pairs. Where the key is a string, but the value can be all kinds of things. For example it can be a simple string, or more key-value pairs. Yaml makes use of white-space in the form of indents as part of it's syntax to show nested child objects. Keys can also hold a list of values by using this bullet list style dash syntax. 
+At it's heart, YAML is based on     key-value pairs. Where the key is a string, but the value can be all kinds of things. For example it can be a simple string, or more key-value pairs. Yaml makes use of white-space in the form of indents as part of it's syntax to show nested child objects. Keys can also hold a list of values as indicated by this hyphen syntax, where each value can be yet more key-values 
 
 Therefore a value can essentially hold another yaml code block. And the process can repeat itself further where needed, which means that you end up with a tree like structure. 
 
 Because of this, yaml is ideal for storing complex data in a hierachial structures.  
 
-In the study guide I have included I've links to several websites where you can learn more about the yaml syntax, so that you can quickly get yourself up to speed with it. It's not particarly but it does take a little time to get used to it. 
+In the study guide I have included links to several websites where you can learn more about the yaml syntax. These guides will help you get yourself up to speed with writing yaml files. It's not particarly hard,  but it does take a little time to get used to it. 
 
 
 # slide - list of other names
-In Kubernetes, The yaml files we have demoed, are referred to quite generically, as configuration files. However people often refer to these files by other names, such as:
+In Kubernetes, The yaml files we have demoed so far, are referred to quite generically, as object configuration files. However people often refer to these files by other names, such as:
 
 - kubernetes manifests
 - or kubernetes yaml descriptors
-- However I just call them name yaml files. 
+- or just       yaml files. 
 
 
 ## vscode
@@ -51,7 +51,7 @@ spec:
   ...
 ```
 
-apiVersion, kind, metadata, and spec. These keys, with the exception of spec, are mandatory. However the spec section can also be mandatory, depending on the kind of object you're defining. For example, the spec section is mandatory when defining a pod obect, but it's optional when defining namespace objects. We'll cover namespaces later.  
+apiVersion, kind, metadata, and spec. These keys, with the exception of spec, are mandatory. However the spec section can also be mandatory, depending on the kind of object you're defining. For example, the spec key     is mandatory when defining a pod obect, but it's optional when defining namespace objects. We'll cover namespaces later.  
 
 Remember that in kubernetes, the keys are case sensitive. That means you can't write apiVersion all in lower case. 
 
@@ -59,7 +59,7 @@ Remember that in kubernetes, the keys are case sensitive. That means you can't w
 Now let's go over these 4 keys. 
 
 
-The 'apiVersion' sets which part of the kubernetes api to access. This depends on the object kind. For example, if the kind is 'Pod' then this field needs to be set to 'v1', You can find out what to set here by using the kubectl-explain command.
+The 'apiVersion' sets which part of the kubernetes api to access. This depends on the object kind. For example, if the kind is 'Pod' then this field needs to be set to 'v1', You can find out what to set here by using the "kubectl explain"  command.
 
 ```bash
 $ kubectl explain pod
@@ -68,15 +68,16 @@ VERSION:  v1
 ...
 ```
 
-the 'kind' setting is used to set the kind of object you want to define. So far we have only created pods and services objects, but there's a lot more. You can get a full list of them using the api-resources command:
+Next we have the 'kind ' key. This setting is used to specify the kind of object you want to define. So far we have only created pod and service objects    , but there's a lot more. You can get a full list of them using the api-resources command:
 
 ```bash
 kubectl api-resources
 ```
 
-We have quite a lot of info here, so I'll just scroll up to the start of this output.
+We have quite a lot of output here, so I'll just scroll up to the beginning .
 
-As you can see we have a lot of different kinds of objects, and so far we have only touched 2 kinds so far, pods and services. We'll cover more of these kinds as we go through the course. 
+
+As you can see we have a lot of different kinds of objects, and we have only touched on  2 kinds so far, pods and services. We'll cover more of these kinds as we go through the course. 
 
 By the way, notice the shortname column. You can use these aliases to cut down on typing. For example to you can run the get services command using the svc alias:
 
@@ -85,28 +86,28 @@ By the way, notice the shortname column. You can use these aliases to cut down o
 $ kubectl get svc -o wide
 ```
 
-The metadata section mainly gets used to store info to help uniquely identify the object, such as the object's name.
+Next we have metadata. The section is mainly used for storing info to help uniquely identify the object, such as the object's name.
 
 The 'spec' section is where you specify the object's detailed specs. This section varies greatly depending on the type of object you're defining.
 
 
 Ok we have now seen what these yaml files are, as well as their high-level structure. But how do you go about writing them?
 
-One option is that you can write them from scratch. In this scenario you start by writing out the 4 high-level keys, then use kubectl-explain to work out what to write under each section. Theres also the recursive flag that gives a handy high level overview of the various settings available:
+One option is that you can write them from scratch. In this scenario you start by writing out the 4 high-level keys, then you can use   kubectl-explain to work out what to write under each section. Theres also the recursive flag that gives a handy high level overview of the various settings available:
 
 ```bash
 kubectl explain pod --recursive
 ```
 
-We have a huge range of available settings for pods, so I'll just scroll up to the start of this output. 
+We have a huge range of settings for pods, so I'll just scroll up to the beginning. 
 
-To learn more about a particular setting, then you can use the dot notation to drill-down, to view more detailed info:
+To learn more about a particular setting,    you can use the dot notation to drill-down, to view more detailed info:
 
 ```bash
 $ kubectl explain pod.spec.containers.image
 ```
 
-Writing yaml files by hand like this, is time consuming, but it's a great way to  practice, and you'll learn a lot through trial and error.
+Writing yaml files by hand like this, is time consuming, but it's a great way to  practice, and you'll learn a lot through trial and errer.
 
 
 Another way to write these manifests, is to just copy and paste sample yaml extracts from the official documentation, and then customise them to meet your needs. There are plenty of examples available.
