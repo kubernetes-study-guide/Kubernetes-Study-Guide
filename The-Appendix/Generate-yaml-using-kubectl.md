@@ -53,3 +53,5 @@ kubectl create secret generic secret-name --from-literal MysqlRootPassword=passw
 ## bookmarks
 
 https://medium.com/faun/how-to-pass-certified-kubernetes-administrator-cka-exam-on-first-attempt-36c0ceb4c9e
+
+[https://unofficialism.info/posts/unofficial-tips-for-cka-and-ckad-exams/](https://unofficialism.info/posts/unofficial-tips-for-cka-and-ckad-exams/)
