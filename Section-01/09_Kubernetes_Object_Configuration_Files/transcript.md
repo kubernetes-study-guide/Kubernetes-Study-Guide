@@ -36,6 +36,9 @@ Let's now go over these yaml files in more details.
 For this demo I've opened up a bash terminal inside this video's topic folder. 
 
 ```bash
+clear
+command+K shortcut
+kubectl delete all --all
 pwd
 ```
 
@@ -62,18 +65,24 @@ Now let's go over these 4 keys.
 The 'apiVersion' sets which part of the kubernetes api to access. This depends on the object kind. For example, if the kind is 'Pod' then this field needs to be set to 'v1', You can find out what to set here by using the "kubectl explain"  command.
 
 ```bash
+clear
 command+K shortcut
 $ kubectl explain pod
 KIND:     Pod
 VERSION:  v1
 ...
+
+then scroll up using scrollbar
 ```
 
 Next we have the 'kind ' key. This setting is used to specify the kind of object you want to define. So far we have only created pod and service objects    , but there's a lot more. You can get a full list of them using the api-resources command:
 
 ```bash
+clear
 command+K shortcut
 kubectl api-resources
+
+then scroll up using scrollbar
 ```
 
 We have quite a lot of output here, so I'll just scroll up to the beginning .
