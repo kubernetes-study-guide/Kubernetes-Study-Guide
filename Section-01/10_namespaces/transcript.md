@@ -1,13 +1,13 @@
-# transcript 
+# transcript
 
-When you create a brand new kube cluster, and then get a list of pods, you'll get:
+When you create a brand new kube cluster, and then list out your pods, you'll find there aren't any pods yet:
 
 ```bash
 $ kubectl get pods
 No resources found.
 ```
 
-So that means that we shouldn't have any containers running at all. If your kubecluster is using docker as it's container run time engine, then you can connect to one of your worker node's docker daemon directly. In the minikube, not only does it use docker as it's container run time engine, minikube even provides the docker-env command to let you you easily connect to it: 
+And consequently that means that we shouldn't have any containers running either. Now If your kubecluster is using docker, then you can run docker commands against your kubecluster's worker nodes. minikube happens to use docker as it's container run time engine, and it even comes with the docker-env helper command: 
 
 ```bash
 $ minikube docker-env
@@ -18,22 +18,23 @@ export DOCKER_API_VERSION="1.35"
 # Run this command to configure your shell:
 # eval $(minikube docker-env)
 ```
-This command only prints out a set of export commands that you need to run in order to get your docker cli to connect to the minikube VM's docker daemon. However the last line of this output shows how to activate these settings:
+
+This command prints out a set of export commands that you need to run in order to get your workstation's docker cli to connect to the minikube VM's docker daemon. However the last line of this output shows how to activate these settings:
 
 
 ```bash
 eval $(minikube docker-env)
 ```
 
-At this point, we are now connected to minikube's docker daemon for the rest of this bash session. So let's try this by getting a list of running containers:
+Ok we're now connected to minikube's docker daemon for the rest of this bash session. So let's try listing our containers:
 
 ```bash
 $ docker container ls
 ```
 
-Ok so based on what we know so far, we should have got an empty list, since we don't have any pods. So where did this massive list of containers come from?
+Ok so based on what we know so far, we should have got an empty list, since we don't have any pods. So where have all these containers come from?
 
-The answer is to do with namespaces. You see, in Kubernetes we can group our objects into a construct known as **namespaces**. Here's the current list of namespaces:
+The answer is to do with namespaces. You see, in Kubernetes we can group our objects into a construct known as **namespaces**. We can list all the namespaces using the get command:
 
 ```bash
 $ kubectl get namespaces
@@ -43,7 +44,7 @@ kube-public   Active    11h
 kube-system   Active    11h
 ```
 
-our minikube cluster comes with these namespaces already setup. Kubectl can only interact with one namespace at a time. To see which namespace our kubectl client is currently configured to interact with, we run the get-context config command:
+our minikube cluster comes with these namespaces already setup. Kubectl can only interact with one namespace at a time. We can run the get-context config command to see which namespace our kubectl client is currently pointing to:
 
 ```bash
 $ kubectl config get-contexts
@@ -51,16 +52,16 @@ CURRENT   NAME       CLUSTER    AUTHINFO   NAMESPACE
 *         minikube   minikube   minikube
 ```
 
-This command essentially displays some of the the content extracted from the kubectl's config file, but in a more human readable form. This file by default should be located in your home directory.
+This command shows some of the info stored in the kubectl config file. By default this file is called config,it's located in your home directory.
 
 
 ```popup animation
 ~/.kube/config
 ```
 
-We'll cover more about this config file later in the course.
+We'll cover more about this file later in the course.
 
-If the current context shows as blank, like it is here, then it means that we're using the 'default' namespace. So when we run the get-pods command we only see a list of pods that are residing in the default namespace.
+If the current context shows as blank, like it is here, then it means that we're using the default namespace [red box]. So when we ran the get-pods command we only saw a list of pods that are residing in the default namespace.
 
 
 If you want to interact with a different namespace, then you can do so by specifying the namespace flag:
@@ -70,7 +71,7 @@ If you want to interact with a different namespace, then you can do so by specif
 $ kubectl get pods --namespace=kube-system
 ```
 
-the kube-system namespaces comes included with kubernetes, and it stores kubernetes objects that kubernetes itself needs for it's own internal working. Here we see that we have a lot of pods, which explains where all those containers came from. Most commands, such as, create, delete, apply, have the namespace flag. 
+Kubernetes is using this namespace to house objects that it itself needs for it's own internal working. Here we see that we have a lot of pods, which explains where all those containers came from earlier.
 
 You can also create your own namespaces and organise your objects into them. Here's a yaml file to create a namespace called dev1:
 
@@ -79,7 +80,7 @@ $ tree configs/
 $ code configs/namespace-dev1.yml
 ```
 
-In my case I called my namespace ns-dev1 becuase I want to have several dev environments and dev1 will store all the objects for the first development environment. You can name namespaces after teams, projects, or a combination of these, or whatever makes most sense in your workplace. 
+In my case I called my namespace ns-dev1 becuase I want to have several dev environments and dev1 will store all the objects for the first development environment. You can name your namespaces to whatever makes sense in your workplace, such as team names, project names, environment names, 
 
 Note that this is one of the few object types where you don't need to explicitly add a spec section. Lets now create this namespace:
 
