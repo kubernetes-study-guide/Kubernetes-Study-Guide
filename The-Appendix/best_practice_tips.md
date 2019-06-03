@@ -7,3 +7,5 @@
 [https://www.cncf.io/blog/2019/01/14/9-kubernetes-security-best-practices-everyone-must-follow/](https://www.cncf.io/blog/2019/01/14/9-kubernetes-security-best-practices-everyone-must-follow/)
 
 [https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment/](https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment/)
+
+https://cheatsheet.dennyzhang.com/cheatsheet-kubernetes-a4

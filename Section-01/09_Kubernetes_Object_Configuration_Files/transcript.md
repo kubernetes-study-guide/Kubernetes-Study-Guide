@@ -110,7 +110,7 @@ $ kubectl explain pod.spec.containers.image
 Writing yaml files by hand like this, is time consuming, but it's a great way to  practice, and you'll learn a lot through trial and errer.
 
 
-Another way to write these manifests, is to just copy and paste sample yaml extracts from the official documentation, and then customise them to meet your needs. There are plenty of examples available.
+Another way to write these manifests, is to just copy and paste sample yaml extracts from the official documentation, and then customise them to meet your needs. 
 
 
 However my favourite way to write these yaml files, is to get kubectl to generate them for you! That's possible by running imperative commands along with the dry-run flag and yaml output, For example, here's how to create a pod yaml definition: 
@@ -120,26 +120,23 @@ kubectl run pod-name --image=nginx --restart=Never --dry-run -o yaml > pod.yaml
 code pod.yaml
 ```
 
-You can then use these manifests as boilerplate templates as a starting point for  your own yaml files. 
+You can then use these generated manifests as a starting point for writing your own yaml files. 
 
-These commands are not that intuitive and are in fact quite tricky to figure out. For example it took me several minutes of googling before realising that I needed to include this restart flag settng. If I leave out this flag then I end up with a different kind of object altogether!
+These commands are not that intuitive,   in fact quite tricky to figure out. For example it took me several minutes of googling before realising that I needed to include this restart flag settng. If I leave out this flag then I end up with a different kind of object altogether!
 
 # github
-That's why in the Appendix section of the study guide, I have added an article called 'generate yaml using kubectl'. This article has a list of example commands that you can use to generate yaml files for various objects types.
+That's why in the Appendix section of the study guide, I have added a    page with a list of commands for generating these various boilerplate yaml files. The page is called 'generate yaml using kubectl'.
 
-I highly recommend memorising some of these commands if you're planning to take the CKA exam. That's because you won't have time to write yaml files manually, and also you're not allowed copy and paste more than 2 lines at a time during the exam, that rules out copying yaml samples from the official documentation. 
+I highly recommend memorising some of these commands if you're planning to take the CKA exam. That's because you won't have time to write yaml files manually, and also you're not allowed copy and paste more than 2 lines at a time during the exam. 
 
 ## vscode
-One final thing I wanted to mention is that so far we created one yaml file per object, however you can define multiple objects in a single yaml file. That's done by using the triple-dash notation as a delimiter. 
+One final thing I wanted to mention is that so far we created one yaml file per object, however you can define multiple objects in a single yaml file. That's done by using the triple-dash notation as a seperator. 
 
 ```bash
 code configs/pod-and-service.yml 
 ```
 
-
-However if you're planning on taking the CKA exam, then you can't take this approach, that's because you're not allowed to copy-and-paste more than a couple of lines at a time in the CKA exam. 
-
-Here we have our earlier hello world pod and service definitions, but this time in a single file, with a the triple-dash delimiter seperating them. This triple-dash notation is part of the standard yaml syntax. 
+Here we have the hello world pod and service definitions from our   earlier demos, but this time in a single file, with a the triple-dash seperating them. This triple-dash notation is part of the standard yaml syntax. So when you apply this file you end up with the same results as we saw earlier.   
 
 
 

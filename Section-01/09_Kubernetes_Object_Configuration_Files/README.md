@@ -152,3 +152,5 @@ kubectl create service nodeport svc-nodeport-httpd --node-port=31000 --tcp=3050:
 
 [kubernetes api concepts](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)
 [kubernetes api reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/)
+
+[https://www.mirantis.com/blog/introduction-to-yaml-creating-a-kubernetes-deployment/](https://www.mirantis.com/blog/introduction-to-yaml-creating-a-kubernetes-deployment/)

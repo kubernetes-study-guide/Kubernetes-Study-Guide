@@ -89,3 +89,5 @@ systemctl status kubelet
 You can also find samples in the api documentations:
 
 [https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#service-v1-core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#service-v1-core)
+
+[https://unofficialism.info/posts/unofficial-tips-for-cka-and-ckad-exams/](https://unofficialism.info/posts/unofficial-tips-for-cka-and-ckad-exams/)
