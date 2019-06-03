@@ -62,6 +62,7 @@ Now let's go over these 4 keys.
 The 'apiVersion' sets which part of the kubernetes api to access. This depends on the object kind. For example, if the kind is 'Pod' then this field needs to be set to 'v1', You can find out what to set here by using the "kubectl explain"  command.
 
 ```bash
+command+K shortcut
 $ kubectl explain pod
 KIND:     Pod
 VERSION:  v1
@@ -71,6 +72,7 @@ VERSION:  v1
 Next we have the 'kind ' key. This setting is used to specify the kind of object you want to define. So far we have only created pod and service objects    , but there's a lot more. You can get a full list of them using the api-resources command:
 
 ```bash
+command+K shortcut
 kubectl api-resources
 ```
 
@@ -96,6 +98,8 @@ Ok we have now seen what these yaml files are, as well as their high-level struc
 One option is that you can write them from scratch. In this scenario you start by creating an empty text file with a dot yaml extension. Then you write out the 3 high-level mandatory keys. After that you can use kubectl-explain to work out what to write next. Theres also the recursive flag that gives a handy high level overview of the various settings available:
 
 ```bash
+clear
+command+K shortcut
 kubectl explain pod --recursive
 ```
 
