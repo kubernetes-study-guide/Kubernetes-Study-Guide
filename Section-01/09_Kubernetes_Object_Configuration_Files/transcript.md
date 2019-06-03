@@ -93,7 +93,7 @@ The 'spec' section is where you specify the object's detailed specs. This sectio
 
 Ok we have now seen what these yaml files are, as well as their high-level structure. But how do you go about writing them?
 
-One option is that you can write them from scratch. In this scenario you start by writing out the 4 high-level keys, then you can use   kubectl-explain to work out what to write under each section. Theres also the recursive flag that gives a handy high level overview of the various settings available:
+One option is that you can write them from scratch. In this scenario you start by creating an empty text file with a dot yaml extension. Then you write out the 3 high-level mandatory keys. After that you can use kubectl-explain to work out what to write next. Theres also the recursive flag that gives a handy high level overview of the various settings available:
 
 ```bash
 kubectl explain pod --recursive
@@ -104,7 +104,7 @@ We have a huge range of settings for pods, so I'll just scroll up to the beginni
 To learn more about a particular setting,    you can use the dot notation to drill-down, to view more detailed info:
 
 ```bash
-$ kubectl explain pod.spec.containers.image
+kubectl explain pod.spec.containers.image
 ```
 
 Writing yaml files by hand like this, is time consuming, but it's a great way to  practice, and you'll learn a lot through trial and errer.
