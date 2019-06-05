@@ -1,5 +1,11 @@
 # transcript
 
+TODO: Need to break this topic/video up into 3 seperate videos:
+- yaml file intro (include particular syntax used in this course.)
+- Anatomy of a object configuration file. - E.g. expand on this.  apiVersion gives you access to new beta features. Write the structure as you go along. 
+- how to write the the yaml files (demo for kubectl explain) and how to quickly genererate them. 
+
+
 Structure:
 slide
 -> vscode
