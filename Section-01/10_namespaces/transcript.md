@@ -75,7 +75,7 @@ CURRENT   NAME       CLUSTER    AUTHINFO   NAMESPACE
 *         minikube   minikube   minikube
 ```
 
-This command shows some of the info taken from the kubectl config file.
+This command lists all the contexts defined in the kubectl config file, in my case I only have one context.
 
 ```popup animation
 ~/.kube/config
@@ -83,7 +83,7 @@ This command shows some of the info taken from the kubectl config file.
 
 We'll cover more about this file later in the course.
 
-If the current context shows as blank, like it is here, then it means that we're using the default namespace [red box]. So when we ran the get-pods command we only retrieved a list of pods that are in the default namespace.
+If the current context's namespace shows as blank, like it is here, then it means that we're using the default namespace [red box]. So when we ran the get-pods command we only retrieved a list of pods that are in the default namespace.
 
 
 If you want to interact with a different namespace, then one way to do that is by  specifying the namespace flag:
@@ -102,7 +102,7 @@ $ tree configs/
 $ code configs/namespace-dev1.yml
 ```
 
-The name that you give to your namespaces should be something that makes sense in your workplace, such as naming them after    team names, project names, environment names, and etc. 
+namespaces are quite a basic type of object, which is why the yaml definition is quite short compared to other object types. The name that you give to your namespaces should be something that makes sense in your workplace, such as naming them after    team names, project names, environment names, and etc. 
 
 Lets now create this namespace:
 
@@ -159,6 +159,7 @@ kubectl get pods --namespace=kube-public
 ok, So far, We have only explored namespace using pod objects. But the same concepts apply to other object types as well such as services. However, some objects are cluster level objects and can't be namespaced. You can use the api-resources command to get a list of which objects can be namespaced and which cant:
 
 ```bash
+# zoom out
 $ kubectl api-resources -o wide
 ```
 
