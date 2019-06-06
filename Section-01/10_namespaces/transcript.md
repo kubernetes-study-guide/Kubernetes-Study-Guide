@@ -1,15 +1,25 @@
 # transcript
 
-When you create a brand new kube cluster, and then list out your pods, you'll find there aren't any pods yet:
+
+Hello Everyone,
+
+For this demo I've opened up a bash terminal inside this video's topic folder. 
 
 ```bash
-$ kubectl get pods
-No resources found.
+pwd
 ```
 
-And consequently that means that we shouldn't have any containers running either. Now If your kubecluster is using docker, then you can run docker commands against your kubecluster's worker nodes. minikube happens to use docker as it's container run time engine, and it even comes with the docker-env helper command: 
+A minikube cluster happens to use Docker as it's default container run time engine.
 
 ```bash
+$ minikube start --help |  grep container-runtime
+      --container-runtime string          The container runtime to be used (docker, crio, containerd) (default "docker")
+```
+
+So if you stick with this default then you can run docker commands against your    cluster, which is pretty cool becuase it let's you see what's going on behind the scenes. Before you can run Docker commands, you first need to configure your workstation's docker cli to point to the minikube vm's docker daemon. To help you with that, you can use the docker-env command:
+
+```bash
+$ clear
 $ minikube docker-env
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.99.102:2376"
@@ -19,7 +29,10 @@ export DOCKER_API_VERSION="1.35"
 # eval $(minikube docker-env)
 ```
 
-This command prints out a set of export commands that you need to run in order to get your workstation's docker cli to connect to the minikube VM's docker daemon. However the last line of this output shows how to activate these settings:
+docker-env doesn't make any changes itself, instead it just tells you what configurations you need to set. This happens to involve running a few export commands in order to create some environment variables . By the way if you don't have docker installed on your workstation, then you can still use docker, by ssh'ing into the minikube vm, where you'll find docker is already installed and configured for you. 
+
+
+In my case I want to use my workstation's docker cli, and the last line of this output shows how to run all these export commands with a single command:
 
 
 ```bash
@@ -29,12 +42,22 @@ eval $(minikube docker-env)
 Ok we're now connected to minikube's docker daemon for the rest of this bash session. So let's try listing our containers:
 
 ```bash
+$ clear
+command+K
 $ docker container ls
+scroll up
 ```
 
-Ok so based on what we know so far, we should have got an empty list, since we don't have any pods. So where have all these containers come from?
+Here we can see that we have a lot of containers, so that means that we must have   some pods running as well. 
 
-The answer is to do with namespaces. You see, in Kubernetes we can group our objects into a construct known as **namespaces**. We can list all the namespaces using the get command:
+```bash
+$ kubectl get pods
+No resources found.
+```
+
+Ok that's strange, we don't have any pods at all. How is that possible, where have all these containers come from?
+
+The answer is to do with namespaces. You see, in Kubernetes we can group our objects into a construct known as **namespaces**. We can use the   get command to list out our namespace:
 
 ```bash
 $ kubectl get namespaces
@@ -44,7 +67,7 @@ kube-public   Active    11h
 kube-system   Active    11h
 ```
 
-our minikube cluster comes with these namespaces already setup. Kubectl can only interact with one namespace at a time. We can run the get-context config command to see which namespace our kubectl client is currently pointing to:
+Our minikube cluster comes included with these namespaces, however Kubectl can only interact with one namespace at a time. We can run the get-context config command to see which namespace our kubectl client is currently using:
 
 ```bash
 $ kubectl config get-contexts
@@ -52,8 +75,7 @@ CURRENT   NAME       CLUSTER    AUTHINFO   NAMESPACE
 *         minikube   minikube   minikube
 ```
 
-This command shows some of the info stored in the kubectl config file. By default this file is called config,it's located in your home directory.
-
+This command shows some of the info taken from the kubectl config file.
 
 ```popup animation
 ~/.kube/config
@@ -61,77 +83,80 @@ This command shows some of the info stored in the kubectl config file. By defaul
 
 We'll cover more about this file later in the course.
 
-If the current context shows as blank, like it is here, then it means that we're using the default namespace [red box]. So when we ran the get-pods command we only saw a list of pods that are residing in the default namespace.
+If the current context shows as blank, like it is here, then it means that we're using the default namespace [red box]. So when we ran the get-pods command we only retrieved a list of pods that are in the default namespace.
 
 
-If you want to interact with a different namespace, then you can do so by specifying the namespace flag:
+If you want to interact with a different namespace, then one way to do that is by  specifying the namespace flag:
 
 
 ```bash
 $ kubectl get pods --namespace=kube-system
 ```
 
-Kubernetes is using this namespace to house objects that it itself needs for it's own internal working. Here we see that we have a lot of pods, which explains where all those containers came from earlier.
+The kube-system namespace is used by Kubernetes to house objects that it itself needs for it's own internal working. Here we see that we have a lot of pods. This explains where all those containers came from earlier.
 
-You can also create your own namespaces and organise your objects into them. Here's a yaml file to create a namespace called dev1:
+In Kubernetes, you can create your own custom namespaces and organise your objects into them. Here's a yaml file to create a namespace called ns-dev1:
 
 ```bash
 $ tree configs/
 $ code configs/namespace-dev1.yml
 ```
 
-In my case I called my namespace ns-dev1 becuase I want to have several dev environments and dev1 will store all the objects for the first development environment. You can name your namespaces to whatever makes sense in your workplace, such as team names, project names, environment names, 
+The name that you give to your namespaces should be something that makes sense in your workplace, such as naming them after    team names, project names, environment names, and etc. 
 
-Note that this is one of the few object types where you don't need to explicitly add a spec section. Lets now create this namespace:
+Lets now create this namespace:
 
 ```bash
 kubectl apply -f configs/namespace-dev1.yml
 kubectl get namespaces
 ```
 
-Next you'll want to add objects to your namespace. You can do this by using the namespace flag:
+Next you'll want to add objects to your namespace. So let's try to create the following pod:
 
 ```bash
-kubectl apply -f configs/pod-httpd.yml --namespace ns-dev1   # just show but dont run. 
+code configs/pod-httpd-any-namespace.yml
 ```
 
-This is a great way to deploy the same pod across several namespaces. All you have to do is run the above command multiple times with a different namespace each time.
-
-However if you have an object that's only supposed to be deployed to a particular namespace, then you can set this in the yaml file instead:
+This is the same yaml definition that we used in our hello world demo earlier. Now to create this pod in our new namespace, we can use the namespace flag:
 
 ```bash
-code configs/pod-httpd.yml 
+kubectl apply -f configs/pod-httpd.yml --namespace ns-dev1
+kubectl get pods
+kubectl get pods --namespace=ns-dev1
 ```
 
-This is the same file as we used in the hello world pod demo, but this time with a metadata.namespace setting added in. In this case you don't need to use the namespace flag anymore:
+This is a great way to deploy the same pod across several namespaces. All you have to do is run the above command multiple times with a different namespace each time. Now if you want to work with a particular namespace for a prolonged period, then constantly writing out the namespace flag can get tedious. In that scenario, it's more convenient to persistently change the default namespace by using the set-context command:
 
 ```bash
-kubectl apply -f configs/pod-httpd.yml
+kubectl config current-context
+kubectl config set-context $(kubectl config current-context) --namespace=ns-dev1
+kubectl config get-contexts
 ```
 
-We can doublecheck which namespace an object belongs to using the get command:
+This effectily makes a one line change in the kubectl's config file. Now kubectl will use the ns-dev1 namespace as the new default, unless told otherwise. 
 
 ```bash
-kubectl get pods pod-httpd -o yaml --namespace=ns-dev1 | head 
+$ kubectl get pods
+NAME        READY   STATUS    RESTARTS   AGE
+pod-httpd   1/1     Running   0          3m10s
+$ kubectl get pods -o yaml --namespace=ns-dev1 | grep 'namespace:'
+    namespace: ns-dev1
 ```
 
-The fact that we used the --namespace flag alone is proof enough. but you can view this output just to be extra sure. 
+If you want to limit a pod, so that it can only be created inside a specific namespace, then you can hard code the namespace into the pod's   definition. 
 
+```code
+code configs/pod-httpd-specfic-namespace.yml
+```
 
-
-Now if you want to work with a particular namespace for a prolonged period then writing out the namespace flag all the time can get tedious. Instead you can persistently change the default namespace:
+Here we set the restriction by specifying the metadata.namespace setting. Let's try this out now:
 
 ```bash
-$ kubectl config set-context $(kubectl config current-context) --namespace=ns-dev1
-$ kubectl config get-contexts
+kubectl apply -f configs/pod-httpd-specfic-namespace.yml
+kubectl get pods --namespace=kube-public
 ```
 
-This now shows our chosen namespace. All that's happened behind the scenes to make this change persistent, is a single line was changed in kubectl's config file.
-
-
-
-
-Some objects are cluster level objects and can't be namespaced. You can use the api-resources command to get a list of which objects can be namespaced and which cant:
+ok, So far, We have only explored namespace using pod objects. But the same concepts apply to other object types as well such as services. However, some objects are cluster level objects and can't be namespaced. You can use the api-resources command to get a list of which objects can be namespaced and which cant:
 
 ```bash
 $ kubectl api-resources -o wide

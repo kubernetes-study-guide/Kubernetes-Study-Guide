@@ -2,7 +2,6 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: pod-httpd
-  namespace: ns-dev1
   labels:
     app: apache_webserver
 spec: 
