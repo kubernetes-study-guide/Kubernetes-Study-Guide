@@ -169,7 +169,7 @@ There's a lot of output here so I'll just scroll up to the beginning.
 I'll zoom out a little bit so that each row fits on a single line. 
 
 
-As you can can see here, we have a column that tells us which of these objects can be put inside a namespace. 
+Here we have the namespaced column. This tells us which of these objects can be put inside a namespace. 
 
 
 That's it for this video. See you in the next one. 
