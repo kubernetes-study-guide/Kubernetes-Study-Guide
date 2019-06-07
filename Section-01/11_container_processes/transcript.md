@@ -117,7 +117,7 @@ If you have containers that keep unexpectedly restarting then these log commands
 
 There's one more thing I wanted to point out, pods are designed to only host containers that have a continuously running main process. In other words the containers in your pod needs to be continuously running. 
 
-However there can containers that have a main process that are only supposed to perform a specific task and then end naturally, which in turn would shut down the container. These types of short-lived containers shouldn't be placed inside pods. Otherwise the pod will view these shutdowns as something unexpected and will keep spinning up replacement containers. 
+However there can be containers that have a main process that is only supposed to perform a specific task and then end naturally, which in turn would shut down it's container as well. These types of short-lived containers shouldn't be placed inside pods. Otherwise the pod will view these shutdowns as something unexpected and will keep spinning up replacement containers. 
 
 
 Instead you should run these shortlived containers inside a job or cronjob objects. We'll cover these later. 
