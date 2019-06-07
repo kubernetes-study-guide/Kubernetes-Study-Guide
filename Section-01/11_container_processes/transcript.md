@@ -50,6 +50,7 @@ It looks like ps isn't installed in our container. But I do have apt available s
 ```bash
 apt-get update
 apt-get install -y procps
+
 ```
 
 Ok now let's try again:
@@ -57,6 +58,48 @@ Ok now let's try again:
 ```bash
 ps -ef
 ```
+
+In containers, the process with the process id of 1 is the container's primary process. On the right we can see the command that was executed to start this process. We'll cover more about these commands in a later video. The main process also spawned a few child processes. As indicated by the fact that these processes have parent process id of 1. we can see this parent/child relationship a bit more visually using pstree:
+
+```bash
+pstree -an
+```
+
+Here we can see there are few child processes. 
+
+
+A container's primary purpose is to run the main process. If that process comes to an end then the container will shutdown. So what happens if one of the pod's container dies? Well we can try it out and see what happens. 
+
+Lets first exit out of the container. 
+
+```bash
+exit
+```
+
+Now let's run get pods again, just as a reminder. 
+
+```bash
+kubecelt get pods -o wide
+```
+
+Now let's simulatte a container failure by running the kill command:
+
+```bash
+kubectl exec pod-httpd -c cntr-httpd -- kill 1
+```
+
+This should have killed a the container. Now lets do get pods again:
+
+
+```bash
+kubecelt get pods -o wide
+```
+
+
+
+
+
+
 
 Here the process that has the process id of 1, is the main process that this container has been created to run. 
 
