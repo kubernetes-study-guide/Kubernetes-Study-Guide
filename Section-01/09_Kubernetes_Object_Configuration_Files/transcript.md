@@ -32,6 +32,7 @@ In Kubernetes, The yaml files we have demoed so far, are referred to quite gener
 
 - kubernetes manifests
 - or kubernetes yaml descriptors
+- or yaml definitions
 - or just       yaml files. 
 
 
