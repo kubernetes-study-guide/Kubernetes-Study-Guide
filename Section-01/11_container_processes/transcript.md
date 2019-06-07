@@ -92,23 +92,40 @@ This should have killed a the container. Now lets do get pods again:
 
 
 ```bash
-kubecelt get pods -o wide
+kubectl get pods -o wide
 ```
 
+Notice that this time there has been a restart. This restart doesn't mean the pod has been restarted since the pod's age is about the same as before. This restart means that the pod has restarted one of it's containers. Basically pods are self healing, so if a container shuts down then the pod will spin up a new container to replace it. You can confirm that this is what really happenedy by taking a look at the container's logs:
+
+```bash
+$ kubectl logs pod-httpd -c cntr-httpd
+```
+
+When using the logs command you should specify the container's name, since a pod can have multiple containers. You also need to specify the pod's name.
+
+This shows the logs for the current container, which replaced the previous container. The timestamps indicated that this container has started up only a couple of minutes ago. We can also view the previous containers log using the previous flag:
+
+```bash
+$ kubectl logs pod-httpd cntr-httpd --previous
+```
+
+Here we can see the exact time the container received the kill signal. This timestamp is just before our new container's timestamp, which correlates with what we expected. 
+
+
+If you have containers that keep unexpectedly restarting then these log commands are a great way to troubleshoot what's going on. 
+
+
+There's one more thing I wanted to point out, pods are designed to only host containers that have a continuously running main process. In other words the containers in your pod needs to be continuously running. 
+
+However there can containers that have a main process that are only supposed to perform a specific task and then end naturally, which in turn would shut down the container. These types of short-lived containers shouldn't be placed inside pods. Otherwise the pod will view these shutdowns as something unexpected and will keep spinning up replacement containers. 
+
+
+Instead you should run these shortlived containers inside a job or cronjob objects. We'll cover these later. 
 
 
 
 
 
 
-Here the process that has the process id of 1, is the main process that this container has been created to run. 
 
-
-But what start's that process in the first place? The answer is, commands.
-
-
-
-
-The main reason we use containers is so to run a process that provides a service that's of value to us. This process can be in the form of a command or a shell script. 
-
-if a image doesn't come with a predefined command baked into it, then you need to define an ongoing command in the pod definition instead. 
+ if our container's process ends naturally, becuase the process finished whatever it was supposed to do, rather than us killing it with the kill command.
