@@ -122,6 +122,7 @@ However there can containers that have a main process that are only supposed to 
 
 Instead you should run these shortlived containers inside a job or cronjob objects. We'll cover these later. 
 
+That's it for this video. See you in the next one. 
 
 
 
