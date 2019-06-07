@@ -90,7 +90,7 @@ If you want to interact with a different namespace, then one way to do that is b
 
 
 ```bash
-$ kubectl get pods --namespace=kube-system
+$ kubectl get pods xxxxx --namespace=kube-system
 ```
 
 The kube-system namespace is used by Kubernetes to house objects that it itself needs for it's own internal working. Here we see that we have a lot of pods. This explains where all those containers came from earlier.
@@ -162,6 +162,15 @@ ok, So far, We have only explored namespace using pod objects. But the same conc
 # zoom out
 $ kubectl api-resources -o wide
 ```
+
+
+There's a lot of output here so I'll just scroll up to the beginning. 
+
+I'll zoom out a little bit so that each row fits on a single line. 
+
+
+As you can can see here, we have a column that tells us which of these objects can be put inside a namespace. 
+
 
 That's it for this video. See you in the next one. 
 
