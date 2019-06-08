@@ -9,8 +9,14 @@ vscode
 
 ## vscode
 
+For this demo I've opened up a bash terminal inside this video's topic folder. 
 
-Earlier we looked at how to view a container's main process. As a reminder let me quickly do that again, using our hello world pod. 
+```bash
+pwd
+```
+
+
+Earlier we looked at how to view a container's primary process. As a reminder let me quickly do that using our hello world pod again. 
 
 
 ```bash
