@@ -4,8 +4,8 @@ TODO: ....
 
 Structure:
 vscode
--> vscode
--> github: 
+-> swipe to httpd docker hub home page
+
 
 ## vscode
 
@@ -25,45 +25,61 @@ apt-get install -y procps
 ps -ef
 ```
 
-As you can see here, we have the main process as identified by the process id of 1. and on the right we can see the command that was executed to start that process. 
+As you can see here, we have the primary process as identified by the process id of 1. and on the right we can see the command that was executed to start that process. 
 
 
-But where did this startup command come from? In otherwords, how did the container know that it needed to execute this particular command in order to start the pid 1 process? The answer is that this startup command is baked into the image itself by the dockerfile. In the dockerfile, the startup command is specifed using either the CMD or ENTTRYPOINT settings, or a combination of both. 
+But where did this startup command come from? In otherwords, how did the container know that it needed to execute this particular command in order to start the primary process? The answer is that this startup command is baked into the image itself by the dockerfile. In the dockerfile, the startup command is specifed using either the CMD or ENTTRYPOINT settings, or a combination of both. 
 
 
-# website - https://hub.docker.com/_/httpd
+# website - https://hub.docker.com/_/httpd - swipe right. 
 
-For example here's the httpd image's web page. Clicking on dockerfile link takes us to github where we can view the file. At the bottom we find the CMD setting. This CMD command actually runs a shell script which was copied into the image. So let's go up one level and then take a look at this shell script.
+For example here's the httpd image's web page. Clicking on the dockerfile link takes us to github where we can view the dockerfile's content.
 
-Here we can see that actual command that starts up the main process. 
+```web-tasks
+click on link
+```
+
+
+At the bottom we find the CMD setting.
+
+
+```web-tasks
+scroll to bottom by dragging scroll bar
+```
+
+
+ This CMD command actually runs a shell script which was copied into the image. So let's go up one level and then take a look at this shell script.
+
+
+```web-tasks
+scroll to top by dragging scrollbar
+click up one level
+```
+
+Here we can see that actual command that starts up the primary process. 
 
 ## vscode
 
 This matches up with what we saw in our ps output. 
 
 
-Since this container is designed to provide an ongoing web service, it means that this baked-in command will start a continuously running process.
+Since this container is designed to provide an ongoing web service, it means that this baked-in command starts a continuously running process.
 
 
+However there are other images where the baked-in command only starts-up a shortlived process. For example the official centos image is a general purpose image that only comes with a shortlived bash command baked-in. 
 
 
-
-
-
-However there are other images where the baked in command only starts up a shortlived process. For example the official centos image is a general purpose image and it only comes with a shortlived bash command baked-in. 
-
-
-So if you create a pod with this image, then the container will just keep dying repeatedly. Here's a yaml file that we'll use in this demo:
+So if you create a pod with this image, then the container will just keep dying repeatedly. Let's demo this with the following yaml file:
 
 ```bash
 tree configs/
 code configs/pod-centos-shortlived.yml 
 ```
 
-This is a basic single container pod. By the way I specified the image's tag here, just to show how to use a particular image version. if you leave this out, like we did with our hello-world pod then, it defaults to using the tag called latest. 
+Here we have a basic single container pod. By the way I've specified the image's tag here, just to show how to use a particular image version. if you leave this out, like we did with our hello-world pod then, then it defaults to using the tag called latest. 
 
 
-Let's apply this now. 
+Ok let's apply this now. 
 
 
 ```bash
@@ -135,7 +151,10 @@ you can also attach your terminal directly to the main process's standard output
 $ kubectl attach pod-centos -c cntr-centos
 ```
 
-Here we can see the date being echoed out every 5 seconds. 
+Here we can again see the date being echoed out every 5 seconds. 
+
+
+Going back to the yaml file, notice the way I wrote the command setting. This is yaml syntax for writing a list as a single line. There are other ways to write this yaml file to achieve the same result. I'ved included them in the more-sample folder. 
 
 Ok, that's it for this video. See you in the next one. 
 

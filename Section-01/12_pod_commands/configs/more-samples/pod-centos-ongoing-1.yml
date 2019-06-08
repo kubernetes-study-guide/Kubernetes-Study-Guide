@@ -6,7 +6,9 @@ spec:
   containers:
   - name: cntr-centos
     image: centos
-    command: ["/bin/bash", "-c"]
+    command: 
+    - /bin/bash
+    - -c
     args:
     - |
       while true ; do
