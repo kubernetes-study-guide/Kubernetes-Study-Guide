@@ -123,6 +123,26 @@ kubectl get pods
 
 It looks like that has now worked. Let's try the logs to see if the timestamp is being sent to the standard output:
 
+```bash
+$ kubectl logs -f pod-centos -c cntr-centos
+```
+
+Notice I've used the -f flag here, that so that we can follow the logs. Everything looks good here so Lets now cntrl+c out of that. 
+
+you can also attach your terminal directly to the main process's standard output. That's done using the attach command:
+
+```bash
+$ kubectl attach pod-centos -c cntr-centos
+```
+
+Here we can see the date being echoed out every 5 seconds. 
+
+Ok, that's it for this video. See you in the next one. 
+
+
+
+
+
 
 
 
