@@ -5,4 +5,4 @@ metadata:
 spec: 
   containers:
   - name: cntr-centos
-    image: centos
+    image: centos:7

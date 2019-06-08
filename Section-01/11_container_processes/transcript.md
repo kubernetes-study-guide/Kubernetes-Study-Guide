@@ -101,6 +101,8 @@ Notice that this time there has been a restart. This restart doesn't mean the po
 $ kubectl logs pod-httpd -c cntr-httpd
 ```
 
+The logs command displays the standard output and error output for the main processk. 
+
 When using the logs command you should specify the container's name, since a pod can have multiple containers. You also need to specify the pod's name.
 
 This shows the logs for the current container, which replaced the previous container. The timestamps indicated that this container has started up only a couple of minutes ago. We can also view the previous containers log using the previous flag:

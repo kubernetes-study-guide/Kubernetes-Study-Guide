@@ -103,4 +103,17 @@ So far it might sound like I'm telling you to always, always, always, take the d
 $ kubectl delete -f configs/
 ```
 
+###TODO - Start
+One final thing I wanted to show you. You can run a single imperative command to quickly spin up a pod and start a bash session inside it:
+
+```bash
+$ kubectl run podcentos --image=centos --restart=Never -it --command -- /bin/bash
+```
+
+Here we've create a pod using the official centos image. This is a handy way to take a look inside an image, without having to go through the hassle of writing out a yaml file first. 
+
+Note that we didn't need to specify the --comand setting here. That's because the dockerfile that built this image already specified bash for the CMD setting. But we've added it in here just so you know what to do if that wasn't the case for the image you want to look inside. 
+###TODO - END
+
+
 That's it for this video. See you in the next one. 

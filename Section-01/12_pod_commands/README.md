@@ -157,3 +157,10 @@ There could be times when you want to run commands/scripts in addition to the do
 You can also run non-primary containers with shortlived workloads using `pod.spec.initContainers`, which will cover later.
 
 You can also run other commands that periodically monitors the health of your pod's containers. These are known as [liveness and readiness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/). We'll cover these later too.
+
+
+## Reference
+
+[https://aws.amazon.com/blogs/opensource/demystifying-entrypoint-cmd-docker/](https://aws.amazon.com/blogs/opensource/demystifying-entrypoint-cmd-docker/)
+
+[https://www.freecodecamp.org/news/docker-entrypoint-cmd-dockerfile-best-practices-abc591c30e21/](https://www.freecodecamp.org/news/docker-entrypoint-cmd-dockerfile-best-practices-abc591c30e21/)
