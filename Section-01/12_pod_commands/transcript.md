@@ -137,13 +137,19 @@ $ kubectl apply -f configs/pod-centos-ongoing.yml
 kubectl get pods
 ```
 
-It looks like that has now worked. Let's try the logs to see if the timestamp is being sent to the standard output:
+It looks like that has now worked. let's take a look at what the resulting process looks like:
+
+```bash
+kubectl exec pod-centos -c cntr-centos -- ps -ef
+```
+
+Let's take a look at the logs to see if the timestamp is being sent to the standard output:
 
 ```bash
 $ kubectl logs -f pod-centos -c cntr-centos
 ```
 
-Notice I've used the -f flag here, that so that we can follow the logs. Everything looks good here so Lets now cntrl+c out of that. 
+Notice I've used the -f flag here, that's so that we can follow the logs. Everything looks good here so lets cntrl+c out of that. 
 
 you can also attach your terminal directly to the main process's standard output. That's done using the attach command:
 
@@ -154,7 +160,7 @@ $ kubectl attach pod-centos -c cntr-centos
 Here we can again see the date being echoed out every 5 seconds. 
 
 
-Going back to the yaml file, notice the way I wrote the command setting. This is yaml syntax for writing a list as a single line. There are other ways to write this yaml file to achieve the same result. I'ved included them in the more-sample folder. 
+Now, going back to the yaml file, notice the how I wrote the command setting. This is actually yaml syntax for writing a list as a single line. There are other ways to write this yaml file to achieve the same result. I'ved included them in the more-sample folder. 
 
 Ok, that's it for this video. See you in the next one. 
 
