@@ -34,7 +34,7 @@ ps -ef
 As you can see here, we have the primary process as identified by the process id of 1. and on the right we can see the command that was executed to start that process. 
 
 
-But where did this startup command come from? In otherwords, how did the container know that it needed to execute this particular command in order to start the primary process? The answer is that this startup command is baked into the image itself by the dockerfile. In the dockerfile, the startup command is specifed using either the CMD or ENTTRYPOINT settings, or a combination of both. 
+But where did this startup command come from? In otherwords, how did the container know that it needed to execute this particular command in order to start the primary process? The answer is that this startup command is baked into the image itself by the dockerfile. In the dockerfile, the startup command is defined using either the CMD or ENTTRYPOINT settings, or a combination of both. 
 
 
 # website - https://hub.docker.com/_/httpd - swipe right. 
@@ -111,7 +111,7 @@ tree configs/
 code config
 ```
 
-Here we have two settings, command is the kubernetes equivalent of dockerfiles Entrypoint setting. And similarly 'args' is equivalent for the dockerfile's CMD setting. These 2 settings will override the baked in start-up command. 
+Here we have two settings, command is the kubernetes equivalent of dockerfiles Entrypoint setting. And similarly 'args' is the equivalent for the dockerfile's CMD setting. These 2 settings will override the baked in start-up command. By the way, some images might not come with a baked-in command at all. In which case you can use these 2 pod settings to set what you want the startup command to be.
 
 Here we're saying that we want to feed in this multiline string value into bash. We also used the -c flag to tell bash to treat this multiline string as a command. 
 
@@ -199,7 +199,7 @@ So to get this work, we need to
 
 
 
-Some images doesn't come with a baked-in command at all. in which case this would sets what the startup command should. 
+ 
 
 
 
