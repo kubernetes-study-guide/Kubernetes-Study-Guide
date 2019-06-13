@@ -166,68 +166,16 @@ $ kubectl attach pod-centos -c cntr-centos
 Here we can again see the date being echoed out every 5 seconds. 
 
 
-Now, going back to the yaml file, notice the how I wrote the command setting. This is actually yaml syntax for writing a list as a single line. There are other ways to write this yaml file to achieve the same result. I'ved included them in the more-sample folder. 
+Now, going back to the yaml file, notice the wierd syntax I used to write the command setting. This is actually yaml syntax for writing a yaml list in the form of aa single line. There are other ways to write this yaml file to achieve the same end results. I've included some examples in the more-sample folder, just in case you want to take a look at them. 
+
+Finally I should point out that these to settings are not the only way to run commands. There are other ways to run commands such as:
+
+- making using of initcontainers,
+- or use postStart and preStop lifecycle hooks
+- and there's also Liveness and Readiness Probes
+
+We'll cover all these later in the course. 
+
+
 
 Ok, that's it for this video. See you in the next one. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-You can still use these images in your pods, 
-
-So to get this work, we need to 
-
-
-
- 
-
-
-
-, such as the official centos image, that comes with process 
-
-
- are general purpose images, and these  image's dockerfil
-
-
-
-
-
-
-The whole point of having containers is to run a Linux process inside them. That process in turn provides a service that is of value to us. You can find what that process is by taking a look inside a pod. For example let's create our hello-world pod again
-
-```bash
-tree configs/
-code 
-```
-
-
-
-
-But what start's that process in the first place? The answer is, commands.
-
-
-
-
-The main reason we use containers is so to run a process that provides a service that's of value to us. This process can be in the form of a command or a shell script. 
-
-if a image doesn't come with a predefined command baked into it, then you need to define an ongoing command in the pod definition instead. 
