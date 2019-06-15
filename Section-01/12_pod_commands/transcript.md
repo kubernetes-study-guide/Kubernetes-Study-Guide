@@ -34,7 +34,7 @@ ps -ef
 As you can see here, we have the primary process as identified by the process id of 1. and on the right we can see the command that was executed to start that process. 
 
 
-But where did this startup command come from? In otherwords, how did the container know that it needed to execute this particular command in order to start the primary process? The answer is that this startup command is baked into the image itself by the dockerfile. In the dockerfile, the startup command is defined using either the CMD or ENTTRYPOINT settings, or a combination of both. 
+But where did this startup command come from? In otherwords, how did the container know that it needed to execute this particular command in order to start the primary process? The answer is that this startup command is baked into the image itself by the dockerfile. In the dockerfile, the startup command is defined using either the CMD setting, or the ENTTRYPOINT setting, or a combination of both. 
 
 
 # website - https://hub.docker.com/_/httpd - swipe right. 
@@ -54,7 +54,7 @@ scroll to bottom by dragging scroll bar
 ```
 
 
- This CMD command actually runs a shell script which was copied into the image. So let's go up one level and then take a look at this shell script.
+ This CMD command actually runs a shell script which was copied into the image in an earlier step. So let's go up one level and then take a look at this shell script.
 
 
 ```web-tasks
@@ -72,7 +72,7 @@ This matches up with what we saw in our ps output.
 Since this container is designed to provide an ongoing web service, it means that this baked-in command starts a continuously running process.
 
 
-However there are other images where the baked-in command only starts-up a shortlived process. For example the official centos image is a general purpose image that only comes with a shortlived bash command baked-in. 
+However there are other images where the baked-in command only starts-up a shortlived process. For example, the official centos image is a general purpose image that only comes with a shortlived bash command baked-in. 
 
 
 So if you create a pod with this image, then the container will just keep dying repeatedly. Let's demo this with the following yaml file:
@@ -92,7 +92,7 @@ Ok let's apply this now.
 kubectl apply -f configs/pod-centos-shortlived.yml
 ```
 
-Now lets run get pods command a few times to see the progress:
+Now lets run the get pods command a few times to see the progress:
 
 ```bash
 $ kubectl get pods -o wide
@@ -101,7 +101,7 @@ $ kubectl get pods -o wide
 $ kubectl get pods -o wide
 ```
 
-Here we can see is that as expected the container keeps dying and this pod keeps building new replacement containers. As a result the restart number is creeping up over time.
+Here we can see is that as expected the container keeps dying and the pod keeps building new replacement containers. As a result the restart number is just going to carry on creeping up over time.
 
 Now in Kubernetes we can override the baked-in command, as shown in this yaml file:
 
@@ -111,14 +111,14 @@ tree configs/
 code config
 ```
 
-Here we have two settings, command is the kubernetes equivalent of dockerfiles Entrypoint setting. And similarly 'args' is the equivalent for the dockerfile's CMD setting. These 2 settings will override the baked in start-up command. By the way, some images might not come with a baked-in command at all. In which case you can use these 2 pod settings to set what you want the startup command to be.
+Here we have two settings, command is the kubernetes equivalent of dockerfiles Entrypoint setting. And similarly 'args' is the equivalent for the dockerfile's CMD setting. These 2 settings will override the baked in start-up command. By the way, some images might not come with a baked-in command at all. In which case you can use these 2 settings to just set the startup command.
 
-Here we used the -c flag to tell bash to run -c flags string input as a command. In our case, our input for the -c flag is a multiline string value. 
+Here we used the -c flag. this flag requires a string input. The -c flags then instructs bash to run this string as a command. In our case, this string is going to be a multiline string and we're feeding this string into the -c flag via the command setting.
 
 
-This effectively ends up running a shell script. Where the shell script is an infinitely running while-loop that prints out the date every 5 seconds. This essentially is a bit of a crude technique to start up a continuously running process. 
+This effectively ends up running a continously running shell script, whose only job is to print out the date every 5 seconds. This is a bit of a crude technique, but it is quite useful for testing purposes. 
 
-To better understand how this works, let's simulate how this shell script would run if ran it directly on my macbook. 
+To better understand what this startup command looks like, let's simulate how this shell script works by running it directly on my macbook. 
 
 
 
@@ -137,7 +137,7 @@ Here we used single quotes to feed in the multiline string as a single arguement
 press enter
 ```
 
-As you can see, the script is now printing out the date every 5 seconds. ok let's cntrl+c out of the script. Now let's create this pod:
+As you can see, the script is now printing out the date every 5 seconds. ok let's cntrl+c out of this script a go ahead with creating this pod:
 
 ```bash
 $ kubectl apply -f configs/pod-centos-ongoing.yml
@@ -150,7 +150,7 @@ It looks like that has now worked. let's take a look at what the resulting proce
 kubectl exec pod-centos -c cntr-centos -- ps -ef
 ```
 
-Let's take a look at the logs to see if the timestamp is being sent to the standard output:
+This confirms taht our shell script is now running as the primary process which is what we expected. Let's take a look at the logs to see if the timestamp is being sent to the standard output:
 
 ```bash
 $ kubectl logs -f pod-centos -c cntr-centos
@@ -167,16 +167,16 @@ $ kubectl attach pod-centos -c cntr-centos
 Here we can again see the date being echoed out every 5 seconds. 
 
 
-Now, going back to the yaml file, notice the wierd syntax I used to write the command setting. This is actually yaml syntax for writing a yaml list in the form of aa single line. There are other ways to write this yaml file to achieve the same end results. I've included some examples in the more-sample folder, just in case you want to take a look at them. 
+Now let's turn our attention back to the yaml file, one thing you may have noticed, is the wierd syntax I used to write the command setting. This is actually yaml syntax for writing a yaml list as a single line. However there are lots of other ways to write this yaml file to achieve the same end results. I've included some examples in the more-sample folder, in case you want to take a look at them. 
 
-Finally I should point out that these to settings are not the only way to run commands. There are other ways to run commands such as:
+Finally I should point out that these two settings are not the only way to run commands inside pods. There are other ways to run commands such as:
 
+```popupwindows
 - making using of initcontainers,
 - or use postStart and preStop lifecycle hooks
 - and there's also Liveness and Readiness Probes
+```
 
 We'll cover all these later in the course. 
-
-
 
 Ok, that's it for this video. See you in the next one. 
