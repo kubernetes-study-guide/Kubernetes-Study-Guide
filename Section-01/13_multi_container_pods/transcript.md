@@ -45,6 +45,11 @@ As you can see here we got a successful response. That's becausee all containers
 
 In Kubernetes, the first container that's listed in your yaml file, is treated to as the main container, and all the other containers are treated as supporting containers. 
 
+These containers are referred to by other names, such as sidecar containers, secondary containers,...etc. 
+
+
+As these names implies. the supporting containers aren't supposed to provide a pod's primary service. Instead it provides additional features, such as log forwarding using filebeat. 
+
 
 
 
