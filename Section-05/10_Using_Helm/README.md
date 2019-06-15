@@ -233,7 +233,7 @@ NAME   	VERSION	REPOSITORY                                       	STATUS
 mariadb	5.x.x  	https://kubernetes-charts.storage.googleapis.com/	missing
 ```
 
-To pull down the missing dependencies you run the following while in the Chartss.yaml folder:
+To pull down the missing dependencies you run the following while in the helm's root folder:
 
 ```bash
 $ helm dependency update
@@ -253,9 +253,93 @@ If the helm charts are locally, then you can install it like this:
 $ helm install .
 ```
 
+This is a good appraoch if you git clone the helm source code, and then run this command. In this scenario you skip using tar files altogether. However you can also feed in tar files too:
+
+```bash
+$ helm install /path/to/helmchart.tar.gz
+```
+
+
+
+## Helm Repos
+
+Helm downloads tar files from 'helm repos'. Similar to you yum downloads from rpm repos. However instead to .repo files, helm uses repositories.yaml file:
+
+```bash
+$ cat ~/.helm/repository/repositories.yaml 
+apiVersion: v1
+generated: "2019-06-11T19:03:36.605906+01:00"
+repositories:
+- caFile: ""
+  cache: /Users/schowdhury/.helm/repository/cache/stable-index.yaml
+  certFile: ""
+  keyFile: ""
+  name: stable
+  password: ""
+  url: https://kubernetes-charts.storage.googleapis.com
+  username: ""
+- caFile: ""
+  cache: /Users/schowdhury/.helm/repository/cache/local-index.yaml
+  certFile: ""
+  keyFile: ""
+  name: local
+  password: ""
+  url: http://127.0.0.1:8879/charts
+  username: ""
+```
+
+You can crud this file using helm by using commands like:
+
+```bash
+helm repo add
+helm repo remove
+helm list
+helm repo update   # useful for cleangin up the cache
+```
+
+
+# Create helm boilerplate
+
+This is done using 
+
+```bash
+$ helm create hello-world
+```
+This creates:
+
+```bash
+$ tree ./hello-world
+./hello-world
+├── Chart.yaml          # mainly contains meta data
+├── charts
+├── templates
+│   ├── NOTES.txt
+│   ├── _helpers.tpl
+│   ├── deployment.yaml
+│   ├── ingress.yaml
+│   ├── service.yaml
+│   └── tests
+│       └── test-connection.yaml
+└── values.yaml     # this contains default values. These are used 
+                    # to render the yaml files stored in the templates 
+                    # folder. 
+
+3 directories, 8 files
+```
+
+One file that doesn't get requreted is the requirements.yaml. this stores chart dependenices. These dependencies are downloaded and installed in the charts folders. this file is also where the `helm dependency list` command gets it's info from. 
+
+
+values.yaml has a bunch of default values. you can override these values on the command like using the --set flag. 
+
+```bash
+helm install --set key=value --set key=value ...
+```
+
 
 
 
 
 ## References
 [helm](https://helm.sh/)
+[https://linuxhint.com/getting-started-kubernetes-helm-charts/](https://linuxhint.com/getting-started-kubernetes-helm-charts/)
