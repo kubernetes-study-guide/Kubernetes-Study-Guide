@@ -167,9 +167,9 @@ $ kubectl attach pod-centos -c cntr-centos
 Here we can again see the date being echoed out every 5 seconds. 
 
 
-Now let's turn our attention back to the yaml file, one thing you may have noticed, is the wierd syntax I used to write the command setting. This is actually yaml syntax for writing a yaml list as a single line. However there are lots of other ways to write this yaml file to achieve the same end results. I've included some examples in the more-sample folder, in case you want to take a look at them. 
+Now let's turn our attention back to the yaml file, one thing you may have noticed, is the wierd syntax I used to write the command setting. This is actually yaml syntax for writing a yaml list as a single line. However there are a few other ways to write this yaml file to achieve the same end result. I've included some examples of them in the more-samples folder, in case you want to take a look at them. 
 
-Finally I should point out that these two settings are not the only way to run commands inside pods. There are other ways to run commands such as:
+Finally I should point out that these two settings are not the only ways to run commands inside pods. There are other options, such as initcontainers, lifecycle hooks, and healthcheck probes:
 
 ```popupwindows
 - making using of initcontainers,

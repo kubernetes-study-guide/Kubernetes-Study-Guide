@@ -6,15 +6,15 @@ For this demo I've opened up a bash terminal inside this video's topic folder.
 pwd
 ```
 
-In this video we're going to build a multicontainer pod. In our demo, we'll build a pod that has 2 containers running inside it. Here's the yaml file we'll use to create this. 
+So far we've only demo pods that only had a single container running inside it. However you can multiple containers running inside a single pod. In this demo, I'm going to show what a 2 container pod looks like. Here's the yaml file I'll use to create this. 
 
 ```bash
 tree configs/
-code configs/pod-httpd.yml
+code configs/pod-with-2-cntrs.yml
 switch to bash terminal (ctrl+~) 
 ```
 
-I've actually created this definition using yaml extracts from previous examples. The first container is a hello-world apache webserver container, and the second container is a standard centos container with an infinite while loop, which keeps the cento container running continuously. So let's see what we end up with when we create this pod. 
+I've actually created this definition using yaml extracts from previous examples. The first container is a hello-world webserver container, and the second container is a standard centos container with an infinite while loop. So let's see what we end up with when we create this pod. 
 
 ```bash
 $ kubectl apply -f configs/pod-with-2-cntrs.yml
@@ -26,10 +26,10 @@ NAME             READY   STATUS    RESTARTS   AGE   IP            NODE       NOM
 pod-multi-cntr   2/2     Running   0          30s   172.17.0.10   minikube   <none>           <none>
 ```
 
-Here we can see that our pod contains 2 containers. That's indicated by the fact that our pod has 2 containers ready out of total of 2 containers. Containers inside the pod behaves a little like processes inside the same virtual machine, in the sense that the containers can interact with each other using localhost networking namespace. Let's see this in action by starting up a terminal inside the centos container:
+Here we can see that our pod contains 2 containers. That's indicated by the fact that our pod has 2 containers ready out of total of 2 containers. Containers inside the same pod have a few interesting capabilities. To see what I mean, lets first open up a terminal inside the centos container:
 
 ```bash
-$ kubectl exec pod-multi-cntr -c cntr-centos -it bash
+$ kubectl exec pod-multi-cntr -c cntr-centos -it /bin/bash
 ```
 
 Now this container doesn't have apache running on it. However if I curl the localhost I get the following:
@@ -39,8 +39,19 @@ Now this container doesn't have apache running on it. However if I curl the loca
 curl http://localhost
 ```
 
-As you can see here we got a successful response. That's becausee all containers inside a pod are part of the same network namespace. That means that when we run the curl command from our centOS container, our web container ended up responding to that request. You can think of it as all the containers in a pod have the same loopback interface attached to them. You can also share folders between containers in a pod. We'll cover how to do that in a later video. 
+As you can see here we got a successful response. This response actually came from the web container. That's because all containers inside a pod are part of the same network namespace. That means that when we run the curl command from our centOS container, our web container ended up responding to that request. 
 
+You can think of this in terms of a pod is a bit like a virtual machine, and the containers as processes inside that vm, in which case the containers can interact with each other using the localhost networking namespace. That means that the pod's network loopback interface is simultaneously attached to all containers in that pod.
+
+You can also share folders between containers in a pod. But we'll cover how to do that in a later video.
+
+There's another thing I wanted to to show you, let me first exit out of this pod. Now let me run the logs command:
+
+```bash - write command but not hit enter
+
+```
+
+Now normally I would also add the -c flag along with the containers name, so that kubectl knows exactly which container's log I'm interested in. However I'm not going to bother with that and just hit return
 
 
 In Kubernetes, the first container that's listed in your yaml file, is treated to as the main container, and all the other containers are treated as supporting containers. 
