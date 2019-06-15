@@ -76,6 +76,10 @@ So what are the worker components? they are:
 - kube-proxy - This manages networking across all worker nodes. It creates a network overlay, 
   so that each pod has it's own unique ip address
 
+
+
+
+
 There's actually lots of different ways to setup kubernetes. One option is to install all the components onto a single node:
 
 ![Single-node-kubecluster.png](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide/raw/master/Section-01/04_What_is_Kubernetes/images/Single-node-kubecluster.png)
@@ -110,4 +114,11 @@ However this setup still has a single point of failure, which is the kube master
 
 In order for HA to work properly, you need to have an odd number of Kube masters in your cluster, e.g. 3, 5, 7. These kube masters together are referred to as the **control plane**.
 
+##TODO-START
+Finally I should mention that Kubernetes doesn't come with feature to allow pod-to-pod across worker nodes. That feature is something that's added into a kube cluster by installing third party networking plugins. These networking plugins provide the following features:
+- all containers can communicate with eachother without resorting to NAT. 
+- all nodes can communicate with all containers without resorting to NAT. 
+
+These plugins are referred to as cni plugins. Where cni stands for contanier networking interface.
+##TODO-END
 That's it for this video, see you in the next one. 

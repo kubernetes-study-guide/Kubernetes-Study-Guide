@@ -21,7 +21,7 @@ Earlier we looked at how to view a container's primary process. As a reminder le
 
 ```bash
 tree configs/
-code code configs/pod-httpd.yml
+code configs/pod-httpd.yml
 switch to bash terminal (ctrl+~) 
 kubectl apply -f configs/pod-httpd.yml
 kubectl get pods
@@ -113,9 +113,10 @@ code config
 
 Here we have two settings, command is the kubernetes equivalent of dockerfiles Entrypoint setting. And similarly 'args' is the equivalent for the dockerfile's CMD setting. These 2 settings will override the baked in start-up command. By the way, some images might not come with a baked-in command at all. In which case you can use these 2 pod settings to set what you want the startup command to be.
 
-Here we're saying that we want to feed in this multiline string value into bash. We also used the -c flag to tell bash to treat this multiline string as a command. 
+Here we used the -c flag to tell bash to run -c flags string input as a command. In our case, our input for the -c flag is a multiline string value. 
 
-This effectively ends up running a shell script. Where the shell script is an infinitely running while-loop that prints out the date every 5 seconds. 
+
+This effectively ends up running a shell script. Where the shell script is an infinitely running while-loop that prints out the date every 5 seconds. This essentially is a bit of a crude technique to start up a continuously running process. 
 
 To better understand how this works, let's simulate how this shell script would run if ran it directly on my macbook. 
 
