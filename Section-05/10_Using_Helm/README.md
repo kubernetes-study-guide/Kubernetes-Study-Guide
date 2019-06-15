@@ -330,12 +330,19 @@ $ tree ./hello-world
 One file that doesn't get requreted is the requirements.yaml. this stores chart dependenices. These dependencies are downloaded and installed in the charts folders. this file is also where the `helm dependency list` command gets it's info from. 
 
 
-values.yaml has a bunch of default values. you can override these values on the command like using the --set flag. 
+values.yaml has a bunch of default values. 
+
+You can override these by just updating this values.yaml with new defaults. Not that good approach though.  A better way to override these values, is on the command like using the --set flag. 
 
 ```bash
-helm install --set key=value --set key=value ...
+helm install stable/wordpress --set key=value --set key=value ...
 ```
 
+this commmand can end up getting quite long. An even better way is to create your own customs-values.yaml file which only includes the parts of the original yaml file you want to override, with the overrided value, and then use the --values flag to feed in your custom-values.yaml file.
+
+```bash
+helm install stable/wordpress --values=/path/to/customs-values.yaml
+```
 
 
 
