@@ -174,6 +174,18 @@ The important thing here is that we:
 
 Need to talk about how you would setup ingress to accept https connections. Also see `ingress.spec.tls`.
 
+## Types of routing
+
+ingress provides to types of routing:
+
+- name based hostnames - e.g. send example.com traffic to clusterIP service. 
+- paths based routing.  e.g. send example.com/v1 and example.com/v2 traffic to different clusterIP services. 
+
+You can also use a combination of these two approach. 
+
+In order to do this you need to, you need to set up a loadbalancer that forwards traffic to all the cluster's worker nodes. You also need to create multiple dns cname entries for the hostnames to point to the elb's hostname. 
+
+
 ### Further Reading
 
 This is to do with:
