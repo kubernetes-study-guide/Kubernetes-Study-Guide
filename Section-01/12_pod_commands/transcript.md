@@ -9,6 +9,8 @@ vscode
 
 ## vscode
 
+Hello everyone one, and welcome back.
+
 For this demo I've opened up a bash terminal inside this video's topic folder. 
 
 ```bash
@@ -16,7 +18,7 @@ pwd
 ```
 
 
-Earlier we looked at how to view a container's primary process. As a reminder let me quickly do that using our hello world pod again. 
+Earlier we looked at how to view a container's primary process. L et me quicky do that again using our hello world pod. 
 
 
 ```bash
@@ -34,12 +36,12 @@ ps -ef
 As you can see here, we have the primary process as identified by the process id of 1. and on the right we can see the command that was executed to start that process. 
 
 
-But where did this startup command come from? In otherwords, how did the container know that it needed to execute this particular command in order to start the primary process? The answer is that this startup command is baked into the image itself by the dockerfile. In the dockerfile, the startup command is defined using either the CMD setting, or the ENTTRYPOINT setting, or a combination of both. 
+So my question is, where did this startup command come from? In otherwords, how did the container know that it needed to execute this particular command in order to start the primary process? The answer is,                 this startup command is baked into the image itself by the dockerfile. In the dockerfile, the startup command is defined using either the CMD setting, or the ENTTRYPOINT setting, or a combination of both. 
 
 
 # website - https://hub.docker.com/_/httpd - swipe right. 
 
-For example here's the httpd image's web page. Clicking on the dockerfile link takes us to github where we can view the dockerfile's content.
+For example here's the docker hub page for the official httpd image               . Clicking on the dockerfile link takes us to github, where we can view the dockerfile that built this image.
 
 ```web-tasks
 click on link
@@ -54,7 +56,7 @@ scroll to bottom by dragging scroll bar
 ```
 
 
- This CMD command actually runs a shell script which was copied into the image in an earlier step. So let's go up one level and then take a look at this shell script.
+      This setting, actually runs a shell script which was copied into the image in an earlier step. So let's go up one level and then take a look at this shell script.
 
 
 ```web-tasks
@@ -69,22 +71,27 @@ Here we can see that actual command that starts up the primary process.
 This matches up with what we saw in our ps output. 
 
 
-Since this container is designed to provide an ongoing web service, it means that this baked-in command starts a continuously running process.
+
+However there are other images where the baked-in command only starts-up a shortlived process. For example, the official centos image is a general purpose image that only starts bash, which in turn runs for less than a second. 
 
 
-However there are other images where the baked-in command only starts-up a shortlived process. For example, the official centos image is a general purpose image that only comes with a shortlived bash command baked-in. 
+## swiped to browser.
+
+```web
+google docker hub centos, then click on the dockerfile link
+```
 
 
-So if you create a pod with this image, then the container will just keep dying repeatedly. Let's demo this with the following yaml file:
+So if you create a pod with this image, then the container will just keep dying repeatedly. Let me show you what i mean with this yaml file:
+
+# swipe to       m vscode
 
 ```bash
 tree configs/
 code configs/pod-centos-shortlived.yml 
 ```
 
-Here we have a basic single container pod. By the way I've specified the image's tag here, just to show how to use a particular image version. if you leave this out, like we did with our hello-world pod then, then it defaults to using the tag called latest. 
-
-
+Here we have a basic single container pod, where our container's image is set to the official centOS image. 
 Ok let's apply this now. 
 
 

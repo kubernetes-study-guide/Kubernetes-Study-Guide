@@ -26,8 +26,16 @@ But for now this yaml file is basically saying that:
 - we want to assign a key/value label to the pod where the key is set to 'app' and the value is set to 'apache_webserver'
 - This pod should only have one container
 - the containers name should be cntr-httpd
-- the container should be built using the latest official httpd image from the docker hub website. 
-- and finally, the container should be listening on port 80
+- the container should be listening on port 80
+- and finally, the container should be built using the official httpd image from the docker hub website. and also use the image that's tagged as 'latest'. 
+
+## TODO - Start
+Theres one thing I should mention about this image setting, this is something that I looked up by going to the docker hub website, and then searched for apache. From there I found the image's name, along with available tags. If you leave out the tag, then it will just default to the 'latest' tag. 
+
+I also omitted the full fqdn, which is why it defaulted to docker hub. 
+
+## TODO - END. 
+
 
 Let's now create this pod by feeding this yaml file into the apply command:
 

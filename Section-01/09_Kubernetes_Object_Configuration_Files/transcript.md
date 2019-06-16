@@ -127,7 +127,7 @@ To learn more about a particular setting,    you can use the dot notation to dri
 kubectl explain pod.spec.containers.image
 ```
 
-Writing yaml files by hand like this, is time consuming, but it's a great way to  practice, and you'll learn a lot through trial and errer.
+Writing yaml files by hand like this, is time consuming, but it's a great way to practice, and you'll learn a lot through trial and errer.
 
 
 Another way to write these manifests, is to just copy and paste sample yaml extracts from the official documentation, and then customise them to meet your needs. 
