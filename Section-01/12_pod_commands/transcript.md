@@ -14,6 +14,7 @@ Hello everyone one, and welcome back.
 For this demo I've opened up a bash terminal inside this video's topic folder. 
 
 ```bash
+
 pwd
 ```
 
@@ -91,7 +92,7 @@ tree configs/
 code configs/pod-centos-shortlived.yml 
 ```
 
-Here we have a basic single container pod, where our container's image is set to the official centOS image. 
+Here we have a basic single container pod, where I'm  using  the official cent-      OS image. 
 Ok let's apply this now. 
 
 
@@ -108,7 +109,7 @@ $ kubectl get pods -o wide
 $ kubectl get pods -o wide
 ```
 
-Here we can see is that as expected the container keeps dying and the pod keeps building new replacement containers. As a result the restart number is just going to carry on creeping up over time.
+As you can see   the cent-OS container keeps dying and the pod keeps building new replacement containers. As a result the restart number,  just keeps going up.
 
 Now in Kubernetes we can override the baked-in command, as shown in this yaml file:
 
@@ -118,14 +119,14 @@ tree configs/
 code config
 ```
 
-Here we have two settings, command is the kubernetes equivalent of dockerfiles Entrypoint setting. And similarly 'args' is the equivalent for the dockerfile's CMD setting. These 2 settings will override the baked in start-up command. By the way, some images might not come with a baked-in command at all. In which case you can use these 2 settings to just set the startup command.
+Here we have two settings, command is the kubernetes equivalent of the dockerfile'  s Entrypoint setting. And similarly 'args' is the equivalent for the dockerfile's CMD setting. These 2 settings will override the baked in start-up command        . By the way, some images might not come with a baked-in command at all. In which case you can use these 2 settings to just set the startup command.
 
-Here we used the -c flag. this flag requires a string input. The -c flags then instructs bash to run this string as a command. In our case, this string is going to be a multiline string and we're feeding this string into the -c flag via the command setting.
+Here we used the -c flag. this flag requires a string input. The -c flags then instructs bash to run this string as a command. In our case, this string is going to be a multiline string and that we're feeding into this    flag via the command setting.
 
 
 This effectively ends up running a continously running shell script, whose only job is to print out the date every 5 seconds. This is a bit of a crude technique, but it is quite useful for testing purposes. 
 
-To better understand what this startup command looks like, let's simulate how this shell script works by running it directly on my macbook. 
+To help you understand what this startup command looks like, let's try running it directly on my workstation. 
 
 
 
@@ -151,13 +152,22 @@ $ kubectl apply -f configs/pod-centos-ongoing.yml
 kubectl get pods
 ```
 
-It looks like that has now worked. let's take a look at what the resulting process looks like:
+Ok it looks like that has worked   . Let's check that the pod is still running without any restarts:
+
+```bash
+kubectl get pods -o wide
+```
+
+
+
+
+So far so good. let's now take a look at what the resulting process looks like:
 
 ```bash
 kubectl exec pod-centos -c cntr-centos -- ps -ef
 ```
 
-This confirms taht our shell script is now running as the primary process which is what we expected. Let's take a look at the logs to see if the timestamp is being sent to the standard output:
+This confirms that our shell script is now running continuously, as the primary process which is what we were hoping for   . Let's take a look at the logs to see if the timestamp is being sent to the standard output:
 
 ```bash
 $ kubectl logs -f pod-centos -c cntr-centos
@@ -171,12 +181,18 @@ you can also attach your terminal directly to the main process's standard output
 $ kubectl attach pod-centos -c cntr-centos
 ```
 
-Here we can again see the date being echoed out every 5 seconds. 
+H ere we can see the date is being echoed out every 5 seconds, like we saw earlier using the logs command. 
 
 
-Now let's turn our attention back to the yaml file, one thing you may have noticed, is the wierd syntax I used to write the command setting. This is actually yaml syntax for writing a yaml list as a single line. However there are a few other ways to write this yaml file to achieve the same end result. I've included some examples of them in the more-samples folder, in case you want to take a look at them. 
+Now let's turn our attention back to this yaml file, one thing you may have noticed, is the wierd syntax I used to write the command setting. This is actually yaml syntax for writing a           list as a single line. However there are a few other ways to write this yaml file to achieve the same end result. I've included some examples of them in the more-samples folder, in case you want to take a look at them. 
 
-Finally I should point out that these two settings are not the only ways to run commands inside pods. There are other options, such as initcontainers, lifecycle hooks, and healthcheck probes:
+```bash 
+ls configs/more-samples
+code ...    
+```
+
+
+Finally I should point out that these two settings are not the only ways to run custom commands inside pods. There are other options, such as initcontainers, lifecycle hooks, and healthcheck probes:
 
 ```popupwindows
 - making using of initcontainers,
