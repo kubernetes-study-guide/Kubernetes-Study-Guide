@@ -51,10 +51,16 @@ There's another thing I wanted to to show you, let me first exit out of this pod
 
 ```
 
-Now normally I would also add the -c flag along with the containers name, so that kubectl knows exactly which container's log I'm interested in. However I'm not going to bother with that and just hit return
+Now normally I would also add the -c flag along with the containers name, so that kubectl knows exactly which container's log I'm interested in. However I'm not going to bother with that and just hit return, just to see what happens.
+
+
+
 
 
 In Kubernetes, the first container that's listed in your yaml file, is treated to as the main container, and all the other containers are treated as supporting containers. 
+
+
+
 
 These containers are referred to by other names, such as sidecar containers, secondary containers,...etc. 
 
