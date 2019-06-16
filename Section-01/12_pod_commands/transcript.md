@@ -14,7 +14,11 @@ Hello everyone one, and welcome back.
 For this demo I've opened up a bash terminal inside this video's topic folder. 
 
 ```bash
-
+# adjust font size
+git add . ; git commit -m wip ; git push
+kubectl delete all --all --grace-period=2
+clear
+cmd+k
 pwd
 ```
 
@@ -42,7 +46,7 @@ So my question is, where did this startup command come from? In otherwords, how 
 
 # website - https://hub.docker.com/_/httpd - swipe right. 
 
-For example here's the docker hub page for the official httpd image               . Clicking on the dockerfile link takes us to github, where we can view the dockerfile that built this image.
+For example here's the docker hub page for the official httpd image    . Clicking on the dockerfile link takes us to github, where we can view the dockerfile that built this image.
 
 ```web-tasks
 click on link
