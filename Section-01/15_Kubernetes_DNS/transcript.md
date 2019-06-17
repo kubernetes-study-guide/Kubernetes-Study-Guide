@@ -1,0 +1,1 @@
+kubernetes comes with built in dns. 
