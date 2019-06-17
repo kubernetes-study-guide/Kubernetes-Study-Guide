@@ -41,7 +41,7 @@ ps -ef
 As you can see here, we have the primary process as identified by the process id of 1. and on the right we can see the command that was executed to start that process. 
 
 
-So my question is, where did this startup command come from? In otherwords, how did the container know that it needed to execute this particular command in order to start the primary process? The answer is,                 this startup command is baked into the image itself by the dockerfile. In the dockerfile, the startup command is defined using either the CMD setting, or the ENTTRYPOINT setting, or a combination of both. 
+So my question is, where did this startup command come from? In otherwords, how did the container know that it needed to execute this particular command in order to start the primary process? The answer is, this startup command is baked into the image itself by the dockerfile. In the dockerfile, the startup command is defined using either the CMD setting, or the ENTTRYPOINT setting, or a combination of both. 
 
 
 # website - https://hub.docker.com/_/httpd - swipe right. 
@@ -75,21 +75,35 @@ Here we can see that actual command that starts up the primary process.
 
 This matches up with what we saw in our ps output. 
 
+# TODO-start
+Another way to find out what the start up command is, is by using docker
+
+```bash
+$ docker run -d httpd
+$ docker container ls --all
+```
+
+However, here, for this particular image, it only shows the shell script it will execute.
+# TODO-end
+
+
 
 
 However there are other images where the baked-in command only starts-up a shortlived process. For example, the official centos image is a general purpose image that only starts bash, which in turn runs for less than a second. 
 
+# TODO-start
+Another way to find out what the start up command is, is by using docker
 
-## swiped to browser.
-
-```web
-google docker hub centos, then click on the dockerfile link
+```bash
+$ docker run -d cenots
+$ docker container ls --all
 ```
+
+# TODO-end
 
 
 So if you create a pod with this image, then the container will just keep dying repeatedly. Let me show you what i mean with this yaml file:
 
-# swipe to       m vscode
 
 ```bash
 tree configs/
@@ -188,7 +202,23 @@ $ kubectl attach pod-centos -c cntr-centos
 H ere we can see the date is being echoed out every 5 seconds, like we saw earlier using the logs command. 
 
 
-Now let's turn our attention back to this yaml file, one thing you may have noticed, is the wierd syntax I used to write the command setting. This is actually yaml syntax for writing a           list as a single line. However there are a few other ways to write this yaml file to achieve the same end result. I've included some examples of them in the more-samples folder, in case you want to take a look at them. 
+Now let's turn our attention back to this yaml file, one thing you may have noticed, is the wierd syntax I used to write the command setting. This is actually yaml syntax for writing list as a single line. 
+
+#TODO - Start
+Also for args, args can only take an list. 
+
+```bash
+$ kubectl explain --recursive pod.spec.containers.args
+```
+
+As indicated by the field definition. 
+
+So in our case, we specified a single value list, where the pipe character is standard yaml syntax for defining a multiline string. 
+
+
+#TODO - End
+
+ However there are a few other ways to write this yaml file to achieve the same end result. I've included some examples of them in the more-samples folder, in case you want to take a look at them. 
 
 ```bash 
 ls configs/more-samples

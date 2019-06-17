@@ -1,24 +1,44 @@
 # emptyDir Volumes
 
-When a container dies, all the data inside that container get's deleted as well. However in Kubernetes you can actually store data outside of your container, but also make that data fully accessible to the container, in the form of a folder. To the container, this folder will look and behave like an ordinary folder. So if a container dies, and the pod builds a replacement container, then the new container can carry on using the data left behind by the previous container.
-
-That's all possible in Kubernetes using a constuct called volumes.
-
-
-
-emptyDir volumes are perfect for storing data that is only of value during the lifetime of the pod.  However if 
+Structure:
+slides
+-> vscode
 
 
-When a container is terminated, then the data inside the container (if any) also gets deleted. If you have a mysql database running inside a container, then the chances are that you don't want to lose that data when the mysql container dies for any reason. That's where Kubernetes volumes comes into the picture. Volumes let's you store your data outside of your containers, your containers can then mount these volumes in the same way you mount block devices on a Linux machine. There are a lot of different types of Kubernetes volumes, one of the most basic type is the [emptyDir volume](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir).
+Hello everyone one, and welcome back.
 
-emptyDir volumes exists outside a container but inside the pod. This setup has the following characteristics:
 
-- If the container dies, then kubernetes will launch a new container inside the pod, and that container will reconnect to the volume and pick up where the previous container left off
-- emptyDir volumes are only mountable by containers in the same pod.
-- The underlying storage used by emptyDir volumes is the worker node's disk space.
-- emptyDir volumes gets deleted if/when the pod dies.
 
-One possible use case for using emptyDir is when you have a 2 container pod, where the main container app outputs logs, and the sidecar container is a log-forwarder that will forward your log to a log aggregator such as ELK server. In that scenario, you can have a emptyDir volume mounted on to the directory where your main app writes logs to. Then on the sidecar container, you mount the same volume so that it can read the logs and forward them to the elk server.
+When a container dies, all the data inside that container get's deleted as well. However in Kubernetes you can actually store data outside of your container, but also make that data fully accessible to the container, in the form of a folder. To the container, this folder will look and behave like an ordinary folder. So if a container dies, then the pod builds a replacement container. This new container then carries on using the data left behind by the previous container.
+
+
+To set something like this up, you need to use a Kubernetes construct called volumes.
+Volumes let's you store your data outside of your containers, and your containers can then mount these volumes in the same way you mount block devices on a Linux machine. 
+
+There are different types of volumes, and in this video I'll demo how to setup [emptyDir volume](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir). That's becuase they are quite simple to setup. I'll cover some of the other volume types later in the course.  
+
+emptyDir volumes are volumes that lives outside the container but inside the pod. So only containers inside that pod can access this emptyDir volume. It also means that the emptyDir volume gets deleted if and when the pod dies. This makes emptyDir volumes perfect for storing data that is only of value during the lifetime of the pod. 
+
+
+
+
+## vscode
+
+For this demo I've opened up a bash terminal inside this video's topic folder. 
+
+
+
+
+
+
+
+
+
+
+One possible use case for using emptyDir is when you have a 2 container pod, where the main container app outputs logs, and the sidecar container is a log-forwarder that will forward your log to a log aggregator such as ELK server.
+
+
+ In that scenario, you can have a emptyDir volume mounted on to the directory where your main app writes logs to. Then on the sidecar container, you mount the same volume so that it can read the logs and forward them to the elk server.
 
 However we don't have an ELK server to demonstrate this, so in our demo we'll create a 2-container pod, the main container is a httpd container, and the sidecar container is a centos container. The centos container will create the index.html file which the httpd container will display via an emptyDir volume:
 
