@@ -83,7 +83,7 @@ $ docker run -d httpd
 $ docker container ls --all
 ```
 
-However, here, for this particular image, it only shows the shell script it will execute.
+Although it doesn't quite give the right answer here since this particular runs the root process using a shell script.
 # TODO-end
 
 
