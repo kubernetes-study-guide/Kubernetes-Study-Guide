@@ -95,7 +95,7 @@ However there are other images where the baked-in command only starts-up a short
 Another way to find out what the start up command is, is by using docker
 
 ```bash
-$ docker run -d cenots
+$ docker run -d centos
 $ docker container ls --all
 ```
 
