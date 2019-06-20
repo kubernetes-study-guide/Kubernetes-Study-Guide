@@ -48,7 +48,22 @@ $ kubectl get pods --namespace=kube-system | grep tiller
 tiller-deploy-69d5cd79bb-qbtx7              1/1     Running   0          2m20s
 ```
 
+Which is create by the following deployment:
+
+```bash
+$ kubectl get deployments --namespace=kube-system | grep tiller
+tiller-deploy              1/1     1            1           9d
+```
+
+You can output the all the yaml definitions that were used to create the tiller app by running:
+
+```bash
+$ helm init --dry-run --debug
+```
+
 Tiller is the server side component of helm. 
+
+Note, tiller will actually be deprecated in the next version of helm. Instead, you will just have helm interacting with the kube-apiserver directly without any tiller middleman. 
 
 
 Now list your helm charts:
@@ -65,18 +80,56 @@ NAME            	CHART VERSION	APP VERSION	DESCRIPTION
 stable/wordpress	5.12.3       	5.2.1      	Web publishing platform for building blogs and websites.
 ```
 
-Now install this:
+You can list all available helm charts (aka helm packages) by running:
 
 ```bash
-helm install stable/wordpress
+$ helm search
 ```
 
-This creates a number of kubernetes objects, pods, services, configmaps,...etc, and groups them into a 'release' and it names that release. If you run this command again, then it will create a second release. 
+
+Now [install](https://helm.sh/docs/using_helm/#more-installation-methods) this:
+
+```bash
+helm install stable/wordpress --name codingbee-wp
+```
+
+This creates a number of kubernetes objects, pods, services, configmaps,...etc, and groups them into a 'release' and it names that release using --name. If you run this command again, then it will create a second release (but you have to pick a different name). You can check your release's status by running:
+
+```bash
+helm status release-name
+```
+
+
+A helm chart comes with a set of default values, you print these defaults:
+
+
+```bash
+helm inspect values stable/mariadb
+```
+
+You can [override these default values](https://helm.sh/docs/using_helm/#customizing-the-chart-before-installing) by running:
+
+```bash
+$ cat << EOF > config.yaml
+mariadbUser: user0
+mariadbDatabase: user0db
+EOF
+$ helm install -f config.yaml stable/mariadb
+```
+
+-f is short for --values. An alternative to --values is --set. 
+
 
 To delete a release, do:
 
 ```bash
 $ helm delete release-name --purge
+```
+
+To see a list of deleted releases, do:
+
+```bash
+helm list --deleted
 ```
 
 
@@ -216,7 +269,7 @@ charts/
 4 directories, 23 files
 ```
 
-While in the same directory as the chart.yaml, run:
+While in the top level folder, run:
 
 ```bash
 $ helm dependency list
@@ -247,7 +300,7 @@ Downloading mariadb from repo https://kubernetes-charts.storage.googleapis.com/
 Deleting outdated charts
 ```
 
-If the helm charts are locally, then you can install it like this:
+If the helm charts are local, then you can install it like this:
 
 ```bash
 $ helm install .
@@ -293,7 +346,7 @@ You can crud this file using helm by using commands like:
 ```bash
 helm repo add
 helm repo remove
-helm list
+helm repo list
 helm repo update   # useful for cleangin up the cache
 ```
 
