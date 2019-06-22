@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-empty-dir-demo
+spec: 
+  volumes: 
+  - name: my-data
+    emptyDir: {} 
+  containers:
+  - name: cntr-centos
+    image: centos
+    volumeMounts:
+    - name: my-data
+      mountPath: /mnt/reports
+    command: ["/bin/bash", "-c"]
+    args:
+    - |
+      echo "$(date): new container created" >> /mnt/reports/data.txt
+      while true ; do
+        sleep 10
+      done
