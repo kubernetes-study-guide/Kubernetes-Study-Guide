@@ -4,10 +4,9 @@ Structure:
 slides
 -> vscode
 
+# Slide
 
 Hello everyone, and welcome back.
-
-
 
 When a container dies, all the data inside that container get's deleted. However you can make some of your container's data persistant by making use of Kubernetes volumes. 
 
@@ -89,7 +88,7 @@ $ docker container ls | grep cntr-centos   (copy and paste the containers name u
 Here I tracked down the container by grepping for the container's name. Now let's delete it. 
 
 ```bash
-$ docker container delete  (copy and paste)
+$ docker container stop  (copy and paste)
 $ kubecetl get pods -o wide
 ```
 
