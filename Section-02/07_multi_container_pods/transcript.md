@@ -6,7 +6,7 @@ For this demo I've opened up a bash terminal inside this video's topic folder.
 pwd
 ```
 
-So far we've only demo pods that only had a single container running inside it. However you can multiple containers running inside a single pod. In this demo, I'm going to show what a 2 container pod looks like. Here's the yaml file I'll use to create this. 
+So far we've only explored single container pods. If you want, you can also build a multi-container pods, and it's actually quite easy to set up. So in this video, I'm going to show what a 2 container pod looks like. Here's the yaml file that I'll use for this demo. 
 
 ```bash
 tree configs/
@@ -14,61 +14,85 @@ code configs/pod-with-2-cntrs.yml
 switch to bash terminal (ctrl+~) 
 ```
 
-I've actually created this definition using yaml extracts from previous examples. The first container is a hello-world webserver container, and the second container is a standard centos container with an infinite while loop. So let's see what we end up with when we create this pod. 
+I've actually created this definition by recycling yaml extracts from earlier examples. The first container is our hello-world webserver container, and the second container is a standard cent-OS container. So let's see what we end up with when we create this pod. 
 
 ```bash
 $ kubectl apply -f configs/pod-with-2-cntrs.yml
 pod/pod-multi-cntr created
 $ kubectl get pod -o wide
-$ kubectl get pod -o wide
-$ kubectl get pod -o wide
 NAME             READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
 pod-multi-cntr   2/2     Running   0          30s   172.17.0.10   minikube   <none>           <none>
 ```
 
-Here we can see that our pod contains 2 containers. That's indicated by the fact that our pod has 2 containers ready out of total of 2 containers. Containers inside the same pod have a few interesting capabilities. To see what I mean, lets first open up a terminal inside the centos container:
+Here we can see that our pod has 2 containers ready out of total of 2 containers. Containers inside the same pod have a few interesting capabilities. To see what I mean, lets first open up a terminal inside the centos container:
 
 ```bash
 $ kubectl exec pod-multi-cntr -c cntr-centos -it /bin/bash
 ```
 
-Now this container doesn't have apache running on it. However if I curl the localhost I get the following:
+The cent-OS container doesn't have apache running on it. However if I curl localhost then I get the following:
 
 
 ```bash
 curl http://localhost
 ```
 
-As you can see here we got a successful response. This response actually came from the web container. That's because all containers inside a pod are part of the same network namespace. That means that when we run the curl command from our centOS container, our web container ended up responding to that request. 
+As you can see here, we got a successful response. This response actually came from the web container. That happened because all containers inside a pod are part of the same network namespace. That means that when we run the curl command from our centOS container, our web container ended up responding to that request. So what on earth is going on here!
 
-You can think of this in terms of a pod is a bit like a virtual machine, and the containers as processes inside that vm, in which case the containers can interact with each other using the localhost networking namespace. That means that the pod's network loopback interface is simultaneously attached to all containers in that pod.
+Ok the way networking inside a pod, is similar to how networking works on a linux machine. All Linux machines have special virtual network interface called the loopback interface. This loopback interface is used to route internal traffic between various processes on the Linux machine. The loopback interface has the ip address of 127.0.0.1, which is what internal processes use to forward traffic internally.  
 
-You can also share folders between containers in a pod. But we'll cover how to do that in a later video.
 
-There's another thing I wanted to to show you, let me first exit out of this pod. Now let me run the logs command:
+For example, let's say you have a Ubuntu machine that has apache werbserver running on it. Now if you open up bash terminal inside this ubuntu machine and then curl 127.0.0.1, then behind the scenes the curl command starts up a process, this process in turns forwards the curl request to the machine's loopback network interface, the loopback interface then forwards the request on to the apache webservice's underlying process. This process then provides a response which gets sent back to the curl process. 
 
-```bash - write command but not hit enter
 
+In Kubernetes, the same kind of thing is going on. Where instead of a VM with a loopback interface,we have a pod with a loopback interface, and instead of processes talking to each other, we have containers talking to each other. 
+
+So hopefully that now clears up what happened when we run the curl command form the cent-OS container. 
+
+Another cool thing you can do is that you can share a folder between your containers using emptyDir. Here's a ymal file to demo this:
+
+```bash
+tree configs/
+code configs/pod-folder-share.yml
+switch to bash terminal (ctrl+~) 
 ```
 
-Now normally I would also add the -c flag along with the containers name, so that kubectl knows exactly which container's log I'm interested in. However I'm not going to bother with that and just hit return, just to see what happens.
+This is similar to the previous yaml file, but this time we have some volume defintions as well. Notice here that both containers are mounting the same volume. Let's go ahead and create this. 
+
+
+```bash
+$ kubectl apply -f configs/pod-with-2-cntrs.yml
+pod/pod-multi-cntr created
+$ kubectl get pod -o wide
+NAME             READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+pod-multi-cntr   2/2     Running   0          30s   172.17.0.10   minikube   <none>           <none>
+```
+
+The cool thing here is that the cent-OS pod is generating new web content that the apache container then displays in realtime. We can see this in action by running the curl command from our first pod:
+
+
+```bash
+kubectl exec -it -- curl http://xxxxxxx
+kubectl exec -it -- curl http://xxxxxxx
+kubectl exec -it -- curl http://xxxxxxx
+```
+
+As you can see, new lines are being added every few seconds. 
+
+You can use other volumes types to achieve the same effect, but using emptyDir volumes like this is quite a common use case.
 
 
 
+One thing to bear in mind when dealing with multicontainer pods, is that some commands will start asking for the container name. For example the logs command:
+
+In this scenario you just have to use the -c flag to tell the command which container you're interested in. 
 
 
-In Kubernetes, the first container that's listed in your yaml file, is treated to as the main container, and all the other containers are treated as supporting containers. 
+Other commands, such as xxx will still work, becuase they end up defaulting to the first container defined in the yaml definition, which in this example would be the apache container.  
 
+```bash
+xxxxx
+```
 
+Now let's talk about when you should use multi-container pods. As a general rule of thumb you should always stick to using single-container pods, and you if do need to build multicontainer pods, then try to only have one main container, and the rest as helper containers. The main container is container that provides the main application, without which the pod becomes useless. Whereas the helper containers provides a supporting role to the main container. In this example the main container is apache, and centos is the helper container. So if the main container dies, then the pod can no longer provide a web service, whereas the pod can still offer a web service if just the helper container dies. 
 
-
-These containers are referred to by other names, such as sidecar containers, secondary containers,...etc. 
-
-
-As these names implies. the supporting containers aren't supposed to provide a pod's primary service. Instead it provides additional features, such as log forwarding using filebeat. 
-
-
-
-
-
-commands where you need to specify a container name, e.g. logs commands, if you omit the -c flag, then the command will default to using the main container's log. 
