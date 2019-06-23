@@ -21,7 +21,7 @@ There are different types of volumes, and in this video I'll demo how to setup a
 
 For this demo I've opened up a bash terminal inside this video's topic folder. 
 
-Volumes are defined as     part of the pod's definition. Here's the yaml file we'll use for this demo.
+Volumes are defined as part of the pod's definition. Here's the yaml file we'll use for this demo.
 
 
 ```bash
@@ -31,7 +31,22 @@ code configs/httpd-emptydir.yaml
 
 Volumes are defined using the pod.spec.volumes settings. Notice that volumes is plural, meaning that you can define a list of volumes here. But we'll just define one. So in this example I'm saying here that I want a single emptyDir volume, and I want to call it my-data. 
 
-Next, we    have a volumeMounts section in our pod definition. Here I'm saying I want to mount the my-data volume to the /em-en-tee/reports folder. That means that these 2 lines need to match. By the way, the mount point folder will get created automatically, if it doesn't already exist.
+# TODO - Start
+EmptyDir volume types do have lower level settings, but they are only optional. 
+
+```bash
+kubectl explain pod.spec.volumes.emptyDir
+```
+
+That's why i added an empty curly brace here to tell kubernetes, to use the default values for the lower level EmptyDir settings. However other volumes types, such as nfs, do have mandatory fields:
+
+```bash
+$ kubectl explain pod.spec.volumes.nfs
+```
+# TODO - end
+
+
+Next, we have a volumeMounts section, which forms part of our container's definition. Here I'm saying I want to mount the my-data volume to the /em-en-tee/reports folder. That means that these 2 lines need to match. By the way, the mount point folder will get created automatically, if it doesn't already exist.
 
 I also added an echo command as part of the startup shellscript, just so that it writes some dummy data to our volume. Let's now go ahead and create this pod.
 
@@ -85,7 +100,7 @@ $ eval $(minikube docker-env)
 $ docker container ls | grep cntr-centos   (copy and paste the containers name using cursor)
 ```
 
-Here I tracked down the container by grepping for the container's name. Now let's delete it. 
+Here I tracked down the container by grepping for the container's name. Now let's kill it. 
 
 ```bash
 $ docker container stop  (copy and paste)
