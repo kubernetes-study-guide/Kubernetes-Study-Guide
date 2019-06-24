@@ -1,5 +1,7 @@
 # Transcript
 
+Hello everyone, and welcome back. 
+
 For this demo I've opened up a bash terminal inside this video's topic folder. 
 
 ```bash
@@ -95,4 +97,6 @@ xxxxx
 ```
 
 Now let's talk about when you should use multi-container pods. As a general rule of thumb you should always stick to using single-container pods, and you if do need to build multicontainer pods, then try to only have one main container, and the rest as helper containers. The main container is container that provides the main application, without which the pod becomes useless. Whereas the helper containers provides a supporting role to the main container. In this example the main container is apache, and centos is the helper container. So if the main container dies, then the pod can no longer provide a web service, whereas the pod can still offer a web service if just the helper container dies. 
+
+That's it for this video, See you in the next one. 
 
