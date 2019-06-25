@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-folder-share
+spec:
+  volumes: 
+  - name: web-data
+    emptyDir: {} 
+  containers:
+  - name: cntr-httpd
+    image: httpd:latest
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: web-data
+      mountPath: /var/www/html
+  - name: cntr-centos
+    image: centos
+    volumeMounts:
+    - name: web-data
+      mountPath: /mnt/webcontent
+    command: ["/bin/bash", "-c"]
+    args:
+    - |
+      while true ; do
+        curl http://127.0.0.1
+        sleep 5 
+      done
