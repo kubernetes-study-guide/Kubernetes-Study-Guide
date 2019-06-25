@@ -48,7 +48,7 @@ As you can see here, we got a successful response. But how is that possible, bec
 
 
 
-The answer is, this response actually came from the other container in the pod, which is running the apache web service. That means that when we run the curl command from our cent-OS container, our web container ended up responding to that request.
+The answer is, this response actually came from the other container in the pod, which is running the apache web service. So when running 
 
 Ok the way networking works inside a pod, is similar to how networking works on a linux machine. All Linux machines have special virtual network interface called the loopback interface. This loopback interface is used to route internal traffic between various processes on the Linux machine. The loopback interface has the ip address of 127.0.0.1, which is what processes use to forward traffic internally.  
 
