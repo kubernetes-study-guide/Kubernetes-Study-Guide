@@ -8,7 +8,7 @@ For this demo I've opened up a bash terminal inside this video's topic folder.
 pwd
 ```
 
-So far we've only explored single container pods. If you want, you can also build a multi-container pods, and it's actually quite easy to set up. So in this video, I'm going to show what a 2 container pod looks like. Here's the yaml file that I'll use for this demo. 
+So far we've only explored single container pods. If you want, you can also build multi-container pods, and it's actually quite easy to set up. So in this video, I'm going to show what a 2 container pod looks like. Here's the yaml file that I'll use for this demo. 
 
 ```bash
 tree configs/
@@ -26,28 +26,37 @@ NAME             READY   STATUS    RESTARTS   AGE   IP            NODE       NOM
 pod-multi-cntr   2/2     Running   0          30s   172.17.0.10   minikube   <none>           <none>
 ```
 
-Here we can see that our pod has 2 containers ready out of total of 2 containers. Containers inside the same pod have a few interesting capabilities. To see what I mean, lets first open up a terminal inside the centos container:
+Here we can see that our pod has 2 out of 2 containers ready. So that's all there is to it, we have created our first multi-container pod. 
+
+Let's now take a look at a couple of interesting things you can do with a multi-container. First of all, the containers can interact with eachother via localhost. To see what I mean, lets first open up a terminal inside the cent-OS container:
 
 ```bash
 $ kubectl exec pod-multi-cntr -c cntr-centos -it /bin/bash
 ```
 
-The cent-OS container doesn't have apache running on it. However if I curl localhost then I get the following:
-
+Now let's trying curling localhost just to see what happens:
 
 ```bash
 curl http://localhost
 ```
 
-As you can see here, we got a successful response. This response actually came from the web container. That happened because all containers inside a pod are part of the same network namespace. That means that when we run the curl command from our centOS container, our web container ended up responding to that request. So what on earth is going on here!
 
-Ok the way networking inside a pod, is similar to how networking works on a linux machine. All Linux machines have special virtual network interface called the loopback interface. This loopback interface is used to route internal traffic between various processes on the Linux machine. The loopback interface has the ip address of 127.0.0.1, which is what internal processes use to forward traffic internally.  
-
-
-For example, let's say you have a Ubuntu machine that has apache werbserver running on it. Now if you open up bash terminal inside this ubuntu machine and then curl 127.0.0.1, then behind the scenes the curl command starts up a process, this process in turns forwards the curl request to the machine's loopback network interface, the loopback interface then forwards the request on to the apache webservice's underlying process. This process then provides a response which gets sent back to the curl process. 
+The cent-OS container doesn't have apache running on it. However if I curl localhost, then I get the following:
 
 
-In Kubernetes, the same kind of thing is going on. Where instead of a VM with a loopback interface,we have a pod with a loopback interface, and instead of processes talking to each other, we have containers talking to each other. 
+As you can see here, we got a successful response. But how is that possible, because the Cent-OS container doesn't have any web services running on it. 
+
+
+
+The answer is, this response actually came from the other container in the pod, which is running the apache web service. That means that when we run the curl command from our cent-OS container, our web container ended up responding to that request.
+
+Ok the way networking works inside a pod, is similar to how networking works on a linux machine. All Linux machines have special virtual network interface called the loopback interface. This loopback interface is used to route internal traffic between various processes on the Linux machine. The loopback interface has the ip address of 127.0.0.1, which is what processes use to forward traffic internally.  
+
+
+For example, let's say you have a linux machine that has apache werbserver running on it. Now if you open up bash terminal inside this ubuntu machine and then curl 127.0.0.1, then behind the scenes the curl command starts up a process, this process in turns forwards the curl request to the machine's loopback network interface, the loopback interface then forwards the request on to the apache webservice's underlying process. This process then provides a response which gets sent back to the curl process. 
+
+
+In Kubernetes, the same kind of thing is going on. Where instead of a VM with a loopback interface, we have a pod with a loopback interface, and instead of processes talking to each other, we have containers talking to each other. 
 
 So hopefully that now clears up what happened when we run the curl command form the cent-OS container. 
 
