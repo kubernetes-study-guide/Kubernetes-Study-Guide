@@ -17,7 +17,7 @@ $ helm home
 In this folder, there is a repositories.yaml file. This is the equivalent to yum's .repo file. 
 
 
-Next, confirm that you're on the right context:
+Next, confirm that you're on the right context (in order to install server side of helm, called Tiller, into the cluster):
 
 ```bash
 $ kubectl config get-contexts
@@ -68,10 +68,12 @@ stable/wordpress	5.12.3       	5.2.1      	Web publishing platform for building 
 Now install this:
 
 ```bash
-helm install stable/wordpress
+helm install --name codingbee stable/wordpress
 ```
 
-This creates a number of kubernetes objects, pods, services, configmaps,...etc, and groups them into a 'release' and it names that release. If you run this command again, then it will create a second release. 
+Here we specified a name. This is referred to as a 'release name', and corresponds to one of the predefined values, [Release.Name](https://helm.sh/docs/charts/#predefined-values). You can use these variables in your helm templates later on. These are part of the broader [built-in objects](https://helm.sh/docs/chart_template_guide/#built-in-objects), which you can used in your templates. 
+
+This creates a number of kubernetes objects, pods, services, configmaps,...etc, and groups them into a 'release' and it names that release. If you run this command again (without name flag), then it will create a second release with a randomly geneerated release-name. 
 
 To delete a release, do:
 
@@ -79,12 +81,10 @@ To delete a release, do:
 $ helm delete release-name --purge
 ```
 
-
 To install a particular version, do:
 
-
 ```bash
-helm install stable/wordpress --version 5.0.0
+helm install --name codingbee stable/wordpress --version 5.0.0
 ```
 
 Here's how to upgrade to a particular version:
