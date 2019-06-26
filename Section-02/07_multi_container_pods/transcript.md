@@ -40,25 +40,18 @@ Now let's trying curling localhost just to see what happens:
 curl http://localhost
 ```
 
-
-The cent-OS container doesn't have apache running on it. However if I curl localhost, then I get the following:
-
-
-As you can see here, we got a successful response. But how is that possible, because the Cent-OS container doesn't have any web services running on it. 
+You may have expected for this curl command to hang for a while and then timeout, since this is just a standard cent-OS container and doesn't have a web service running. However what we can see here, is that not only did we get a successful response, but the response actually came from the other container in the pod, which is running apache. So what on earth is going on!
 
 
-
-The answer is, this response actually came from the other container in the pod, which is running the apache web service. So when running 
-
-Ok the way networking works inside a pod, is similar to how networking works on a linux machine. All Linux machines have special virtual network interface called the loopback interface. This loopback interface is used to route internal traffic between various processes on the Linux machine. The loopback interface has the ip address of 127.0.0.1, which is what processes use to forward traffic internally.  
+Ok the way networking works inside a pod, is similar to how networking works inside a linux machine. All Linux machines have a special virtual network interface called the loopback interface. This loopback interface is used to route internal traffic between various processes on the Linux machine. The loopback interface has the ip address of 127.0.0.1, which is what processes use to forward traffic internally.  
 
 
-For example, let's say you have a linux machine that has apache werbserver running on it. Now if you open up bash terminal inside this ubuntu machine and then curl 127.0.0.1, then behind the scenes the curl command starts up a process, this process in turns forwards the curl request to the machine's loopback network interface, the loopback interface then forwards the request on to the apache webservice's underlying process. This process then provides a response which gets sent back to the curl process. 
+For example, let's say you have a linux machine that has apache daemon running on it. Now if you open up bash terminal inside this ubuntu machine and then curl 127.0.0.1, then behind the scenes the curl command starts up a process, and this process in turns forwards the curl request to the machine's loopback network interface, the loopback interface then forwards the request on to the apache daemon's underlying process. This process then provides a response which gets sent back to the curl process. 
 
 
 In Kubernetes, the same kind of thing is going on. Where instead of a VM with a loopback interface, we have a pod with a loopback interface, and instead of processes talking to each other, we have containers talking to each other. 
 
-So hopefully that now clears up what happened when we run the curl command form the cent-OS container. 
+So hopefully that now clears up what happened in this demo when we curled the localhost. 
 
 Another cool thing you can do is that you can share a folder between your containers using emptyDir. Here's a ymal file to demo this:
 
