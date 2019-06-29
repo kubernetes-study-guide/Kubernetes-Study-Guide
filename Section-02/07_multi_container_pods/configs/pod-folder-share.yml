@@ -13,7 +13,7 @@ spec:
     - containerPort: 80
     volumeMounts:
     - name: web-data
-      mountPath: /var/www/html
+      mountPath: /usr/local/apache2/htdocs
   - name: cntr-centos
     image: centos
     volumeMounts:
@@ -23,6 +23,6 @@ spec:
     args:
     - |
       while true ; do
-        echo "$(date) - New content added >> /var/www/html/index.html"
+        echo "$(date) - New content added" >> /mnt/webcontent/index.html
         sleep 5 
       done

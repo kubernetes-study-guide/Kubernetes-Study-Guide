@@ -37,7 +37,7 @@ $ kubectl exec pod-multi-cntr -c cntr-centos -it /bin/bash
 Now let's trying curling localhost just to see what happens:
 
 ```bash
-curl http://localhost
+curl http://127.0.0.1
 ```
 
 It's likely that you expected that this curl command to hang for a while and then timeout, since this is just a standard cent-OS container and doesn't have a web service running inside it. However what we can see here, is that not only did we get a successful response, but the response actually came from the other container in the pod, which is running apache. So you might be thinking,      what on earth is going on!
