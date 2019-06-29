@@ -23,6 +23,6 @@ spec:
     args:
     - |
       while true ; do
-        curl http://127.0.0.1
+        echo "$(date) - New content added >> /var/www/html/index.html"
         sleep 5 
       done

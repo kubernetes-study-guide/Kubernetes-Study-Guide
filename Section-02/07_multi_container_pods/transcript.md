@@ -16,7 +16,7 @@ code configs/pod-with-2-cntrs.yml
 switch to bash terminal (ctrl+~) 
 ```
 
-I've actually created this definition by recycling yaml extracts from earlier examples. The first container is our hello-world webserver container, and the second container is a standard cent-OS container. So let's see what we end up with when we create this pod. 
+I've actually put together  this definition by copying and pasting yaml extracts from previous examples, so some of this might already look familiar to you. The first container is our hello-world apache   container, and the second container is a standard cent-OS container. So let's see what we end up with when we create this pod. 
 
 ```bash
 $ kubectl apply -f configs/pod-with-2-cntrs.yml
@@ -28,7 +28,7 @@ pod-multi-cntr   2/2     Running   0          30s   172.17.0.10   minikube   <no
 
 Here we can see that our pod has 2 out of 2 containers ready. So that's all there is to it, we have created our first multi-container pod. 
 
-Let's now take a look at a couple of interesting things you can do with a multi-container. First of all, the containers can interact with eachother via localhost. To see what I mean, lets first open up a terminal inside the cent-OS container:
+There's a couple of interesting things you can do with  multi-container pods. First of all, the containers can interact with eachother via localhost. To see what I mean, lets first open up a terminal inside the cent-OS container:
 
 ```bash
 $ kubectl exec pod-multi-cntr -c cntr-centos -it /bin/bash
@@ -40,20 +40,25 @@ Now let's trying curling localhost just to see what happens:
 curl http://localhost
 ```
 
-You may have expected for this curl command to hang for a while and then timeout, since this is just a standard cent-OS container and doesn't have a web service running. However what we can see here, is that not only did we get a successful response, but the response actually came from the other container in the pod, which is running apache. So what on earth is going on!
+It's likely that you expected for this curl command to hang for a while and then timeout, since this is just a standard cent-OS container and doesn't have a web service running inside it  . However what we can see here, is that not only did we get a successful response, but the response actually came from the other container in the pod, which is running apache. So you might be thinking,      what on earth is going on!
 
 
 Ok the way networking works inside a pod, is similar to how networking works inside a linux machine. All Linux machines have a special virtual network interface called the loopback interface. This loopback interface is used to route internal traffic between various processes on the Linux machine. The loopback interface has the ip address of 127.0.0.1, which is what processes use to forward traffic internally.  
 
 
-For example, let's say you have a linux machine that has apache daemon running on it. Now if you open up bash terminal inside this ubuntu machine and then curl 127.0.0.1, then behind the scenes the curl command starts up a process, and this process in turns forwards the curl request to the machine's loopback network interface, the loopback interface then forwards the request on to the apache daemon's underlying process. This process then provides a response which gets sent back to the curl process. 
+For example, let's say you have a linux machine that has the  apache daemon running on it. Now if you open up bash terminal inside this ubuntu machine and then curl 127.0.0.1, then behind the scenes the curl command starts up a process, and this process in turns forwards the curl request to the machine's loopback network interface, the loopback interface then forwards the request on to the apache daemon's underlying process. The apache process then provides a response which gets sent back to the curl process. The curl process then feeds the response back to the curl command which then displays it on the bash terminal's standard output  . 
 
 
 In Kubernetes, the same kind of thing is going on. Where instead of a VM with a loopback interface, we have a pod with a loopback interface, and instead of processes talking to each other, we have containers talking to each other. 
 
-So hopefully that now clears up what happened in this demo when we curled the localhost. 
+So hopefully that now clears up what happened in this demo when we curled the localhost. Ok I don't need this pod any more so I'm going to delete it before moving on. 
 
-Another cool thing you can do is that you can share a folder between your containers using emptyDir. Here's a ymal file to demo this:
+```bash
+kubectl delete pod ...
+```
+
+
+The second thing I wanted to show regarding multi-container pods is that you can share folders between your containers using emptyDir volumes. Here's a yaml file to demo this:
 
 ```bash
 tree configs/
@@ -61,7 +66,9 @@ code configs/pod-folder-share.yml
 switch to bash terminal (ctrl+~) 
 ```
 
-This is similar to the previous yaml file, but this time we have some volume defintions as well. Notice here that both containers are mounting the same volume. Let's go ahead and create this. 
+This is similar to the previous yaml file, but this time we have some volume definitions as well. Notice here that both containers are mounting the same volume. 
+
+Let's go ahead and create this. 
 
 
 ```bash
@@ -72,8 +79,14 @@ NAME             READY   STATUS    RESTARTS   AGE   IP            NODE       NOM
 pod-multi-cntr   2/2     Running   0          30s   172.17.0.10   minikube   <none>           <none>
 ```
 
-The cool thing here is that the cent-OS pod is generating new web content that the apache container then displays in realtime. We can see this in action by running the curl command from our first pod:
+In this pod, the cent-OS container is appending new lines to the apache container's default homepage, index.html. This means that the apache container will end up displaying the new content as and when it becomes available. We can see this in action by curling our apache container from another pod. So let's try this out by first creating a new pod:
 
+
+```bash
+
+```
+
+Ok, Now let's try curling our apache container a few times from this pod
 
 ```bash
 kubectl exec -it -- curl http://xxxxxxx
@@ -83,22 +96,38 @@ kubectl exec -it -- curl http://xxxxxxx
 
 As you can see, new lines are being added every few seconds. 
 
-You can use other volumes types to achieve the same effect, but using emptyDir volumes like this is quite a common use case.
+You can use other volumes types to share folders between containers, but using emptyDir volumes like this is quite a common use case, since it restricts folder sharing to only containers in the same pod. And also if the data that's being shared is no longer needed after the pod dies, then using emptyDir is a greate way to clean up after yourself.
 
 
 
 One thing to bear in mind when dealing with multicontainer pods, is that some commands will start asking for the container name. For example the logs command:
 
-In this scenario you just have to use the -c flag to tell the command which container you're interested in. 
-
-
-Other commands, such as xxx will still work, becuase they end up defaulting to the first container defined in the yaml definition, which in this example would be the apache container.  
-
 ```bash
-xxxxx
+$ kubectl logs pod-folder-share
+Error from server (BadRequest): a container name must be specified for pod pod-folder-share, choose one of: [cntr-httpd cntr-centos]
 ```
 
-Now let's talk about when you should use multi-container pods. As a general rule of thumb you should always stick to using single-container pods, and you if do need to build multicontainer pods, then try to only have one main container, and the rest as helper containers. The main container is container that provides the main application, without which the pod becomes useless. Whereas the helper containers provides a supporting role to the main container. In this example the main container is apache, and centos is the helper container. So if the main container dies, then the pod can no longer provide a web service, whereas the pod can still offer a web service if just the helper container dies. 
+Here the logs command doesn't know which container's logs you want to view. So you have use the -c flag to specify which container's log that you want to view. 
+
+```bash
+$ kubectl logs pod-folder-share -c cntr-httpd
+```
+
+
+Other commands, such as the exec command will still work without having to explicitly specify the container's name. That's becuase they end up defaulting to the first container defined in the yaml definition, which in this example would be the apache container.  
+
+```bash
+$ kubectl exec pod-folder-share -- pwd
+Defaulting container name to cntr-httpd.
+Use 'kubectl describe pod/pod-folder-share -n default' to see all of the containers in this pod.
+/usr/local/apache2
+```
+
+As you can see, the exec command even tells you which container it's defaulting too. 
+
+Now let's talk about when you should use multi-container pods. As a general rule of thumb you should always stick to using single-container pods, however there are some use cases where you have to use multicontainer pods, such as when utilizing a service mesh technology like Istio.
+
+So if you do build multicontainer pods, you need to ensure that your pod comprises of only one main container, and the rest are helper containers. The main container is the container that provides the main application that we're interested in consuming. Whereas the helper containers provides a supporting role to the main container. Also in the yaml definitions, the main container must be listed first, followed by all the other helper containers. So in this example the main container is apache, and centos is the helper container.
 
 That's it for this video, See you in the next one. 
 
