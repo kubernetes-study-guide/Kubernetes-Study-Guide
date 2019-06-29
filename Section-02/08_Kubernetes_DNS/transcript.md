@@ -1,8 +1,16 @@
 # Kubernete's DNS 
 
-In some of the previous videos we have demoed how one pod can reach another pod by curling the ip address. However communicating with IP addresses is bad practice. Instead you should communicate using dns names.
 
-Domain Name Servers (DNS) are the Internet's equivalent of a phone book. Where instead of a person's name and their phone number, we have a domain name and it's IP address. We normally use dns when accessing a website. For example we want to access facebook, we don't access if by entrering facebook's ip address, instead we access it using facebook's dns name, which is facebook.com. 
+Hello everone and welcome back. 
+
+
+When you access a website, then you access it by using it's website address, rather than ip address. For example you don't access Google by using the google server's ip address, instead you use the domain name google.com. The ability to use domain names is made possible thanks to DNS servers. Domain Name Servers (DNS) are the Internet's equivalent of a phone book. Where instead of a person's name and their phone number, we have a domain name and it's IP address. Your web browser still uses ip addresses behind the scenes, by querying a dns server to find out what IP number to use for a given domain name. The dns server that your web browser queries is defined somewhere on your machine. For example on Linux and Mac systems, it's defined under /etc/resolv.conf. In my case it's showing my dns server as my local router's ip address, and my router in turn queries one my internet service provider's dns servers. The reason we use domain names in ther first place is because IP addresses can change overtime and are harder to remember.
+
+
+The same is true for pods. Pod to pod communication should be done using dns names, not ip address. 
+
+In some of the previous videos we have demoed how one pod can reach another pod by curling the ip address. However communicating with IP addresses is bad practice. Instead you should communicate using dns names.
+For example we want to access facebook, we don't access if by entrering facebook's ip address, instead we access it using facebook's dns name, which is facebook.com. 
 
 There's 2 obvious reasons why dns is better than ip address, first dns names are easier to remember, and secondly ip addresses can change over time. 
 
