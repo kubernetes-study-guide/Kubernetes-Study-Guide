@@ -125,7 +125,8 @@ $ kubectl exec -it pod-httpd -c cntr-httpd -- /bin/bash
 root@pod-httpd:/usr/local/apache2#
 ```
 
-This command is quite similar to the docker command. In our case, you might need to replace '/bin/bash' with something else, e.g. '/bin/sh', bash, sh, depending on the image your container was created from. The '--' is used to tell kubectl that everything after '--' should be interpreted as the command to run inside the pod, which in our example is just to create a bash session.
+This command is quite similar to the docker command. In our case, you might need to replace '/bin/bash' with something else, e.g. '/bin/sh', bash, sh, depending on what image your container was created from. The '--' is used to tell kubectl that everything after '--' should be interpreted as the command to run inside the pod, which in our example is just to create a bash session.
+
 
 Once you're inside the container, you then need to install the nc and curl packages. The command you need to run various depending on the image you use, but in our case, we run:
 
