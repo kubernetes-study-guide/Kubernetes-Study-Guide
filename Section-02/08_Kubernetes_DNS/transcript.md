@@ -1,12 +1,23 @@
+# Kubernete's DNS 
+
+In some of the previous videos we have demoed how one pod can reach another pod by curling the ip address. However communicating with IP addresses is bad practice. Instead you should communicate using dns.
+
+Domain Name Servers (DNS) are the Internet's equivalent of a phone book. Where instead of a person's name and their phone number, we have a domain name and it's IP address. We normally use dns when accessing a website. For example we want to access facebook, we don't access if by entrering facebook's ip address, instead we access it using facebook's dns name, which is facebook.com. 
+
+There's 2 obvious reasons why dns is better than ip address, first dns names are easier to remember, and secondly ip addresses can change over time. 
+
+
+
+Kubernetes comes with a builtin internal dns service. 
+
+
 In the previous video we run a curl command from one pod to another pod
 
 
-kubernetes comes with built in dns.
+kubernetes comes with builtin dns. This builtin dns only stores dns records for service objects. 
 
 
-It's bad practice to access pods using it's ip address, that's because ip addresses can change. Instead you should do the same thing that you do when surfing the internet, which is to use domain names. For example we don't access google by entering the google server's ip address into our web browser, instead we use the domain name, google.com. And you should take the same approach when accessing pods. 
-
-Kubernetes comes with builtin dns. This builtin dns only stores dns records for service objects. So here's the curl command you can use: 
+So here's the curl command you can use: 
 
 ```bash
 
