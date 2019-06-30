@@ -3,16 +3,16 @@
 
 Hello everone and welcome back. 
 
-We're now going to talk about how to use DNS in Kubernetes. But before let me quickly explain what dns is. 
+We're now going look at how to use DNS in Kubernetes. But before let me quickly explain what dns is. 
 
 
 When you access a website, then you access it by using it's website address, rather than it's ip address. For example you don't access Google by using the google server's ip address, instead you use the domain name google.com. The ability to use domain names is made possible thanks to DNS servers. Domain Name Servers (DNS) are the Internet's equivalent of a phone book. Where instead of a person's name and their phone number, we have a domain name and it's IP address. So when you enter a domain name, Your web browser still uses ip addresses behind the scenes, by first querying a dns server to find out what IP number to use for a given domain name. The dns server that your web browser queries is defined somewhere on your machine. For example on Linux and Mac systems, it's defined in your resolv.conf file"
 
 ```bash
-/etc/resolv.conf.
+/etc/resolv.conf
 ```
 
-In my case it's showing my dns server as my local router's ip address, and my router in turn queries one my internet service provider's dns servers. You can also perform manual dns lookups using the nslookup command. 
+In my case, this is my local router's ip address, which means that my local router is also my dns server, however behind the scenese, my router is actually relaying dns requests to one my internet service provider's dns servers. You can also perform manual dns using the nslookup command. 
 
 ```bash
 $ nslookup codingbee.net
@@ -23,6 +23,8 @@ Non-authoritative answer:
 Name:   codingbee.net
 Address: 77.104.171.177
 ```
+
+
 
 Here we can see which nameserver was used and what our website's ip address is. You can also use the dig command to perform dns lookups as well:
 
@@ -48,23 +50,18 @@ codingbee.net.          11070   IN      A       77.104.171.177
 ```
 
 
+It's actually possible to set your own custom dns entries locally on your workstation or container. That's done by adding them to your hosts file:
+
+```bash
+cat /etc/hosts
+```
+
+We'll demo how to make use of this file in later videos. Now let's turn our attention back to Kubernetes. 
 
 
+In earlier videos we demoed pod-to-pod communication by running curl from one pod to an apache pod by using the apache pod's ip address.
+However as explained earlier, we should use domain names rather than ip address. Luckily Kubernetes comes with a builtin internal DNS service, in the form of coredns. 
 
-
-
-
-
-
-
-
-The reason we use domain names in ther first place is because IP addresses can change overtime and are harder to remember.
-
-
-The same is true for pods. Pod to pod communication should be done using dns names, not ip addresses. Luckily Kubernetes comes with a builtin internal DNS service, in the form of coredns. 
-
-In some of the previous videos we have demoed how one pod can reach another pod by curling the ip address. However communicating with IP addresses is bad practice. Instead you should communicate using dns names.
-For example we want to access facebook, we don't access if by entrering facebook's ip address, instead we access it using facebook's dns name, which is facebook.com. 
 
 There's 2 obvious reasons why dns is better than ip address, first dns names are easier to remember, and secondly ip addresses can change over time. 
 
