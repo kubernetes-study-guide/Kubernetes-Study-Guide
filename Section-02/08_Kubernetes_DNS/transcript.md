@@ -59,28 +59,8 @@ cat /etc/hosts
 We'll demo how to make use of this file in later videos. Now let's turn our attention back to Kubernetes. 
 
 
-In earlier videos we demoed pod-to-pod communication by running curl from one pod to an apache pod by using the apache pod's ip address.
-However as explained earlier, we should use domain names rather than ip address. Luckily Kubernetes comes with a builtin internal DNS service, in the form of coredns. 
+In earlier videos, we demoed pod-to-pod communication by running curl from a cent-os pod to an apache pod by using the apache pod's ip address. However ip addresses are prone to changing, so it's better to use domain names instead. Luckily Kubernetes comes with a builtin DNS Server, called CoreDNS. and you can your own dns entries to the coreDNS service 
 
-
-There's 2 obvious reasons why dns is better than ip address, first dns names are easier to remember, and secondly ip addresses can change over time. 
-
-
-
-Kubernetes comes with a builtin internal dns service. 
-
-
-In the previous video we run a curl command from one pod to another pod
-
-
-kubernetes comes with builtin dns. This builtin dns only stores dns records for service objects. 
-
-
-So here's the curl command you can use: 
-
-```bash
-
-```
 
 This domain name is made up of a few parts:
 
@@ -89,34 +69,6 @@ This domain name is made up of a few parts:
 - the base domain name. 
 
 
-So whenever you want one pod to access another pod, then use domain names like this. Don't use ip addresses. 
-
-
-Now you might be wondering how this dns works behind the scenes. 
-
-
-
-nslookup
-
-dig
-
-For example you can run the following commands to query the builtin dns.  So did know where to access the dns service?
-
-
-
-
-
-
-
-
-
-That's because the ip address can change, whenever pod is rebuilt. The recommend approach is to access pods using domain names.
-
-
-It's bad practive to use IP addresses to access things. 
-
-
-the same approach that we use for rest of the world wide web, and that's to use dns 
 
 
 
