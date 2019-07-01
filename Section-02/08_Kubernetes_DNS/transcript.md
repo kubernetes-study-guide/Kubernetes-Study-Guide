@@ -12,7 +12,7 @@ When you access a website, then you access it by using it's website address, rat
 /etc/resolv.conf
 ```
 
-In my case, this is my local router's ip address, which means that my local router is also my dns server, however behind the scenese, my router is actually relaying dns requests to one my internet service provider's dns servers. You can also perform manual dns using the nslookup command. 
+In my case, this is my local router's ip address, which means that my local router is also my dns server, however behind the scenes, my router is actually relaying dns requests to one my internet service provider's dns servers. You can also perform manual dns using the nslookup command. 
 
 ```bash
 $ nslookup codingbee.net
@@ -59,7 +59,7 @@ cat /etc/hosts
 We'll demo how to make use of this file in later videos. Now let's turn our attention back to Kubernetes. 
 
 
-In earlier videos, we demoed pod-to-pod communication by running curl from a cent-os pod to an apache pod by using the apache pod's ip address. However ip addresses are prone to changing, so it's better to use domain names instead. Luckily Kubernetes comes with a builtin DNS Server, called CoreDNS. and you can your own dns entries to the coreDNS service 
+In earlier videos, we demoed pod-to-pod communication by running curl from a cent-os pod to an apache pod by using the apache pod's ip address. However ip addresses are prone to changing, so it's better to use domain names instead. Luckily most Kubernetes installer tools, such as minikube, sets up DNS for you, by installing a DNS software called CoreDNS. You can then set dns entries in coredns by creating service objects.
 
 
 This domain name is made up of a few parts:
@@ -73,6 +73,14 @@ This domain name is made up of a few parts:
 
 
 This kubernetes service ip address will actually never change. That's because this ip address is hardcoded into the kube clusters configuration files. The only way to change this ip address is by deliberately going into your kube cluster's config files and then changing it there. 
+
+
+By the way, you can control the content of your pod's resolv.conf
+
+
+
+## Reference
+https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/ (talks about how to customise pods resolv.conf file - should be covered in a seperate video)
 
 
 
