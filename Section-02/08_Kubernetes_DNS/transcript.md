@@ -1,88 +1,77 @@
-# Kubernete's DNS 
+In the previous video we saw how containers in the same pod can communicate with each other using the localhost. Which is fine, since the loopback's interfaces ip address of 127.0.0.1 is a standard and never changes.
 
-
-Hello everone and welcome back. 
-
-We're now going look at how to use DNS in Kubernetes. But before let me quickly explain what dns is. 
-
-
-When you access a website, then you access it by using it's website address, rather than it's ip address. For example you don't access Google by using the google server's ip address, instead you use the domain name google.com. The ability to use domain names is made possible thanks to DNS servers. Domain Name Servers (DNS) are the Internet's equivalent of a phone book. Where instead of a person's name and their phone number, we have a domain name and it's IP address. So when you enter a domain name, Your web browser still uses ip addresses behind the scenes, by first querying a dns server to find out what IP number to use for a given domain name. The dns server that your web browser queries is defined somewhere on your machine. For example on Linux and Mac systems, it's defined in your resolv.conf file"
+However when it comes to pod-to-pod communications, we can do that using pod ip addresses. To demo this, I'll need to create 2 pods, after that I'll run a curl command from one pod to access the service exposes by the other pod. So for this demo I'll create an apache pod cent-os pod. I'll then run a curl command from the centos pod to reach the apache pod. here are the 2 yamls files I'll use to create these pods:
 
 ```bash
-/etc/resolv.conf
+code ... 
 ```
 
-In my case, this is my local router's ip address, which means that my local router is also my dns server, however behind the scenes, my router is actually relaying dns requests to one my internet service provider's dns servers. You can also perform manual dns using the nslookup command. 
+These are actually copies of yaml files I've used in earlier demos. Now let go ahead and create these pods.  
+
+
 
 ```bash
-$ nslookup codingbee.net
-Server:         192.168.0.1
-Address:        192.168.0.1#53
-
-Non-authoritative answer:
-Name:   codingbee.net
-Address: 77.104.171.177
+$ kubectl apply -f configs/pod-httpd.yml -f configs/pod-centos.yml
+pod/pod-httpd unchanged
+pod/pod-centos unchanged
+kubectl get pods -o wide
 ```
 
+Here we can see what our apache pod's ip address. This is the ip address I need to curl to from the cento-os pod. So let's try that now:
 
-
-Here we can see which nameserver was used and what our website's ip address is. You can also use the dig command to perform dns lookups as well:
 
 ```bash
-$ dig codingbee.net
-
-; <<>> DiG 9.10.6 <<>> codingbee.net
-;; global options: +cmd
-;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 4183
-;; flags: qr rd ra ad; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
-
-;; QUESTION SECTION:
-;codingbee.net.                 IN      A
-
-;; ANSWER SECTION:
-codingbee.net.          11070   IN      A       77.104.171.177
-
-;; Query time: 5 msec
-;; SERVER: 192.168.0.1#53(192.168.0.1)
-;; WHEN: Sat Jun 29 19:20:30 BST 2019
-;; MSG SIZE  rcvd: 47
+kubectl exec ... -- curl http://xxxxxx
 ```
 
-
-It's actually possible to set your own custom dns entries locally on your workstation or container. That's done by adding them to your hosts file:
+Here we can see that we've managed to get one pod to communicate with another pod using ip addresses. However direclty using pod ip addresses is a bad idea for a numbers, one of the main reason being that pod ip numbers can change over time if and and when the pod dies and get's recreated. That's where service objects comes into the picture. With service object you can access a pod via the service object,rather than using the pod's ip address. Let's demo this by creating a nodeport service, here's the yaml file I'll use to create nodeport service:
 
 ```bash
-cat /etc/hosts
+code ...
 ```
 
-We'll demo how to make use of this file in later videos. Now let's turn our attention back to Kubernetes. 
+Once again I've taken this yaml file from an earlier demo, where we've set port xx for pod-to-pod communication. So let's now go ahead and create this service:
 
 
-In earlier videos, we demoed pod-to-pod communication by running curl from a cent-os pod to an apache pod by using the apache pod's ip address. However ip addresses are prone to changing, so it's better to use domain names instead. Luckily most Kubernetes installer tools, such as minikube, sets up DNS for you, by installing a DNS software called CoreDNS. You can then set dns entries in coredns by creating service objects.
+```bash
+kubectl apply -f ...
+```
 
+As you can see, service objects comes with it's own ip address. So let's try curling the services ip address:
 
-This domain name is made up of a few parts:
+```bash
+kubectl exec -- curl....
+```
 
-- the service's name
-- namespace name
-- the base domain name. 
+He we can see that our service object forwarded our curl request to the apache pod, which then sent the response. That's because this service and apache pod are associated with each other through label and selectors, as covered in earlier videos. One way to confirm this association is by using the endpoints command:
 
+```bash
+$ kubectl get endpoints svc-nodeport-httpd
+NAME                 ENDPOINTS       AGE
+svc-nodeport-httpd   172.17.0.3:80   8s
+```
 
-
-
-
-This kubernetes service ip address will actually never change. That's because this ip address is hardcoded into the kube clusters configuration files. The only way to change this ip address is by deliberately going into your kube cluster's config files and then changing it there. 
-
-
-By the way, you can control the content of your pod's resolv.conf
-
-
-
-## Reference
-https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/ (talks about how to customise pods resolv.conf file - should be covered in a seperate video)
+Now we no longer have to worry about the a pod's ip number changing, because if it does change the our service will automatically update update the endpoint with the new pod ip address. 
 
 
 
 
 
+
+and a centos pod. 
+
+now let's curl by id address. Now lets do the same thing but using the nodeport service objects, 
+
+then lets curl the service ip address. 
+
+So far so good. 
+
+However there a few problem with use ip address:
+
+- ip address can change
+- ip address are not informative. a dns name google.com is informative. 
+- dns names have a logical naming structure that you can specify in your pods at creation time.  
+
+To fix this, we can use kubernetes dns. That's something that comes preinstalled by default in most installer options, such as minikube. 
+
+create another new, shorter article after this, called : clusterip services. 
