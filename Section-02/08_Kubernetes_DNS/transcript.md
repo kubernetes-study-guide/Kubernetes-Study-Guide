@@ -51,6 +51,8 @@ NAME                 ENDPOINTS       AGE
 svc-nodeport-httpd   172.17.0.3:80   8s
 ```
 
+Here we can see our service will forward traffic to the following ip address at this very moment in time. This info get's update in realtime. 
+
 Now we no longer have to worry about the a pod's ip number changing, because if it does change the our service will automatically update update the endpoint with the new pod ip address. 
 
 
