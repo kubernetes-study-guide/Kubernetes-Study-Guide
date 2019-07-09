@@ -1,171 +1,7 @@
 # Helm
 
 
-Install helm:
-
-```bash
-brew install kubernetes-helm
-```
-
-Helm is installed here:
-
-```bash
-$ helm home
-/Users/schowdhury/.helm
-```
-
-In this folder, there is a repositories.yaml file. This is the equivalent to yum's .repo file. 
-
-
-Next, confirm that you're on the right context (in order to install server side of helm, called Tiller, into the cluster):
-
-```bash
-$ kubectl config get-contexts
-```
-
-The next command will then setup tiller on this context:
-
-
-```bash
-helm init --history-max 200
-Creating /Users/schowdhury/.helm
-...
-Adding stable repo with URL: https://kubernetes-charts.storage.googleapis.com
-Adding local repo with URL: http://127.0.0.1:8879/charts
-$HELM_HOME has been configured at /Users/schowdhury/.helm.
-
-Tiller (the Helm server-side component) has been installed into your Kubernetes Cluster.
-
-Please note: by default, Tiller is deployed with an insecure 'allow unauthenticated users' policy.
-To prevent this, run `helm init` with the --tiller-tls-verify flag.
-For more information on securing your installation see: https://docs.helm.sh/using_helm/#securing-your-helm-installation
-```
-
-This ends up installing the tiller pod:
-
-```bash
-$ kubectl get pods --namespace=kube-system | grep tiller
-tiller-deploy-69d5cd79bb-qbtx7              1/1     Running   0          2m20s
-```
-
-Which is create by the following deployment:
-
-```bash
-$ kubectl get deployments --namespace=kube-system | grep tiller
-tiller-deploy              1/1     1            1           9d
-```
-
-You can output the all the yaml definitions that were used to create the tiller app by running:
-
-```bash
-$ helm init --dry-run --debug
-```
-
-Tiller is the server side component of helm. 
-
-Note, tiller will actually be deprecated in the next version of helm. Instead, you will just have helm interacting with the kube-apiserver directly without any tiller middleman. 
-
-
-Now list your helm charts:
-
-```bash
-helm ls
-```
-
-Here's how to search for a helm chart in the public repos:
-
-```bash
-$ helm search wordpress
-NAME            	CHART VERSION	APP VERSION	DESCRIPTION
-stable/wordpress	5.12.3       	5.2.1      	Web publishing platform for building blogs and websites.
-```
-
-You can list all available helm charts (aka helm packages) by running:
-
-```bash
-<<<<<<< HEAD:Section-05/10_Using_Helm/README.md
-helm install --name codingbee stable/wordpress
-```
-
-Here we specified a name. This is referred to as a 'release name', and corresponds to one of the predefined values, [Release.Name](https://helm.sh/docs/charts/#predefined-values). You can use these variables in your helm templates later on. These are part of the broader [built-in objects](https://helm.sh/docs/chart_template_guide/#built-in-objects), which you can used in your templates. 
-
-This creates a number of kubernetes objects, pods, services, configmaps,...etc, and groups them into a 'release' and it names that release. If you run this command again (without name flag), then it will create a second release with a randomly geneerated release-name. 
-=======
-$ helm search
-```
-
-
-Now [install](https://helm.sh/docs/using_helm/#more-installation-methods) this:
-
-```bash
-helm install stable/wordpress --name codingbee-wp
-```
-
-This creates a number of kubernetes objects, pods, services, configmaps,...etc, and groups them into a 'release' and it names that release using --name. If you run this command again, then it will create a second release (but you have to pick a different name). You can check your release's status by running:
-
-```bash
-helm status release-name
-```
-
-
-A helm chart comes with a set of default values, you print these defaults:
-
-
-```bash
-helm inspect values stable/mariadb
-```
-
-You can [override these default values](https://helm.sh/docs/using_helm/#customizing-the-chart-before-installing) by running:
-
-```bash
-$ cat << EOF > config.yaml
-mariadbUser: user0
-mariadbDatabase: user0db
-EOF
-$ helm install -f config.yaml stable/mariadb
-```
-
--f is short for --values. An alternative to --values is --set. 
-
->>>>>>> 4c3b7ff674b2fa902296bff73f1a7fcc46861f3b:Section-06/10_Using_Helm/README.md
-
-To delete a release, do:
-
-```bash
-$ helm delete release-name --purge
-```
-
-<<<<<<< HEAD:Section-05/10_Using_Helm/README.md
-=======
-To see a list of deleted releases, do:
-
-```bash
-helm list --deleted
-```
-
-
->>>>>>> 4c3b7ff674b2fa902296bff73f1a7fcc46861f3b:Section-06/10_Using_Helm/README.md
-To install a particular version, do:
-
-```bash
-helm install --name codingbee stable/wordpress --version 5.0.0
-```
-
-Here's how to upgrade to a particular version:
-
-```bash
-$ helm upgrade lazy-ragdoll stable/wordpress --version 5.0.1
-```
-
-If you want to upgrade to the latest version then you omit the version flag. this causes the revision to go up:
-
-```bash
-$ helm ls
-NAME        	REVISION	UPDATED                 	STATUS  	CHART          	APP VERSION	NAMESPACE
-lazy-ragdoll	2       	Tue Jun 11 19:25:45 2019	DEPLOYED	wordpress-5.0.1	5.0.1      	default
-```
-
-Helm charts comes in the form of tar files, which you can just download:
+Helm charts comes in the form of tar files, which you can just download this tar file using [helm fetch](https://helm.sh/docs/helm/#helm-dependency):
 
 ```bash
 $ helm fetch stable/wordpress
@@ -231,7 +67,7 @@ $ tree .
 ```
 
 
-Helm charts can have dependencies on other charts. E.g. the wordpress chart depends the the mariadb chart. This dependencies are specified in the requirements.yaml file:
+Helm charts can have [dependencies](https://helm.sh/docs/helm/#helm-dependency) on other charts. E.g. the wordpress chart depends the the mariadb chart. This dependencies are specified in the requirements.yaml file:
 
 ```bash
 $ cat requirements.yaml
@@ -364,11 +200,13 @@ helm repo update   # useful for cleangin up the cache
 
 # Create helm boilerplate
 
-This is done using 
+This is done using the [helm create](https://helm.sh/docs/helm/#helm-create) command: 
 
 ```bash
-$ helm create hello-world
+helm create --help  # has useful info
+helm create hello-world
 ```
+
 This creates:
 
 ```bash
@@ -384,14 +222,14 @@ $ tree ./hello-world
 │   ├── service.yaml
 │   └── tests
 │       └── test-connection.yaml
-└── values.yaml     # this contains default values. These are used 
-                    # to render the yaml files stored in the templates 
-                    # folder. 
+└── values.yaml     # this contains default values. These are used
+                    # to render the yaml files stored in the templates
+                    # folder.
 
 3 directories, 8 files
 ```
 
-One file that doesn't get requreted is the requirements.yaml. this stores chart dependenices. These dependencies are downloaded and installed in the charts folders. this file is also where the `helm dependency list` command gets it's info from. 
+One file that doesn't get generated is the requirements.yaml. this stores chart dependenices. These dependencies are downloaded and installed in the charts folders. this file is also where the `helm dependency list` command gets it's info from. 
 
 
 values.yaml has a bunch of default values. 
