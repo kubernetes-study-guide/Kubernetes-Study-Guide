@@ -54,3 +54,7 @@ I'm planning create more courses in future to cover these areas.
 [https://github.com/ramitsurana/awesome-kubernetes](https://github.com/ramitsurana/awesome-kubernetes)
 
 [https://kubectl.docs.kubernetes.io/pages/kubectl_book/getting_started.html](https://kubectl.docs.kubernetes.io/pages/kubectl_book/getting_started.html)
+
+eli5 guides
+[https://www.cncf.io/the-childrens-illustrated-guide-to-kubernetes/](https://www.cncf.io/the-childrens-illustrated-guide-to-kubernetes/)
+[https://cloud.google.com/kubernetes-engine/kubernetes-comic/](https://cloud.google.com/kubernetes-engine/kubernetes-comic/)
