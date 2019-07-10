@@ -55,6 +55,12 @@ $ kubectl get deployments --namespace=kube-system | grep tiller
 tiller-deploy              1/1     1            1           9d
 ```
 
+If you installed tiller by mistake, then you can uninstall tiller by running:
+
+```bash
+helm reset
+```
+
 You can output the all the yaml definitions that were used to create the tiller app by running:
 
 ```bash
@@ -107,11 +113,26 @@ The 'helm install' installed a chart which in turn created a number of kubernete
 
 ```bash
 helm get release-name
+USER-SUPPLIED VALUES:
+...
+HOOKS:
+...
+MANIFESTS:
+...
+NOTES:
 ```
 
-This is equivalent to running multiple `kubectl .... -o yaml` in one go for each object that exists in the release. 
+The get command gives 4 sets of info, the input parameters used for this particular release, the hooks (covered later), and rendered manifests. The rendered manifests are generally running multiple `kubectl .... -o yaml` in one go for each object that exists in the release. The usage 'NOTES' contains helpful info about how to do 'hello world' demo to test this release. 
 
 
+To get a subset of the above output do:
+
+```bash
+helm get values --all release-name   # without --all you just get the overrides you provided. 
+helm get manifests release-name
+helm get notes release-name
+helm get hooks release-name
+```
 
 A helm chart comes with a set of default values, you print these defaults:
 
@@ -170,13 +191,13 @@ stable/wordpress        5.12.6          5.2.2           Web publishing platform 
 stable/wordpress        5.12.5          5.2.2           Web publishing platform for building blogs and websites.
 stable/wordpress        5.12.4          5.2.2           Web publishing platform for building blogs and websites.
 ...
-helm install --name codingbee stable/wordpress --version 5.0.0
+helm install --name codingbee-wp stable/wordpress --version 5.0.0
 ```
 
 Here's how to upgrade to a particular version:
 
 ```bash
-$ helm upgrade lazy-ragdoll stable/wordpress --version 5.0.1
+$ helm upgrade codingbee-wp stable/wordpress --version 5.0.1
 ```
 
 If you want to upgrade to the latest version then you omit the version flag. this causes the revision to go up:
@@ -184,8 +205,36 @@ If you want to upgrade to the latest version then you omit the version flag. thi
 ```bash
 $ helm ls
 NAME        	REVISION	UPDATED                 	STATUS  	CHART          	APP VERSION	NAMESPACE
-lazy-ragdoll	2       	Tue Jun 11 19:25:45 2019	DEPLOYED	wordpress-5.0.1	5.0.1      	default
+codingbee-wp	2       	Tue Jun 11 19:25:45 2019	DEPLOYED	wordpress-5.0.1	5.0.1      	default
 ```
+
+You can check a release's upgrade history:
+
+```bash
+$ helm history codingbee-wp
+REVISION        UPDATED                         STATUS          CHART                   DESCRIPTION     
+1               Tue Jul  9 18:57:04 2019        SUPERSEDED      wordpress-5.0.0         Install complete
+2               Tue Jul  9 18:57:14 2019        SUPERSEDED      wordpress-5.0.1         Upgrade complete
+3               Tue Jul  9 18:57:42 2019        SUPERSEDED      wordpress-5.13.0        Upgrade complete
+4               Tue Jul  9 18:57:46 2019        DEPLOYED        wordpress-5.13.0        Upgrade complete # here I tried doing the same upgrade a second time. 
+```
+
+You can also perform rollbacks:
+
+
+```bash
+$ helm rollback codingbee-wp 2
+Rollback was a success.
+$ helm history codingbee-wp
+REVISION        UPDATED                         STATUS          CHART                   DESCRIPTION     
+1               Tue Jul  9 18:57:04 2019        SUPERSEDED      wordpress-5.0.0         Install complete
+2               Tue Jul  9 18:57:14 2019        SUPERSEDED      wordpress-5.0.1         Upgrade complete
+3               Tue Jul  9 18:57:42 2019        SUPERSEDED      wordpress-5.13.0        Upgrade complete
+4               Tue Jul  9 18:57:46 2019        SUPERSEDED      wordpress-5.13.0        Upgrade complete
+5               Tue Jul  9 19:06:03 2019        DEPLOYED        wordpress-5.0.1         Rollback to 2   
+```
+
+
 
 
 ## References

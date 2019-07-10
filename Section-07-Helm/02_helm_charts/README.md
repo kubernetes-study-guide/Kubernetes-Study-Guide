@@ -1,6 +1,28 @@
 # Helm
 
 
+Charts is to helm, in a similar way to what rpms are to yum. Charts are usually distributed as targz files where, but once extracted they have a certain [chart folder structure](https://helm.sh/docs/developing_charts/#the-chart-file-structure):
+
+```
+wordpress/
+  Chart.yaml          # A YAML file containing information about the chart
+  LICENSE             # OPTIONAL: A plain text file containing the license for the chart
+  README.md           # OPTIONAL: A human-readable README file
+  requirements.yaml   # OPTIONAL: A YAML file listing dependencies for the chart
+  values.yaml         # The default configuration values for this chart
+  charts/             # A directory containing any charts upon which this chart depends.
+  templates/          # A directory of templates that, when combined with values,
+                      # will generate valid Kubernetes manifest files.
+  templates/NOTES.txt # OPTIONAL: A plain text file containing short usage notes
+```
+
+
+
+
+
+
+
+
 Helm charts comes in the form of tar files, which you can just download this tar file using [helm fetch](https://helm.sh/docs/helm/#helm-dependency):
 
 ```bash
