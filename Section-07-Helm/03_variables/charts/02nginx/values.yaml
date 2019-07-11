@@ -1,0 +1,5 @@
+container_name: cntr-nginx
+
+image:
+  repository: nginx
+  tag: stable
