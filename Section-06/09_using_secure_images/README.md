@@ -52,7 +52,7 @@ So here I'm creating a secret:
 
 
 ```bash
-$ kubectl create secret docker-registry docker-hub-credentials --docker-server=https://index.docker.io/v1/ --docker-username=codingbee --docker-password=hotelviewdenmark --docker-email=not-used@ignore.com
+$ kubectl create secret docker-registry docker-hub-credentials --docker-server=https://index.docker.io/v1/ --docker-username=codingbee --docker-password=xxxxxx --docker-email=not-used@ignore.com
 secret/docker-hub-credentials created
 
 
@@ -75,7 +75,19 @@ Data
 .dockerconfigjson:  172 bytes
 ```
 
-At the moment I don't have a private image. Normally building a new image involves writing Dockerfiles, which is a course in it's own write. So we'll cheat and instead create a new private image by simply cloning the official httpd image as a starting point:
+At the moment I don't have a private image.
+
+You can also view your secret's content by running:
+
+```bash
+kubectl get secrets docker-hub-credentials -o=jsonpath='{.data.\.dockerconfigjson}' | base64 --decode
+{"auths":{"ttps://index.docker.io/":{"username":"codingbee","password":"xxxx","auth":"xxxxxx"}}}
+```
+
+
+
+
+Normally building a new image involves writing Dockerfiles, which is a course in it's own write. So we'll cheat and instead create a new private image by simply cloning the official httpd image as a starting point:
 
 ```bash
 # docker image ls
