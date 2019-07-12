@@ -4,7 +4,7 @@ If you want to modify your variables before they get inserted into the template,
 
 
 ```bash
-$ helm install . --dry-run --debug 
+$ helm install charts/01nginx --dry-run --debug 
 ...
 spec:
   containers:
@@ -13,7 +13,8 @@ spec:
 ...
 ```
 
-There are a lot of functions available:
+These functions comes from [3 places](https://helm.sh/docs/developing_charts/#templates-and-values):
 
 - [https://godoc.org/text/template](https://godoc.org/text/template)
 - [http://masterminds.github.io/sprig/](http://masterminds.github.io/sprig/)
+- [https://helm.sh/docs/developing_charts/#chart-development-tips-and-tricks](https://helm.sh/docs/developing_charts/#chart-development-tips-and-tricks) - 'inlcude' and 'required' are special functions developed specifically for helm 

@@ -6,7 +6,8 @@ metadata:
     app: {{ .Chart.Name }}
 spec:
   containers:
-  - name: {{ quote .Values.container_name }}
+#  - name: {{ quote .Values.container_name }}
+  - name: {{ quote .Values.container_name | upper }}
     image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
     ports:
     - containerPort: 80
