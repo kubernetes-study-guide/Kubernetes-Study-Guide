@@ -213,12 +213,18 @@ repositories:
 You can crud this file using helm by using commands like:
 
 ```bash
-helm repo add
-helm repo remove
-helm repo list
+helm repo add ...
+helm repo remove ...
+helm repo list ...
 helm repo update   # useful for cleangin up the cache
 ```
 
+e.g.: 
+
+```bash
+$ helm repo add bitnami https://charts.bitnami.com/bitnami
+"bitnami" has been added to your repositories
+```
 
 # Create helm boilerplate
 
