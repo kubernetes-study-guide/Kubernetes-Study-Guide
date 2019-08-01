@@ -27,7 +27,7 @@ The next command will then setup tiller on this context:
 
 
 ```bash
-helm init --history-max 200
+$ helm init --history-max 200
 Creating /Users/schowdhury/.helm
 ...
 Adding stable repo with URL: https://kubernetes-charts.storage.googleapis.com
@@ -48,20 +48,20 @@ $ kubectl get pods --namespace=kube-system | grep tiller
 tiller-deploy-69d5cd79bb-qbtx7              1/1     Running   0          2m20s
 ```
 
-Which is create by the following deployment:
+Which in turn is created by the following deployment:
 
 ```bash
 $ kubectl get deployments --namespace=kube-system | grep tiller
 tiller-deploy              1/1     1            1           9d
 ```
 
-If you installed tiller by mistake, then you can uninstall tiller by running:
+If you installed tiller by mistake, then you can uninstall it by running:
 
 ```bash
 helm reset
 ```
 
-You can output the all the yaml definitions that were used to create the tiller app by running:
+You can output all the yaml definitions that were used to create the tiller app by running:
 
 ```bash
 helm init --dry-run --debug
@@ -100,7 +100,7 @@ Now here's how to [install](https://helm.sh/docs/using_helm/#more-installation-m
 helm install stable/wordpress --name codingbee-wp
 ```
 
-This creates a number of kubernetes objects, pods, services, configmaps,...etc, and groups them into a 'release' and names that release using the --name flag. If you run this command again, then it will create a second release (but you have to pick a different name). You can check your release's status by running:
+This creates a number of kubernetes objects, pods, services, configmaps,...etc, and groups them into a 'release' and names that release using the --name flag. So in this example, this install instance has the release name 'codingbee-wp'. If you run this command again, then it will create a second release (but you have to pick a different name). You can check your release's status by running:
 
 
 
@@ -108,11 +108,11 @@ This creates a number of kubernetes objects, pods, services, configmaps,...etc, 
 helm status release-name
 ```
 
-The 'helm install' installed a chart which in turn created a number of kubernetes objects, i.e. deployments, services, ConfigMaps,...etc. You can use `kubectl get ...` command to list them out in turn. But that would also involve identifying which object was created by the release. Better yet you can do:
+The 'helm install' installed a chart which in turn created a number of kubernetes objects, i.e. deployments, services, ConfigMaps,...etc. You can use `kubectl get ...` command to list them out in turn. But that would also involve identifying which object was created by the release. Better yet, you can do:
 
 
 ```bash
-helm get release-name
+$ helm get release-name
 USER-SUPPLIED VALUES:
 ...
 HOOKS:
@@ -122,7 +122,7 @@ MANIFESTS:
 NOTES:
 ```
 
-The get command gives 4 sets of info, the input parameters used for this particular release, the hooks (covered later), and rendered manifests. The rendered manifests are generally running multiple `kubectl .... -o yaml` in one go for each object that exists in the release. The usage 'NOTES' contains helpful info about how to do 'hello world' demo to test this release. 
+The get command gives 4 sets of info, the input parameters used for this particular release, the hooks (covered later), and rendered manifests. The rendered manifests are generally like running multiple `kubectl .... -o yaml` for each Kubernetes object that exists in the release. The usage 'NOTES' contains helpful info about how to do 'hello world' demo to test this release. 
 
 
 To get a subset of the above output do:
@@ -134,7 +134,7 @@ helm get notes release-name
 helm get hooks release-name
 ```
 
-A helm chart comes with a set of default values, you print these defaults:
+A helm chart comes with a set of default values, you can print these defaults:
 
 
 ```bash
