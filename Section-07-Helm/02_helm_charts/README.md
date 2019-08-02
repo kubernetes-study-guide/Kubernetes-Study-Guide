@@ -50,7 +50,7 @@ $ tree .
 │       │   └── docker-entrypoint-initdb.d
 │       │       └── README.md
 │       ├── templates
-│       │   ├── NOTES.txt
+│       │   ├── NOTES.txt      <= Use this to display useful info, e.g. url and port number to use along with default login credentials. # https://helm.sh/docs/chart_template_guide/#creating-a-notes-txt-file
 │       │   ├── _helpers.tpl
 │       │   ├── initialization-configmap.yaml
 │       │   ├── master-configmap.yaml
@@ -224,6 +224,12 @@ e.g.:
 ```bash
 $ helm repo add bitnami https://charts.bitnami.com/bitnami
 "bitnami" has been added to your repositories
+
+$ helm repo list
+NAME   	URL
+stable 	https://kubernetes-charts.storage.googleapis.com
+local  	http://127.0.0.1:8879/charts
+bitnami	https://charts.bitnami.com/bitnami
 ```
 
 # Create helm boilerplate

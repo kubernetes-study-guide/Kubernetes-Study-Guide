@@ -116,12 +116,23 @@ image:
 EOF
 ```
 
-[Capabilities](https://helm.sh/docs/chart_template_guide/#built-in-objects) is another builtin object:
+[Capabilities and Template](https://helm.sh/docs/chart_template_guide/#built-in-objects) are a couple of other builtin objects:
 
 ```bash
 $ cd charts/02nginx/
-$ helm install . --dry-run --debug 
+$ helm install . --dry-run --debug | less
+
+
+$ helm install . --name=codingbeewp --dry-run --debug | grep KubeVersion
+    capabilityKubeVersion: v1.15.0
+
+$ helm install . --name=codingbeewp --dry-run --debug | grep helmTemplateName
+    helmTemplateName: 02nginx/templates/pod.yaml
+
+
 ```
+
+
 
 
 

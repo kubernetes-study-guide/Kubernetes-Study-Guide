@@ -175,6 +175,8 @@ To [delete](https://helm.sh/docs/helm/#helm-delete) a release, do:
 $ helm delete release-name --purge
 ```
 
+If we didn't use the purge flag then some objects, such as configmap objects would get left behind.  
+
 To see a list of deleted releases, do:
 
 ```bash

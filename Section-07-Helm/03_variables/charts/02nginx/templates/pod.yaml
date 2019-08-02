@@ -3,7 +3,8 @@ kind: Pod
 metadata:
   name: {{ .Release.Name }}
   labels:
-    capabilityApiVersions: {{ .Capabilities.APIVersions }}
+    capabilityKubeVersion: {{ .Capabilities.KubeVersion }}
+    helmTemplateName: {{ .Template.Name }}
 spec:
   containers:
   - name: {{ .Values.container_name }}
