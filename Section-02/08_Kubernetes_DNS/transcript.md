@@ -1,12 +1,15 @@
-In the previous video we saw how containers in the same pod can communicate with each other using the localhost. Which is fine, since the loopback's interfaces ip address of 127.0.0.1 is a standard and never changes.
+In the last video we saw how containers that lives inside the same pod can talk to each other using the loopback interface, 127.0.0.1. 
 
-However when it comes to pod-to-pod communications, we can do that using pod ip addresses. To demo this, I'll need to create 2 pods, after that I'll run a curl command from one pod to access the service exposes by the other pod. So for this demo I'll create an apache pod cent-os pod. I'll then run a curl command from the centos pod to reach the apache pod. here are the 2 yamls files I'll use to create these pods:
+However, what about if want one pod to talk to another pod? Well one way to do that is by using the ip addresses that Kubernetes auto assigns to each pod.  
+
+
+To demo this, I'll need to create a apache pod, and a centos pod. I'll then run a curl command from the centos pod to reach the apache pod. here are the 2 yamls files I'll use to create these pods:
 
 ```bash
 code ... 
 ```
 
-These are actually copies of yaml files I've used in earlier demos. Now let go ahead and create these pods.  
+These are actually copies of yaml files I've used in earlier demos. Now lets go ahead and create the 2 pods.  
 
 
 
@@ -17,14 +20,24 @@ pod/pod-centos unchanged
 kubectl get pods -o wide
 ```
 
-Here we can see what our apache pod's ip address. This is the ip address I need to curl to from the cento-os pod. So let's try that now:
+Here we can see that Kubernetes has automatically assigned IP addresses to each pod. So let's now see if our centos pod can talk to the apache pod. Now let's try sending a curl request from our centos pod, to the apache pod.  
+
+This is the ip address I need to curl to from the cento-os pod. So let's try that now:
 
 
 ```bash
 kubectl exec ... -- curl http://xxxxxx
 ```
 
-Here we can see that we've managed to get one pod to communicate with another pod using ip addresses. However direclty using pod ip addresses is a bad idea for a numbers, one of the main reason being that pod ip numbers can change over time if and and when the pod dies and get's recreated. That's where service objects comes into the picture. With service object you can access a pod via the service object,rather than using the pod's ip address. Let's demo this by creating a nodeport service, here's the yaml file I'll use to create nodeport service:
+Ok that has worked. We've managed to successfully get our centos pod to talk to the apache pod. 
+
+However using pod ip addresses like this is actually bad practice. For example, there's no gaurantee that a pod will always have the same ip address. If for whatever reason kubernetes has to delete and recreate the apache pod, then the pod could end up with a different ip address. Also ip addresses are not easy to remember or keep track of. 
+
+In the real world, we use DNS instead of raw ip addresses. For example if you want to access the Google search, you don't do that by typing the google server's ip address into your browser, instead you use it's dns name, google.com. 
+
+In Kubernetes, you can also create your own easy to remember dns names for your pods. That's done by createing Service objects. 
+
+With service object you can access a pod via the service object, rather than using the pod's ip address. Let's demo this by creating a nodeport service, here's the yaml file I'll use to create nodeport service:
 
 ```bash
 code ...
@@ -43,7 +56,7 @@ As you can see, service objects comes with it's own ip address. So let's try cur
 kubectl exec -- curl....
 ```
 
-He we can see that our service object forwarded our curl request to the apache pod, which then sent the response. That's because this service and apache pod are associated with each other through label and selectors, as covered in earlier videos. One way to confirm this association is by using the endpoints command:
+Here we can see that our service object forwarded our curl request to the apache pod, which then sent the response. That's because this service and apache pod are associated with each other through label and selectors, as covered in earlier videos. One way to confirm this association is by using the endpoints command:
 
 ```bash
 $ kubectl get endpoints svc-nodeport-httpd
