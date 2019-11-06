@@ -33,9 +33,15 @@ Ok that has worked. We've managed to successfully get our centos pod to talk to 
 
 However using pod ip addresses like this is actually bad practice. For example, there's no gaurantee that a pod will always have the same ip address. If for whatever reason kubernetes has to delete and recreate the apache pod, then the pod could end up with a different ip address. Also ip addresses are not easy to remember or keep track of. 
 
-In the real world, we use DNS instead of raw ip addresses. For example if you want to access the Google search, you don't do that by typing the google server's ip address into your browser, instead you use it's dns name, google.com. 
+In the real world, we use DNS instead of raw ip addresses. For example if you want to access the Google search, you don't do that by typing the google server's ip address into your browser, instead you it's dns name, google.com. 
 
-In Kubernetes, you can also create your own easy to remember dns names for your pods. That's done by createing Service objects. 
+In Kubernetes, you can also create your own easy to remember dns names for your pods. That's done by creating Service objects. Let's quickly demo kubernetes dns by creating a nodeport service. 
+
+
+
+
+
+
 
 With service object you can access a pod via the service object, rather than using the pod's ip address. Let's demo this by creating a nodeport service, here's the yaml file I'll use to create nodeport service:
 
@@ -70,6 +76,8 @@ Now we no longer have to worry about the a pod's ip number changing, because if 
 
 
 
+
+There's a lot more to services than just setting up dns and we'll explore them later. 
 
 
 
