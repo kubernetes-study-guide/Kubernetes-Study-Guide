@@ -1,6 +1,6 @@
 In the last video we saw how containers that lives inside the same pod can talk to each other using the loopback interface, 127.0.0.1. 
 
-However, what about if want one pod to talk to another pod? Well one way to do that is by using the ip addresses that Kubernetes auto assigns to each pod.  
+However, what about if you want one pod to talk to another pod? Well one way to do that is by using the ip addresses that Kubernetes auto assigns to each pod.  
 
 
 To demo this, I'll need to create a apache pod, and a centos pod. I'll then run a curl command from the centos pod to reach the apache pod. here are the 2 yamls files I'll use to create these pods:
@@ -33,14 +33,13 @@ Ok that has worked. We've managed to successfully get our centos pod to talk to 
 
 However using pod ip addresses like this is actually bad practice. For example, there's no gaurantee that a pod will always have the same ip address. If for whatever reason kubernetes has to delete and recreate the apache pod, then the pod could end up with a different ip address. Also ip addresses are not easy to remember or keep track of. 
 
-In the real world, we use DNS instead of raw ip addresses. For example if you want to access the Google search, you don't do that by typing the google server's ip address into your browser, instead you it's dns name, google.com. 
+In the real world, we use DNS instead of raw ip addresses. For example if you want to access the Google search, you don't do that by typing the google server's ip address into your web browser, instead you etner it's dns name, google.com. 
 
-In Kubernetes, you can also create your own easy to remember dns names for your pods. That's done by creating Service objects. Let's quickly demo kubernetes dns by creating a nodeport service. 
+In Kubernetes, you can also create your own easy to remember dns names for your pods. That's done by creating Service objects. Let's demo kubernetes dns by creating a nodeport service. 
 
+```
 
-
-
-
+```
 
 
 With service object you can access a pod via the service object, rather than using the pod's ip address. Let's demo this by creating a nodeport service, here's the yaml file I'll use to create nodeport service:
