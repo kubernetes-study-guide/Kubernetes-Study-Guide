@@ -1,9 +1,12 @@
+Hello everyone one, and welcome back.
+
+
 In the last video we saw how containers that lives inside the same pod can talk to each other using the loopback interface, 127.0.0.1. 
 
 However, what about if you want one pod to talk to another pod? Well one way to do that is by using the ip addresses that Kubernetes auto assigns to each pod.  
 
 
-To demo this, I'll need to create a apache pod, and a centos pod. I'll then run a curl command from the centos pod to reach the apache pod. here are the 2 yamls files I'll use to create these pods:
+For this demo I've opened up a bash terminal inside this video's topic folder.
 
 ```bash
 code ... 
