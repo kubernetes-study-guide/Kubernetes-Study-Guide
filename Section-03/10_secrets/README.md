@@ -234,3 +234,8 @@ passwordxyz[root@pod-centos secrets]#
 ```
 
 Note: the cat outputs looks a bit messy becuase the files content doesnt include any new-line charaacters, which is as it should be.
+
+
+## References
+
+[https://www.magalix.com/blog/kubernetes-secrets-101](https://www.magalix.com/blog/kubernetes-secrets-101)

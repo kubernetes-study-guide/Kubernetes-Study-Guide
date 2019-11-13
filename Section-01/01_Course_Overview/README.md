@@ -55,6 +55,8 @@ I'm planning create more courses in future to cover these areas.
 
 [https://kubectl.docs.kubernetes.io/pages/kubectl_book/getting_started.html](https://kubectl.docs.kubernetes.io/pages/kubectl_book/getting_started.html)
 
+[https://medium.com/tarkalabs/know-kubernetes-pictorially-f6e6a0052dd0](https://medium.com/tarkalabs/know-kubernetes-pictorially-f6e6a0052dd0)
+
 eli5 guides
 [https://www.cncf.io/the-childrens-illustrated-guide-to-kubernetes/](https://www.cncf.io/the-childrens-illustrated-guide-to-kubernetes/)
 [https://cloud.google.com/kubernetes-engine/kubernetes-comic/](https://cloud.google.com/kubernetes-engine/kubernetes-comic/)
