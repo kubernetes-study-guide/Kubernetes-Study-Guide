@@ -1,18 +1,43 @@
+# Transcript
+
+TODO: ....
+
+Structure:
+vscode
+-> powerpoint internalpodcommunication vs pod-to-pod communication
+-> vscode
+
+
+## powerpoint slide
+
 Hello everyone one, and welcome back.
 
 
 In the last video we saw how containers that lives inside the same pod can talk to each other using the loopback interface, 127.0.0.1. 
 
-However, what about if you want one pod to talk to another pod? Well one way to do that is by using the ip addresses that Kubernetes auto assigns to each pod.  
+However, what about pod-to-pod communications? Well one way to do that is by using the ip addresses that Kubernetes auto assigns to each pod.  
 
+## vscode slide
 
-For this demo I've opened up a bash terminal inside this video's topic folder.
+Let's take a look at how that's done. Here I've opened up a bash terminal inside this video's topic folder.
 
 ```bash
-code ... 
+pwd
 ```
 
-These are actually copies of yaml files I've used in earlier demos. Now lets go ahead and create the 2 pods.  
+In this folder we have a couple of pod yaml definitions.
+
+```bash
+code configs/pod-httpd.yml 
+switch to bash terminal (ctrl+~) 
+code configs/pod-centos.yml 
+switch to bash terminal (ctrl+~) 
+clear
+cmd+k
+
+```
+
+The apache container is going to listen for requests on port 80, this in turn means that the apache pod itself will be listening on that port 80 too. so we should be able to send a http curl request to that pod and get a successful response. So lets go ahead and create the 2 pods.  
 
 
 
@@ -23,80 +48,26 @@ pod/pod-centos unchanged
 kubectl get pods -o wide
 ```
 
-Here we can see that Kubernetes has automatically assigned IP addresses to each pod. So let's now see if our centos pod can talk to the apache pod. Now let's try sending a curl request from our centos pod, to the apache pod.  
-
-This is the ip address I need to curl to from the cento-os pod. So let's try that now:
+Here we can see that Kubernetes has automatically assigned an IP address to each pod. So let's now use curl to see if our centOS pod can reach the apache pod, by sending the request to the apache pod's ip address:
 
 
 ```bash
 kubectl exec ... -- curl http://xxxxxx
 ```
 
-Ok that has worked. We've managed to successfully get our centos pod to talk to the apache pod. 
+Ok that has worked. We've managed to get our centos pod to successfully talk to the apache pod. 
 
-However using pod ip addresses like this is actually bad practice. For example, there's no gaurantee that a pod will always have the same ip address. If for whatever reason kubernetes has to delete and recreate the apache pod, then the pod could end up with a different ip address. Also ip addresses are not easy to remember or keep track of. 
+However, it's actually bad practice to use ip addresses. That's becuase there's no gaurantee that a pod will always have the same ip address. If for whatever reason kubernetes has to delete and recreate the apache pod, then there's a chance that the new apache pod could end up with a different ip address. 
 
-In the real world, we use DNS instead of raw ip addresses. For example if you want to access the Google search, you don't do that by typing the google server's ip address into your web browser, instead you etner it's dns name, google.com. 
+The only reason I used IP addresses in this demo, is just to give you a behind-the-scenes look at how kubernetes networking works.
 
-In Kubernetes, you can also create your own easy to remember dns names for your pods. That's done by creating Service objects. Let's demo kubernetes dns by creating a nodeport service. 
+Also ip addresses are harder to use because they're not easy to remember or meaningful. A good analogy is when phoning a friend using a smart phone. When you make a phone call to your friend, you do that by selecting their name from your phone's address book. That's a lot easier than manually dialling their number. 
+
+That's why in Kubernetes, it would be so much easier if we could assign meaningful names to our pods, and then get our pods to talk to each other with those names. 
+
+
+That's actually possible, thanks to Kubernetes DNS, and we'll cover that next. 
+
 
 ```
 
-```
-
-
-With service object you can access a pod via the service object, rather than using the pod's ip address. Let's demo this by creating a nodeport service, here's the yaml file I'll use to create nodeport service:
-
-```bash
-code ...
-```
-
-Once again I've taken this yaml file from an earlier demo, where we've set port xx for pod-to-pod communication. So let's now go ahead and create this service:
-
-
-```bash
-kubectl apply -f ...
-```
-
-As you can see, service objects comes with it's own ip address. So let's try curling the services ip address:
-
-```bash
-kubectl exec -- curl....
-```
-
-Here we can see that our service object forwarded our curl request to the apache pod, which then sent the response. That's because this service and apache pod are associated with each other through label and selectors, as covered in earlier videos. One way to confirm this association is by using the endpoints command:
-
-```bash
-$ kubectl get endpoints svc-nodeport-httpd
-NAME                 ENDPOINTS       AGE
-svc-nodeport-httpd   172.17.0.3:80   8s
-```
-
-Here we can see our service will forward traffic to the following ip address at this very moment in time. This info get's update in realtime. 
-
-Now we no longer have to worry about the a pod's ip number changing, because if it does change the our service will automatically update update the endpoint with the new pod ip address. 
-
-
-
-
-There's a lot more to services than just setting up dns and we'll explore them later. 
-
-
-
-and a centos pod. 
-
-now let's curl by id address. Now lets do the same thing but using the nodeport service objects, 
-
-then lets curl the service ip address. 
-
-So far so good. 
-
-However there a few problem with use ip address:
-
-- ip address can change
-- ip address are not informative. a dns name google.com is informative. 
-- dns names have a logical naming structure that you can specify in your pods at creation time.  
-
-To fix this, we can use kubernetes dns. That's something that comes preinstalled by default in most installer options, such as minikube. 
-
-create another new, shorter article after this, called : clusterip services. 
