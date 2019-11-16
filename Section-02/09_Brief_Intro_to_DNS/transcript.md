@@ -115,3 +115,32 @@ This time I got a successful response.
 So far I've only scratched the surface of DNS. But hopefully I've covered enough to help you continue with the rest of this course. 
 
 That's it for this video, see you in the next one. 
+
+
+=====================================================
+
+
+The recommended approach is to use a Domain Name Service, or DNS for short. Lets take a quick detour and talk about DNS more generally. DNS is quite a big subject to cover in this course, but the basic premise of DNS is that it's a system that let's you assign a name to an IP address. It's a bit like how you assign a name to a phone number in your smart phone's address book. The World Wide Web relies on DNS in order to work, becuase it's used for resolving website addresses to ip addresses. 
+
+You can perform DNS lookups from the command line using nslookup. For example let's do a DNS lookup of my website, codingbee.net:
+
+```bash
+$ nslookup codingbee.net
+Server:         194.168.4.100
+Address:        194.168.4.100#53
+
+Non-authoritative answer:
+Name:   codingbee.net
+Address: 77.104.171.177
+```
+
+Here it says that codingbee.net resides on the server with the ip address 77.104.171.177.
+
+
+Now let's 
+
+
+
+That's why in the real world, we use DNS instead of raw ip addresses. For example when you want to access Google, you use the dns name of google.com. You don't use the google's IP address. 
+
+you don't do that by typing the google server's ip address into your web browser, instead you etner it's dns name, google.com. 
