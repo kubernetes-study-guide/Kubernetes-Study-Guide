@@ -35,7 +35,7 @@ Here we have 2 files. The one on the right is a copy of the pod yaml file that w
 Here we're saying:
 
 - We want to create a service object 
-- This service's name is goign to be svc-nodeport-httpd
+- This service's name is going to be svc-nodeport-httpd
 - this service is going to be of the type nodeport nodeport
 - Next we have three port numbers.
 We'll explain these port numbers in more detail   a bit later in this video. But for now, let's just say that:

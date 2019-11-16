@@ -15,7 +15,7 @@ Hello everyone one, and welcome back.
 
 In the last video we saw how containers that lives inside the same pod can talk to each other using the loopback interface, 127.0.0.1. 
 
-However, what about pod-to-pod communications? Well one way to do that is by using the ip addresses that Kubernetes auto assigns to each pod.  
+However, what about pod-to-pod communications? Well one way to do that is by using the ip addresses that gets auto-assigned to each pod.  
 
 ## vscode slide
 
