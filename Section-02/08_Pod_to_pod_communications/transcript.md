@@ -15,9 +15,9 @@ Hello everyone one, and welcome back.
 
 In the last video we saw how containers that lives inside the same pod can talk to each other using the loopback interface, 127.0.0.1. 
 
-However, what about pod-to-pod communications? Well one way to do that is by using the ip addresses that gets auto-assigned to each pod.  
+Another common use case is to have pods talking to each other, in other words, pod-to-pod communication? One way to achieve that, is by using using ip addresses. Each pod gets it's own private IP address auto-assigned to it at the time of it's creation, and we can use these IP addresses to get one pod to send requests to another pod. 
 
-## vscode slide
+## vscode
 
 Let's take a look at how that's done. Here I've opened up a bash terminal inside this video's topic folder.
 
@@ -48,26 +48,26 @@ pod/pod-centos unchanged
 kubectl get pods -o wide
 ```
 
-Here we can see that Kubernetes has automatically assigned an IP address to each pod. So let's now use curl to see if our centOS pod can reach the apache pod, by sending the request to the apache pod's ip address:
+Here we can see that Kubernetes has automatically assigned a private IP address to each pod. Let's now try execcing into the centos pod and then send a curl request to the apache pod's ip address:
 
 
 ```bash
 kubectl exec ... -- curl http://xxxxxx
 ```
 
-Ok that has worked. We've managed to get our centos pod to successfully talk to the apache pod. 
+Cool, that worked. Our centos pod managed to send a request to the apache pod and got a successfuly response. 
 
-However, it's actually bad practice to use ip addresses. That's becuase there's no gaurantee that a pod will always have the same ip address. If for whatever reason kubernetes has to delete and recreate the apache pod, then there's a chance that the new apache pod could end up with a different ip address. 
+However, it's actually bad practice to use ip addresses. There are a few reasons for this. But the main reason is that there's no gaurantee that a pod will always have the same ip address. If for whatever reason Kubernetes needs to delete and recreate a pod, then there's a chance that the new pod ends up with a different ip address. 
 
-The only reason I used IP addresses in this demo, is just to give you a behind-the-scenes look at how kubernetes networking works.
+I only used IP addresses in this demo, just to give you an idea about how kubernetes networking works behind the scene.
 
-Also ip addresses are harder to use because they're not easy to remember or meaningful. A good analogy is when phoning a friend using a smart phone. When you make a phone call to your friend, you do that by selecting their name from your phone's address book. That's a lot easier than manually dialling their number. 
+Another reason to avoid using IP addresses, is that they're not meaningful or easy to keep track of. Let's take phoning a friend using your smart phone as an analogy. When you make a phone call to your friend, you do that by selecting their name from your phone's address book,you don't manually dial their number. Using IP address is a bit like manually dialing a number. Using IP addresses is a bit like manually dialling a number. 
 
-That's why in Kubernetes, it would be so much easier if we could assign meaningful names to our pods, and then get our pods to talk to each other with those names. 
+That's why it would be more convenient if we could use names such as http://apache.localcluster rather than a random looking ip adderss. 
 
-
-That's actually possible, thanks to Kubernetes DNS, and we'll cover that next. 
-
-
+```popup
+curl http://apache.localcluster
 ```
 
+
+That's actually possible thanks to Kubernetes DNS along with creating Service Objects. We'll cover how that's done in the next couple of videos. 
