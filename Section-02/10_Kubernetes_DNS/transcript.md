@@ -1,15 +1,15 @@
 Hello everyone one, and welcome back.
 
-Earlier we saw how you can do pod-to-pod communication using pod IP addresses. This time we're going to do the same thing but using DNS names rather than IP addresses. That's possible thanks to Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is an addon that comes preinstalled by default in most installer options, including a minikube provisioned cluster. Kubernetes DNS is actually built on top of another open source software called CoreDNS.
+Earlier we saw how you can do pod-to-pod communication using IP addresses. This time we're going to do the same thing but using DNS names instead of IP addresses. That's possible by making use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is an addon that usually comes preinstalled in most installer options, including a minikube provisioned cluster. 
 
-Ok before we show how kubernetes DNS works, let's first remind ourselves on how to do pod-to-pod communication using ip addresses:
+Ok before we show how kubernetes DNS works, let's first remind ourselves on how to do pod-to-pod communication using ip addresses, so I'm going to create the same centos and apache pods as last time:
 
 ```
 code configs/pod-centos.yml
 code configs/pod-httpd.yml
 ```
 
-These are the same pod yaml definitions I used before. So let's create these 2 pods
+Ok let's create these 2 pods:
 
 ```
 $ kubectl apply -f configs/pod-centos.yml -f configs/pod-httpd.yml
@@ -17,29 +17,27 @@ $ kubectl get pods -o wide
 $ kubectl exec pod-centos -- curl --silent http://172.17.0.9
 ```
 
-So that's how far we got last time. Now to start using DNS, we need to create a service object. Service objects are used for intelligently forwarding traffic to pods.
-
-So here's the service we'll create:
+So that's how far we got to last time. Now to start using DNS, we need to create a service object. Service objects are used for intelligently forwarding traffic to pods. So here's the service we'll create:
 
 ```
 code config/svc-nodeport-httpd.yaml
 ```
 
 
-Here we're saying:
+Let's breakdown whats this yaml file is saying:
 
-- We want to create a service object 
+- Here we're saying, We want to create a service object 
 - This service's name is going to be svc-nodeport-httpd
-- this service is going to be of the type nodeport nodeport. There are other service types, and we'll cover them later. 
+- this service is going to be of the type nodeport. There are other service types available, and we'll cover them later.
 
 - Next we have set three port numbers:
--  port 3050 is the port number that the service itself will be listening on for requests that are coming from inside the cluster. 
-- the target port is the container's port number that the service will forward traffic to.
-- ... and The nodePort is the port number that all the kubeworker nodes will start listening on at the node OS level, for accepting requests coming from outside the kubecluster. 
-- Finally we have The selector. This is a really important setting. that's becuase it's the mechanism that attaches this service to our httpd pod. basically it says only forward traffic to pods that have the label, app equal to apache_webserver. This eliminates the problem of pods changing ip addresss becuase service forwards traffic using the label&selectors system rather than static ip addresses. 
+-  port 3050 is the port number that the service itself will be listening on for requests that are coming from inside the cluster itself, for example other pods in the cluster. So we'll need to use this port number a bit later on.  
+- the target port is the container's port number that the service will forward traffic to. In this case it is set to port 80 since that's the port our apache container will be listening on. 
+- ... and The nodePort is the port number that all the kubeworker nodes will start listening on at the node OS level.  equests coming from outside the kubecluster. 
+- Finally we have The selector. This is a really important. that's becuase it's the mechanism that links this service to our httpd pod. basically it says only forward traffic to pods that have the label name of "app" which has the value set to apache_webserver. This means that this service will forward traffic using this label&selectors logic and doesn't rely on ip addresses, which is good, since ip addresses can change over time.
 
 
-So let's go ahead and create this service. 
+So let's go ahead and create this service.
 
 ```
 $ kubectl apply -f configs/svc-nodeport-httpd.yml
@@ -55,11 +53,16 @@ $ kubectl exec -it pod-centos -- bash
 nslookup svc-nodeport-httpd
 ```
 
-Ok it looks like nslookup isn't installed, so let's install it. y
+Ok it looks like nslookup isn't installed, so let's install it.
 
 
 ```
 yum whatprovides */nslookup
+```
+
+It looks like I need to install the bind-utils package to get nslookup so let's install that.
+
+```
 yum install -y bind-utils
 ```
 
