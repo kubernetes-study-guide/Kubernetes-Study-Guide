@@ -1,6 +1,6 @@
 Hello everyone one, and welcome back.
 
-Earlier we saw how you can do pod-to-pod communication using pod IP addresses. However IP addresses are prone to changing over time, and that's why it's recommended to use Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is an addon that comes preinstalled by default in most installer options, including minikube. Kubernetes DNS is actually built on top of another open source software called CoreDNS.
+Earlier we saw how you can do pod-to-pod communication using pod IP addresses. This time we're going to do the same thing but using DNS names rather than IP addresses. That's possible thanks to Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is an addon that comes preinstalled by default in most installer options, including a minikube provisioned cluster. Kubernetes DNS is actually built on top of another open source software called CoreDNS.
 
 Ok before we show how kubernetes DNS works, let's first remind ourselves on how to do pod-to-pod communication using ip addresses:
 
@@ -127,7 +127,7 @@ coredns-5644d7b6d9-5wm6q   1/1     Running   0          4h45m
 coredns-5644d7b6d9-kzpjj   1/1     Running   0          4h45m
 ```
 
-These coredns pods that are responsible for maintaining all the DNS entries and providing the DNS lookup service. 
+These coredns pods that are responsible for maintaining all the DNS entries and providing the DNS lookup service. If coredns receives a nslookup request for a dns entry it has no knowledge of, such as doing an nslookup for google.com, then coredns will forward that request on to one of the internet's public dns servers, and then feedback that response back. 
 
 That's it for this video. I'll see you in the next one. 
 
