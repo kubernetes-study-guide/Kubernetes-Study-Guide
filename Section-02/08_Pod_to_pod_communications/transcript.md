@@ -10,12 +10,12 @@ vscode
 
 ## powerpoint slide
 
-Hello everyone one, and welcome back.
+Hello everyone, and welcome back.
 
 
 In the last video we saw how containers that lives inside the same pod can talk to each other using the loopback interface, 127.0.0.1. 
 
-Another common use case is to have pods talking to each other, in other words, pod-to-pod communication? One way to achieve that, is by using using ip addresses. Each pod gets it's own private IP address auto-assigned to it at the time of it's creation, and we can use these IP addresses to get one pod to send requests to another pod. 
+Another common use case is to have pods talking to each other, in other words, pod-to-pod communication? One way to achieve that, is by using using ip addresses. You see,   Each pod gets it's own private IP address auto-assigned to it at the time of it's creation, and we can use these IP addresses to get one pod to send    to another pod. 
 
 ## vscode
 
@@ -48,7 +48,7 @@ pod/pod-centos unchanged
 kubectl get pods -o wide
 ```
 
-Here we can see that Kubernetes has automatically assigned a private IP address to each pod. Let's now try execcing into the centos pod and then send a curl request to the apache pod's ip address:
+Here we can see that Kubernetes has automatically assigned a private IP address to each pod. Let's now try execcing into the centos pod and then send a curl request to the apache pod, using the apache pod's     ip address:
 
 
 ```bash
@@ -61,9 +61,9 @@ However, it's actually bad practice to use ip addresses. There are a few reasons
 
 I only used IP addresses in this demo, just to give you an idea about how kubernetes networking works behind the scene.
 
-Another reason to avoid using IP addresses, is that they're not meaningful or easy to keep track of. Let's take phoning a friend using your smart phone as an analogy. When you make a phone call to your friend, you do that by selecting their name from your phone's address book,you don't manually dial their number. Using IP address is a bit like manually dialing a number. Using IP addresses is a bit like manually dialling a number. 
+Another reason to avoid using IP addresses, is that they're not meaningful or easy to keep track of. Let's take phoning a friend using your smart phone as an analogy. When you make a phone call to your friend, you do that by selecting their name from your phone's   address book,you don't manually dial their number. Using IP address is a bit like manually dialing a number. 
 
-That's why it would be more convenient if we could use names such as http://apache.localcluster rather than a random looking ip adderss. 
+That's why it would be more convenient if we could use names such as sending a curl request to http://apache.localcluster rather than a random looking ip adderss. 
 
 ```popup
 curl http://apache.localcluster
@@ -71,3 +71,5 @@ curl http://apache.localcluster
 
 
 That's actually possible thanks to Kubernetes DNS along with creating Service Objects. We'll cover how that's done in the next couple of videos. 
+
+That's it for this video, see you in the next one. 

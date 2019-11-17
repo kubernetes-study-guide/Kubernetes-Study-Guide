@@ -2,7 +2,7 @@ Hello everyone one, and welcome back.
 
 Earlier we saw how you can do pod-to-pod communication using IP addresses. This time we're going to do the same thing but using DNS names instead of IP addresses. That's possible by making use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is an addon that usually comes preinstalled in most installer options, including a minikube provisioned cluster. 
 
-Ok before we show how kubernetes DNS works, let's first remind ourselves on how to do pod-to-pod communication using ip addresses, so I'm going to create the same centos and apache pods as last time:
+Ok before we show how kubernetes DNS works, let's first remind ourselves on how to do pod-to-pod communication using ip addresses, so I'm going to create the same centos and apache pods as before:
 
 ```
 code configs/pod-centos.yml
@@ -24,7 +24,7 @@ code config/svc-nodeport-httpd.yaml
 ```
 
 
-Let's breakdown whats this yaml file is saying:
+Let's breakdown whats this yaml file is defining
 
 - Here we're saying, We want to create a service object 
 - This service's name is going to be svc-nodeport-httpd
