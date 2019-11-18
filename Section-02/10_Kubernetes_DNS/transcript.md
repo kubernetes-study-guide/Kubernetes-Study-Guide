@@ -1,6 +1,9 @@
+Also demo reaching that pod from macbook, by updating etc hosts file. Also in the real world cluster will be on aws, so can set up proper appraoch using route53, which is aws's dns management service. Also maybe demo how to bypass nodeport by using port forwarding. 
+
+
 Hello everyone one, and welcome back.
 
-Earlier we saw how you can do pod-to-pod communication using IP addresses. This time we're going to do the same thing but using DNS names instead of IP addresses. That's possible by making use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is an addon that usually comes preinstalled in most installer options, including a minikube provisioned cluster. 
+Earlier we saw how you can do pod-to-pod communication using IP addresses. This time we're going to do the same thing but using DNS names. That's possible by making use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is an addon that usually comes preinstalled in most installer options. That includes a minikube provisioned cluster. 
 
 Ok before we show how kubernetes DNS works, let's first remind ourselves on how to do pod-to-pod communication using ip addresses, so I'm going to create the same centos and apache pods as before:
 
@@ -131,6 +134,10 @@ coredns-5644d7b6d9-kzpjj   1/1     Running   0          4h45m
 ```
 
 These coredns pods that are responsible for maintaining all the DNS entries and providing the DNS lookup service. If coredns receives a nslookup request for a dns entry it has no knowledge of, such as doing an nslookup for google.com, then coredns will forward that request on to one of the internet's public dns servers, and then feedback that response back. 
+
+
+
+
 
 That's it for this video. I'll see you in the next one. 
 
