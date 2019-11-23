@@ -26,6 +26,8 @@ By the way, you can control the content of your pod's resolv.conf
 ## Reference
 https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/ (talks about how to customise pods resolv.conf file - should be covered in a seperate video)
 
+https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+
 https://github.com/kubernetes/dns
 
 https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/

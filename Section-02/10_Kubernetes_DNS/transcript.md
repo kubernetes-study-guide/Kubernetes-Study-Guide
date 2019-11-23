@@ -1,26 +1,18 @@
-Also demo reaching that pod from macbook, by updating etc hosts file. Also in the real world cluster will be on aws, so can set up proper appraoch using route53, which is aws's dns management service. Also maybe demo how to bypass nodeport by using port forwarding. 
-
-
 Hello everyone one, and welcome back.
 
-Earlier we saw how you can do pod-to-pod communication using IP addresses. This time we're going to do the same thing but using DNS names. That's possible by making use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is an addon that usually comes preinstalled in most installer options. That includes a minikube provisioned cluster. 
+Earlier we saw how you can do pod-to-pod communication using IP addresses. This time we're going to do the same thing but using DNS names. That's possible by making use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is actually an addon that you can install into your cluster. However due to the important role that Kubernetes DNS plays, it actually comes preinstalled by default in most installer options, such as minikube and kubeadm. 
 
-Ok before we show how kubernetes DNS works, let's first remind ourselves on how to do pod-to-pod communication using ip addresses, so I'm going to create the same centos and apache pods as before:
-
-```
-code configs/pod-centos.yml
-code configs/pod-httpd.yml
-```
-
-Ok let's create these 2 pods:
+Ok before we show how kubernetes DNS works, let me show you where we got to last time, which was that we had 2 pods and we managed to send a curl request from our Centos Pod to the apache pod:
 
 ```
-$ kubectl apply -f configs/pod-centos.yml -f configs/pod-httpd.yml
 $ kubectl get pods -o wide
 $ kubectl exec pod-centos -- curl --silent http://172.17.0.9
 ```
 
-So that's how far we got to last time. Now to start using DNS, we need to create a service object. Service objects are used for intelligently forwarding traffic to pods. So here's the service we'll create:
+So that's how far we got to last time. Now in this demo we still want to run this curl command, but use a DNS name rather than an IP address. 
+
+
+To start using DNS, we need to create a service object. Service objects are used for intelligently forwarding traffic to pods. So here's the service we'll create:
 
 ```
 code config/svc-nodeport-httpd.yaml
@@ -60,13 +52,13 @@ Ok it looks like nslookup isn't installed, so let's install it.
 
 
 ```
-yum whatprovides */nslookup
+dnf whatprovides */nslookup
 ```
 
-It looks like I need to install the bind-utils package to get nslookup so let's install that.
+Here we can see that nslookup comes as part of the bind-utils package.
 
 ```
-yum install -y bind-utils
+dnf install -y bind-utils
 ```
 
 Now let's try nslookup again
@@ -92,14 +84,14 @@ Now let's try out our new dns entry:
 <html><body><h1>It works!</h1></body></html>
 ```
 
-As you can see we've now managed to access our apache pod via the service object, using the service's dns name rather than the pod's ip address.
+Awesome that worked! That means we no longer have to use IP addresses. The service object now acts as our gateway to the pod.   
 
 
 We had to use port 3050 here because in the service spec we said that this service can only accept internal traffic on this port.
 
 The 'default' in the fqdn actually refers to the namespace the service was created in. 
 
-Also Since our centOS pod resides in the same namespace as the service, we can actually leave out the fqdn's basename, and just curl the service's name and it will still work:
+Also Since our ubi pod resides in the same namespace as the service, we can actually leave out the fqdn's basename, and just curl the service's name and it will still work:
 
 ```
 $ curl http://svc-nodeport-httpd:3050
@@ -108,7 +100,6 @@ $ curl http://svc-nodeport-httpd:3050
 
 That worked because the resolv.conf has a default basename that the resolver use as a fallback if you don't specify the fqdn. 
 
-
 ```
 $ cat /etc/resolv.conf 
 nameserver 10.96.0.10
@@ -116,7 +107,7 @@ search default.svc.cluster.local svc.cluster.local cluster.local
 options ndots:5
 ```
 
-Now, there's one final thing I wanted to show you before I end this video, and that's to do with the nameserver. I mentioned earlier that Kubernetes DNS is essentially built on top of CoreDNS. And this nameserver ip address leads to coredns. To show what I mean, let's exit out of the pod and then perform a search for this ip address. Here we find that it belongs to service called kube-dns:
+Now, there's one final thing I wanted to show you before I end this video, and that's to do with the nameserver. Kubernetes DNS is actually built on top of another open source softwared called, CoreDNS. And this nameserver ip address leads to coredns. To show what I mean, let's exit out of the pod and then perform a search for this ip address. Here we find that it belongs to service called kube-dns:
 
 ```
 $ kubectl get all -o wide --all-namespaces | grep 10.96.0.10
@@ -133,11 +124,15 @@ coredns-5644d7b6d9-5wm6q   1/1     Running   0          4h45m
 coredns-5644d7b6d9-kzpjj   1/1     Running   0          4h45m
 ```
 
-These coredns pods that are responsible for maintaining all the DNS entries and providing the DNS lookup service. If coredns receives a nslookup request for a dns entry it has no knowledge of, such as doing an nslookup for google.com, then coredns will forward that request on to one of the internet's public dns servers, and then feedback that response back. 
+These coredns pods that are responsible for providing the DNS service to the cluster. So everytime we create a service object, a new dns entry get's added to these pod's dns database. 
 
+Also if coredns receives a nslookup request for a dns entry it has no knowledge of, such as doing an nslookup for codingbee.net, then coredns will forward that request on to one of the internet's public dns servers, and then feedback that response back to the pod. 
 
-
-
+```
+$ kubectl exec xxxxxx -- nslookup codingbee.net
+```
 
 That's it for this video. I'll see you in the next one. 
+
+
 
