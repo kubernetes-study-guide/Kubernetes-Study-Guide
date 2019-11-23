@@ -13,7 +13,7 @@ One possible real world scenario, your cluster is made of EC2 VMs running on the
 
 {lots of powerpoint slide here to show above diagram}
 
-In this scenario this works great. although still involves using lots of non standard ports. Which isn't that neat.
+In this scenario this works great. although still involves using lots of non standard ports. Which isn't that neat or good practice.
 
 
 

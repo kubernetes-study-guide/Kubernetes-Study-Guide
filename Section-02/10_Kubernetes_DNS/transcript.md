@@ -9,10 +9,18 @@ $ kubectl get pods -o wide
 $ kubectl exec pod-centos -- curl --silent http://172.17.0.9
 ```
 
-So that's how far we got to last time. Now in this demo we still want to run this curl command, but use a DNS name rather than an IP address. 
+By the way you may have noticed that in my earlier demos I used the centos Docker image to create my dummy test pod. However I've now switched to using the Universal Base Image, or UBI for short. The UBI image is an enterprise grade image developed by redhat. And the best part is that this image is available for free. UBI is not available on docker hub though, instead you need to download it from redhat's own registry, which is why I needed to specify the full image path. If you just specify the name, then kubernetes will default to using the dockerhub's basename, which is docker.io. For example if you specify busybox, then kubernetes will translate this to docker.io/busybox.  
+
+Anyway, back to this demo. Our test pod can talk to the apache pod using it's ip address:
+
+```
+$ kubectl exec pod-centos -- curl --silent http://172.17.0.9
+```
+
+So that's how far we got to last time. Now in this demo we still want to run this curl command, but use a DNS name rather than an IP address. Because as explained before using IP addresses is bad practice.
 
 
-To start using DNS, we need to create a service object. Service objects are used for intelligently forwarding traffic to pods. So here's the service we'll create:
+To start using DNS, we need to create a service object. Service objects are used for intelligently forwarding traffic to pods. Services works out which pods it's permitted to forward traffic to  using the concept of label&selectors which I'll explain shortly. So here's the service we'll create:
 
 ```
 code config/svc-nodeport-httpd.yaml
@@ -29,7 +37,7 @@ Let's breakdown whats this yaml file is defining
 -  port 3050 is the port number that the service itself will be listening on for requests that are coming from inside the cluster itself, for example other pods in the cluster. So we'll need to use this port number a bit later on.  
 - the target port is the container's port number that the service will forward traffic to. In this case it is set to port 80 since that's the port our apache container will be listening on. 
 - ... and The nodePort is the port number that all the kubeworker nodes will start listening on at the node OS level.  equests coming from outside the kubecluster. 
-- Finally we have The selector. This is a really important. that's becuase it's the mechanism that links this service to our httpd pod. basically it says only forward traffic to pods that have the label name of "app" which has the value set to apache_webserver. This means that this service will forward traffic using this label&selectors logic and doesn't rely on ip addresses, which is good, since ip addresses can change over time.
+- Finally we have The selector. This is a really important. It's the mechanism that links this service to our httpd pod. basically it says only forward traffic to pods that have the label with the name of "app", and this label's value needs to be set apache_webserver. This means that this service will forward traffic using this label&selectors logic and doesn't rely on ip addresses, which is good, since ip addresses can change over time.
 
 
 So let's go ahead and create this service.
