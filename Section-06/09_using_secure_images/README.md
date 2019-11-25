@@ -187,8 +187,10 @@ spec:
 
 This time it is successful.
 
-
-
+handy one-liner to view docker registry secret:
+```
+kubectl get secrets secret-name -o=jsonpath='{.data.\.dockerconfigjson}' | base64 --decode
+```
 
 
 
