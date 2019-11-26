@@ -1,4 +1,4 @@
-# RBAC
+# Roles and RoleBindings
 
 This article follows on from the previous article where we created a new user, called Lisa. We want to give Lisa view access to pods. 
 
@@ -27,10 +27,10 @@ This creates:
 ```bash
 $ kubectl get role -o wide
 NAME            AGE
-employee-role   74s
+role-read   74s
 ```
 
-This is a permission, but we now need to attach this permission to a user or group. We do this by creating a rolebinding object:
+This is an access-permission, but we now need to attach this permission to a user or group (and serviceaccounts). We do this by creating a rolebinding object:
 
 ```yaml
 ---
@@ -49,7 +49,7 @@ subjects:
     name: employee
 ```
 
-You can associate multiple users/groups to a single role. Here we attached our role to the 'employee' group:
+You can associate multiple users/groups/serviceaccounts to a single role. Here we attached our role to the 'employee' group:
 
 ```bash
 $ kubectl get rolebindings -o wide
