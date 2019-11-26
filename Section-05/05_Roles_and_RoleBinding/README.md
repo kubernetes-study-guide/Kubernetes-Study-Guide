@@ -1,6 +1,6 @@
 # RBAC
 
-This article follows on from the previous article where we created a new user, called Lisa. We want to give List view access to pods. 
+This article follows on from the previous article where we created a new user, called Lisa. We want to give Lisa view access to pods. 
 
 
 To do this we need to make use of Role objects. At the moment we don't have any roles, so let's create a new role:
