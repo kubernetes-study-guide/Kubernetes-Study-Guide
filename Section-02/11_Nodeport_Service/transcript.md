@@ -61,7 +61,9 @@ From our minikube's point of view, it views our macbook as external to it. So we
 curl http://${minikube ip}:30050
 ```
 
-We can't use the dns name of our service name because kubernetes DNS only provides this service internally in the cluster, but we cna mimic it by adding an entry to our etc-hosts file:
+The Nodeport service type's main purpose is to allow outside traffic into the cluster, that's why the nodeport service is called nodeport servicee
+
+We can't use the dns name of our service name because kubernetes DNS only provides this service internally in the cluster, but we can mimic it by adding an entry to our macbook's etc-hosts file:
 
 
 ```
@@ -76,7 +78,7 @@ this is a handy technique for doing development work.
 
 
 
-- Finally we have The selector. This is a really important. Because this is the part that helps the service work out which pods to forward traffic to. Here the selector says, only forward traffic to pods that have the label with the name of "app", along with the value of apache_webserver.
+- last but not least, we arrive at The selector. This is a really important. That's Because this is the part that helps the service identify which pods to forward traffic to. Here the selector says, only forward traffic to pods that have the label with the name of "app", along with the value of apache_webserver.
 
 
  
@@ -87,8 +89,12 @@ So if you were thinking that labels are just for storing some random bits of inf
 
 So far I've done locally on my macbook, so what is the real world equivalent to using the nodeport services.  
 
-Well, one possible real world scenario, is that your cluster is made of EC2 VMs running on the aws cloud platform. You have also registered your own domain using a service like Godaddy, and you use AWS route53 to configure your DNS to point to an aws loadbalancer. This loadbalancer in turn forwards traffic to your worker nodes. 
+Well, one possible real world scenario, is that your cluster is made of EC2 VMs running on the aws cloud platform. You have also registered your own domain using a service like Godaddy, and you use AWS route53 to configure your DNS to point to an aws loadbalancer. This aws loadbalancer in turn forwards traffic to your worker nodes. By the way, this loadbalancer is something that sits outside the cluster, but you can actually create this loadbalancer by create a loadbalancer service. This is a bit of a weird feature of Kubernetes becuase it's one of those rare occasion where it's making changes outside of the cluster. 
 
 {lots of powerpoint slide here to show above diagram}
 
 
+If you only want internal traffic reaching your pods then you shouldn't use nodeport services, then you should use clusterip services. That's 
+
+
+One thing that tends to put people off from using nodeport services is the use of non-standard port numbers for the nodeport. For example it's generally considered bad practice to open up lots of port numbers. Also using these port numbers in your urls looks a bit crude and messy. That's why there's an alternative to using nodeport, that's by using a combination of both node+ingress. 
