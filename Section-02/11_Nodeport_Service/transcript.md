@@ -1,11 +1,26 @@
-So far we have touched on nodeport service. However there are several types of service object and nodeport is just one of them. 
+Hello everyone and welcome back. 
+
+So far we have touched demoed services a few times but we haven't properly explained what they are and how they work. Services are Kubernetes objects that helps with routing traffic to the correct pods. Services essentially sits in front of your pods and acts as a gateway to them. So when you're creating service objects your actually configuring your cluster's networking. 
+
+
+There are several types of service objects. 
 
 - nodeport
 - clusterip 
 - loadbalancer
 - ingress
 
-the key feature that makes nodeport services standout from the other services is that it's used for allowing outside traffic into the cluster. 
+and in this video we're going to take a look at the nodeport service in more detail. We'll cover the others as we go through the course. 
+
+We've already demoed the nodeport service when we talked about Kubernetes DNS. And we're going to use the same set of yaml files again as part of this demo as well. So let's start by creating our apache and centos pods:
+
+```
+code -f ...
+```
+
+
+
+
 
 In the case of a minikube provisioned cluster, We can access these nodeport services from our macbook. To demo this, let me create the pod to test with:
 
