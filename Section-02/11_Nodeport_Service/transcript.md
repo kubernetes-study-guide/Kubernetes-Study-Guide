@@ -76,13 +76,8 @@ this is a handy technique for doing development work.
 
 
 
+- Finally we have The selector. This is a really important. Because this is the part that helps the service work out which pods to forward traffic to. Here the selector says, only forward traffic to pods that have the label with the name of "app", along with the value of apache_webserver.
 
-
-
-
-
-
-- Finally we have The selector. This is a really important. It's the mechanism that links this service to our apache pod. basically it says only forward traffic to pods that have the label with the name of "app", along with the value of apache_webserver. 
 
  
 So if you were thinking that labels are just for storing some random bits of information, then you would be wrong. Becuase labels are needed for this labels&selectors concept to function.
@@ -90,8 +85,7 @@ So if you were thinking that labels are just for storing some random bits of inf
 
 
 
-
-But that's all done locally on my macbook, so what is the real world equivalent to using the nodeport services.  
+So far I've done locally on my macbook, so what is the real world equivalent to using the nodeport services.  
 
 Well, one possible real world scenario, is that your cluster is made of EC2 VMs running on the aws cloud platform. You have also registered your own domain using a service like Godaddy, and you use AWS route53 to configure your DNS to point to an aws loadbalancer. This loadbalancer in turn forwards traffic to your worker nodes. 
 
