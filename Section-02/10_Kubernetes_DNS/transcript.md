@@ -36,7 +36,7 @@ code config/svc-nodeport-httpd.yaml
 
 I'm going to close the centos tab to free up some screen space. 
 
-I don't want to get sidetracked by going over everything in this service file just yet. Instead I'll go through it in the next video. For now, the only thing I'll say is that this service uses label&selectors to associate itself with this pod, and this service will accept internal traffic from port xxxxx and forward it to port xxxx, which is the port our apache pod is listening on. 
+I don't want to get sidetracked by going over everything in this service file just yet. Instead I'll go through it in the next video. For now, the only thing you need to know is that this service uses label&selectors to associate itself with this pod, and this service will accept internal traffic from port xxxxx and forward it to port xxxx, which is the port our apache pod is listening on. 
 
 
 So let's go ahead and create this service.
