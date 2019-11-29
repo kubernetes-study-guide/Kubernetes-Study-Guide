@@ -12,10 +12,11 @@ There are several types of service objects.
 
 and in this video we're going to take a look at the nodeport service in more detail. We'll cover the others as we go through the course. 
 
-We've already demoed the nodeport service when we talked about Kubernetes DNS. And we're going to use the same set of yaml files again as part of this demo as well. So let's start by creating our apache and centos pods:
+We've already demoed the nodeport service when we talked about Kubernetes DNS. And we're going to use the same set of yaml files again for this demo as well. So let's start by creating our apache and centos pods:
 
 ```
 code -f ...
+kubectl apply -f 
 ```
 
 
