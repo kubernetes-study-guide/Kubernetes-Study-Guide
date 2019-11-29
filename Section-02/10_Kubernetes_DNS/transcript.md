@@ -1,4 +1,4 @@
-Hello everyone one, and welcome back.
+Hello everyone, and welcome back.
 
 Ok, a little while ago, we saw how you can do pod-to-pod communication using IP addresses. We're going to do the same thing again, but this time using DNS names instead of ip addresses. To do this we need to make use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is actually an addon that you can install into your cluster. Luckily Kubernetes DNS comes installed by default if you use one of the automated kube cluster provisioning tools, such as minikube and kubeadm. 
 
@@ -46,7 +46,7 @@ $ kubectl apply -f configs/svc-nodeport-httpd.yml
 $ kubectl get services -o wide
 ```
 
-The important thing to note here is that, as part of creating this servier kubernetes took this service's name, along with it's ip address, and used them to register a dns record in Kubernetes DNS. We can confirm that by doing an nslookup inside our centos test pod:
+The important thing to note here is that, as part of creating this service, kubernetes took this service's name, along with it's ip address, and used them to register a new dns record in Kubernetes DNS. We can confirm that by doing an nslookup inside our centos test pod:
 
 ```
 $ kubectl exec -it pod-centos -- bash
@@ -66,7 +66,7 @@ Here we can see that nslookup comes as part of the bind-utils package. So let's 
 dnf install -y bind-utils
 ```
 
-Now let's try doing the nslookup again:
+Ok nslookup should now be instealled. Let's now try using nslookup again:
 
 ```
 nslookup svc-nodeport-httpd
@@ -88,23 +88,21 @@ Now, finally, let's try out our new dns record:
 <html><body><h1>It works!</h1></body></html>
 ```
 
-Awesome that worked! That means we can stop using IP addresses. This also means that we can use this  service as a gateway to our pod.
+Awesome that worked! That means that we no longer need to rely on ip addresses as long as we use service objects and their DNS entries. This effectively means that services are acting as a gateway to our pods.
 
-You might have notived that I port 3050 here. That's because in the service spec we said that this service can only accept internal traffic on this port.
+Now let's take a closer look at the url we used in our test. You might have noticed that I used port 3050 here. That's because in the service spec we said that this service can only accept internal traffic on this port.
 
-
-Now before I end this video, there's a couple more things I wanted to point out about this fqdn. 
 
 The 'default' in the fqdn actually refers to the namespace that the service live's in. 
 
-Also Since our centOS pod lives in the same namespace as the service itself, it means we can get away with just curling the service's name:
+And since our centOS pod happens to also live in the same namespace as the service itself, it means we can get away with just curling the service's name:
 
 ```
 $ curl http://svc-nodeport-httpd:3050
 <html><body><h1>It works!</h1></body></html>
 ```
 
-As you can see this still worked. That's because the resolv.conf has a default basename that get's used as the default if you don't specify the fqdn. 
+As you can see this still worked. That's because the resolv.conf has a default basename that get's used as the default if you don't explicitly specify one in the url. 
 
 ```
 $ cat /etc/resolv.conf 
@@ -113,16 +111,13 @@ search default.svc.cluster.local svc.cluster.local cluster.local
 options ndots:5
 ```
 
-The resolv.conf also contains the nameserver setting. This specifies what ip address the pod needs to use to perform DNS queries against Kubernetes DNS. This ip address is something that kubernetes has automatically put into the resolv.conf at the time of creating this pod. So let's see where this ip address points to:
-
-
-
+The resolv.conf also contains the nameserver setting. This specifies the ip address for the pod to use to perform DNS queries against Kubernetes DNS. This ip address is something that kubernetes has automatically inserted into the resolv.conf at the time of creating this pod. So let's see where this ip address leads to:
 ```
 $ kubectl get all -o wide --all-namespaces | grep 10.96.0.10
 kube-system            service/kube-dns                    ClusterIP   10.96.0.10       <none>        53/UDP,53/TCP,9153/TCP   4h34m   k8s-app=kube-dns
 ```
 
-Here we find that it belongs to a service called kube-dns. This service lives in the kube-system namespace, and is configured to forward traffic to pods with this label (redbox).
+Here we find that it belongs to a service called kube-dns. This service lives in the kube-system namespace, and is configured to listen on port 53, which is that standard port for DNS traffic. This service forwards any DNS traffic traffic to pods with this label (redbox).
 
 And if we look at what pods has this label, we find they are coredns pods. 
 
@@ -136,10 +131,10 @@ coredns-5644d7b6d9-kzpjj   1/1     Running   0          4h45m
 
 That's because, under the covers, Kubernetes DNS is actually built on top of another open source project called, CoreDNS. These pods are responsible for providing the core DNS service to the cluster. So whenever we create a service object, a new dns record gets added to these pod's internal dns database. 
 
-Also if coredns receives a nslookup request for a dns record that it has no knowledge of, such as doing an nslookup for codingbee.net, then coredns will forward that request on to one of the internet's public dns servers, and then feedback the results back to the requester. 
+Also if coredns receives a dns lookup request that it's unfamiliar with, such as codingbee.net, then coredns will seek help from one of the dns servers on the wider internet to resolve the lookup request for them. 
 
 ```
-$ kubectl exec xxxxxx -- nslookup codingbee.net
+$ kubectl exec xxxxxx -- dig codingbee.net
 ```
 
 That's it for this video. I'll see you in the next one. 
