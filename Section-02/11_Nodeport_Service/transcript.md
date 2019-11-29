@@ -61,9 +61,9 @@ From our minikube's point of view, it views our macbook as external to it. So we
 curl http://${minikube ip}:30050
 ```
 
-The Nodeport service type's main purpose is to allow outside traffic into the cluster, that's why the nodeport service is called nodeport servicee
 
-We can't use the dns name of our service name because kubernetes DNS only provides this service internally in the cluster, but we can mimic it by adding an entry to our macbook's etc-hosts file:
+
+Notice here that this time we didn't curl our service name, instead we had to use the minikube vm's ip address. That's because my macbook is external to the cluster so it can't query the internal Kubernetes DNS, but we can mimic it by adding an entry to our macbook's etc-hosts file:
 
 
 ```
@@ -78,23 +78,46 @@ this is a handy technique for doing development work.
 
 
 
-- last but not least, we arrive at The selector. This is a really important. That's Because this is the part that helps the service identify which pods to forward traffic to. Here the selector says, only forward traffic to pods that have the label with the name of "app", along with the value of apache_webserver.
+- last but not least, we arrive at The selector. This is a really important. That's Because this is the part that helps the service identify which podd it's allowed to forward traffic to. Here the selector says, only forward traffic to pods that have the label with the name of "app", along with the value of apache_webserver. We can confirm that's the case by viewing The service's active endpoints:
+
+```
+$ kubectl get endpoints -o wide
+NAME                 ENDPOINTS           AGE
+kubernetes           192.168.64.3:8443   12d
+svc-nodeport-httpd   172.17.0.3:80       2m36s
+$ kubectl get pods -o wide
+```
+
+endpoints lists out the available destinations, i.e. endpoints, a service can forward traffic to. 
 
 
  
-So if you were thinking that labels are just for storing some random bits of information, then you would be wrong. Becuase labels are needed for this labels&selectors concept to function.
+So if you were thinking that labels are just for storing some random bits of information, then you would be wrong. Labels plays a crucial role in configuring services.
 
 
 
 
-So far I've done locally on my macbook, so what is the real world equivalent to using the nodeport services.  
+So far I've demoed the nodeport service locally on my macbook, so what is the real world equivalent to using the nodeport services.  
 
 Well, one possible real world scenario, is that your cluster is made of EC2 VMs running on the aws cloud platform. You have also registered your own domain using a service like Godaddy, and you use AWS route53 to configure your DNS to point to an aws loadbalancer. This aws loadbalancer in turn forwards traffic to your worker nodes. By the way, this loadbalancer is something that sits outside the cluster, but you can actually create this loadbalancer by create a loadbalancer service. This is a bit of a weird feature of Kubernetes becuase it's one of those rare occasion where it's making changes outside of the cluster. 
 
 {lots of powerpoint slide here to show above diagram}
 
 
-If you only want internal traffic reaching your pods then you shouldn't use nodeport services, then you should use clusterip services. That's 
+Ok that's it for this video. See you in the next one. 
+
+
+
+
+
+```
+kubectl explain service.spec.type
+```
+
+There's one final thing I wanted to mention before I end this video, and that is that there are a lot of people who don't like using nodeport services. that's because of the use of non-standard ports. 
+
+That's why there's an alternative way of getting outside traffic into your cluster, and that is by making use of clusterIP services in conjunction with ingress objects. I'll cover this approach later in the course.  
+
 
 
 One thing that tends to put people off from using nodeport services is the use of non-standard port numbers for the nodeport. For example it's generally considered bad practice to open up lots of port numbers. Also using these port numbers in your urls looks a bit crude and messy. That's why there's an alternative to using nodeport, that's by using a combination of both node+ingress. 
