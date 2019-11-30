@@ -11,7 +11,7 @@ pwd
 ```
 
 
-So let's create the same 2 pods that we used earlier. 
+So let's create the same 2 pods that we used in our earlier demo. 
 
 ```
 $ pwd
@@ -25,7 +25,7 @@ $ kubectl exec pod-centos -- curl --silent http://172.17.0.9
 By the way you may have noticed that in my earlier demos I used the centos Docker image to create my dummy test pod. However I've now switched to using the Universal Base Image, or UBI for short. The UBI image is an enterprise grade image developed by redhat. And the best part is that this image is available for free. UBI is not available on docker hub though, instead you need to download it from redhat's own registry. That's why I needed to specify the full image path. If you just specify the name, then kubernetes will default to prefixing the dockerhub's registry, to the image name behind the scenes. The docker hub's registry url is docker.io. For example if you specify busybox, then kubernetes will assume you meant docker.io/busybox. I'll cover more about using third party docker registries later in this course. 
 ====
 
-So that's how far we got to last time, we managed to get one pod talking to another pod using an ip address. Now in this demo we still want to run this curl command, but this time using a DNS name rather than an IP address.
+So that's how far we got to last time, we managed to get one pod talking to another pod using an ip address. Now in this demo we still want to run this curl command, but this time using a DNS name.
 
 
 So to start using DNS, we first need to create a service object. So here's the service we're going to create:
@@ -36,7 +36,7 @@ code config/svc-nodeport-httpd.yaml
 
 I'm going to close the centos tab to free up some screen space. 
 
-I don't want to get sidetracked by going over everything in this file just yet. Instead I'll go through it in the next video. For now, the only thing you need to know is that this service uses label&selectors to associate itself with this pod, and this service will accept internal traffic from port 3050 and forward it to port 80, which is the port our apache pod is listening on. 
+I don't want to get sidetracked by going over everything in this file just yet. Instead I'll go through it in the next video. For now, the only thing you need to know is that this service uses label&selectors to associate itself with this pod, and this service will accept internal traffic from port 3050 and forward it to port 80, which is the port number our apache pod is listening on. 
 
 
 So let's go ahead and create this service.
@@ -88,7 +88,7 @@ Now, finally, let's try out our new dns record:
 <html><body><h1>It works!</h1></body></html>
 ```
 
-Awesome that worked! That means that we no longer need to rely on ip addresses as long as we use service objects and their DNS entries. This makes service well suited for acting as a gateway to our pods.
+Awesome that worked! That means that we no longer need to rely on ip addresses as long as we use service objects and their DNS entries.
 
 Now let's take a closer look at the url we used in our test. You might have noticed that I used port 3050 here. That's because in the service spec we said that this service can only accept internal traffic on this port.
 
@@ -111,7 +111,7 @@ search default.svc.cluster.local svc.cluster.local cluster.local
 options ndots:5
 ```
 
-The resolv.conf also contains the nameserver setting. This tells the pod which ip address to use to perform DNS queries against Kubernetes DNS. This ip address is something that kubernetes has automatically inserted into the resolv.conf at the time of creating this pod. So let's see where this ip address leads to:
+The resolv.conf also contains the nameserver setting. This tells the pod what the Kubernetes DNS ip address is, so that it knows where to send dns queries to. This ip address is something that kubernetes has automatically inserted into the resolv.conf at the time of creating this pod. So let's see where this ip address leads to:
 ```
 $ kubectl get all -o wide --all-namespaces | grep 10.96.0.10
 kube-system            service/kube-dns                    ClusterIP   10.96.0.10       <none>        53/UDP,53/TCP,9153/TCP   4h34m   k8s-app=kube-dns
