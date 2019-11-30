@@ -1,6 +1,6 @@
 Hello everyone, and welcome back.
 
-Ok, a little while ago, we saw how you can do pod-to-pod communication using IP addresses. We're going to do the same thing again, but this time using DNS names. To do this we need to make use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is actually an addon that you can install into your cluster. Luckily Kubernetes DNS comes installed by default if you use one of the automated kube cluster provisioning tools, such as minikube and kubeadm. 
+Ok, a little while ago, we saw how you can do pod-to-pod communication using IP addresses. We're going to do the same thing again, but this time using DNS names. To do this we need to make use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is actually an addon that you can install into your cluster. However this addon is        installed by default if you use one of the automated kube cluster provisioning tools, such as minikube and kubeadm. 
 
 Ok before we show how kubernetes DNS works, let me do a quick recap on the ip address approach. 
 
@@ -36,7 +36,7 @@ code config/svc-nodeport-httpd.yaml
 
 I'm going to close the centos tab to free up some screen space. 
 
-I don't want to get sidetracked by going over everything in this file just yet. Instead I'll go through it in the next video. For now, the only thing you need to know is that this service uses label&selectors to associate itself with this pod, and this service will accept internal traffic from port 3050 and forward it to port 80, which is the port number our apache pod is listening on. 
+I don't want to get sidetracked by going over everything in this service file just yet. Instead I'll go through it in the next video. For now, the only thing you need to know is that this service uses label&selectors to associate itself with our apache pod, and this service will accept internal traffic from port 3050 and forward it to port 80, which is the port number that    our apache pod is listening on. 
 
 
 So let's go ahead and create this service.
@@ -46,7 +46,7 @@ $ kubectl apply -f configs/svc-nodeport-httpd.yml
 $ kubectl get services -o wide
 ```
 
-The important thing to note here is that, as part of creating this service, kubernetes took this service's name, along with it's ip address, and used them to register a new dns record in Kubernetes DNS. We can confirm that by doing an nslookup inside our centos test pod:
+The key thing I    point out here, is that  as part of creating this service, kubernetes took this service's name, along with it's ip address, and used them to register a new dns record in Kubernetes DNS. We can confirm that by doing an nslookup inside our centos test pod:
 
 ```
 $ kubectl exec -it pod-centos -- bash
@@ -77,7 +77,7 @@ Name:   svc-nodeport-httpd.default.svc.cluster.local
 Address: 10.105.186.109
 ```
 
-As you can see, we now have a new dns record, which is the fqdn of our service along with it's ip address. 
+This time   it has worked and  As you can see, we now have a new dns record, which is the fqdn of our service along with it's ip address. 
 
 
 Now, finally, let's try out our new dns record:
@@ -90,10 +90,13 @@ Now, finally, let's try out our new dns record:
 
 Awesome that worked! That means that we no longer need to rely on ip addresses as long as we use service objects and their DNS entries.
 
-Now let's take a closer look at the url we used in our test. You might have noticed that I used port 3050 here. That's because in the service spec we said that this service can only accept internal traffic on this port.
+Now let's take a closer look at the url we used in our test. The url is made up of our service names, along with the basename, which toghther makes up our Fully Qualified Domain Name, or FQDN for short.   
 
 
-The 'default' in the fqdn actually refers to the namespace that the service live's in. 
+You might have noticed that I used port 3050 here. That's because in the service spec we said   this service can only accept internal traffic on this port.
+
+
+The 'default' string in the fqdn actually refers to the namespace that the service live's in. 
 
 And since our centOS pod happens to also live in the same namespace, it means we can get away with just curling the service's name rather than it's FQDN:
 
@@ -102,7 +105,7 @@ $ curl http://svc-nodeport-httpd:3050
 <html><body><h1>It works!</h1></body></html>
 ```
 
-As you can see this still worked. That's because the resolv.conf has a default basename that get's used if you don't explicitly specify one in the url. 
+As you can see this still worked. That's because our pods  resolv.conf has a default basename that get's used instead. 
 
 ```
 $ cat /etc/resolv.conf 
@@ -111,7 +114,7 @@ search default.svc.cluster.local svc.cluster.local cluster.local
 options ndots:5
 ```
 
-The resolv.conf also contains the nameserver setting. This tells the pod what the Kubernetes DNS ip address is, so that it knows where to send dns queries to. This ip address is something that kubernetes has automatically inserted into the resolv.conf at the time of creating this pod. So let's see where this ip address leads to:
+The resolv.conf also contains the nameserver setting. This tells the pod,    what the Kubernetes DNS ip address is, so that it knows where to send dns queries to. This ip address is something that kubernetes has automatically inserted into the resolv.conf at the time of creating this pod. So let's see where this ip address leads to:
 ```
 $ kubectl get all -o wide --all-namespaces | grep 10.96.0.10
 kube-system            service/kube-dns                    ClusterIP   10.96.0.10       <none>        53/UDP,53/TCP,9153/TCP   4h34m   k8s-app=kube-dns
@@ -119,7 +122,7 @@ kube-system            service/kube-dns                    ClusterIP   10.96.0.1
 
 Here we find that it belongs to a service called kube-dns. This service lives in the kube-system namespace, and is configured to listen on port 53, which is that standard port for DNS traffic. This service forwards any DNS traffic traffic to pods with this label (redbox).
 
-And if we look at what pods has this label, we find they are coredns pods. 
+And if we look for pods that have has this label, we find that they are some coredns pods. 
 
 
 ```
