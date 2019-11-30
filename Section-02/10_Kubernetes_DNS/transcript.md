@@ -1,6 +1,6 @@
 Hello everyone, and welcome back.
 
-Ok, a little while ago, we saw how you can do pod-to-pod communication using IP addresses. We're going to do the same thing again, but this time using DNS names instead of ip addresses. To do this we need to make use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is actually an addon that you can install into your cluster. Luckily Kubernetes DNS comes installed by default if you use one of the automated kube cluster provisioning tools, such as minikube and kubeadm. 
+Ok, a little while ago, we saw how you can do pod-to-pod communication using IP addresses. We're going to do the same thing again, but this time using DNS names. To do this we need to make use of Kubernete's own internal DNS service, which is called Kubernetes DNS. Kubernetes DNS is actually an addon that you can install into your cluster. Luckily Kubernetes DNS comes installed by default if you use one of the automated kube cluster provisioning tools, such as minikube and kubeadm. 
 
 Ok before we show how kubernetes DNS works, let me do a quick recap on the ip address approach. 
 
@@ -28,7 +28,7 @@ By the way you may have noticed that in my earlier demos I used the centos Docke
 So that's how far we got to last time, we managed to get one pod talking to another pod using an ip address. Now in this demo we still want to run this curl command, but this time using a DNS name rather than an IP address.
 
 
-So to start using DNS, we first need to create a service object. So here's the service yaml file we'll use to do that:
+So to start using DNS, we first need to create a service object. So here's the service we're going to create:
 
 ```
 code config/svc-nodeport-httpd.yaml
@@ -36,7 +36,7 @@ code config/svc-nodeport-httpd.yaml
 
 I'm going to close the centos tab to free up some screen space. 
 
-I don't want to get sidetracked by going over everything in this service file just yet. Instead I'll go through it in the next video. For now, the only thing you need to know is that this service uses label&selectors to associate itself with this pod, and this service will accept internal traffic from port xxxxx and forward it to port xxxx, which is the port our apache pod is listening on. 
+I don't want to get sidetracked by going over everything in this file just yet. Instead I'll go through it in the next video. For now, the only thing you need to know is that this service uses label&selectors to associate itself with this pod, and this service will accept internal traffic from port 3050 and forward it to port 80, which is the port our apache pod is listening on. 
 
 
 So let's go ahead and create this service.
@@ -88,21 +88,21 @@ Now, finally, let's try out our new dns record:
 <html><body><h1>It works!</h1></body></html>
 ```
 
-Awesome that worked! That means that we no longer need to rely on ip addresses as long as we use service objects and their DNS entries. This effectively means that services are acting as a gateway to our pods.
+Awesome that worked! That means that we no longer need to rely on ip addresses as long as we use service objects and their DNS entries. This makes service well suited for acting as a gateway to our pods.
 
 Now let's take a closer look at the url we used in our test. You might have noticed that I used port 3050 here. That's because in the service spec we said that this service can only accept internal traffic on this port.
 
 
 The 'default' in the fqdn actually refers to the namespace that the service live's in. 
 
-And since our centOS pod happens to also live in the same namespace as the service itself, it means we can get away with just curling the service's name:
+And since our centOS pod happens to also live in the same namespace, it means we can get away with just curling the service's name rather than it's FQDN:
 
 ```
 $ curl http://svc-nodeport-httpd:3050
 <html><body><h1>It works!</h1></body></html>
 ```
 
-As you can see this still worked. That's because the resolv.conf has a default basename that get's used as the default if you don't explicitly specify one in the url. 
+As you can see this still worked. That's because the resolv.conf has a default basename that get's used if you don't explicitly specify one in the url. 
 
 ```
 $ cat /etc/resolv.conf 
@@ -111,7 +111,7 @@ search default.svc.cluster.local svc.cluster.local cluster.local
 options ndots:5
 ```
 
-The resolv.conf also contains the nameserver setting. This specifies the ip address for the pod to use to perform DNS queries against Kubernetes DNS. This ip address is something that kubernetes has automatically inserted into the resolv.conf at the time of creating this pod. So let's see where this ip address leads to:
+The resolv.conf also contains the nameserver setting. This tells the pod which ip address to use to perform DNS queries against Kubernetes DNS. This ip address is something that kubernetes has automatically inserted into the resolv.conf at the time of creating this pod. So let's see where this ip address leads to:
 ```
 $ kubectl get all -o wide --all-namespaces | grep 10.96.0.10
 kube-system            service/kube-dns                    ClusterIP   10.96.0.10       <none>        53/UDP,53/TCP,9153/TCP   4h34m   k8s-app=kube-dns
@@ -129,9 +129,9 @@ coredns-5644d7b6d9-5wm6q   1/1     Running   0          4h45m
 coredns-5644d7b6d9-kzpjj   1/1     Running   0          4h45m
 ```
 
-That's because, under the covers, Kubernetes DNS is actually built on top of another open source project called, CoreDNS. These pods are responsible for providing the core DNS service to the cluster. So whenever we create a service object, a new dns record gets added to these pod's internal dns database. 
+That's because, under the covers, Kubernetes DNS is actually built on top of another open source project called, CoreDNS. These pods are responsible for providing the actual DNS service to the cluster. So whenever we create a service object, a new dns record gets added to the internal dns database that's running inside these pods. 
 
-Also if coredns receives a dns lookup request that it's unfamiliar with, such as codingbee.net, then coredns will seek help from one of the dns servers on the wider internet to resolve the lookup request for them. 
+Also if coredns receives a dns lookup request that it's unfamiliar with, such as codingbee.net, then coredns will seek assistance from outside dns servers to help resolve those requests:  
 
 ```
 $ kubectl exec xxxxxx -- dig codingbee.net

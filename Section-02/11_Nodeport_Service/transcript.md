@@ -50,7 +50,7 @@ kubectl exec curl ...
 ok that worked. next we have the target port. 
 
 - the target port is the port number that the service will use to forward traffic to the destination pods. In this case it is set to port 80 since that's the port our apache container will be listening on. If these port numbers don't match then we'll get an error message. 
-- and we have The nodePort, this is the port number that all the worker nodes in the cluster will listen on for requests coming from outside the kubecluster. 
+- and we have The nodePort, this is the port number that all the worker nodes in the cluster will listen on for requests coming from outside the kubecluster. You are only allowed to use a port number from a specific (30000-32767), and once you've used a particular port number for a nodeport service, then you can't create another nodeport service with the same nodeport number. This line is actually, so if leave it out, then kubernetes automatically assign an available nodeport number for you.  
 
 
 

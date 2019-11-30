@@ -8,10 +8,10 @@ In this video we're going to demo replicasets. Replicasets is a controller objec
 Here's an example of a replicaset. 
 
 ```
-code configs/replicat.yaml
+code configs/replicaset.yaml
 ```
 
-Let's breakdown what this yaml. First we have the common settings, including.....
+Let's breakdown what's in this yaml. First we have the common settings, including.....
 
 this section is essentially a pod spec nested inside the replicaset. 
 
