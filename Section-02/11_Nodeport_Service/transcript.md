@@ -2,7 +2,7 @@ Hello everyone and welcome back.
 
 So far we have touched on nodeport services a few times already, but we haven't properly explained what they are and how they work. Generally speaking, Services are Kubernetes objects that helps with routing traffic to the correct pods. Services essentially sits in front of your pods and acts as a gateway to them. So when you're creating service objects your actually configuring your cluster's networking. 
 
-We've already demoed the nodeport service a few times already, but in this video we're going to take a closer look at this service. We're going to use the same set of yaml files that we used in our previous demos . So let's start by creating our apache and centos pods:
+We've already demoed the nodeport service a few times already, but in this video we're going to take a closer look at this service. We're going to use the same set of yaml files that we used in our previous demos. So let's start by creating our apache and centos pods:
 
 ```
 pwd 
