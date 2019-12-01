@@ -8,7 +8,7 @@ We've already demoed the nodeport service a few times already, but in this video
 pwd 
 ll configs/
 code -f configs/pod-*
-kubectl -f configs/pod-*
+kubectl apply -f configs/pod-centos.yml -f configs/pod-httpd.yml
 kubectl get pods -o wide
 ```
 
@@ -32,12 +32,12 @@ Now Let's take a moment  to see what this service yaml   file is saying:
 - This service is going to be of the nodeport service type. There are other types of service   , such as clusterIP service, and we'll cover more about them later in the course. 
 - Next we have set three port numbers:
 -  port 3050 is the port that this service will listen on for internal traffic, for example other pods in the cluster.
-````
+```
 
 Let's confirm that's the case curling this port from our centOS pod.
 
 ```
-kubectl exec curl ...
+kubectl exec pod-centos -- curl --silent http://svc-nodeport-httpd:3050
 ```
 
 ok so far so good. next we have the target port. 
@@ -51,7 +51,7 @@ My minikube provisioned kubecluster is running in a self contained VM on my macb
 
 
 ```
-curl http://${minikube ip}:30050
+curl http://$(minikube ip):30050
 ```
 
 
