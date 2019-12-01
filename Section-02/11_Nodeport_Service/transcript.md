@@ -6,8 +6,9 @@ We've already demoed the nodeport service a few times already, but in this video
 
 ```
 pwd 
-code -f ...
-kubectl apply -f 
+ll configs/
+code -f configs/pod-*
+kubectl -f configs/pod-*
 kubectl get pods -o wide
 ```
 
