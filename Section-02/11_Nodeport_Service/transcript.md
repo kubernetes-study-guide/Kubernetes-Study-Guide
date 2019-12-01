@@ -32,7 +32,7 @@ Now Let's take a moment  to see what this service yaml   file is saying:
 - This service is going to be of the nodeport service type. There are other types of service   , such as clusterIP service, and we'll cover more about them later in the course. 
 - Next we have set three port numbers:
 -  port 3050 is the port that this service will listen on for internal traffic, for example other pods in the cluster.
-```
+
 
 Let's confirm that's the case curling this port from our centOS pod.
 
