@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pod-ubi
+  name: pod-centos
 spec: 
   containers:
-  - name: cntr-ubi
+  - name: cntr-centos
     image: centos
     command: ["/bin/bash", "-c"]
     args:
