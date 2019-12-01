@@ -1,25 +1,16 @@
 Hello everyone and welcome back. 
 
-So far we have touched demoed services a few times but we haven't properly explained what they are and how they work. Services are Kubernetes objects that helps with routing traffic to the correct pods. Services essentially sits in front of your pods and acts as a gateway to them. So when you're creating service objects your actually configuring your cluster's networking. 
+So far we have touched on nodeport services a few times already, but we haven't properly explained what they are and how they work. Generally speaking, Services are Kubernetes objects that helps with routing traffic to the correct pods. Services essentially sits in front of your pods and acts as a gateway to them. So when you're creating service objects your actually configuring your cluster's networking. 
 
-
-There are several types of service objects. 
-
-- nodeport
-- clusterip 
-- loadbalancer
-- ingress
-
-and in this video we're going to take a look at the nodeport service in more detail. We'll cover the others as we go through the course. 
-
-We've already demoed the nodeport service when we talked about Kubernetes DNS. And we're going to use the same set of yaml files for this demo as well. So let's start by creating our apache and centos pods:
+We've already demoed the nodeport service a few times already, but in this video we're going to take a closer look at this service. We're going to use the same set of yaml files that we used in our previous demos . So let's start by creating our apache and centos pods:
 
 ```
 code -f ...
 kubectl apply -f 
+kubectl get pods -o wide
 ```
 
-Ok that's done now, I'll just close the cento yaml file for now. Now le'ts open up the service file:
+Ok that's done, our pods are now running. Let's now  open up the nodeport service yaml file:
 
 ```
 code config/svc.yaml
@@ -32,29 +23,29 @@ kubectl apply -f
 kubectl get services -o wide
 ```
 
-Now Let's take a moment  to see what this file is saying:
+Now Let's take a moment  to see what this service yaml   file is saying:
 
 - Here we're saying, We want to create a service object 
-- This service is going to be called svc-nodeport-httpd
-- This service is going to be a nodeport service.
+- We've given our service a name, as we earlier, this name is also used to set up a dns record for this service      
+- This service is going to be of the nodeport service type. There are other types of service   , such as clusterIP service, and we'll cover more about them later in the course. 
 - Next we have set three port numbers:
--  port 3050 is the port that this service will listen on for handling requests, for example other pods in the cluster.
+-  port 3050 is the port that this service will listen on for internal traffic, for example other pods in the cluster.
 ````
 
-Let's confirm that works. Now let's test this out.
+Let's confirm that's the case curling this port from our centOS pod.
 
 ```
 kubectl exec curl ...
 ```
 
-ok that worked. next we have the target port. 
+ok so far so good. next we have the target port. 
 
-- the target port is the port number that the service will use to forward traffic to the destination pods. In this case it is set to port 80 since that's the port our apache container will be listening on. If these port numbers don't match then we'll get an error message. 
-- and we have The nodePort, this is the port number that all the worker nodes in the cluster will listen on for requests coming from outside the kubecluster. You are only allowed to use a port number from a specific (30000-32767), and once you've used a particular port number for a nodeport service, then you can't create another nodeport service with the same nodeport number. This line is actually, so if leave it out, then kubernetes automatically assign an available nodeport number for you.  
+- This    is the port number our servive will use to forward traffic to the destination pods. In this case it is set to port 80 since that's the port our apache container will be listening on. 
+- Next we have The nodePort, this is the port number that all the worker nodes in the cluster will listen on for requests coming from outside the kubecluster. You are only allowed to use a port number from a specific range (30000-32767), also you can't have more than one nodeport service using the same nodeport number . The nodeport  setting is actually optional, so if leave it out, then kubernetes will  automatically look an available nodeport number and then assign it for you.  
 
+Now how do we try out this nodeport number. 
 
-
-From our minikube's point of view, it views our macbook as external to it. So we can demo this nodeport setitng by trying to access it from our macbook.
+My minikube provisioned kubecluster is running in a self contained VM on my macbook, that means my   kubecluster views my macbook as the outside world. So we can demo this nodeport setting by trying to access it from my  macbook.
 
 
 ```
@@ -63,7 +54,7 @@ curl http://${minikube ip}:30050
 
 
 
-Notice here that this time we didn't curl our service name, instead we had to use the minikube vm's ip address. That's because my macbook is external to the cluster so it can't query the internal Kubernetes DNS, but we can mimic it by adding an entry to our macbook's etc-hosts file:
+Notice here that this time we didn't curl our nodeport service's dns name, instead we had to use the minikube vm's ip address. That's because my macbook doesn't have access to Kubernetes DNS, since Kubernetes DNS is only available internally in the cluster    , but we can mimic it by adding an entry to our macbook's etc-hosts file:
 
 
 ```
@@ -74,13 +65,15 @@ curl http://nodeport-name:30050
 
 ```
 
-this is a handy technique for doing development work. 
+Editing my macbooks hosts file like is something I sometimes do for troubleshooting problems.  
 
 
+- last but not least, we arrive at The selector. This is a really important. That's Because this setting helps the service identify which pod it's allowed to forward traffic to. Here the selector says, only forward traffic to pods that have the label with the name of "app", along with the value of apache_webserver. Our apache pod has this matching label, so at this moment in time, our service should have our apache pod listed as an allowed destination, in otherwords it should be an active endpoint
 
-- last but not least, we arrive at The selector. This is a really important. That's Because this is the part that helps the service identify which podd it's allowed to forward traffic to. Here the selector says, only forward traffic to pods that have the label with the name of "app", along with the value of apache_webserver. We can confirm that's the case by viewing The service's active endpoints:
+We can confirm that's the case by viewing The service's active endpoints:
 
 ```
+
 $ kubectl get endpoints -o wide
 NAME                 ENDPOINTS           AGE
 kubernetes           192.168.64.3:8443   12d
@@ -88,36 +81,29 @@ svc-nodeport-httpd   172.17.0.3:80       2m36s
 $ kubectl get pods -o wide
 ```
 
-endpoints lists out the available destinations, i.e. endpoints, a service can forward traffic to. 
+endpoints lists out the available destinations for a service        . Here we can see that, as expected our apache pod's   ip address is on the allowed list of endpoints. 
 
 
  
-So if you were thinking that labels are just for storing some random bits of information, then you would be wrong. Labels plays a crucial role in configuring services.
+So if you assumed that labels are just for storing some random bits of information, then you would be wrong. Labels plays a critical    role in configuring services.
 
 
 
 
-So far I've demoed the nodeport service locally on my macbook, so what is the real world equivalent to using the nodeport services.  
+So far I've demoed the nodeport service locally on my macbook, but how are nodeport services used in the real world .  
 
-Well, one possible real world scenario, is that your cluster is made of EC2 VMs running on the aws cloud platform. You have also registered your own domain using a service like Godaddy, and you use AWS route53 to configure your DNS to point to an aws loadbalancer. This aws loadbalancer in turn forwards traffic to your worker nodes. By the way, this loadbalancer is something that sits outside the cluster, but you can actually create this loadbalancer by create a loadbalancer service. This is a bit of a weird feature of Kubernetes becuase it's one of those rare occasion where it's making changes outside of the cluster. 
+Well, one possible real world scenario, is that your cluster is    of EC2 instances running on the aws cloud platform. You have also registered your own domain name using a service like Godaddy, and you have configured your domain name using AWS route53  so that they point to your aws loadbalancer. This  loadbalancer then forwards traffic to your cluster's worker nodes. 
 
 {lots of powerpoint slide here to show above diagram}
 
 
+
+
+
+There's one final thing I wanted to bring up before I end this video, and that is that there are a lot of people who are put off from using   nodeport services. that's because of it's reliance of using non-standard ports. This means that you're forced to explicitly specify the nodeport number in your urls, like we did when we ran the curl command from our macbook. It doesn't look neat and it's a bit primitive. Also the more nodeport services you have, the more ports you're worker nodes ends up listening on, which isn't great from a security standpoint. 
+
+
+That's why a lot of people use a combination of ClusterIP services and Ingress objects, as a powerful alternative to using nodeport services. We'll cover that later in the course. 
+
 Ok that's it for this video. See you in the next one. 
-
-
-
-
-
-```
-kubectl explain service.spec.type
-```
-
-There's one final thing I wanted to mention before I end this video, and that is that there are a lot of people who don't like using nodeport services. that's because of the use of non-standard ports. 
-
-That's why there's an alternative way of getting outside traffic into your cluster, and that is by making use of clusterIP services in conjunction with ingress objects. I'll cover this approach later in the course.  
-
-
-
-One thing that tends to put people off from using nodeport services is the use of non-standard port numbers for the nodeport. For example it's generally considered bad practice to open up lots of port numbers. Also using these port numbers in your urls looks a bit crude and messy. That's why there's an alternative to using nodeport, that's by using a combination of both node+ingress. 
+  
