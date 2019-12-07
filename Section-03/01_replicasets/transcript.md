@@ -3,7 +3,9 @@ replicasets
 
 In Kubernetes, you can create Kubernetes objects whose job is to inturn create other kubernetes objects. These types of objects are referred to as controller objects. 
 
-In this video we're going to demo replicasets. Replicasets is a controller object and it's job is to create a set of pods with identical specs. 
+In this video we're going to demo replicasets. Replicasets is a controller object and it's job is to create a set of pods with identical specs.
+
+Now you might be wondering why would you want to have group of identical pods in the first place, there's 2 main reasons. loadbalancing and failover. 
 
 Here's an example of a replicaset. 
 
@@ -18,8 +20,6 @@ this section is essentially a pod spec nested inside the replicaset.
 
 
 Replicasets doesn't only creates the pods, it also ensures the desired state. For example. here it says that we should have exactly 3 pods runnning at any given time. So if we delete a pod, then the replicaset straightaway creates a new pod to bring the desired state back to 3 pods.. 
-
-
 
 
 In practice you will rarely need to create replicasets, instead you'll create them indirectly by creating a higher level object called deployments. 
