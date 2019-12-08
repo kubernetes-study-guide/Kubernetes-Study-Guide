@@ -31,11 +31,11 @@ This clusterIP and ingress combo is a really powerful and popular alternative to
 And finally we have the externalname Service.
 
 
-Now there can be situations where you want your pods to reach out and access a resource outside the cluster, for example, an ftp server. Now let's say that this ftp server has a puplic ip address but no dns name.  
+Now there can be situations where you want your pods to reach out and access a resource outside the cluster, for example, a mysql database. In this example our mysql database has quite a complicated connection string.
 
-Then in that scenario,   you can let your pods use that ip addresss to interact the ftp server. However that's not good practice. If your ftp server's ip address changes in future, then your pods would need to be updated with the new ip address. A much better approach is to add a custom dns entry for your SFTP server into Kubernetes DNS. 
+We can use this connection string to interact with the mysql db. However a better approach would be to use a nicer, human readable connection string. Enter ExternalNames services. 
 
-And that's where the externalname service comes into the picture. Put simply, externalname  services are used for adding custom dns entries to Kubernetes DNS. So in this scenario you can make up a dns name for your ftp server and then write out a yaml file that associates youre new dns name with the ftp server's ip address. Then apply that yaml file so that your new dns entry get's added to Kubernetes DNS. After that, Your pods can then use the dns name instead of the ip address. I  f the ip address does change, then you just need to update the externalName service's yaml file with the new IP address, and then re-apply it. That in turn will end up updating Kubernetes with the new ip address. 
+Put simply, externalname services are used for adding custom c-name entries to Kubernetes DNS. So in this scenario you can write a yaml file for your ExternalName service associates youre new dns name with the mysql db's connection string. Then apply that yaml file so that your new dns entry get's added to Kubernetes DNS. After that, Your pods can then use the new connection string instead of the complicated one. 
 
 Ok, That's it for this video, see you in the next one. 
 
