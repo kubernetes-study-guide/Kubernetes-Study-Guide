@@ -20,22 +20,21 @@ Next we have clusterIP services.
 
 Let's say you don't want to expose your pods to the outside world. In that scenario you won't need any   loadbalancers. And for that matter, also don't want your service listening for outside traffic via the nodeport number. That's where clusterIP services comes to the rescue. 
 
-ClusterIP services are similar to nodeport services. The key difference is that clusterIP services don't listen for external traffic. In otherwords, clusterIP services restricts access to pods to internal cluster traffic only. That's why, I often think of clusterIP services as a cut down version of nodeport services.
+ClusterIP services are similar to nodeport services. The key difference is that they don't listen for external traffic. In otherwords. That's why, I often think of clusterIP services as a cut down version of nodeport services.
 
-ClusterIP is actually the default service type, meaning that if you don't explicitly specify the service type in your yaml file then kubernetes will assume it to be a clusterIP service.
+ClusterIP is also the default service type, meaning that if you don't explicitly specify the service type in your yaml file then kubernetes will assume it to be clusterIP.
 
-Theres another object type that's often used in conjunction with clusterIP services. And that's Ingress objects. Ingress objects provides another way to allow external traffic into your cluster. You can    configure your ingress objects to forward the outside traffic to one or more clusterIP services.  
+Theres another object type that's often used in conjunction with this service type. And that's Ingress objects. Ingress objects provides another way to allow external traffic into your cluster. You can configure your ingress objects to receive outside traffic, then forward it to one or more clusterIP services.
 
-This clusterIP and ingress combo is a really powerful and popular alternative to using nodeport services. One reason for that is that unlike nodeport services, this combo let's you're kube cluster accept traffic on standard port numbers. We'll go into more detail about this,  later in the course. 
+This combination of clusterIP and ingress is a really powerful and popular alternative to using nodeport services. One reason for that is that unlike nodeport services, this pairing let's you're kube cluster accept outside traffic on standard port numbers. We'll go into more detail about all of this later in the course. 
 
 And finally we have the externalname Service.
 
+Now there can be situations where you want your pods to reach out and access a resource outside the cluster, for example, a mysql database. Let's say our mysql database has a long and complicated connection string.
 
-Now there can be situations where you want your pods to reach out and access a resource outside the cluster, for example, a mysql database. In this example our mysql database has quite a complicated connection string.
+We can use this connection string to interact with the mysql db. However a better approach would be to use a nicer, human readable connection string. That's where ExternalNames services can come in handy. 
 
-We can use this connection string to interact with the mysql db. However a better approach would be to use a nicer, human readable connection string. Enter ExternalNames services. 
-
-Put simply, externalname services are used for adding custom c-name entries to Kubernetes DNS. So in this scenario you can write a yaml file for your ExternalName service associates youre new dns name with the mysql db's connection string. Then apply that yaml file so that your new dns entry get's added to Kubernetes DNS. After that, Your pods can then use the new connection string instead of the complicated one. 
+Put simply, externalname services are used for adding custom c-name entries to Kubernetes DNS. It's a bit like giving another name to an existing dns name. So in this scenario you can write a yaml file for your ExternalName service that associates you're new dns name with the existing mysql db's connection string. Then apply that yaml file so that your new dns entry get's added to Kubernetes DNS. After that, Your pods can then use the new simpler connection string. 
 
 Ok, That's it for this video, see you in the next one. 
 
