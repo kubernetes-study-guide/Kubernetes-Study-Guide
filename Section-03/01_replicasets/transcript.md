@@ -1,4 +1,10 @@
+make sure you don't have more than replicaset mathcing hte same pod, or you can end up getting wierd behaviours
+
+also replicasets have versatile selector logic. 
+
 replicasets
+
+why do pods have a random string in their name? 
 
 
 In Kubernetes, you can create Kubernetes objects whose job is to inturn create other kubernetes objects. These types of objects are referred to as controller objects. 

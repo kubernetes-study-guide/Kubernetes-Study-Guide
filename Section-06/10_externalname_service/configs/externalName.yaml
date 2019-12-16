@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mydb
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: mydb.456354643544.us-east-1.rds.amazonaws.com

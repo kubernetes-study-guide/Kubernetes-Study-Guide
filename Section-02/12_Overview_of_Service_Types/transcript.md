@@ -30,11 +30,14 @@ This combination of clusterIP and ingress is a really powerful and popular alter
 
 And finally we have the externalname Service.
 
-Now there can be situations where you want your pods to reach out and access a resource outside the cluster, for example, a mysql database. Let's say our mysql database has a long and complicated connection string.
+Now there can be situations where you want your pods to access a resource outside the cluster, for example, a mysql database. Now, let's say our mysql database has a long and complicated endpoint.
 
-We can use this connection string to interact with the mysql db. However a better approach would be to use a nicer, human readable connection string. That's where ExternalNames services can come in handy. 
+Our pods can use this endpoint as is. However this endpoint is quite long and unweildy. It would be if we had a more human readable endpoint. And that's possible thanks to Externalname services . 
 
-Put simply, externalname services are used for adding custom c-name entries to Kubernetes DNS. It's a bit like giving another name to an existing dns name. So in this scenario you can write a yaml file for your ExternalName service that associates you're new dns name with the existing mysql db's connection string. Then apply that yaml file so that your new dns entry get's added to Kubernetes DNS. After that, Your pods can then use the new simpler connection string. 
+Put simply, externalname services are used for adding custom c-name entries to Kubernetes DNS. It's a bit like giving another name to an existing dns name. So in this scenario you can write a yaml file for your ExternalName service that associates you're new dns name with the existing mysql db's endpoint. Also your new dns name will look like an ordinary Kubernetes dns name 
+
+
+Then apply that yaml file so that your new dns entry get's added to Kubernetes DNS. After that, Your pods can then use the new simpler endpoint. 
 
 Ok, That's it for this video, see you in the next one. 
 
