@@ -8,6 +8,18 @@ Writing yaml files from scratch can be a time consuming process. That's why it's
 kubectl run pod-name --image=nginx --restart=Never --dry-run -o yaml > pod.yaml
 ```
 
+By the way, to start and exec into a container in docker, you do:
+
+```bash
+docker run -it centos bash
+```
+
+The kubernetes equivalent is:
+
+```bash
+kubectl run -it my-test-pod --image=centos --restart=Never -- bash
+```
+
 ## Nodeport Service Template
 
 ```bash
