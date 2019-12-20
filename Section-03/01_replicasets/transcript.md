@@ -58,8 +58,64 @@ Now let's take a look at how to load balance traffic to them. That's done by usi
 code configs/nodeport.yaml
 ```
 
-There's nothing new here, this is just a typical nodeport service. The key thing to note here is that we've set the selector to match the label the replicaset will assign to the pods it creates. So that means our nodeport has. 
+There's nothing new here, this is just a typical nodeport service. So let's go ahead and create this:
 
+```
+$ kubectl apply -f svc-nodeport-httpd.yml
+$ kubectl get services -o wide
+```
+
+The key thing to note here is since our replicaset has created 3 pods with this label it means that our nodeport service has 3 pods that it's allowed to forward traffic to. We can list the endpoints to confirm that's the case
+
+```
+$ kubectl get endpoints svc-nodeport-httpd-webserver 
+$ kbuectl get pods -o wide
+```
+
+As you can see, the ip address of all three pods created by the replicaset are listed as acceptable destination to forward traffic to. So let's try curling our service and see what happens:
+
+```
+$ curl http://$(minikube ip):31000
+```
+
+Here we can see that we got a response from this pod. We know that becuase we injected the pod's hostname into the index.html. Now let's try curling a few more times. 
+
+```
+$ curl http://$(minikube ip):31000
+$ curl http://$(minikube ip):31000
+$ curl http://$(minikube ip):31000
+$ curl http://$(minikube ip):31000
+```
+
+As you can see we're getting responses back from different pods. That's because the nodeport service is doubling up as a loadbalancer. It is loadbalancing the traffic in a round robin like fashion. 
+
+Pretty cool right!
+
+Now let's see what happens if one of the pods accidently dies. We'll simulate that by manually killing a pod. 
+
+
+
+```
+kubectl get pods -o wide
+kubectl delete pod xxxxx
+```
+
+As soon as that's happened the replicaset will have immediately noticed that the number of replica pods have deviated from the desired number and it will take action to fix that straigt away, which in this case means creating a new pod to replace the deleted pods. This is Kubernetes self-healing in action. 
+
+
+So if we list out the pods again
+
+```
+kubectl get pods -o wide
+```
+
+youll see a new replacement pod has been created, as hinted by the age. The nodeport service's endpoints would have also got refreshed so that it starts delivering 
+
+
+
+Now what happens if I create a pod with a matching label?
+
+You can also add wildcard logic to target a group of pods. And there's all sortos of other permutations and combinatinos. 
 
 
 
