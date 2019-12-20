@@ -1,3 +1,23 @@
+Hello everyone and welcome back. 
+
+In all our demos so far we used apache webserveer as our dummy application which was running inside a single pod. However in practice one pod might not be enough to handle all the traffic, That's why it's common practice to create a set of replica pods and then loadbalance the traffic across them. Having replica pods also means that there's no single point of failure, so, if one pod dies for whatever reason, then the traffic can failover to the remaining replica pods that are still working. (show diagram)
+
+So how to do create a set of replica pods? Well one way to do that is by creating a replicaset. Here's the replicaset we'll create:
+
+```
+
+
+```
+
+Here, we're saying, create an object of the type replicaset, this replicaset should ensure that there are 3 pods in the set.
+
+
+
+
+
+
+
+
 make sure you don't have more than replicaset mathcing hte same pod, or you can end up getting wierd behaviours
 
 also replicasets have versatile selector logic. 

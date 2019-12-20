@@ -4,7 +4,7 @@ kind: ReplicaSet
 metadata:
   name: rs-httpd
 spec:
-  replicas: 2   # This sets the number of pods that needs to exist. 
+  replicas: 3   # This sets the number of pods that needs to exist. 
   selector:
     matchLabels:
       component: httpd_webserver  # The rs object manages all pods that has this label
