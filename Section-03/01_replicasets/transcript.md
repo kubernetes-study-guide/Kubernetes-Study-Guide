@@ -1,4 +1,9 @@
-Hello everyone and welcome back. 
+Hello everyone and welcome back.
+
+Wow! You made it to section 3 of the course! That's awesome! If you've been 
+
+
+We're now going to level up and reintroduce you to new 
 
 In all our demos so far we used a single apache webserver pod. However in practice one pod might not be enough to handle all the traffic, That's why it's common practice to create a set of replica pods and then loadbalance the traffic across them. Having replica pods also means that there's no single point of failure, so, if one pod dies for whatever reason, then the traffic can failover to the remaining replica pods. (show diagram)
 
@@ -127,7 +132,7 @@ You can also add wildcard logic to target a group of pods. And there's all sorto
 
 
 
-
+pods with matching labels will get adopted by the replicaset
 
 
 
@@ -179,4 +184,15 @@ So you might be wondering, why bother creating identical pods in the first place
  
 
 To take advantage of failover and loadbalancing we need to use replicaset and service objects together. Let's demo that now. I've already created a replicaset so let's now create 
+
+
+
+
+
+
+
+
+## References
+
+https://kubernetes.io/docs/concepts/workloads/controllers/
 
