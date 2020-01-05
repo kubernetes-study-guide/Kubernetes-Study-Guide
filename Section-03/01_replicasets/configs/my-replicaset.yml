@@ -3,7 +3,7 @@ kind: ReplicaSet
 metadata:
   name: rs-httpd
 spec:
-  replicas: 3   # This sets the number of pods that needs to exist. 
+  replicas: 5   
   selector:
     matchLabels:
       app: httpd_webserver  # The rs object manages all pods that has this label
@@ -20,5 +20,5 @@ spec:
           command: ["/bin/bash", "-c"]     # We have performed a command override here for testing purposes.
           args:
             - |
-              /bin/echo "You've hit - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
-              /usr/local/bin/httpd-foreground
+              echo "You've hit - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
+              httpd-foreground
