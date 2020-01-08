@@ -89,6 +89,7 @@ For our test we'll run the curl command from inside a testpod:
 ```
 $ kubectl run testpod --rm --image=centos --restart=Never -it --command -- curl http://172.17.0.12
 ```
+# or demo kube-proxy command, or port-forward command. 
 
 Awesome that worked. But not only that, unlike in previous demos where we used to get a generic 'it's working' message. This time it printed out the pod's name. That's thanks to the tweak I'm made to the docker image's startup script. The httpd image by default is preconfigured to just run the httpd-foreground command, which I found by looking up the httpd image's oficial Dockerfile on Github. I still want to run this command which is why it's still shown here, but just before starting it, I've inserted a command to update the  index.html file's content, so that it includes the pod's hostname. Pretty cool right. 
 

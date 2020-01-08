@@ -1,3 +1,19 @@
+While using Kubernetes can be fun and intuitive, the same unfortunately can't be said about setting up a kube cluster. 
+
+Actually that's not true, it is quite easy if you want to set up a kube cluster for testing and development purpposes. But it can get hard if you want to build a production grade cluster.  
+
+
+There's lots of install options
+
+1. The hardway - great for learning purposes
+3. local workstation dev environment - minikube,...what are the otherss?
+2. kubeadm - bootstrap approach. Easier approach. 
+3. Third party tools - e.g. kops, -  pro: production ready clusters cons: learning curve, too many competing tools, maintenance falls on you, if cluster has problems
+4. Vendor specifiy Managed services approach, e.g. aws eks. pro: turnkey approach  con: don't have full control, vendor lockin. 
+5. Different flavours of Kubernetes, openshift, rancher, ...etc. 
+
+
+
 While Kubernetes is great for simplifying your IT estate through containerisation. 
 
 Building a Kube Cluster itself is not that straight forward. It involves having to answer lots of questions, for example:

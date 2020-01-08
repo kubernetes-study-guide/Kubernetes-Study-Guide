@@ -1,5 +1,8 @@
 # Transcript
 
+You can use a smart phone, it's camera, gps, bluetooth, without knowinag about all the internal components and how the interact with one another. Hence this course we focus on using kubernetes, we will explore how kubernetes internal components work, towards the end of this course. For now here's a high level overview.  
+
+
 slides only
 
 
