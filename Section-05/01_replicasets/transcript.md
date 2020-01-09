@@ -1,14 +1,13 @@
 Hello everyone and welcome back.
 
-Wow! You made it to section 3 of the course! That's awesome! If you've been 
+Ok we've covered a lot of really good stuff in the past few sections. However things are going get even more interesting because we're now going to level up and start looking at controller objects.
+
+But what are they I hear you say? 
 
 
-We're now going to level up and start taking a look at controller objects. So what are Controller objects I hear you say? 
+Controller objects are objects that in turn creates kubernetes objects. There are a number of objects types that falls into the controller object category. They include replicasets, deployments, and statefulsets. We'll cover all of them in due course, but for now we'll take a look at replicasets.
 
-
-Well, in Kubernetes we can create special objects that in turn are responsible for creating and managing other kubernetes objects. That's why these special objects are referred to as controller objects. A few examples of controller objects are replicasets, deployments, and statefulsets. We'll cover all of them in due course, but for now we'll take a look at replicasets.
-
-A replicaset is used for creating multiple replicas of a pods, hence the name replicaset. You need to create replica pods if you want to implement failover and loadbalancing capabilities. We'll cover how those capabilities work later on. 
+A replicaset is used for creating multiple replicas of a pod, hence the name replicaset. You need to create replica pods if you want to implement high-availability and loadbalancing capabilities in your IT estate. We'll cover how those capabilities work later in the course, when we talk about the clusterIP service. 
 
 Anyway for now here's the replicaset we'll create for this demo:
 
@@ -21,35 +20,47 @@ Here, we're saying, create an object of the type replicaset, this replicaset sho
 
 This replicaset will have control over any pods with this label. In this exmaple. this label has a key with the name 'app', and it's corresponding value is set to httpd_webserver. 
 
-Next we have the template section. This section is actually pod-spec definition nested under it, so this structure should look familiar to you. We're basically telling the replicaset to use this pod spec definition as a template for spinning up the replica pods. 
+Next we have the template section. This section is actually a pod-spec definition nested under it. We're basically telling the replicaset to use this pod spec definition as a template for spinning up the replica pods. 
 
 By the way I've added a custom command and args, I'll explain whats going on here a bit later. 
 
 
-Replicasets makes use of the label and selectors mechanism to help it keep track of which replica pods it's managing. So for this to work, we have to ensure that replicaset creates pods that have labels that matches the selector. 
+Replicasets makes use of the label and selectors mechanism to help it keep track of which replica pods it's managing. So for this to work, we have to ensure that our replicaset creates pods that have labels that matches the selector. 
 
-Now before I demo this yaml file, let's first get a list of our pods. 
+Now before I apply this yaml file, let's first get a list of our pods. 
 
 
 ```
 # open another bash terminal in vscode using split vertical icon
 $ clear 
-$ watch kubectl get pods
+$ watch --interval 1 'kubectl get pods'
 ```
 
-By the way, I'm using the watch command here. The watch command runs whatever comes after it every couple of seconds. So in this instance its going to show the output of kubectl get pods, and refresh that info every 2 seconds. so let's see what that looks like:
+Notice I'm using the 'watch' command here. This utility is used for running a command, over and over again. So in this example I've instructed the watch command to run `kubectl get pods` every second and show it's output. Watch wasn't available on my macbook so I had to install it using brew (pop up box: brew install watch):
 
 ```
 press enter
 ```
 
-As you can see, At the moment we don't have any pods at the moment. So let's now create our replicaset:
+As you can see, we don't have any pods at the moment. The same is also true for replicasets:
 
-```bash
-$ kubectl apply -f my-replicaset.yml
+```
+kubectl get replicaset
 ```
 
-We can now see our pods are now coming into existance. Let's take a look at the replicaset itself:
+
+
+So let's now go ahead and create our replicaset:
+
+```bash
+$ kubectl apply -f my-replicaset.yml ; watch --interval 1 kubectl get replicaset
+```
+
+Here I've actually typed 2 commands on a single line, seperated by a semi colon. The results in the second command running straight after the first command. 
+
+I'm doing this because it takes a little while for the replicaset to get ready and I wanted you to see it's progress as it's starting up. Ok let's hit enter. 
+
+Ok I'm going to briefly pause this video for a moment so that you can see what's happening here. 
 
 ```
 $ kubectl get replicaset -o wide
@@ -57,59 +68,81 @@ NAME       DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES         SELECTO
 rs-httpd   3         3         3       22m   cntr-httpd   httpd:latest   app=httpd_webserver
 ```
 
-Ok I'm going to briefly pause the video so I go over what's going on here. 
 
 
-This shows the current status of our replicaset. Our replicaset desires five running pods because that's what we specified in our yaml file. It shows how many pods currently exists and out of those, how many pods have finished initializing and are now running. Replicasets continuously compares the number of ready pods, to the desired value, and it will create or delete replica pods to reach the desired state. So it means that these 3 values will eventually line up once the desired state is reached. We can also describe the replicaset to get even more detail. So lets resume the video to show that. 
+On the left terminal it shows that our replicaset desires five running pods since that's what we specified in our yaml file. It shows how many pods currently exists and out of those, how many pods have finished initializing and are now running. This matches up with what we see on the right terminal. 
+
+Replicasets continuously compares the number of ready pods, to the desired value, and it will create or delete replica pods to reach that desired state. So it means that these three values will eventually line up once the desired state is reached. 
+
+Let's now resume the video to witness that happening. 
+
+
+Also notice that the replicaset created the pods and named them after itself followed by a uniqe string, that's so that each pod has a unique name.
+
+Ok It looks like all the pods are now running, and as expected, the Desired, Current, and Ready Values are all the same. 
+
+Ok I'm going to leave these two terminals running and open up a third terminal. 
+
+
+
+We can also describe the replicaset to get even more detail, for example it shows in what order the replicaset created these pods: 
 
 ```
 kubectl describe rs xxxx
 ```
 
-Here it says that it's created 5 pods. These pods are named after the replicaset followed by a uniqe string, that's so that each pod has a unique name.
 
-It looks like all the pods are now running, so let's go back and check the replicaset's status again:
 
-```
-$ kubectl get replicaset -o wide
-NAME       DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES         SELECTOR
-rs-httpd   3         3         3       22m   cntr-httpd   httpd:latest   app=httpd_webserver
-```
-
-We can now see the number of pods that are desired, current, and ready, are all the same, which is perfect. 
-
-Now let's see if our replica pods are working by testing one of them. In our case we can do that by curling the ip address for one of our replica pods:
+Now let's check if our replica pods are working. In our example we can do that by curling the ip address for one of our replica pods:
 
 ```
 kubectl get pods -o wide
 ```
 
-For our test we'll run the curl command from inside a testpod:
 
+
+For our test we'll run the curl command from inside a testpod. So let's create our good old dummy pod using this yaml file:
+
+```
+cat ....
+kubectl apply -f .....
+```
+
+Now let's exec into our dummypod and curl the ip address of one of our replica pods. 
+
+```
+kubectl exec ...
+curl ....
+```
+
+# this approach should be covered in a later video:
 ```
 $ kubectl run testpod --rm --image=centos --restart=Never -it --command -- curl http://172.17.0.12
 ```
-# or demo kube-proxy command, or port-forward command. 
+this should be covered in an earlier vidoe. 
+```
+kubectl port-forward pod-name 8080:80
+```
 
-Awesome that worked. But not only that, unlike in previous demos where we used to get a generic 'it's working' message. This time it printed out the pod's name. That's thanks to the tweak I'm made to the docker image's startup script. The httpd image by default is preconfigured to just run the httpd-foreground command, which I found by looking up the httpd image's oficial Dockerfile on Github. I still want to run this command which is why it's still shown here, but just before starting it, I've inserted a command to update the  index.html file's content, so that it includes the pod's hostname. Pretty cool right. 
+Awesome that worked. But not only that, unlike in previous demos where we used to get a generic 'it's working' message. This time it printed out the pod's name. That's thanks to the tweak I'm made to the docker image's startup script. The httpd image is preconfigured to just run the httpd-foreground command. I found that out by looking up the httpd image's official Dockerfile on Github. I've modified this slightly by inserting a command to update the index.html file's content, so that it includes the pod's hostname. Pretty cool right. 
 
 
 Ok so we've now created our replicaset and confirmed our replica pods are working. 
 
-Now let's see what happens if I try deleting one of the replica pods and see what happens. 
+The next thing I want to show you is what happens when I try deleting one of these replica pods. 
 
 ```
 kubectl delete pod xxxx
 ```
 
-As you can see on the left, as soon as we deleted that pod the replicaset built a new replica pod in it's place.
+As you can see on, as soon as we deleted that pod the replicaset built a new replica pod in it's place. 
 
-That's because our replicaset has noticed that we've moved away from the desired state and then took action fix it. 
+That's because our replicaset has noticed that we've moved away from the desired state and then took action fix it. That means that replicasets have self-healing capabilities built in by design. 
 
 
-That means when you create your pods using a replicaset, you also end up adding Self-healing capabilities for your pods too. This is really cool, to me it's almost as cool as how Luke Skywalker brings balance to to the force in Star wars.
+This is really cool, to me it's almost as cool as how Luke Skywalker brings balance to to the force in Star wars.
 
-This self-healing capability makes replicasets handy even if I only want to create a single pod. So that if your single pod dies, then replicaset will replace it with a new pod.  
+This self-healing capability makes replicasets handy even if I only want to create a single pod. So that if my single pod dies, then the replicaset will replace it with a new pod.  
 
 Speaking of which I want to scale down my current replicaset to a single pod then I need to change the desired number to 1. You can do that by updating the replica value to 1 in your yaml file and then reapply it. However I prefer to do`kubectl scale command`:
 
