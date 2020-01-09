@@ -8,9 +8,13 @@ watch kubectl get pods
 actually use this to watch everything instead: 
 
 
-install:
-https://github.com/ahmetb/kubectl-tree
 
+Finally....By the way, you can also use plugins:
+
+install:
+https://github.com/ahmetb/kubectl-tree   ("watch" command doesn't work properly with this)
+
+You can follow the documentation if you want to install this plugin. It's quite easy to install. 
 
 
 
