@@ -14,7 +14,7 @@ spec:
     spec: 
       containers:
         - name: cntr-httpd
-          image: httpd:latest 
+          image: httpd:2.4.37
           ports:
             - containerPort: 80
           command: ["/bin/bash", "-c"]     # We have performed a command override here for testing purposes.

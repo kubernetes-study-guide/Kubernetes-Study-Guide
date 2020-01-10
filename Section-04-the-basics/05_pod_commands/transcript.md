@@ -236,4 +236,7 @@ Finally I should point out that these two settings are not the only ways to run 
 
 We'll cover all these later in the course. 
 
-Ok, that's it for this video. See you in the next one. 
+Ok, that's it for this video. See you in the next one.
+
+
+### TODO - add a couple more minutes explaining how to tweak httpd custom entrypoint to include a custom hello world message that mentions the pod's hostname. 
