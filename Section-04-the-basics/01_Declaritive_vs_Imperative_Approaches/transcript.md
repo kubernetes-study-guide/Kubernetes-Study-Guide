@@ -111,7 +111,11 @@ One final thing I wanted to show you. You can run a single imperative command to
 kubectl run podcentos --rm --image=centos --restart=Never -it --command -- /bin/bash
 ```
 
-Here we've created a pod using the official centos image. This is a handy way to take a look inside an image, without having to go through the hassle of writing out a yaml file first. 
+Here I'm telling kubernetes to build me a pod using called podcentos using centos as the image, and as soon as it started up create an interative terminal inside it and run bash inside it. I've also instructed kubernetes to delete this pod as soon as I've existed out the bash session, and also try not to create a new pod after it's been deleted. I'll explain more about this command when we cover kubernetes deployments later on.   
+
+So you might be wondering what on earth all these settings mean. 
+
+
 
 Note that we didn't need to specify the --comand setting here. That's because the dockerfile that built this image already specified bash for the CMD setting. But we've added it in here just so you know what to do if that wasn't the case for the image you want to look inside. 
 
