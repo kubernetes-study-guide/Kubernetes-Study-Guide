@@ -8,6 +8,8 @@ also using aliases.
 
 install 'brew install watch'
 
+also give a quick demo of the watch command. - actually do this in a later video. 
+
 
 Install process tends to change all the time, so I would recommend reading the docs for the latest instructions. 
 
