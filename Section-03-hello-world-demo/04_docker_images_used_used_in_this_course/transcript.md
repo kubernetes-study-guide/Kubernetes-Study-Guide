@@ -6,6 +6,17 @@ https://catalog.redhat.com/software/containers/search
 github.com
 
 
+UBI is short for Universal Base Image, that's similar os based images, such as the centos image. . It is a general purpose image that you can use as a base image for building your docker image. This image is growing in popularity because:
+
+- developled by redhat
+- enterprise grade image. 
+- totally free. 
+
+
+So how do we use this image?
+
+https://catalog.redhat.com/software/containers/search
+
 registry-name/account-name/my-image-name:tag-name. 
 
 Here's an axample for ubi path:
@@ -13,7 +24,7 @@ Here's an axample for ubi path:
 xxxxxxxxxxxxxxxxxxxxxxx
 
 if the image you want to use has the tag called 'latest'
-
+gd,te 
 
 
 
