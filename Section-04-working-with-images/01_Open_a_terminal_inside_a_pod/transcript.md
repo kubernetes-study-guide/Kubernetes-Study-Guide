@@ -54,7 +54,7 @@ Now there's a kubernetes equivalent to this docker run command, and that's the k
 kubectl run --rm=true -it client --image=centos --restart=Never -- bash
 ```
 
-Here I'm telling kubectl to spin up a container from the centos image and run the command that comes after the double-dash, which in this case is just bash. I've asked kubectl to give this pod the name "client". I've also requested that my current terminal should be attached to this bash session as an interactive terminal. The rm flag tells kubernetes to delete this pod after the bash process ends, which will happen when I exit out of the container. The --restart=Never setting tells kubernetes to not restart the pod if it stops running. Don't worry too much if this command doesn't make a lot of sense at the moment. I'll explain this command in more detail when we come talk about Kubernetes deployments in the course. As you can see the docker run and kubectl run commands look quite similar, which is nice. 
+Here I'm telling kubectl to spin up a container from the centos image and run the command that comes after the double-dash, which in this case is just bash. I've asked kubectl to give this pod the name "client". I've also requested that my current terminal should be attached to this bash session as an interactive terminal. The rm flag tells kubernetes to delete this pod after the bash process ends, which will happen when I exit out of the container. The --restart=Never setting tells kubernetes to not restart the pod if it stops running. Don't worry too much if this command doesn't make a lot of sense at the moment. I'll explain this command in more detail when we come talk about Kubernetes deployments in the course. As you can see the docker run and kubectl run commands look quite similar. The reason I'm highlighting the similarity is becuase if you're coming from a docker background, then these similarities makes using kubectl just that little bit easier to get to grips with. 
 
 
 Let's hit enter now. 
@@ -117,3 +117,6 @@ Now when it comes to Kubernetes, I can take a similar approach, using the kubect
 ```
 $ kubectl exec -it webserver -- bash
 ```
+
+Once again notice how similar these 2 commands are. 
+
