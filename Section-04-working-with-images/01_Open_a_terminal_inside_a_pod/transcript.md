@@ -19,13 +19,42 @@ exit
 
 Now there's a kubernetes equivalent to this docker run command, and that's the kubectl run command. Let's take a look at what that looks like:
 
-Now kubernetes let's you do a similar thing using the kubectl run command. Here's what the equivalent kubectl run command looks like:
+Now kubernetes let's you do a similar thing using kubectl run. Here's what the equivalent command looks like:
 
 ```
 kubectl run --rm=true -it client --image=centos --restart=Never -- bash
 ```
 
-Here I'm telling kubectl to spin up a container from the centos image and instruct that container to run bash. I've asked kubectl to name the pod "client". I've also requested that my current terminal should be attached to this bash session as an interactive terminal. The rm flag tells kubernetes to delete this pod after the bash process ends, which will happen when I exit out of the container. The --restart=Never setting tells kubernetes to not restart the pod if it stops running. Don't worry too much if this command doesn't make a lot of sense at the moment. I'll explain this command in more detail when we come talk about Kubernetes deployments in the course. 
+Here I'm telling kubectl to spin up a container from the centos image and run the command that comes after the double-dash, which in this case is just bash. I've asked kubectl to give this pod the name "client". I've also requested that my current terminal should be attached to this bash session as an interactive terminal. The rm flag tells kubernetes to delete this pod after the bash process ends, which will happen when I exit out of the container. The --restart=Never setting tells kubernetes to not restart the pod if it stops running. Don't worry too much if this command doesn't make a lot of sense at the moment. I'll explain this command in more detail when we come talk about Kubernetes deployments in the course. 
+
+
+Ok before I run this command let's first get a list of all our pods. I'll do that in a another terminal:
+
+```
+# open another terminal
+watch -n1 kubectl get pods
+```
+
+Notice I'm using the 'watch' command here. This utility is used for running a command, over and over again. So in this example I've instructed "watch" to run "docker container ls" every second and show it's output. The watch command's -n flag is where I've set the refresh internal to one second.  This is a simple technique I like to use to monitor what's going on in near realtime. Ok I'll hit enter to start the monitoring. 
+
+```
+<enter>
+```
+
+At the moment we don't have any pods. Ok let's now hit return on the kubectl run command:
+
+
+```
+<enter>
+```
+
+As expected we now have a pod called client that has a single container running inside it, and our terminal is now attached to that container's bash session. We can now go ahead and run commands inside that container. 
+
+```
+pwd
+ls -l
+```
+
 
 
 I'll be using this command a lot for spinning up temporary pods which I'll then use for test other pods. You'll see what I mean as we go through the course. 
@@ -44,12 +73,6 @@ I'll be using this command a lot for spinning up temporary pods which I'll then 
 
 
 
-Ok before I run this command let's first get a list of all our containers. I'll do that in a another terminal:
-
-```
-# open another terminal
-watch -n1 docker container ls --all
-```
 
 
 
