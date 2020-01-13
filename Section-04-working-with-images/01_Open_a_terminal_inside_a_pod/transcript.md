@@ -1,13 +1,49 @@
-A common thing a lot of people do when playing with a docker image, is to take a look inside the image. With docker, you can do that by using either the docker or kubectl command. I'm going to show both approaches just for comparison purposes. 
+A common thing a lot of people do when using a particular image for the first time, is to take a look inside the image by spinning up container from that image and then attach a bash terminal to that container. Now you most likely know how to do that using docker. 
 
+For example if you want to Let's first take a look at the docker way of doing this. For this example, I'm goint to create a shell session inside the official centos image, and that's done using the docker run command:
 
-Let's first take a look at the docker way of doing this. For this example, I'm goint to create a shell session inside the official centos image, and that's done using the docker run command:
+For example if you want to open up a bash terminal to look inside the official centOS image, then you can do that using docker run:
 
 ```
 $ docker run -it --rm --name client centos bash
+cat /etc/redhat-release
 ```
 
-Here I'm telling docker to spin up a container from the centos image and instruct that container to run bash. I've asked docker to name the container "client". I've also requested that my current terminal should be attached to this bash session as an interactive terminal. The rm flag tells docker to delete this container after the bash process ends, which will happen when I exit out of the container. 
+Here I've created a new contianer which I've called 'client'. I've used the official centOS image to create the container. 
+
+Ok I'll exit out of that now
+
+```
+exit
+```
+
+Now there's a kubernetes equivalent to this docker run command, and that's the kubectl run command. Let's take a look at what that looks like:
+
+Now kubernetes let's you do a similar thing using the kubectl run command. Here's what the equivalent kubectl run command looks like:
+
+```
+kubectl run --rm=true -it client --image=centos --restart=Never -- bash
+```
+
+
+
+Here I'm telling kubectl to spin up a container from the centos image and instruct that container to run bash. I've asked kubectl to name the pod "client". I've also requested that my current terminal should be attached to this bash session as an interactive terminal. The rm flag tells kubernetes to delete this pod after the bash process ends, which will happen when I exit out of the container. The --restart=Never setting tells kubernetes to not restart the pod if stops running. 
+
+
+
+I'll be using the command a lot in future for spinning up tempary pods which I'll then use to test out the other pods that's running my acual application. 
+
+
+
+
+
+
+
+
+
+
+
+
 
 Ok before I run this command let's first get a list of all our containers. I'll do that in a another terminal:
 
@@ -15,6 +51,11 @@ Ok before I run this command let's first get a list of all our containers. I'll 
 # open another terminal
 watch -n1 docker container ls --all
 ```
+
+
+
+
+
 
 Notice I'm using the 'watch' command here. This utility is used for running a command, over and over again. So in this example I've instructed "watch" to run "docker container ls" every second and show it's output. The watch command's -n flag is where I've set the refresh internal to one second.  This is a simple technique I like to use to monitor what's going on in near realtime. Ok I'll hit enter to get that started. 
 
