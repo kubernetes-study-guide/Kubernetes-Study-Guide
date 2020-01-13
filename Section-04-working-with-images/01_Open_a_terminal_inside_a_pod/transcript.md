@@ -25,13 +25,12 @@ Now kubernetes let's you do a similar thing using the kubectl run command. Here'
 kubectl run --rm=true -it client --image=centos --restart=Never -- bash
 ```
 
+Here I'm telling kubectl to spin up a container from the centos image and instruct that container to run bash. I've asked kubectl to name the pod "client". I've also requested that my current terminal should be attached to this bash session as an interactive terminal. The rm flag tells kubernetes to delete this pod after the bash process ends, which will happen when I exit out of the container. The --restart=Never setting tells kubernetes to not restart the pod if it stops running. Don't worry too much if this command doesn't make a lot of sense at the moment. I'll explain this command in more detail when we come talk about Kubernetes deployments in the course. 
 
 
-Here I'm telling kubectl to spin up a container from the centos image and instruct that container to run bash. I've asked kubectl to name the pod "client". I've also requested that my current terminal should be attached to this bash session as an interactive terminal. The rm flag tells kubernetes to delete this pod after the bash process ends, which will happen when I exit out of the container. The --restart=Never setting tells kubernetes to not restart the pod if stops running. 
+I'll be using this command a lot for spinning up temporary pods which I'll then use for test other pods. You'll see what I mean as we go through the course. 
 
 
-
-I'll be using the command a lot in future for spinning up tempary pods which I'll then use to test out the other pods that's running my acual application. 
 
 
 
