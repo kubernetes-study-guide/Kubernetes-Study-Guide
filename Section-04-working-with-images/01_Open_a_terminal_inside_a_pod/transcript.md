@@ -1,7 +1,7 @@
 A common thing a lot of people do when using a particular image for the first time, is to take a look inside the image. That's done by spinning up container from that image and then attach your terminal to that container. 
 
 
-The way you do this in Kubernetes is actually similar to the way you do it in docker. So for this demo I'm going to show you both the docker way, and the kubernetes way side-by-side. 
+The way you do this in Kubernetes is actually similar to the way you do it in docker. So for this demo I'm going to show you both the docker way, and the kubernetes way side-by-side. My hope is that if you see the similarities between docker and kubernetes, then it will give you something to relate to and consequently makes it easier to learn kubectl
 
 
 Before I can start my demo, I need to a bit of prepartion work. First I'll open up a new terminal window 
@@ -18,6 +18,8 @@ and I'll break this window down into 4 panes.
 ```
 gui action
 ```
+
+I'll use the left to panes for the docker demo, and the right two columns will be used for the equivalent kubernetes demo. 
 
 
 Next I'll use the top left pane to list out my running docker containers. 
