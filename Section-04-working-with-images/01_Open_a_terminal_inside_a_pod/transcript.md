@@ -1,7 +1,7 @@
-A common thing a lot of people do when using a particular image for the first time, is to take a look inside the image. That's done by spinning up container from that image and then attach your terminal to that container. 
+A common thing a lot of people do when using a particular image for the first time, is to take a look inside the image. That's done by spinning up container from that image and then attach your terminal to that container. This is something I often do with docker using the Docker run command. 
 
 
-The way you do this in Kubernetes is actually similar to the way you do it in docker. So for this demo I'm going to show you both the docker way, and the kubernetes way side-by-side. My hope is that if you see the similarities between docker and kubernetes, then it will give you something to relate to and consequently makes it easier to learn kubectl
+However you can also do the same kind of thing in Kubernetes, using the kubectl run command. In fact the docker run command and the equivalnet kubectl run command looks quite similar. That's why for this demo I'm going to show you both of these techniques side-by-side.
 
 
 Before I can start my demo, I need to a bit of prepartion work. First I'll open up a new terminal window 
@@ -19,7 +19,7 @@ and I'll break this window down into 4 panes.
 gui action
 ```
 
-I'll use the left to panes for the docker demo, and the right two columns will be used for the equivalent kubernetes demo. 
+I'll use the left to panes for the docker demo, and the right two panes will be used for the equivalent kubernetes demo. 
 
 
 Next I'll use the top left pane to list out my running docker containers. 
@@ -29,10 +29,10 @@ watch -n 1 docker container ls --all
 ```
 
 
-Notice I'm using the 'watch' command here. This utility is used for running the same command, over and over again. So in this example I've instructed "watch" to run "docker container ls" every second and show it's output. The watch command's -n flag is where I've set the refresh internal to one second, that's to override the default, which is every 2 seconds.  This is a simple technique I like to use to monitor what's going on in near realtime. At the moment we don't have any containers
+Notice I'm using the 'watch' command here. This utility is used for running the same command, over and over again. So in this example I've instructed "watch" to run "docker container ls" every second and show it's output. The watch command's -n flag is where I've set the refresh internal to one second, that's to override the default, which is every 2 seconds.  This is a simple technique I like to use to monitor what's going on in near realtime. At the moment we don't have any containers. At the moment we don't have any containers. 
 
 
-While I'm at it, I'll also do the same thing to get a list of pods:
+While I'm at it, I'll also use the top right pane to get a list of pods:
 
 ```
 watch -n 1 kubectl get pods
@@ -40,7 +40,7 @@ watch -n 1 kubectl get pods
 
 At the moment we don't have any pods. 
 
-Ok that's all the preparation out of the way. Now can start the actual demo. Let's first take a look at the docker way of looking inside an image. For example if you want to open up a bash terminal to look inside the official centOS image, then you can do that using docker run:
+Ok that's all the preparation out of the way. Now we can start the actual demo. Let's first take a look at the docker way of creating a bash terminal inside a container. For example heres the docker run command to open up a bash terminal to look inside the official centOS image:
 
 ```
 $ docker run -it --rm --name client centos bash
