@@ -27,7 +27,7 @@ Ok now I have a running container. Also here's the equivalent kubectl run comman
 kubectl run webserver --image=httpd --restart=Never 
 ```
 
-Normally I would create a pod using the kubectl apply command along witha yaml file. But I've done it using the kubeclt run command just to show that it's possible to do it this way. 
+Normally I would create a pod using the kubectl apply command along with a yaml file, like the way I did in the hello world demo. But I've done it using the kubectl run command just to show that it's possible to do it this way too. 
 
 Ok we now have a running pod. Notice how similar these 2 commands are again. 
 
