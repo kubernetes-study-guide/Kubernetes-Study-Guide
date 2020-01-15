@@ -1,3 +1,20 @@
+In most workplaces docker is primarily used for building images using the docker build command along with a docker file. And result docker images are pushed up to docker registries. 
+
+Once the images are in a docker registries, the images can then be downloaded by a kubernetes cluster.
+
+A lot of docker registries lets you password protect your images, in other words make your images private. If you want to restrict access to only authenticated requesters. Kubernetes is able to download both public and private images. Although to get Kubernetes to pull down private images, you need to provide Kubernetes with valid login credential. We'll show you how to do that later in the course. 
+
+There are quite a few public docker registries you can make use of. The defacto is dockerhub, but there are other popular alternatives:
+
+- docker.io (aka dockerhub)
+- github.com
+- https://catalog.redhat.com/software/containers/search
+
+
+Out of all these registries, dockerhub is the king. 
+
+
+
 Images have the following naming conventions:
 
 

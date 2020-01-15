@@ -49,4 +49,6 @@ Now when it comes to Kubernetes, I can take a similar approach, using the kubect
 $ kubectl exec -it webserver -- bash
 ```
 
-Once again notice how similar these 2 commands are. 
+Once again notice how similar these 2 commands are.
+
+This practice of going inside a pod is often referred to execcing into a pod. It's a really handy technique to help troubleshoot problems. 

@@ -83,5 +83,14 @@ exit
 Notice that as soon as exit out the container the container got deleted. The same goes for the pod object as well.  
 
 
+One final thing I wanted to show you is that you can use kubectl run to spin up a pod just long enough to run a single command and then shutdown and get deleted again. 
+
+```
+kubectl run --rm=true -it client --image=centos --restart=Never -- curl https://google.com/
+```
+
+
+
+
 Ok we'll take a break here. In the next vidoe I'll demo how to create bash session inside an existing container 
 
