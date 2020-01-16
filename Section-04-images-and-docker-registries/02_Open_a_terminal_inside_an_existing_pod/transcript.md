@@ -1,19 +1,20 @@
 Hello everyone, and welcome. 
 
 
-In the last we saw how to use kubectl to create a new pod for the sole purpose of creating a bash terminal inside it. We also demoed a similar approach using docker. 
+In the last video we saw how we can look inide a image by spawning a container from that image, and then open up a bash terminal inside it. I demoed how to do that using the docker way and the kubernetes way, side by side.  
 
-Now what if you want to create a bash session inside an existing container?
+Now what if you want to create a bash session inside a container that's already running? That's something you might want to do if a container is misbehaving and you want to investigate why. 
 
-That's possible using docker exec, if you're working with containers directly, or with kubectl exec if the container is running inside a pod. Like last time, I'll demo both approaches side-dy-side so that you can see the similarities. 
+Well, in docker, you can do that using the docker exec command, and in Kubernetes you can do it using the kubectl exec command. Both of these commands once again look quite similar, so I'll demo them side-by-side like last time. 
 
 Also like before, I'll start monitoring my list of containers and pods. 
 
 ```
-
+watch -n 1 kubectl get pods
+watch -n 1 docker container ls
 ```
 
-As you can see we don't have any containers or pods running. 
+As you can see we don't have any or pods running. 
 
 For this demo, I'll create a docker container using the official httpd image, and I'll name this container, webserver:
 
@@ -27,13 +28,13 @@ Ok now I have a running container. Also here's the equivalent kubectl run comman
 kubectl run webserver --image=httpd --restart=Never 
 ```
 
-Normally I would create a pod using the kubectl apply command along with a yaml file, like the way I did in the hello world demo. But I've done it using the kubectl run command just to show that it's possible to do it this way too. 
+Normally I would create a pod using the kubectl apply command along with a yaml file, like the way I did in the hello world demo. But I've done it like this just to show what kubectl run is capable of. 
 
 Ok we now have a running pod. Notice how similar these 2 commands are again. 
 
 
 
-Now when using docker, you need to use the docker exec command to get inside an existing container. 
+Now when using docker, you need to use the docker exec command to get inside a running container. 
 
 ```
 $ docker exec -it webserver bash
@@ -51,10 +52,11 @@ $ kubectl exec -it webserver -- bash
 
 Once again notice how similar these 2 commands are.
 
-This practice of going inside a pod is often referred to execcing into a pod. It's a really handy technique to help troubleshoot problems. 
+This practice of going inside a pod is often referred to execcing into a pod. 
 
 You can also use this technique to just a single command:
 
 ```
-
+$ docker exec -it webserver echo hello
+$ kubectl exec -it webserver -- echo hello
 ```

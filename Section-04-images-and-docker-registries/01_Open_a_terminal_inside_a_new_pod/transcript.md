@@ -2,10 +2,10 @@ Hello everyone, and welcome.
 
 If there's a particular image that you're interested in using for the first time, then you might want to first check what files and software packages that image comes with. One way to do that is by reviewing that image's dockerfile. 
 
-In addition to that I also like to take a look inside the image itself. I can do that by spinning up a container from that image and then attach my bash terminal to that container. After that I can explore the image from the command line. You can do this with docker by using the "docker run" command.
+However the way going to show you is how to look inside the image itself. We can do that by spinning up a container from that image and then attach a bash terminal to that container. After that we can explore the image from the command line. We can do all this with docker by using the "docker run" command.
 
 
-However you can also do this with kubernetes, using the "kubectl run" commnd. Both of these commands look quite similar, So for this demo I'm going to show you both techniques side-by-side, just so you can see the similarities. 
+However you can also do this with kubernetes, using the "kubectl run" command, whic actually looks quite similar to the docker run command. So for this demo I'm going to show you both techniques side-by-side, just so you can see the similarities. 
 
 To do that I've opened up 4 terminals, and I'll use the 2 left terminals for the docker demo, and the 2 right terminals for the equivalent kubernetes demo. 
 
@@ -18,13 +18,13 @@ watch -n 1 docker container ls
 ```
 
 
-Notice I'm using the 'watch' command here. This utility is used for running the same command, over and over again. So in this example I've instructed "watch" to run "docker container ls" every second and show it's output. The watch command's -n flag is where I've set the refresh interval to one second. However the default is 2 seconds if I don't use the -n flag.  I like using the watch command because it's a quick and easy way for monitoring what's going on in near realtime. Ok let's run this now. 
+Notice that I'm using the 'watch' command here. This utility is used for running the same command, over and over again. So in this example I've instructed "watch" to run "docker container ls" every second and show it's output. The watch command's -n flag is where I've set the refresh interval to one second. However the default is 2 seconds if I didn't use this flag. Ok let's run this now. 
 
 ```
 enter
 ```
 
-As you can see, At the moment we don't have any containers runners.
+As you can see, At the moment we don't have any containers running.
 
 
 Likewsie, On the kubernetes side, let's get a list of pods:
@@ -33,9 +33,9 @@ Likewsie, On the kubernetes side, let's get a list of pods:
 watch -n 1 kubectl get pods
 ```
 
-As you can see, at the moment we don't have any pods either. 
+Here we can see that we don't have any pods either. 
 
-Ok that's all the preparation out of the way. Now I'm going to show you the docker run command in action. For example, let's say I want to look inside the official centOS image, then to do that I need run the following docker run command:
+Ok that's all the preparation out of the way. Let's now demo the docker run command. Let's say I want to look inside the official centOS image, in that case here's the docker run command I'm going to use:
 
 ```
 $ docker run -it --rm --name client centos bash
@@ -83,14 +83,11 @@ exit
 Notice that as soon as exit out the container the container got deleted. The same goes for the pod object as well.  
 
 
-One final thing I wanted to show you is that you can use kubectl run to spin up a pod just long enough to run a single command and then shutdown and get deleted again. 
+One final thing I wanted to show you is that you can use kubectl run to spin up a pod just long enough to run a single command and then that pod gets deleted again. 
 
 ```
 kubectl run --rm=true -it client --image=centos --restart=Never -- curl https://google.com/
 ```
-
-
-
 
 Ok we'll take a break here. In the next vidoe I'll demo how to create bash session inside an existing container 
 
