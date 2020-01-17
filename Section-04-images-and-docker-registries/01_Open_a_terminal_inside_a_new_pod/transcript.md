@@ -72,7 +72,7 @@ ls -l
 ```
 
 
-I'll be using the "kubectl run" command quite a lot in this course for spinning up temporary pods. That's because I'll need to use temporary pods when testing other pods. You'll see what I mean later on. Also from here on out, whenever I create a temporary pod, I'll always give it the name of client, just to keep things consistent. 
+I'll be using the "kubectl run" command quite a lot in this course for spinning up temporary pods just for performing some quick tests. But when I do that I'll always name those pods 'client'. I'm using this naming convention so that you can differentiat between the actual application pods I'm demoing, and which pods are just being used to test those application pods. 
 
 Ok let's exit out of our containers and pods. 
 

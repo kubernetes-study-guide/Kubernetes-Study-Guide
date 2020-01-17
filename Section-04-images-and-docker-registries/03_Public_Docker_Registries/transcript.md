@@ -1,6 +1,68 @@
-In most workplaces docker is primarily used for building images using the docker build command along with a docker file. And result docker images are pushed up to docker registries. 
+Hello everyone one, and welcome back. 
 
-Once the images are in a docker registries, the images can then be downloaded by a kubernetes cluster.
+So far we've seen that kubernetes has use docker images in order to build it's pods, and kubernetes pulls down these images from docker registries. 
+
+There's actually a number of docker registries you can use:
+
+- github
+- redhat
+- ...
+
+To pull down images from any of these places, you need to specify the following naming convention:
+
+Use, github as an example, might be easier.
+
+
+<registry-address>/<account-name>/<image-name>:<tag-version>
+
+
+Here the account-name can be the name of an organisation, or person. The image name also doubles up as the docker registry's repo name. So this particular repo, called ubi, houses multiple version of the image called ubi. Finally we have the tag name, where you can set which version of the image you want to pull down from this image repo.  
+
+
+
+Here's an example:
+
+```
+$ kubectl run --rm=true -it client --image=registry.redhat.io/ubi8/ubi:8.0 --restart=Never -- cat /etc/redhat-release
+```
+
+That's odd, it looks like somethings gone wrong. ok let me describe the pod
+
+
+Here's an example, 
+
+```
+$ kubectl run --rm=true -it client --image=registry.access.redhat.com/ubi8/ubi:8.0 --restart=Never -- cat /etc/redhat-release
+```
+
+Here I'm pulling down the ubi image. I'll talk about this image in the next video.
+
+Now what if I want install the latest version of particular image. Then by convention the latest version has the tag-version set to 'latest'.
+
+```
+$ kubectl run --rm=true -it client --image=registry.access.redhat.com/ubi8/ubi:latest --restart=Never -- cat /etc/redhat-release
+```
+
+However, the tag version setting is optional, so if you don't explicitly specify it then it will default to latest anyway:
+
+```
+$ kubectl run --rm=true -it client --image=registry.access.redhat.com/ubi8/ubi --restart=Never -- cat /etc/redhat-release
+```
+
+In this instance that at this present time, the tag latest is just an alias for 8.1, since 8.1 is the latest available version.
+
+
+Dockerhub is a public docker registry, but in it you can have private image repos. Meaning that you would need provide Kubernetes with login credentials to authenticate against dockerhub before it can do an image pull. I'll cover how do that later in the course.  
+
+
+
+
+
+
+
+
+
+
 
 A lot of docker registries lets you password protect your images, in other words make your images private. If you want to restrict access to only authenticated requesters. Kubernetes is able to download both public and private images. Although to get Kubernetes to pull down private images, you need to provide Kubernetes with valid login credential. We'll show you how to do that later in the course. 
 
@@ -9,6 +71,12 @@ There are quite a few public docker registries you can make use of. The defacto 
 - docker.io (aka dockerhub)
 - github.com
 - https://catalog.redhat.com/software/containers/search
+
+more info: 
+list of ubi images available: 
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/building_running_and_managing_containers/index?extIdCarryOver=true&sc_cid=701f2000001OH7JAAW#get_ubi_images
+
+https://developers.redhat.com/products/rhel/ubi/
 
 
 Out of all these registries, dockerhub is the king. 
@@ -38,7 +106,10 @@ registry-name/account-name/my-image-name:tag-name.
 
 Here's an axample for ubi path:
 
-xxxxxxxxxxxxxxxxxxxxxxx
+```
+$ kubectl run --rm=true -it client --image=registry.access.redhat.com/ubi8/ubi:latest --restart=Never -- bash
+```
+
 
 if the image you want to use has the tag called 'latest'
 gd,te 

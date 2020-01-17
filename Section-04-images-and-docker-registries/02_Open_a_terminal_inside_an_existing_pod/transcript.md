@@ -61,4 +61,8 @@ $ docker exec -it webserver echo hello
 $ kubectl exec -it webserver -- echo hello
 ```
 
-Ok that's it for this video. See in you in the next video. 
+Ok at this point you've probably realised that you can perform some tasks with either docker or kubectl. So you might now be thinking that docker and kubernetes are two competing technologies, and to some extent that is true. 
+
+But in reality you will often find yourself using both technologies. So where does the role of docker end, and the role of Kubernetes start? Well in a typlical workplace, Docker is used to build the images and then uploads them to a docker registry. Whereas Kubernetes pulls down those images and use them to create the pods. So you could say that in this relationship docker is the producer and kubernetes is the consumer. 
+
+And The docker registry ends up at the centre of this relationship. Which I'll cover next. 
