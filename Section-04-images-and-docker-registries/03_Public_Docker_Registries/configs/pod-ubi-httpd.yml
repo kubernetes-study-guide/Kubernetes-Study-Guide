@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-hello-world
+  labels:
+    app: web
+spec:
+  containers:
+  - name: cntr-httpd
+    image: registry.access.redhat.com/ubi8/ubi:latest
+    ports:
+    - containerPort: 80

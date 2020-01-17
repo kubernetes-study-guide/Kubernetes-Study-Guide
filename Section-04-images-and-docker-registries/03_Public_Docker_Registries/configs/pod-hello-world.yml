@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-hello-world
+  labels:
+    app: web
+spec:
+  containers:
+  - name: cntr-httpd
+    image: docker.io/httpd:latest
+    ports:
+    - containerPort: 80
