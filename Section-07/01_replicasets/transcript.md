@@ -33,10 +33,10 @@ Now before I apply this yaml file, let's first get a list of our replicasets and
 ```
 # top right terminal
 
-watch -n kubectl get replicaset
+watch -n kubectl get replicaset -o wide
 
 #bottom right terminal
-$ watch -n1 kubectl get pods
+$ watch -n1 kubectl get pods -o wide
 ```
 
 As you can see, we don't have any replicaset or pods at the moment.
@@ -50,12 +50,6 @@ $ kubectl apply -f my-replicaset.yml
 ```
 
 Ok I'm going to briefly pause this video for a moment so that you can see what's happening here.
-
-```
-$ kubectl get replicaset -o wide
-NAME       DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES         SELECTOR
-rs-httpd   3         3         3       22m   cntr-httpd   httpd:latest   app=httpd_webserver
-```
 
 
 
@@ -75,8 +69,6 @@ Let's confirm these pods are working by curling one of them:
 
 ```
 # bottom left terminal
-kubectl get pods -o wide
-
 $ kubectl run --rm=true -it client --image=centos --restart=Never -- curl http://xxx.xxx.xxx.xxx
 ```
 
