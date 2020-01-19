@@ -3,22 +3,23 @@ kind: ReplicaSet
 metadata:
   name: rs-httpd
 spec:
-  replicas: 5   
+  replicas: 5
   selector:
     matchLabels:
-      app: httpd_webserver  # The rs object manages all pods that has this label
-  template:  # this is used to nest a pode descriptor inside this rs descriptor. 
+      app: webserver
+  template:
     metadata:
       labels:
-        app: httpd_webserver  # this needs to be match with matchLabels above.
-    spec: 
+        app: webserver
+    spec:
       containers:
         - name: cntr-httpd
           image: httpd:2.4.37
           ports:
             - containerPort: 80
-          command: ["/bin/bash", "-c"]     # We have performed a command override here for testing purposes.
+          command: ["/bin/bash", "-c"]
           args:
             - |
               echo "You've hit - $HOSTNAME" > /usr/local/apache2/htdocs/index.html
               httpd-foreground
+
