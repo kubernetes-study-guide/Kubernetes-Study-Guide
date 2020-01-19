@@ -12,7 +12,7 @@ A replicaset is used for creating multiple replicas of a pod, hence the name rep
 Anyway for now here's the replicaset we'll create for this demo:
 
 ```
-
+ll
 vim replicaset-httpd.yaml
 ```
 
@@ -36,9 +36,7 @@ Now before I apply this yaml file, let's first get a list of our replicasets and
 watch -n kubectl get replicaset
 
 #bottom right terminal
-$ watch --interval 1 'kubectl get pods'
-
-
+$ watch -n1 kubectl get pods
 ```
 
 As you can see, we don't have any replicaset or pods at the moment.
@@ -79,7 +77,7 @@ Let's confirm these pods are working by curling one of them:
 # bottom left terminal
 kubectl get pods -o wide
 
-$ kubectl run client --rm --image=centos --restart=Never -it --command -- curl http://172.17.0.12
+$ kubectl run --rm=true -it client --image=centos --restart=Never -- curl http://xxx.xxx.xxx.xxx
 ```
 
 
