@@ -90,7 +90,24 @@ One final thing I wanted to show you is that you can use the "kubectl run" comma
 kubectl run --rm=true -it client --image=centos --restart=Never -- echo hello
 ```
 
-As yoy can see, a pod started just long enouggh to run this command.
+As you can see, a pod started just long enouggh to run this command.
+
+As I have mentioned before, I'll be using this kubectl run command a lot for spinning up temporary testpods. and this command is quite long so typing it all the time gets a bit tedious. So to save time I'll create an alias for this command and I'll call that alias tp, as in testpod:
+
+```
+alias tp="kubectl run --rm=true -it client --image=centos --restart=Never -- "
+```
+
+I'm also going to add this to my .zshrc file.
+
+Now all I have to do is run tp space on the command line, and it will autoexpand.
+
+```
+tp <space>
+```
+
+Then
+
 
 Ok we'll take a break here. In the next vidoe I'll demo how to create bash session inside an existing container
 
