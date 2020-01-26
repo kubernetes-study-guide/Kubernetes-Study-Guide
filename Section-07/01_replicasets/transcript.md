@@ -83,6 +83,10 @@ kubectl describe rs xxxx
 
 Ok so we've now created our replicaset and confirmed our replica pods are working.
 
+
+
+
+
 The next thing I want to show you is what happens when I try deleting one of these replica pods.
 
 ```
