@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-new-message
+  labels:
+    app: web
+spec:
+  containers:
+  - name: cntr-httpd
+    image: httpd:latest
+    ports:
+    - containerPort: 80
+    command: ["/bin/bash", "-c"]
+    args:
+    - |
+      echo "You've hit - $HOSTNAME" > /usr/local/apache2/htdocs/index.html

@@ -2,7 +2,7 @@ Hello everyone, and welcome back.
 
 In this video we're going to play with some images using kubectl.
 
-If there's a particular image that you're interested in using for the first time, then you might want to first check what files and software packages that image comes with. One way to do that is by reviewing that image's dockerfile.
+If there's a particular image that you're interested in using for the first time, then you might want to first check what files and software packages that image comes with. One way to do that is by reviewing the image's documentation, git repo, and the dockerfile it was built with.
 
 However another way is to look inside the image itself. We can do that by spinning up a container from that image and then attach a bash terminal to that container. After that we can explore the image from the command line. We can do all this with docker by using the "docker run" command.
 
@@ -41,7 +41,7 @@ Ok that's all the preparation out of the way. Let's now demo the docker run comm
 
 ```
 $ docker run -it --rm --name client centos bash
-cat /etc/redhat-release
+cat /etc/centos-release
 ```
 
 Here I've created a new container which I've called 'client' and I've based it on the centOS image. I've requested docker to run the bash command as the primary process inside this container, and also attach my current terminal to this bash process as an interactive terminal. That's why my command prompt now looks a little different, since it's now showing the container's command prompt    .

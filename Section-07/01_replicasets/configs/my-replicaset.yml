@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: cntr-httpd
-          image: httpd:2.4.37
+          image: httpd:2.4.38
           ports:
             - containerPort: 80
           command: ["/bin/bash", "-c"]
