@@ -4,7 +4,7 @@ in the last video we introduced you to a pod's 'command' and 'args' settings, an
 
 But I wanted to show you another example but this time using the apache web server image, httpd.
 
-In this demo, I want to changed the default message you get when you curl a httpd based pod.
+In this demo, I want to change the default message you get when you curl a httpd based pod.
 
 Earlier we saw that the default message is ""
 
@@ -62,7 +62,7 @@ tp ....
 
 Awesome that worked. Also notice that the hostname variable has resolved to the pod's name.
 
-Now this isn't necessarily the best way to update the index.html file. There are other ways of doing this and we'll cover them later in the course. But for now I wanted to show you this approach just to give you an idea on how you might want to use this commands and args settings to tweak an image's default command.
+There are other ways of updating the index.html file, and we'll cover them later in the course. But for now I wanted to show you this approach just to give you an idea on how you might want to use this commands and args settings to tweak an image's original default command.
 
 That's it for this video.
 
