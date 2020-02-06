@@ -6,7 +6,7 @@ There's actually a number of docker registries you can use:
 
 - github
 - redhat
-- ...
+- quay.io
 
 To pull down images from any of these places, you need to specify the following naming convention:
 
