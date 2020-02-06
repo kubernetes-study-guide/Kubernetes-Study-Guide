@@ -2,7 +2,7 @@ Hello everyone, and welcome back.
 
 In this video we're going to play with some images using kubectl.
 
-If there's a particular image that you're interested in using for the first time, then you might want to first check what files and software packages that image comes with. One way to do that is by reviewing that image's dockerfile.
+If there's a particular image that you're interested in using for the first time, then you might want to first check what files and software packages that image comes with. One way to do that is by reviewing the image's documentation, git repo, and the dockerfile it was built with.
 
 However another way is to look inside the image itself. We can do that by spinning up a container from that image and then attach a bash terminal to that container. After that we can explore the image from the command line. We can do all this with docker by using the "docker run" command.
 
@@ -41,7 +41,7 @@ Ok that's all the preparation out of the way. Let's now demo the docker run comm
 
 ```
 $ docker run -it --rm --name client centos bash
-cat /etc/redhat-release
+cat /etc/centos-release
 ```
 
 Here I've created a new container which I've called 'client' and I've based it on the centOS image. I've requested docker to run the bash command as the primary process inside this container, and also attach my current terminal to this bash process as an interactive terminal. That's why my command prompt now looks a little different, since it's now showing the container's command prompt    .
@@ -90,7 +90,24 @@ One final thing I wanted to show you is that you can use the "kubectl run" comma
 kubectl run --rm=true -it client --image=centos --restart=Never -- echo hello
 ```
 
-As yoy can see, a pod started just long enouggh to run this command.
+As you can see, a pod started just long enouggh to run this command.
+
+As I have mentioned before, I'll be using this kubectl run command a lot for spinning up temporary testpods. and this command is quite long so typing it all the time gets a bit tedious. So to save time I'll create an alias for this command and I'll call that alias tp, as in testpod:
+
+```
+alias tp="kubectl run --rm=true -it client --image=centos --restart=Never -- "
+```
+
+I'm also going to add this to my .zshrc file.
+
+Now all I have to do is run tp space on the command line, and it will autoexpand.
+
+```
+tp <space>
+```
+
+Then
+
 
 Ok we'll take a break here. In the next vidoe I'll demo how to create bash session inside an existing container
 
