@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+    env: {{ .Values.env | default "dev" }}
+    env: {{ .Values.env }}   # this ends up as null. 
+spec:
+  containers:
+#  - name: {{ quote .Values.container_name }}
+#  - name: {{ .Values.container_name | quote }}  # another way of doing this using pipeline. 
+   - name: {{ quote .Values.container_name | upper }}   # string multiple functions using pipelines. 
+#  - name: {{ quote .Values.container_name | upper | repeat 5 }}
+    image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+    ports:
+    - containerPort: 80
