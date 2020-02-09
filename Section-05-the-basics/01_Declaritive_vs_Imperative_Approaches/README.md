@@ -11,6 +11,7 @@ The imperative approach involves using any of the verb based commands, here are 
 - `kubectl expose`
 - `kubectl delete`
 - `kubectl edit`
+- `kubectl replace --force -f ./pod.json` - This basically is `kubectl delete` following by `kubectl create` rolled into on. 
 
 For example to imperitavely create our pod we would use the `kubectl run` command:
 
