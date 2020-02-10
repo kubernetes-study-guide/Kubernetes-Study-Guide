@@ -36,7 +36,7 @@ Luckily There's a simple fix for that, all you have to do is append your aliases
 
 After that your aliases will always be available. Let's open up a new terminal just to double check. Cool that worked. Ok let's close that again.
 
-I'll be use this tp alias along with a few other handy aliases throughout the course. I've included all these aliases in this video's description if you want to use them as well.
+I'll be use aliases like these throughout the course, and I've also included them in this video's description, just in case you want to use them as well.
 
 
 By the way if you're a bash user then you need to append your alias commands to your .bashrc file instead.
