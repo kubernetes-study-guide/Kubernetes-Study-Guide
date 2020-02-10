@@ -1,4 +1,3 @@
-
 Hello everone and welcome back.
 
 Ok, so earlier I demoed the kubectl run command. Now I use this command all the time in my day to day work. However it's a really long command and typing this command out over and over again can get repetitive and tedious. So to get round this problem I'm going to create an alias for this command.
@@ -33,11 +32,14 @@ ok That's odd, that didn't work. It looks like the busybox image doesn't come wi
 
 Now one important that might catch you out is that aliases only exists for the current terminal session. That means that this alias won't work in a new terminal session.
 
-Luckily There's a simple fix for that, all you have to is append your aliases to the end of your shell's config file. So everytime you start a new shell, these aliases get executed when you're new shell is starting up.
+Luckily There's a simple fix for that, all you have to do is append your aliases to the end of your shell's config file. So everytime you start a new shell, these aliases get executed when you're new shell session is starting up.
 
 After that your aliases will always be available. Let's open up a new terminal just to double check. Cool that worked. Ok let's close that again.
 
-By the way if you're using a bash terminal then you need to appeand this command to your .bashrc file instead.
+I'll be use this tp alias along with a few other handy aliases throughout the course. I've included all these aliases in this video's description if you want to use them as well.
+
+
+By the way if you're a bash user then you need to append your alias commands to your .bashrc file instead.
 
 Ok let's take a break here and I'll see you in the next video.
 
