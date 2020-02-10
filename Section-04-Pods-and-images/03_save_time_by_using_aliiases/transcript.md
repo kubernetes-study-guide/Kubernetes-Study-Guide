@@ -36,10 +36,10 @@ Luckily There's a simple fix for that, all you have to do is append your aliases
 
 After that your aliases will always be available. Let's open up a new terminal just to double check. Cool that worked. Ok let's close that again.
 
-I'll be use aliases like these throughout the course, and I've also included them in this video's description, just in case you want to use them as well.
+This is one of a handful of aliases I'll be using in this course, and I've added all my aliases in this video's description, so you can make use them as well if you want to.
 
 
-By the way if you're a bash user then you need to append your alias commands to your .bashrc file instead.
+By the way if you're a bash user then you need to append your alias commands to your .bashrc file rather than the .zshrc file.
 
 Ok let's take a break here and I'll see you in the next video.
 
