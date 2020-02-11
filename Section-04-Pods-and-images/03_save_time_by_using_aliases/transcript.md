@@ -1,13 +1,13 @@
 Hello everone and welcome back.
 
-Before I start I should mention this video is more about linux aliases rather than kubernetes.
+In this video I'm going to show you technique I use to do kubernetes work more quickly and easily. And that's by using Linux aliases. In case you don't know what linux aliases are, it's basically something that let's you create your own personal custom commands.
 
-Ok, so earlier I demoed the kubectl run command. Now I use this command all the time in my day to day work. However it's a really long command and typing this command out over and over again can get annoying and tedious. So to get round this problem I'm going to create an alias for this command.
+Ok, so earlier I demoed the kubectl run command. Now this is one of those commands I use all the time. However it's a really long command and repeatedly typing this command can get annoying and tedious. So to get round this problem I'm going to make use of aliases.
 
 
 By the way I haven't specified anything after the double dash. I'll explain why I've done that, a bit later.
 
-Now to create an alias for this command I'm going to first surround my command with double quotes. Then I'm going to call the alias command at the beggining. Ok now I need to come up with a good alias, I know how about tp, as in testpod.
+Now to create an alias for this command I'm going to first surround my command with double quotes. Then I'm going to call the alias command at the begining. Ok now I need to come up with a good alias, I know how about tp, as in testpod.
 
 Hold on a second before I create this alias, let's first quickly check that there isn't a command already called tp, otherwise I'll end up with conflict.
 
