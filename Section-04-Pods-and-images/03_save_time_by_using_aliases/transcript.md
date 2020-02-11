@@ -1,28 +1,30 @@
 Hello everone and welcome back.
 
-Ok, so earlier I demoed the kubectl run command. Now I use this command all the time in my day to day work. However it's a really long command and typing this command out over and over again can get repetitive and tedious. So to get round this problem I'm going to create an alias for this command.
+Before I start I should mention this video is more about linux aliases rather than kubernetes.
+
+Ok, so earlier I demoed the kubectl run command. Now I use this command all the time in my day to day work. However it's a really long command and typing this command out over and over again can get annoying and tedious. So to get round this problem I'm going to create an alias for this command.
 
 
-By the way I haven't any commands after the double dash. That's so that I can choose what to put here later on.
+By the way I haven't specified anything after the double dash. I'll explain why I've done that, a bit later.
 
-Now to create an for this command I'm going to first surround my command with double quotes. Then I'm going to call the alias command. Ok now I need to come up with a good alias, I know how about tp, as in short for testpod.
+Now to create an alias for this command I'm going to first surround my command with double quotes. Then I'm going to call the alias command at the beggining. Ok now I need to come up with a good alias, I know how about tp, as in testpod.
 
-Hold on a second before I create this alias, let's first quickly check that there isn't a command already called tp, otherwise we'll end up with conflict.
+Hold on a second before I create this alias, let's first quickly check that there isn't a command already called tp, otherwise I'll end up with conflict.
 
-Cool, so it looks like we can use tp.
+Ok there is no command called tp, so it looks like we can go head with using  tp as an alias.
 
-Ok our new alias tp is now ready for use. But lets first double check that tp is now an alias. Ok that looks good.
+Ok our new alias is now ready for use. But lets first double check that tp is now definitely an alias. Ok that looks good.
 
 This means that whenever I want to run this command, all I now have to do is run tp on the command line.
 
 So let's give that a try. Now watch what happens when I hit space.
 
-Wow did you see that? As soon as I hit space, the tp alias get's autoexpanded to the actual command that this alias was set to. Pretty cool right. This autoexpansion is something I've setup by installing the oh-my-zsh framework and activating the globalias plugin. (pop: see video description for more info)
+Wow did you see that? As soon as I hit space, the tp alias get's autoexpanded to the actual command that this alias was set to. Pretty cool right. This autoexpansion is actually a feature that's provide by the oh-my-zsh framework along with the globalias plugin. (pop: see video description for more info).
 
 
-Ok now all I have to do is to choose what command I want to run inside my testpod. For example to open a terminal inside my pod I'll run bash. Ok that worked as planned so let's exit out of that.
+Ok now all I have to do is to set what command I want to run inside my testpod. For example to open a terminal inside my pod I'll just need to run bash. Ok that worked as planned so let's exit out of that.
 
-Also if I want to just run a simple command, then I can take the same approach.
+Also if I want to run any other command, then I can take the same approach.
 
 That's why I left the command blank after the double quote, so that I can choose what to run.
 
