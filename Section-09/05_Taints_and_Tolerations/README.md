@@ -53,6 +53,8 @@ dep-httpd-78f54cc967-gwth2   1/1     Running   0          23s   192.168.2.14   k
 
 None of the pods ended up on the tainted node, kube-worker1.
 
+Also you can remove taints from a node - https://cloud.google.com/kubernetes-engine/docs/how-to/node-taints#removing_a_taint_from_a_node
+
 **Question**: How will the Dev Team perform test on the tainted node if the tainted node repels all pod objects?
 
 **Answer**: You can add a 'toleration' setting in your pod yaml spec to override taint setting.  
