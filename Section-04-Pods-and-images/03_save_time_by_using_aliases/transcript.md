@@ -5,11 +5,17 @@ In this video I'm going to show you technique I use to do kubernetes work more q
 Ok, so earlier I demoed the kubectl run command. Now this is one of those commands I use all the time. However it's a really long command and repeatedly typing this command can get annoying and tedious. So to get round this problem I'm going to make use of aliases.
 
 
-By the way I haven't specified anything after the double dash. I'll explain why I've done that, a bit later.
+By the way I haven't specified anything after the double dash, that's to make this command open-ended. I'll explain why I've done that, a bit later.
 
 Now to create an alias for this command I'm going to first surround my command with double quotes. Then I'm going to call the alias command at the begining. Ok now I need to come up with a good alias, I know how about tp, as in testpod.
 
+```
+$ alias tp="kubectl run client -it --rm=true --restart=Never --image=centos -- "
+```
+
 Hold on a second before I create this alias, let's first quickly check that there isn't a command already called tp, otherwise I'll end up with conflict.
+
+
 
 Ok there is no command called tp, so it looks like we can go head with using  tp as an alias.
 
@@ -34,7 +40,11 @@ ok That's odd, that didn't work. It looks like the busybox image doesn't come wi
 
 Now one important that might catch you out is that aliases only exists for the current terminal session. That means that this alias won't work in a new terminal session.
 
-Luckily There's a simple fix for that, all you have to do is append your aliases to the end of your shell's config file. So everytime you start a new shell, these aliases get executed when you're new shell session is starting up.
+Luckily There's a easy fix for that, all you have to do is append your aliases to the end of your shell's config file. So everytime you start a new shell, these aliases get executed when you're new shell session is starting up.
+
+```
+$ echo 'alias tp="kubectl run client -it --rm=true --restart=Never --image=centos -- "' >> ~/.zshrc
+```
 
 After that your aliases will always be available. Let's open up a new terminal just to double check. Cool that worked. Ok let's close that again.
 
