@@ -50,7 +50,7 @@ Here I've created a new container which I've called 'client' and I've based it o
 Now here's the equivalent kubectl run command:
 
 ```
-kubectl run --rm=true -it client --image=centos --restart=Never -- bash
+kubectl run client -it --rm=true --restart=Never --image=centos -- bash
 ```
 
 ok, Let's first go over this command before I hit return.
@@ -87,7 +87,7 @@ Notice that as soon as exit out the container the container got deleted. The sam
 One final thing I wanted to show you is that you can use the "kubectl run" command to spin up a pod just long enough to run a single command and then that pod gets deleted again.
 
 ```
-kubectl run --rm=true -it client --image=centos --restart=Never -- echo hello
+kubectl run client -it --rm=true --restart=Never --image=centos -- echo hello
 ```
 
 As you can see, a pod started just long enouggh to run this command.
@@ -95,10 +95,16 @@ As you can see, a pod started just long enouggh to run this command.
 As I have mentioned before, I'll be using this kubectl run command a lot for spinning up temporary testpods. and this command is quite long so typing it all the time gets a bit tedious. So to save time I'll create an alias for this command and I'll call that alias tp, as in testpod:
 
 ```
-alias tp="kubectl run --rm=true -it client --image=centos --restart=Never -- "
+alias tp="kubectl run client -it --rm=true --restart=Never --image=centos -- "
 ```
 
-I'm also going to add this to my .zshrc file.
+I'm also going to add this to my `~/.zshrc` file.
+
+```
+echo 'alias tp="kubectl run client -it --rm=true --restart=Never --image=centos -- "' >> ~/.zshrc
+```
+
+I have left the end of this command (after double hyphen) open ended so to make it more versatile. 
 
 Now all I have to do is run tp space on the command line, and it will autoexpand.
 
@@ -106,7 +112,8 @@ Now all I have to do is run tp space on the command line, and it will autoexpand
 tp <space>
 ```
 
-Then
+This autoexpansion only happens when using a zsh shell along with the oh-my-zsh framework and it's globalias plugin. 
+
 
 
 Ok we'll take a break here. In the next vidoe I'll demo how to create bash session inside an existing container
