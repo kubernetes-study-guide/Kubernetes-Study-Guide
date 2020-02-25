@@ -69,3 +69,15 @@ calico-node-97f2b                     2/2     Running   0          3d
 coredns-fb8b8dccf-m64m9               1/1     Running   2          3d
 ...
 ```
+
+Another handy way to troubleshoot permissions problems is using `kubectl auth`, e.g.:
+
+```
+$ kubectl auth can-i get pods --as system:serviceaccount:namespace1:my-service-account --namespace namespace2
+yes
+```
+
+This says that the my-service-account service account that lives inside namespace1 is allowed to get pods from namespace2. 
+
+
+
