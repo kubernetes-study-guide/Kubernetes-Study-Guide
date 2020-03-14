@@ -1,15 +1,16 @@
 Chrome -> vscode
 
-This course comes with is very own study guide. You can find it on Github, that means that you can download this  guide by just doing a git clone. 
+Each video comes with some course notes. These notes have all the example commands and sample files I used for each video.
 
-This guide is made up of a number of sections and each section contains a series of topic folders. This section and topic structure, mirrors the Udemy course itself. So for each video in this course there is a corresponding topic folder. 
+So after watching each video I recommend that take a look at these notesand  try following along on your local workstation. I cannot emphasis enough how important it is that you practice by actually using Kubernetes rather than just wathing the vidoe. It help build confidence and make you comfortable using Kubernetes.
 
-For example, right now you're watching the video for this topic, the Kubernetes study guide. 
+There can be several ways perform the same kubernetes task. When that's the case I'll Usually cover 1, or maybe 2 approaches in the video and I'll mention the others in the course notes.
 
-Each topic folder contains a readme file. These README files cover everything the videos cover, but in more detail, and they contain a lot of useful links and example commands. I recommend that you review the readme files as you go through the course.
 
-In a lot of the videos, we'll make use of various yaml files. You can find these files in the corresponding topic folder, under a folder called configs. So if you want to follow along and copy what I do in a particular demo, then the very first thing you have to do, is open up a bash terminal and then cd to that video's topic folder. This will make it easier to work with these config files from the command line. 
+I've included links to all online resources that I mention in each video, such as github repos and blog articles.
 
-If you are using VS code, then there's a handy shortcut to quickly let you do this. All you have to do is use the explorer side bar to navigate to the video's topic folder and then open up a bash terminal inside it.
 
-During the demo's, I'll usually have the side bar minimised by toggling the explorer icon so that there's more screen space for the actual demo itself. 
+There's also a study guide to accompany this course which you can find on github. 
+
+
+During the demo's, I'll usually have the side bar minimised by toggling the explorer icon so that there's more screen space for the actual demo itself.
