@@ -7,7 +7,7 @@ So after watching each video I recommend that take a look at these notesand  try
 There can be several ways to perform the same kubernetes task. When that's the case I'll Usually cover 1, or maybe 2 approaches in the video and I'll mention the rest in the course notes.
 
 
-I've included links to all online resources that I mention in each video, such as github repos and blog articles. I've also include links to other resources that expands on the topics covered in the video
+I've included links to all online resources that I mention in each video, such as github repos and blog articles. I've also include links to other resources that expands on the topics covered in the video and gives more indepth info.
 
 
 There's also a study guide to accompany this course which you can find on github. 
