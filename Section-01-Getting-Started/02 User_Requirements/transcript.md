@@ -1,11 +1,13 @@
 Slides -> bash terminal
 
-Kubernetes has quite a high barrier, meaning that you
+Kubernetes has quite a high barrier of entry, meaning that you can't learn Kubernetes without having experience in other technologies, in particular linux and docker:
+
+- Linux
+- Kubernetes
+- Cloud platforms (aws, azure,...etc)
 
 
-Ok, So what skill and experience do you need to have to get the most out of this course.
-
-First you need to know Linux and have lots of experience using a bash terminal. Let's do a quick check and see how many of these commands you know and have used. 
+First you need to know Linux and have lots of experience using a bash terminal. To gage how much you know, Let's do a quick check and see how many of these commands you know and have used. 
 
 Knowing about what these commands would by extension mean that you're familiar with underlying concepts such as processes, netowrking, filesystems and so on. If you have experience with using most of these commands then it's safe to say you meet this requirement.
 
