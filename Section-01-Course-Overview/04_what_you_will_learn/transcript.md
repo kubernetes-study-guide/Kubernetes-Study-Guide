@@ -1,6 +1,6 @@
 cover the big diagram from the trailer. 
 
-Don't worry if you don't understand any of it. going to introduce lots of new terminologies here, to start seeding them in your head. 
+Don't worry if you don't understand any of it. going to introduce lots of new terminologies here, to start seeding them in your head. basically this video will show where all the dots are and the rest of the course will draw the lines to connect all the dots.  
 
 So rewatch this video as you go through the course and you'll see stuff will start clicking and falling into place. 
 
