@@ -1,8 +1,13 @@
 # hello-world pod
 
-Hello everyone and welcome back.
+Setting up an application to run on kubernetes is all about creating kubernetes objects. There are a bunch of different object types, such as services, replicicasets, replicates,....and so on. However the most important object type is the ubiquitous pod object. That's because pods are where you run your actual containers.
 
-We're going to create our first hello-world pod. This pod is going to have an apache webserver container running inside it.
+
+That makes pods the fundamentals building block in kubernetes.
+
+So for this demo We're going to create our first hello-world pod. 
+
+This pod is going to have an apache webserver container running inside it.
 
 To create this pod we first need to create a yaml file that defines the pod's specifications. So here's a yaml file that I wrote earlier:
 
