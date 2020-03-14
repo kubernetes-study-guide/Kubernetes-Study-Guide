@@ -1,33 +1,6 @@
 Slides -> bash terminal
 
 
-Ok, So what are the requirements for this course in order to get the most out of it?
-
-
-Well, there are three sets of requirements
-
-
- - user requirements
- - software requirements
- - and hardware requirements
-
-Let's take a look at user requirements first.
-
-This course is aimed at people who already know their way around Linux. It doesn't matter which distro in particular but I'll be using CentOS and Ubuntu. You should be comftable using a bash terminal and editing files with VIM.
-
-
-experience with Docker is important as well, that's because you need to understand what images and containers are, and how they are used in practice.
-
-
-You should have some basic networking knowledge, for example, you need to be familiar with things like IP addresses and port numbers.
-
-You also need to know how to use various network related commands, such as netcat, dig, and nslookup.
-
-
-This should give you a general idea, of the level you should be at before starting this course.
-
-
-
 Now let's take a look at the software you should have on your workstation.
 
 First and foremost you must have the kubectl client installed. This whole course is based on how to use this cli tool. It comes in the form of a single executable binary file that you can simply download and place into one of your path folders.
