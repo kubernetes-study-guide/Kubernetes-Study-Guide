@@ -1,0 +1,1 @@
+This image's name, httpd, is actually the same name as the name of the process that runs when you start an apache web server, which is also httpd. It's short for http daemon. 
