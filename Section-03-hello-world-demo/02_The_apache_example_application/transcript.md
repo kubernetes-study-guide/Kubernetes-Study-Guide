@@ -8,20 +8,23 @@ I'll be creating my container using the official apache docker hub image, called
 Let's take a look at our example containeer in action:
 
 ```
-$ docker run -d -p 8080:80 httpd
+$ docker run -d -p 80:80 httpd
 ```
 
-Here I'm instructing to spin up a new container using httpd image. set up portforwarding so that any traffic i send from my workstation at port 8080 get's forward to the container's port 80, since the apache image is preconfigured to listen on port 80. I want this container to run in the background which is why I've enabled the detached mode. 
+Here I'm instructing docker to spin up a new container using httpd image. set up portforwarding so that any traffic i send from my workstation at port 8080 get's forward to the container's port 80, since the apache image is preconfigured to listen on port 80. I want this container to run in the background which is why I've enabled the detached mode. 
 
 
 ```
 $ docker container ls
 ```
 
+Let's also check the container's logs:
 
 ```
 $ docker logs kind_chaplygin 
 ```
+
+So far so good, everything looks ok here. Also notice that the container's primary process was started by running httpd command. That's actually where this image's name originates from. 
 
 Now let's see what this looks like:
 
