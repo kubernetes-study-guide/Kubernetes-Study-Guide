@@ -9,7 +9,7 @@ There can be several ways to perform the same kubernetes task. When that's the c
 
 I've included links to all online resources that I mention in each video, such as github repos and blog articles, and links to the official documentations. I've also include links to other resources that expands on the topics covered in the video and gives more indepth info.
 
-Where relevant, I've added other sections in the course notes too, such as FAQs, common pitfalls, and a section about troubleshooting tips. 
+Where relevant, I've added other sections in the course notes too, such as FAQs, common pitfalls, and a section about troubleshooting tips, terminologies, and etc. 
 
 
 There's also a study guide to accompany this course which you can find on github. 
