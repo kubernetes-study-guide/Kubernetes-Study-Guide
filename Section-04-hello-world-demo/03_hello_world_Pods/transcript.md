@@ -16,10 +16,10 @@ These yaml files follows a certain structure and a big part of Kubernetes is to 
 But for now this yaml file is basically saying that:
 
 - We want to create a pod
-- The pod's name should be pod-httpd
+- The pod's name should be "webserver"
 - we want to assign a key/value label, in this case I'm specifying a label which I'm going call 'app' and set that to the value of 'web'. I can add more labels here if I want to, but i'll stick with just the one label for this demo.
 - This pod should only have one container
-- the containers name should be cntr-httpd
+- the containers name should be 'cntr-apache'
 - the container should be listening on port 80
 - and finally, the container should be built using the official httpd image from the docker hub website. and also use the image that's tagged as 'latest'.
 
@@ -28,10 +28,10 @@ But for now this yaml file is basically saying that:
 Let's now create this pod by feeding this yaml file into the apply command:
 
 ```bash
-kubectl apply -f  pod-httpd.yml
+kubectl apply -f pod-httpd.yml
 ```
 
-It doesn't matter what the yaml file's filename is, as long as it's meaningful to you, and it ends with a dot yml extension.
+It doesn't matter what the filename is, as long as it's meaningful to you, and it ends with a dot yaml extension.
 
 Ok it looks like our pod has now been created. Lets see if we can view it using the 'get pods' command:
 
@@ -65,18 +65,20 @@ $ curl http://172.17.0.8
 
 This time it worked. That's because the pod's ip address is part of the kube cluster's internal network. So this curl command will only work if you run it from anywhere inside the kube cluster, such as from another pod, or from any kube worker nodes. 
 
-Back outside the cluster you can also curl your pod using port forwarding:
+Back outside the cluster you can also curl your pod by setting up port forwarding first:
 
 ```
 exit
 xxxx
 ```
 
-Her'e we're saying.....
+Her'e we're saying that any traffic our workstations receives on port 80 should be forwarded to our apache pod at port 80
 
-Let's hit return. This is a bit like creating a tunnel from our workstation to our kube cluster. 
+This is a bit like creating a tunnel from our workstation to our kube cluster. 
 
-This causes the terminal to hang, so we have to run the curl command from another terminal. 
+
+Let's hit return. 
+This causes the terminal to hang, so we have to run curl from another terminal. 
 
 
 ```
