@@ -1,5 +1,7 @@
 ## Trip this as a journey so far checklist. 
 
+## create recap videos once the rest of the course has been completed. 
+
 cover the big diagram from the trailer. 
 
 I'm now going to introduce you to a lot of new terminologies here. A lot of them want make sense to you, and that's ok beacuase at this stage I'm just trying to seed them in your mind. basically I'm tring to show you all the dots, and the rest of the course will draw the lines to connect all those dots.  

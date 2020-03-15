@@ -12,7 +12,7 @@ There's lots of install options
 4. Vendor specifiy Managed services approach, e.g. aws eks. pro: turnkey approach  con: don't have full control, vendor lockin. 
 5. Different flavours of Kubernetes, openshift, rancher, ...etc. 
 
-
+Openshift is what the big boys use. 
 
 While Kubernetes is great for simplifying your IT estate through containerisation. 
 
