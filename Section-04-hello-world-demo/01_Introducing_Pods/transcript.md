@@ -1,7 +1,4 @@
-Setting up an containerised application to run on kubernetes involves creating a set of kubernetes objects. There are a lots of different types of kuberentes object, such as services, replicicasets, replicates,....and so on. However there's one object that plays front and center out of all these types and that's, pods. That's because pods are where you run your containers. [A single pod can have one or more containers running inside it.] 
-
-
-All the other objects types plays more of a supporting role to your pods. 
+Setting up an containerised application to run on kubernetes involves creating a set of kubernetes objects. There are different types of objects, such as services, replicasets, serviceaccounts,....and so on. However there's one object type that's front and center of them all, and that the pod type. That's because pods are where you run your containers. All the other objects types plays more of a supporting role to your pods. 
 
 For example -
 
@@ -13,3 +10,5 @@ Persistant Volumes can be used to provide disk storage space for your pods to st
 
 
 We'll cover all this and more later on, and for now what I want you to take away from this is taht pods are the fundamental building block in kubernetes.
+
+We're now nearly ready to do our first kubernetes hello world demo, but before that I need to give an overview of the example app we'll be using for this demo. That's coming up next. 
