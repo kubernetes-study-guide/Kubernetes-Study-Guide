@@ -1,0 +1,1 @@
+anything that's specific to bash will be covered in the course notes. 

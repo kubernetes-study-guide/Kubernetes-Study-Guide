@@ -1,4 +1,51 @@
+As for the shell itself, I'll be using zsh instead of bash.
+
+```
+echo $SHELL
+```
+
+
+zsh is basically the same as bash, but with a lot more feature. In 2019 zsh replaced bash to become the default shell in  MacOS. So if you're tempted in switching to zsh, then now would be a great time to jump ship. However all the commands I'll demo will work fine on both shells.
+
+In my case not only have switched to using zsh, I've also turbocharged it installing the oh-my-zsh framework. This framework gives me access to a lot of extra features  including a bunch of handy aliases:
+
+```
+alias
+```
+
+For example if I want to run "kubectl get pods", then I can just use the kgp alias followed by space:
+
+```
+kgp<space>
+```
+
+Hitting space ends up replacing the alias with the actual underlying command it referenced to.
+
+Pretty cool right. I'll be using these aliases a lot to cut down my typing and to get things done quicker.
+
+By the way, these aliases are only available after activatin some om-my-zsh plugins. To do that I had to go to my home directory and open up the zsh config file, which is called .zshrc. In this file there's a section where you can select your plugins.
+
+So if you're already a zsh user but haven't used this framework before, then I definitely recommend giving it a try. It's dead easy to install and you can find the install instructions in this video's description.
+
+
+As for my code editor, I'll be using VS Code. VS Code has it's own integrated terminal. You might have noticed that my VS Code interface looks a little different to what you might be expecting, and that's because I'm using the Cobalt2 vscode theme. Check out this video's description for a link to that theme  .
+
+That's it for this video, see you in the next one.
+
+
+
+
 Slides -> bash terminal
+
+- watch
+- zsh (oh my zsh framework) along with plugins. 
+- zsh-syntax-highlighting
+- iterm2
+- [VS Code](https://code.visualstudio.com/) - Text editor for writing our code. themes and plugins
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Used for building Virtual Machines on your local workstation
+- [docker](https://www.docker.com/get-started)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - The main tool for interacting with Kubernetes clusters
+- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - Used for running Kubernetes locally on your workstation
 
 
 Now let's take a look at the software you should have on your workstation.
@@ -11,14 +58,6 @@ Minikube needs to make use of a hyper visor to build a VM, and for that we'll be
 
 We also have a few optional extras that you may like to install as well:
 
-We'll be using VS Code as our text editor.
-Although you can use whatever text editor that you prefer.
-We've also installed a VS code extension called
-"Markdown Preview Enhanced",
- which lets you view README files in a human readable format.
- On top of that I have installed vs code's own cli tool, which is called 'code'.
-
-In some of our demos we'll need to make use of a multinode kube cluster. On those occasions we'll use vagrant to build them.
 
 
 
@@ -32,29 +71,15 @@ For Windows users you can try using chocolatey instead, chocolatey is like the w
 Alternatively you can always refer to the official install instructions for each software.
 
 
-okay lets now go over the workstation hardware requirements. Throughout this course I'll only be using my local workstation to run all my Kubernetes test environments. If you want to do the same, then you need a workstation powerful enough to run minikube. For minikube, your workstation needs to have enough capacity to set aside at least:
-
-- 2 cpu cores
-- 2 gigs of RAM
-- and 20 gigs of available disk space
-
-If you want to follow along some of our vagrant related demos, you will need set aside at least:
-
-- 6 cpu cores
-- 3 gigs of RAM
-- 30 gigs of disk space
-
-In case you don't have that, then you can just watch the videos without following along.
 
 
-
-Now lets go back to the software requirements. .
+Now lets go back to the software requirements.
 
 In my case I have already installed all the required. So I can't show you homebrew in action. Instead I will run some checks to confirm all the software are definitely installed.
 
 First I'll check virtualbox is installed by running VboxManage version. You can also check this by opening up the virtualbox gui interface.
 
-I'll then perform similar checks for vagrant, docker, minikube, and last but not least Kubectl.
+I'll then perform similar checks for docker, minikube, and last but not least Kubectl.
 
 I've included the --short flag to make the output easier to read. By default the kubectl version commnad outputs two versions. The version of the kubectl client binary that's installed locally on your workstation, and the version of the kube cluster that our kubectl is pointing to. So we're using the --client flag here to limit the output to just client side since we don't have a kubecluster yet.
 
