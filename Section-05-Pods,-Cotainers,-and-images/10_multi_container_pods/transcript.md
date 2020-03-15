@@ -1,12 +1,6 @@
 # Transcript
 
-Hello everyone, and welcome back. 
-
-For this demo I've opened up a bash terminal inside this video's topic folder. 
-
-```bash
-pwd
-```
+Containers are supposed to have a app running inside it. single primary process running inside it, which in turn can spawn one or more child processes. It is possible to have more primary that . 
 
 So far we've only explored single container pods. If you want, you can also build multi-container pods, and it's actually quite easy to set up. So in this video, I'm going to show what a 2 container pod looks like. Here's the yaml file that I'll use for this demo. 
 
