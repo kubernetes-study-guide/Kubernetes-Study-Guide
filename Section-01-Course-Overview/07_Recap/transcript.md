@@ -1,8 +1,10 @@
+## Trip this as a journey so far checklist. 
+
 cover the big diagram from the trailer. 
 
-Don't worry if you don't understand any of it. going to introduce lots of new terminologies here, to start seeding them in your head. basically this video will show where all the dots are and the rest of the course will draw the lines to connect all the dots.  
+I'm now going to introduce you to a lot of new terminologies here. A lot of them want make sense to you, and that's ok beacuase at this stage I'm just trying to seed them in your mind. basically I'm tring to show you all the dots, and the rest of the course will draw the lines to connect all those dots.  
 
-So rewatch this video as you go through the course and you'll see stuff will start clicking and falling into place. 
+So I recommend circling back and rewatch this video as you progress through the course and you'll see stuff will start clicking and falling into place. 
 
 
 By the end of this course, you'll learn:
@@ -16,7 +18,6 @@ By the end of this course, you'll learn:
 - ...AND Create all of these objects by first writng yaml files and then feeding these files to kubernetes
 
 
-I'll also cover lots of other stuff along the way. 
   
 
 
