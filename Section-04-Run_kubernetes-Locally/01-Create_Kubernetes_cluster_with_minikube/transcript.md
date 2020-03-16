@@ -1,12 +1,35 @@
 
-In this video we're going to create our first Kube cluster using minikube
-First let's check minikube's status.
+Alright let's start creating our very first kubecluster that's running locally on our workstations. I'm a mac user so I'm going to install it using brew:
 
-Here we can see that we don't have a kube cluster running at the moment. 
+```
+brew install minikube
+```
+
+Oh yeah I forgot I have already installed it. Ok let's check which I have:
+
+```
+minikube version
+```
+
+Now let's check what the status is:
+
+```
+$ minikube status. 
+```
+
+
+Here we can see that, we haven't created a kube cluster exist. 
 
 
 
-So let's create a new kube cluster by running minikube start. This can take a few minutes to complete so we'll fast forward this to save you from waiting. 
+So let's now create one by running minikube start. 
+
+```
+minikube start
+```
+
+This can take a few minutes to complete so we'll fast forward this to save you from waiting. 
+
 
 
 Ok thats now done. minikube has given a summary of what it did to build the kube cluster. There's a lot of interesting info here. Here it shows that minikube downloaded an image file and then used it to create a VM using Virtualbox. It shows how much cpu, ram, and disk space allocated to this VM. You can confirm that's the case by taking a look in virtualbox, As you can see a VM called minikube now exists with the same specs that we saw earlier.  
@@ -67,46 +90,3 @@ Ok, let's clear the screen now.
 I think we can now safely say that our kubectl client is definitely pointing to our minkube built kubecluster. There are a few other things I wanted to show you about minikube. 
 
 
-If you run minikube-help then you'll see all the available commands. 
-
-```bash
-minikube help
-```
-
-Here we can see that if you want to ssh into the minikube vm, you just run:
-
-```bash
-minikube ssh
-```
-
-After you're logged in, you can then switch to root user if you want. 
-
-```bash
-
-```
-
-ok I'll exit out now. 
-
-In kubernetes there is a really cool app you can install called Kubernetes Dashboard, This provides 
-a powerful graphical web interface that let's you view and manage your kubecluster visually. This dashboard is quite straight forward to install. However the nice thing about minikube is that this dashboards comes preinstalled.
-You can access the web ui by running the dashboard command:
-
-```bash
-minikube dashboard
-```
-
-I recommend exploring this dashboard as you go through the course. 
-
-Finally once you have finished working with your kube cluster, you can run the stop command:
-
-```bash
-minikube stop
-```
-
-This will shutdown your minikube vm. However if you want to delete it altogether then you use the delete command:
-
-```bash
-minikube delete
-```
-
-That's it for this video see you in the next one. 

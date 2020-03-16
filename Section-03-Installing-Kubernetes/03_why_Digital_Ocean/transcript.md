@@ -3,5 +3,8 @@ Why DO, why not
 
 For 2 reasons. 
 
-1. The big providers like AWS and Azure are far more sophisticated and feature re, so require a big initial investment in learning AWS to get up to speed with it before.
-2. Secondly you can use Digital Ocean for free!!! 
+1. you can use Digital Ocean for free!!! 
+
+
+2. The big providers like AWS are far more sophisticated and powerful re, so if you're not familiar with aws then you'll need to get up to speed with it first before you can start building a kubecluster on it. And that can be a quite big overhead. On the otherhand digital ocean is a lot simpler to get started with and 
+
