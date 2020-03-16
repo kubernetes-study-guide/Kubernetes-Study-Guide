@@ -40,4 +40,22 @@ The kubernetes is made up of several individual components that needs to be inst
 Setting up a Kubernetes cluster is complicated. 
 
 
-That's why there are lots of ways to set install and 
+That's why there are lots of ways to set install and
+
+
+
+3. Do you want to build from scratch. or use a tool. mention kelsey-hightower 
+4. Do you want to build using a cloudplatform. 
+5. Do you want to use one click install, i.e. kubernetes-as-a-service. e.g. aws eks. there's pros and cons to that. con, less control, vendor lockin, more limited features. Pros, easier maintenance. 
+
+
+For this course, we'll show you three ways to install kubernetes:
+
+- locally on your workstation using minikube
+- Setup a kube cluster in the cloud using kubeadm
+- provision a kubecluster using a cloudplatform's kubernetes-as-a-service cloud offering
+
+
+
+
+... you might be thinking why DO ocean. Why not AWS or Azure since they are far more popular. 
