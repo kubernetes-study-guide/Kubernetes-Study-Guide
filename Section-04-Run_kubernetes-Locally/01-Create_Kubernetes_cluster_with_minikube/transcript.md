@@ -5,7 +5,7 @@ Alright let's start creating our very first kubecluster that's running locally o
 brew install minikube
 ```
 
-Oh yeah I forgot I have already installed it. Ok let's check which I have:
+Oh yeah I forgot I have already installed it. Ok let's check which version I have:
 
 ```
 minikube version

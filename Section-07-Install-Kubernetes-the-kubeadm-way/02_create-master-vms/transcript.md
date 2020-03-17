@@ -1,3 +1,34 @@
+# need cover this video after namespace video, so can talk about switching contexts. 
+
+
+
+First work out what spec you need:
+
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#before-you-begin
+
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+
+
+Note it mentiosn, Need to disable swap. Do this here. 
+
+https://github.com/Sher-Chowdhury/kubernetes-the-kubeadm-way-vagrant/tree/master/roles/common-packages/tasks
+
+
+https://github.com/Sher-Chowdhury/kubernetes-the-kubeadm-way-vagrant
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 In this video we're going to create our first Kube cluster using minikube
 First let's check minikube's status.

@@ -1,5 +1,3 @@
-Slides -> bash terminal
-
 Kubernetes has quite a high barrier of entry, meaning that you can't learn Kubernetes without having experience in other technologies, in particular linux and docker:
 
 - Linux

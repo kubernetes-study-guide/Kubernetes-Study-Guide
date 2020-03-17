@@ -9,7 +9,7 @@ There's lots of install options
 3. local workstation dev environment - minikube,...what are the otherss?
 2. kubeadm - bootstrap approach. Easier approach. 
 3. Third party tools - e.g. kops, -  pro: production ready clusters cons: learning curve, too many competing tools, maintenance falls on you, if cluster has problems
-4. Vendor specifiy Managed services approach, e.g. aws eks. pro: turnkey approach  con: don't have full control, vendor lockin. 
+4. Vendor specifiy Managed services approach, e.g. aws eks. pro: turnkey approach  con: don't have full control, vendor lockin. I.e. you can either build your own kube cluster and maintain it. or get your cloud provider to build one for you maintain it for you.  
 5. Different flavours of Kubernetes, openshift, rancher, ...etc. 
 
 Openshift is what the big boys use. 
