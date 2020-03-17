@@ -19,11 +19,6 @@ Now let's confirm that I have centos8:
 hostnamectl
 ```
 
-Now lets start with a yum update, just to get everything updated:
-
-```
-yum update
-```
 
 
 Now install kubeadm:
@@ -41,33 +36,17 @@ After that you should end up with:
 
 
 ```
-$ kubeadm version --output short
+kubeadm version --output short
 v1.17.4
 
-$ kubectl version --short --client
+kubectl version --short --client
 Client Version: v1.17.4
 
-$ kubelet --version
+kubelet --version
 Kubernetes v1.17.4
 ```
 
-Ok let me show you what happens when I try init. It will fail and you'll see why:
-
-```
-kubeadm init
-```
-
-ok that failed because it couldnt find docker. 
-
-Let's install that now:
-
-```
-yum list available | grep docker
-```
-
-This looks like a really old version of docker. we should look for docker 19, for 2019. 
-
-So let's try installing newer version of docker by following the docs:
+Now we need to install docker:
 https://docs.docker.com/install/linux/docker-ce/centos/#install-using-the-repository
 
 The install command is:
@@ -76,12 +55,22 @@ The install command is:
 yum install docker-ce docker-ce-cli containerd.io
 ```
 
-In docker, This version 19 means that this version of docker was released in the year 2019. and the next part 03, means it was released in the 3rd quarter of 2019. 
+
+
+
+Now start docker:
+
+```
+systemctl start docker
+systemctl enable docker
+systemctl status docker
+```
+
 
 Let's check the version:
 
 ```
- docker version
+[root@kubemaster2 ~]# docker version
 Client: Docker Engine - Community
  Version:           19.03.8
  API version:       1.40
@@ -90,16 +79,41 @@ Client: Docker Engine - Community
  Built:             Wed Mar 11 01:27:04 2020
  OS/Arch:           linux/amd64
  Experimental:      false
-Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          19.03.8
+  API version:      1.40 (minimum version 1.12)
+  Go version:       go1.12.17
+  Git commit:       afacb8b
+  Built:            Wed Mar 11 01:25:42 2020
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.2.13
+  GitCommit:        7ad184331fa3e55e52b890ea95e65ba581ae3429
+ runc:
+  Version:          1.0.0-rc10
+  GitCommit:        dc9208a3303feef5b3839f4323d9beb36df0a9dd
+ docker-init:
+  Version:          0.18.0
+  GitCommit:        fec3683
 ```
 
+In docker, This version 19 means that this version of docker was released in the year 2019. and the next part 03, means it was released in the 3rd quarter of 2019. 
 
-Now start docker:
+
+We're now ready to perform the actuall install. Let's do that in the next video.
+
+
+Also had to do this:
 
 ```
-[root@kubermaster1 ~]# systemctl start docker
-[root@kubermaster1 ~]# systemctl status docker
+vi /etc/sysctl.conf
+net.bridge.bridge-nf-call-iptables = 1
+sysctl -p
 ```
+Otherwise preflight check fails. you might have other issues. Google is your friend. 
 
-Now we're ready to perform the actuall install. Let's do that in the next video.
 
+You have to do all of the above steps in the two masters. 

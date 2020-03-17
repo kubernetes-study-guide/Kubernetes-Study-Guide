@@ -126,3 +126,35 @@ Now let's create our other 2 masters:
 
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/
 
+
+when you run the join command you'll end up with output like:
+
+
+```
+This node has joined the cluster and a new control plane instance was created:
+
+* Certificate signing request was sent to apiserver and approval was received.
+* The Kubelet was informed of the new secure connection details.
+* Control plane (master) label and taint were applied to the new node.
+* The Kubernetes control plane instances scaled up.
+* A new etcd member was added to the local/stacked etcd cluster.
+
+To start administering your cluster from this node, you need to run the following as a regular user:
+
+	mkdir -p $HOME/.kube
+	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+	sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Run 'kubectl get nodes' to see this node join the cluster.
+
+```
+
+After that you should end up with:
+
+```
+[root@kubermaster1 ~]# kubectl get nodes -o wide
+NAME           STATUS   ROLES    AGE     VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION               CONTAINER-RUNTIME
+kubemaster2    Ready    master   8m17s   v1.17.4   10.131.125.53    <none>        CentOS Linux 7 (Core)   3.10.0-957.27.2.el7.x86_64   docker://19.3.8
+kubemaster3    Ready    master   5m19s   v1.17.4   10.131.127.176   <none>        CentOS Linux 7 (Core)   3.10.0-957.27.2.el7.x86_64   docker://19.3.8
+kubermaster1   Ready    master   52m     v1.17.4   10.131.122.38    <none>        CentOS Linux 7 (Core)   3.10.0-957.27.2.el7.x86_64   docker://19.3.8
+```
