@@ -1,7 +1,7 @@
 Kubernetes has quite a high barrier of entry, meaning that you can't learn Kubernetes without having experience in other technologies, in particular linux and docker:
 
-- Linux
-- docker
+- Linux - https://docs.google.com/spreadsheets/d/19Q9520MT-FoNWIH5OzyW7eJLsmrJJLwjdnWS-40-dYk/edit?usp=sharing
+- docker - 
 - Cloud platforms (aws, azure,...etc)
 
 
