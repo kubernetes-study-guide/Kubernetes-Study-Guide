@@ -1,5 +1,10 @@
+need to tag droplets for this to work. 
+
+
 test your lb is up:
 
+
+also setup port forwarding to 6443. 
 
 ```
 $ telnet 188.166.136.150 6443

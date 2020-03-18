@@ -1,3 +1,7 @@
+Installing kubectl on the master and worker nodes is actually optional - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/
+
+
+
 It's great that we can now use kubectl when ssh into a master kubemaster. But it's bad practice to ssh into you kubemasters just to use kubectl. Instesad you should use your workstation's kubectl client to interact with your cluster. To do that we need to configure our ~/.kube/config. We'll do that by running the following commands:
 
 
@@ -72,3 +76,18 @@ kubectl config use-context digital-ocean --namespace default
 
 Here we are saying that we want to use use-context, that in turn means that kubectl will interact with the xxx cluster using the xxx user credentials. We've also said that we want to use 'default' as our current namespace. Basically this command is saying which cluster to connect to with what credentials to make that connection with. 
 
+Now let's check that has worked:
+
+```
+$ kubectl cluster-info
+Kubernetes master is running at https://188.166.136.150:6443
+KubeDNS is running at https://188.166.136.150:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+(⎈ |digital-ocean:default) sherchowdhury@Shers-MacBook-Pro  ~/.kube-digital-ocean 
+$ kubectl get nodes
+NAME           STATUS   ROLES    AGE    VERSION
+kubemaster2    Ready    master   133m   v1.17.4
+kubemaster3    Ready    master   130m   v1.17.4
+kubermaster1   Ready    master   177m   v1.17.4
+```

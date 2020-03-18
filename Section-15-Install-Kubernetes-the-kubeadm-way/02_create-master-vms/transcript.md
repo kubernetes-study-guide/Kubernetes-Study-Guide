@@ -14,6 +14,9 @@ Note it mentiosn, Need to disable swap. Do this here.
 https://github.com/Sher-Chowdhury/kubernetes-the-kubeadm-way-vagrant/tree/master/roles/common-packages/tasks
 
 
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/
+
+
 https://github.com/Sher-Chowdhury/kubernetes-the-kubeadm-way-vagrant
 
 

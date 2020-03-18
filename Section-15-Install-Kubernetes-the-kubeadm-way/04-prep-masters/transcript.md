@@ -109,8 +109,7 @@ We're now ready to perform the actuall install. Let's do that in the next video.
 Also had to do this:
 
 ```
-vi /etc/sysctl.conf
-net.bridge.bridge-nf-call-iptables = 1
+echo "net.bridge.bridge-nf-call-iptables = 1" >> /etc/sysctl.conf
 sysctl -p
 ```
 Otherwise preflight check fails. you might have other issues. Google is your friend. 
