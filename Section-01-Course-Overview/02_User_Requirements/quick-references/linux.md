@@ -58,6 +58,7 @@ telnet
 ssh
 hostnamectl
 scp
+alias
 ```
 
 ##### process
