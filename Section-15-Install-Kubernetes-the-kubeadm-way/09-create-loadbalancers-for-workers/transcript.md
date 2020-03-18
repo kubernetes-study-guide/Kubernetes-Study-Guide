@@ -1,0 +1,1 @@
+cd ~/.kube && kubectl --kubeconfig="digital-ocean-cluster-kubeconfig.yaml" get nodes
