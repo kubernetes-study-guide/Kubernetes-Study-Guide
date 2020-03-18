@@ -1,16 +1,16 @@
-Kubernetes is one of those technologies that has a reasonably barrier of entry. Meaning that you need to be competent on a few other areas before you can start learning Kubernentes. 
+Kubernetes is one of those technologies that has a reasonably high barrier of entry. Meaning that you need to be competent on a few other areas before you can start learning Kubernentes.
 
 broadly speaking there are 3 areas that you need to have prior experience  in before doing this course. They are:
 
 - Linux - https://docs.google.com/spreadsheets/d/19Q9520MT-FoNWIH5OzyW7eJLsmrJJLwjdnWS-40-dYk/edit?usp=sharing
-- docker - 
+- docker -
 - Cloud Experience - such as AWS, Azure, GCP (nice to have)
 
 
-First you need to know Linux and have lots of experience using a bash terminal. To gage how much you know, ask yourself how many of these commands have you used:
+First you need to know Linux and have lots of experience using a bash terminal. To gage how much you know, ask yourself how many of these commands do you have experience in using:
 
 
-This is more a finger in the air test. 
+This is more a finger in the air test.
 
 
 If your answer is most if not all of them, then it's safe to say you meet this requirement. If not, then I would suggest brushing up your Linux skills before continuing with this course. Knowing how to use these commands would also mean by extension that you're familiar with things like filesystems, networking, and Linux processes.
@@ -25,4 +25,4 @@ Here's another quick fire check to check to what your docker knowledge is like.
 Once again This is to only give you a general idea of the level you should be at before starting this course.
 If you're familiar with most of these commands, then I would say you're good to go. Otherwise take some time out and get up to speed with docker.
 
-Finally it would help if you have experience in using a cloud platform such as AWS or Microsoft Azure. That's mainly because kubernetes has a lot concept that are similar to cloud concepts such as making things high-availability and immutability. 
+Finally it would help if you have experience in using a cloud platform such as AWS or Microsoft Azure. That's mainly because kubernetes has a lot concept that are similar to cloud concepts such as making things high-availability and immutability.
