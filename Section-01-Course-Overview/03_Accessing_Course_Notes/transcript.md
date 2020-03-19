@@ -1,15 +1,15 @@
 Chrome -> vscode
 
-Each video comes with some course notes. These notes have all the example commands and sample files I used for each video.
+Each video comes with it's course notes. They contain copies of the commands and example files that I used in the videos.
 
-So after watching a video I recommend that you take a look at these notes and try following along on your local workstation. I cannot stress enough how important it is that you practice by actually using Kubernetes rather than just watching the videos. It help you to get comfortable with and helps to bed what you learn.
+So after watching a video I recommend that you take a look at these notes and try following along on your local workstation. I cannot stress enough how important it is that you practice by doing, rather than just watching the videos. It will help you to get comfortable with using Kubernetes and will help to bed in what you learn.
 
-There can be several ways to perform the same kubernetes task. When that's the case I'll Usually cover 1, or maybe 2 approaches in the video and I'll mention the rest in the course notes.
-
-
-I've included links to all online resources that I mention in each video, such as github repos and blog articles, and links to the official documentations. I've also include links to other resources that expands on the topics covered in the video and gives more indepth info.
-
-Where relevant, I've added other sections in the course notes too, such as FAQs, common pitfalls, and a section about troubleshooting tips, terminologies, and etc. 
+There can be several ways to perform the same kubernetes task. When that's the case I'll Usually go over 1, or maybe 2 approaches in the video and I'll cover the rest in the course notes.
 
 
-There's also a study guide to accompany this course which you can find on github. 
+I've included links to any online resources that I mention in each video, such as github repos and blog articles, as well as links to the official documentations.
+
+In a lot of cases, I've added other sections in the course notes too, such as FAQs, common pitfalls, troubleshooting tips, terminologies, and etc.
+
+
+All these course notes are actually stored in a github repo, so feel free to fork it and make it your own. 
