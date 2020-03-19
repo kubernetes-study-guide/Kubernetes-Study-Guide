@@ -1,5 +1,11 @@
 
 
+
+
+
+
+
+
 I'll be doing most of my demos in a command line terminal and for that I'll be using zsh as my shell.
 
 
@@ -8,6 +14,11 @@ I'll be doing most of my demos in a command line terminal and for that I'll be u
 
 
 My workstation is a macos so I'll be installing everything using brew. In the next few videos' I'll be installing the following list of software.
+
+
+In this course I'll be using the following softare.
+
+
 
 - watch
 - zsh (oh my zsh framework) along with plugins.
