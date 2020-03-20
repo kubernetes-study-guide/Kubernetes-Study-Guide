@@ -1,8 +1,11 @@
-kubectl comes in the form of a single executable binary file. So to install it you can just download that file into one of your path folders. Just to keep things organised so I know which binaries I've downloaded as opposed to binaries have installed by a package manager like brew or apt, I'm going to create a new folder for storing my downloaded binaryies. I'll create this folder in my home directory and I'll call it bin, as in short for binary.  
+kubectl comes in the form of a single executable binary file. So to install it you can just download that file into one of your path folders. Just to keep things organised  I'm going to create a new folder for storing my downloaded binaryies. I'll create this folder in my home directory and I'll call it bin, as in short for binary.  
 
-
+```
 mkdir ~/bin
 cd ~/bin
+```
+
+
 
 Next I'll run the curl command to download the binary. you can find this curl command in the installation guide:
 
@@ -16,7 +19,6 @@ ll
 ```
 
 Ok that's downloaded, but I need to make it execuble, so let's do that now. 
-
 
 
 Now the final step is to add this folder to my PATH variable. and append this to my profile script. 
@@ -46,6 +48,16 @@ kubectl version --client --short
 ```
 
 The kubectl command by default gives two version info, One for the kubectl client and the other for the kubernetes instance it's configured to talk to. Since we don't have a kubernetes cluster yet it would cause this command would hang. That's why I've used the client flat to instruct kubectl to only give the client version.  
+
+
+By creating my own personal bin folder helps me to keep things organised and downloading executables into it, help me to keep things organised. For example when I run 
+
+
+```
+which kubectl
+```
+and see that it's in my personal bin folder, then it means that this tool is something i installed manually rather than it being installed by a package manager, such has homebrew, yum, dnf,,,.etc. 
+
 
 Kubectl comes with an autocomlete feature that will be a massive help to write out kubectl commands faster. To enable autocomplet
 you need to run:
