@@ -1,18 +1,39 @@
-Ok let's take a look at my workstation where I'll performing all the demos.
-
-My workstation is Apple macbook Pro. And i have macos catalina running on it.
-
-
-But the demos should work in nearly the same was as other Linux distros such as ubuntu or debian.
-
-If you're a windows user however then things can get more complicated for you
-and you might need to spend more time googling for workarounds and reading the official documentation.
-
-That's why i recommend trying to get hold of a linux or mac workstation instead. It will make your life a lot easier.
-
-There are still difference when using a macos when compared to other linux distros,
-For example to install software on macos I use a package manager called homebrew but for a ubuntu you need to use apt.
-In those cases I'll leave it to you to read the official documentation for your Operating System.
+I'll be using my local workstation for performing all the demos. 
+My workstation is a Apple macbook Pro. And i have macos catalina running on it.
 
 
-Next we're going to look at the software I've installed on my workstation.
+So if you're using macos or a Linux based os such as ubuntu, then you shouldn't have too much problem following along with the demos. 
+
+
+If you're a windows user, then things can get more complicated for you, at least initially for installing the necessary
+software on your windows machine and configuring them. But hopefully everything will be downhill after that. 
+
+
+Speaking of software, here's what you need to have installed on your workstation, I've broken this list down into must haves and optional. 
+
+## Must have. 
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - The main tool for interacting with Kubernetes clusters
+- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - Used for running Kubernetes locally on your workstation
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Used for building Virtual Machines on your local workstation
+- [docker](https://www.docker.com/get-started) - we 
+
+Up first we have kubectl, this is the main kubernetes command line tool that this whole course is about. kubectl is the client side tool that's
+used for talking to your Kubernetes instance. By the end this course you'll be typing out kubectl commands in your sleep. 
+
+Next we have minikube. this let's you deploy a single-node cluster running locally on your workstation. 
+It's really easy to use and this cluster is in the form of a vm that's running on your workstation, so you're workstation
+will need to have some spare cpu cores and memory to spin up this vm. Minikube needs to use a hypervisor to provision the vm,
+and by default it will look to use virtualbox, which is why I've added that to the must-have list as well. 
+
+
+
+Optional:
+
+
+
+
+- watch
+- zsh (oh my zsh framework) along with plugins.
+- zsh-syntax-highlighting
+- iterm2
+- [VS Code](https://code.visualstudio.com/) - Text editor for writing our code. themes and plugins
