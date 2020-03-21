@@ -28,7 +28,19 @@ echo "export $PATH=~/bin:$PATH" >> ~/.zshrc
 
 I'm using zsh as my shell, however if your using bash, then see the course notes for the bash equivalent. 
 
-Now I'll need to restart my shell to load in the new PATH variable. Le'ts now chech that my shell session can now locate the kubectl binary. 
+Now I'll need to restart my shell to load in the new PATH variable. 
+
+Now let's check our PATH:
+
+```
+echo $PATH 
+```
+
+here we can see our personal bin folder in the list. 
+
+
+
+Let's now check that my shell session can now locate the kubectl binary. 
 
 ```
 which kubectl 
@@ -40,46 +52,21 @@ so far so good. Now let's try using kubectl.
 kubectl version --client 
 ```
 
-That looks like it has worked. Although it's a bit difficult to read, luckily the version subcommand comes with a --short flag to get round that:
+That looks like it has worked. Although it's a bit difficult to read, luckily the version subcommand comes with a --short flag to give a more human readable output:
 
 
 ```
 kubectl version --client --short
 ```
 
-The kubectl command by default gives two version info, One for the kubectl client and the other for the kubernetes instance it's configured to talk to. Since we don't have a kubernetes cluster yet it would cause this command would hang. That's why I've used the client flat to instruct kubectl to only give the client version.  
-
-
-By creating my own personal bin folder helps me to keep things organised and downloading executables into it, help me to keep things organised. For example when I run 
-
-
-```
-which kubectl
-```
-and see that it's in my personal bin folder, then it means that this tool is something i installed manually rather than it being installed by a package manager, such has homebrew, yum, dnf,,,.etc. 
-
-Now you might be wondering why not just install it using a package manager such as homebrew:
-
-
-```
-brew install kubectl
-```
-
-That's by installing it manually you can have multiple versions of kubectl client. For example:
-
-```
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/darwin/amd64/kubectl ... 
-```
-
-chmod +x ...
-
-
-kubectl-v1.17.0 version
+The kubectl command by default gives the version of both the kubectl client and the kubernetes instance this client is currently pointing at. That's why I've used the client flat to instruct kubectl to only give the client version since we haven't created a kubernetes cluster yet, otherwise this command would just hang waiting for a response from a non existent kubecluster.  
 
 
 
 
-Kubectl comes with an autocomlete feature that will be a massive help to write out kubectl commands faster. To enable autocomplet
+
+
+Kubectl comes with an autocomplete feature that will be a massive help to write out kubectl commands faster. To enable autocomplet
 you need to run:
 
 
