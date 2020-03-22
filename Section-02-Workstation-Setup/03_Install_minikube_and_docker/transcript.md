@@ -1,10 +1,10 @@
-Ok as I'm a mac user, so i'm going to install minikube using the homebrew package manager:
+Ok as I'm a mac user, so i'm going to install minikube using homebrew:
 
 ```
 brew install minikube
 ```
 
-Ok that's seems to have installed ok. Let's now test it by running minikube version:
+Alright that's seems to have installed successfully. Let's now test it by running minikube version:
 
 
 ```
@@ -26,7 +26,7 @@ Now let's check that status:
 minikube status
 ```
 
-As expected it's saying that we haven't created our minikube provisioned kube cluster yet.
+That looks better. As expected it's saying that we haven't created our minikube provisioned kube cluster yet.
 
 Let's try to create it now.
 
@@ -61,18 +61,36 @@ Ok got confirmation that docker is now up and running. Let's go back to minikube
 
 Cool this time it looks like we're making more progress. Minikube needs to run a couple of sudo commands which is why it's asking for my password.
 
-Now it looks like it's downloading some files, and then its creating a vm and it's allocating 2 of workstations cpu cores, along with 4 gigs or memory and 20 gigs of disk space. NOw its install all the kubernetes components onto that vm which effectively will result in a single node cluster.
+Now it looks like it's downloading some files, and then its creating a vm and it's allocating 2 of workstations cpu cores, along with 4 gigs or memory and 20 gigs of disk space. NOw its install all the kubernetes components onto that vm which effectively will result in a single node kube cluster.
 
-Ok it looks like it's finished building the cluster and it has configured our kubectl client to point to it.
-
-let's check the status of our minikube clsuter:
+Ok it looks like it's finished building the kube cluster so let's check the status again:
 
 ```
 minikube status
 ```
 
-As you can see, I now have a kubecluster that's running locally on my macbook. We can now run kubectl commands against this local cluster:
+
+
+So I now have a kubecluster that's running locally on my macbook.
+
+Minikube has also taken care of configuring our kubectl client to point to this local kube cluster. Let's test this by running kubectl version:
 
 ```
 kubectl version --short
 ```
+
+This time we can see both the client and server version. They are slight different version but that shouldn't cause any problems.
+
+Let's now check that our kubectl is definitely pointing to this minikube cluster. To do that first let's get the cluster-info:
+
+```
+kubectl cluster-info
+```
+
+Here it show that our kubecluster's ip address has this 192 ip address. Now let's compare that to our minikube vm's ip address:
+
+```
+minikube ip
+```
+
+As you can it matches, which means that kubectl is definitely talking to minikube provisioned test cluster.

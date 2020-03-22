@@ -1,71 +1,11 @@
+We've actually created the minikube cluster as part of the minikube install video. Let's check that it's still running:
 
-Alright let's start creating our very first kubecluster that's running locally on our workstations. I'm a mac user so I'm going to install it using brew:
 
 ```
-brew install minikube
+$ minikube status.
 ```
 
-Oh yeah I forgot I have already installed it. Ok let's check which version I have:
-
-```
-minikube version
-```
-
-Now let's check what the status is:
-
-```
-$ minikube status. 
-```
-
-
-Here we can see that, we haven't created a kube cluster exist. 
-
-
-
-So let's now create one by running minikube start. 
-
-```
-minikube start
-```
-
-This can take a few minutes to complete so we'll fast forward this to save you from waiting. 
-
-
-
-Ok thats now done. minikube has given a summary of what it did to build the kube cluster. There's a lot of interesting info here. Here it shows that minikube downloaded an image file and then used it to create a VM using Virtualbox. It shows how much cpu, ram, and disk space allocated to this VM. You can confirm that's the case by taking a look in virtualbox, As you can see a VM called minikube now exists with the same specs that we saw earlier.  
-
-
-Moving on, It shows what IP address the VM has been assigned with. It also shows that the kubecluster is using docker as it's container runtime engine.  
-
-
-
-
- 
-now let's check minikube status again. 
-
-```bash
-minikube status
-```
-
-Here it says that our local kubectl client has been configured to point this new kube cluster.
-
-
-Let's confirm that's the case by now actually trying to use kubectl. First I'll try getting the cluster-info. 
-
-```bash
-kubectl cluster-info
-```
-
-
-
-So far so good. This ip address matches up with the minikube vm's ip address:
-
-```bash
-minikube ip
-```
-
-
-Now let's perform a component status health check. 
+We can also get kubectl to perform a health check.
 
 ```bash
 $ kubectl get componentstatuses
@@ -77,16 +17,11 @@ Everything looks good here too. Now let's get a list of all the nodes in our kub
 kubectl get nodes
 ```
 
-We can get more info by setting the output flag to wide. 
+We can get more info by setting the output flag to wide.
 
 ```
 kubectl get nodes -o wide
 ```
 
-here we can only see one node listed, which is expected since minikube only builds single node kube clusters. 
-
-Ok, let's clear the screen now. 
-
-I think we can now safely say that our kubectl client is definitely pointing to our minkube built kubecluster. There are a few other things I wanted to show you about minikube. 
-
+here we can only see one node listed, which is expected since minikube only builds single node kube clusters.
 
