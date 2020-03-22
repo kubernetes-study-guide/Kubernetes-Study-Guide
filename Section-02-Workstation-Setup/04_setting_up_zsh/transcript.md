@@ -2,6 +2,7 @@ zsh let's you take advantage of lots of timeaving shortcuts.
 
 
 
+
 As for the shell itself, I'll be using zsh instead of bash.
 
 ```

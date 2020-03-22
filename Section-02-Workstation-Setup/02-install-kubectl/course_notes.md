@@ -1,5 +1,9 @@
 
+bash equivalent:
 
+```
+echo "export $PATH=~/bin:$PATH" >> ~/.bashrc
+```
 
 By creating my own personal bin folder helps me to keep things organised and downloading executables into it, help me to keep things organised. For example when I run 
 
