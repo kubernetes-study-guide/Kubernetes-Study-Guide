@@ -1,3 +1,15 @@
+
+For my terminal, I'll be using iterm2. iterm2 has a loads of extra features when compared to the MacOS's default terminal. For example     I can split a iterm2 terminal into multiple smaller terminals.
+
+```
+click on iterm2 terminal
+```
+
+
+
+
+
+
 zsh let's you take advantage of lots of timeaving shortcuts. 
 
 

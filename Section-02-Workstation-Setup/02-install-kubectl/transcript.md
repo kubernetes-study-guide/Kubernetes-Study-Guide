@@ -28,7 +28,7 @@ Ok that's downloaded, but I need to make it execuble, so let's do that now.
 
 Now I need to add my new bin folder to the PATH variable. I'll do that by append the following line to my shell profile script. 
 
-echo "export $PATH=~/bin:$PATH" >> ~/.zshrc
+echo "export PATH=~/bin:$PATH" >> ~/.zshrc
 
 
 I'm using zsh as my shell, which is why I'm appending to the zshrc file. however if you're using bash, then see the course notes for the bash equivalent.

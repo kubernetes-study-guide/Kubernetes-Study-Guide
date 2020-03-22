@@ -2,7 +2,7 @@ I'll be using my local workstation for performing all the demos.
 My workstation is a Apple macbook Pro. And i have macos catalina running on it.
 
 
-So if you're using macos or a Linux based os such as ubuntu, then you shouldn't have too much problem following along with the course demos. 
+So if you're a mac or linux user, then you shouldn't have too much problem following along with the course demos. 
 
 
 If you're a windows user, then things can get more complicated for you, at least initially for installing the necessary
@@ -11,10 +11,8 @@ software on your windows machine and configuring them. But hopefully everything 
 
 Speaking of software, here's what you need to have installed on your workstation: 
 
-## Must have. 
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - This is the main tool for interacting with Kubernetes clusters
 - [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - This is a tool for creating a Kubernetes cluster that's running direclty on your local workstation
-- [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - This is used for 
 - [docker](https://www.docker.com/get-started) - we 
 
 Up first we have kubectl, this is the main kubernetes command line tool that this whole course is about. kubectl is the client side tool that's
@@ -22,18 +20,15 @@ used for talking to your Kubernetes instance. By the end this course you'll be t
 
 Next we have minikube. this let's you deploy a single-node cluster running locally on your workstation. 
 It's really easy to use and this cluster is in the form of a vm that's running on your workstation, so you're workstation
-will need to have some spare cpu cores and memory to spin up this vm. Minikube needs to use a hypervisor to provision the vm,
-and by default it will look to use virtualbox, which is why I've added that to the must-have list as well. 
+will need to have some spare cpu cores and memory to spin up this vm. 
+
+Finally we have docker. The chances are you already have this installed. We don't actually use docker that much in this course. 
+But I've listed it here because minikube needs to use a hypervisor to spin up vm and docker comes with one.  
 
 
-Ok so that's a list of must-have tools. 
-There are a few other less :
+Ok so that's a list of must-have tools for this course. There are other non-essential tools we'll be using too, 
+and we'll introduce them along the way. 
 
 
 
 
-- watch
-- zsh (oh my zsh framework) along with plugins.
-- zsh-syntax-highlighting
-- iterm2
-- [VS Code](https://code.visualstudio.com/) - Text editor for writing our code. themes and plugins
