@@ -38,9 +38,9 @@ Now I need to add my new bin folder to the PATH variable. I'll do that by append
 echo "export PATH=~/bin:$PATH" >> ~/.zshrc
 
 
-I'm using zsh as my shell, which is why I'm sening this line to the zshrc file. however if you're a bash user, then see the course notes for the bash version of this command.
+I'm using zsh as my shell, which is why I'm sending this line to the zshrc file. however if you're a bash user, then see the course notes for the bash version of this command.
 
-This PATH setting will now come into effect for all future shell sessions. So let's restart my terminal to load this in.
+This PATH setting will take effect from the next restart. So let's restart my terminal to load this in.
 
 ```
 echo $PATH
@@ -72,10 +72,10 @@ If there are any other single executable binary files I want to install in futur
 
 
 
-In this course I'm going to be running a lot of kubectl commands. To help with I'm going enable the kubectl autocomplete feature. That's done by appending the following line to muy shell's profile script.
+One final thing I wanted to show you is how to enable the kubectl autocomplete feature so that kubectl helps you to write your commands faster. All you have to do is append this line to your shell's profile script.
 
 ```
 echo "source <(kubectl completion zsh)" >>~/.zshrc
 ```
 
-And then restart my shell to load in this change. Now we can type kubectl and hit tab twice to get a list of the available sub commands.
+And then restart your shell to load in this change. Now we can type kubectl and hit tab to get a list of the available sub commands.
