@@ -46,33 +46,33 @@ This PATH setting will now come into effect for all future shell sessions. So le
 echo $PATH
 ```
 
-here we can see the new bin folder is listed here. Let's confirm that my shell session can now locate the kubectl binary, using the which utility.
+here we can see our new binary folder is listed here. Let's confirm that my shell can now locate the kubectl binary, using the which utility.
 
 ```
 which kubectl
 ```
 
-so far so good. Now let's try using kubectl.
+so far so good. Now let's try actually using kubectl by getting it to print out it's version.
 
 ```
 kubectl version --client
 ```
 
-That looks like it has worked. The version command also gives the version of the kubernetes cluster that it's currently pointing to. But since we don't have a kubernetes cluster yet, it means taht this command would just hang waiting for a response.  That's why I've used the client flag to suppress kubectl from trying to reach out to any kube clusters.
+Cool it looks like it's working. The version command also gives the version of the kubernetes cluster that kubectl is currently configured to point to. But since we don't have a kube cluster yet, it means taht this command would just hang waiting for a response.  That's why I've used the client flag to limit kubectl to just printing out the client version.
 
 
-This output is a bit difficult to read, which is why I like to use the  --short flag to make it more human readable:
+This output is a a little hard to make out, which is why I like to use the  --short flag to make it more human readable:
 
 
 ```
 kubectl version --client --short
 ```
 
-If there are any other single executable binary files I want to install in future, Then I can now just curl it into this new personal bin folder. This approach helps me to keep track of which tools I've installed manually using curl, and which tools have been installed using a package manager, such as homebrew. By the way I find using package managers a bit of an overkill for installing single file binaries, which is why I've installed kubectl manually.
+If there are any other single executable binary files I want to install in future, Then I can now just curl it into my new personal binary folder. This approach helps me to keep track of which tools I've installed manually using curl, and which tools have been installed using a package manager, such as homebrew. By the way I find using package managers a bit of an overkill for installing single file binaries, the why I installed kubectl manually.
 
 
 
-We'll be writing a lot of kubectl commands in this course. To help with I'm going enable the kubectl autocomplete feature. That's done by appending the following line to muy shell's profile script.
+In this course I'm going to be running a lot of kubectl commands. To help with I'm going enable the kubectl autocomplete feature. That's done by appending the following line to muy shell's profile script.
 
 ```
 echo "source <(kubectl completion zsh)" >>~/.zshrc
