@@ -78,4 +78,4 @@ One final thing I wanted to show you is how to enable the kubectl autocomplete f
 echo "source <(kubectl completion zsh)" >>~/.zshrc
 ```
 
-And then restart your shell to load in this change. Now we can type kubectl and hit tab to get a list of the available sub commands.
+And then restart your shell to load in this change. Now when we type kubectl followed by the tab key, kubectl lists out the available sub commands to choose from.
