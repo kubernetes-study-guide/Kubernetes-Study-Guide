@@ -2,19 +2,19 @@ I'll be using my local workstation for performing all the demos.
 My workstation is a Apple macbook Pro. And i have macos catalina running on it.
 
 
-So if you're using macos or a Linux based os such as ubuntu, then you shouldn't have too much problem following along with the demos. 
+So if you're using macos or a Linux based os such as ubuntu, then you shouldn't have too much problem following along with the course demos. 
 
 
 If you're a windows user, then things can get more complicated for you, at least initially for installing the necessary
 software on your windows machine and configuring them. But hopefully everything will be downhill after that. 
 
 
-Speaking of software, here's what you need to have installed on your workstation, I've broken this list down into must haves and optional. 
+Speaking of software, here's what you need to have installed on your workstation: 
 
 ## Must have. 
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - The main tool for interacting with Kubernetes clusters
-- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - Used for running Kubernetes locally on your workstation
-- [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Used for building Virtual Machines on your local workstation
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - This is the main tool for interacting with Kubernetes clusters
+- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - This is a tool for creating a Kubernetes cluster that's running direclty on your local workstation
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - This is used for 
 - [docker](https://www.docker.com/get-started) - we 
 
 Up first we have kubectl, this is the main kubernetes command line tool that this whole course is about. kubectl is the client side tool that's
@@ -26,8 +26,8 @@ will need to have some spare cpu cores and memory to spin up this vm. Minikube n
 and by default it will look to use virtualbox, which is why I've added that to the must-have list as well. 
 
 
-
-Optional:
+Ok so that's a list of must-have tools. 
+There are a few other less :
 
 
 

@@ -61,9 +61,7 @@ This output is a bit difficult to read, which is why I like to use the  --short 
 kubectl version --client --short
 ```
 
-If there are any other single executable binary files I want to install in future, Then I can now just curl it into this new personal bin folder. This approach helps me to keep track of which tools I've installed manually using curl, and which tools have been installed using a package manager, such as homebrew. 
-
-
+If there are any other single executable binary files I want to install in future, Then I can now just curl it into this new personal bin folder. This approach helps me to keep track of which tools I've installed manually using curl, and which tools have been installed using a package manager, such as homebrew. By the way I find using package managers a bit of an overkill for installing single file binaries, which is why I've installed kubectl manually.  
 
 
 
