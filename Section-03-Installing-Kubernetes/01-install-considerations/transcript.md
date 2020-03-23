@@ -1,8 +1,34 @@
-There's a lot to consider, Before you start building your cluster. Here's some of the questions:
+There's more than 1 way to skin a cat. And the same can be said about setting up a kubernetes Cluster. There are lots of ways to setup a kubernetes cluster. So let's take a look at some of the main ways. 
 
-1. Do you want to use your cluster to run production workloads, or for devepopment purposes. 
-2. Cluster size, HA? How many many masters. can't have even number of masters or else have stability issues. 
-3. what is your budget
-4. where do you want to host your kubeclsuter e.g. private datacenter, or in the cloud. 
-5. Which tool do you want to use to setup your cluster? We'll cover these install tools in the next video. 
+If you want a cluster just for learning and experimenting then minikube is a good option for that. Minikube can spin up a cluster locally on your workstation. 
 
+Another great learning resource is Kubernetes the hardway. This let's you manually build your kubernetes cluster by installing all the components. This is quite an advanced guide and I would suggest you try it out at the end of this course. 
+
+
+However it's definitely worth doing it help you understand how all the indviduals components fit together. 
+
+
+Next we have kubeadm. This is an official kubernetes tool that effectively bootstraps a cluster with a production grade setup. We'll be demo this later in the course. 
+
+
+
+Next we have tools developed by the wider kubernetes community. Here are few of them:
+
+
+
+
+Some of these tools are aimed at particular cloudplatforms. 
+
+
+
+Finally we have saas options. Such as AKS, EKS. 
+
+These can be used to build production grade kube clsuters. But they have vendor lockin and less control, but easier to maintain since it's the cloud vendors update to maintain them. Such as patching the cluster with the latest security fixes, and keeping the os and kubernetes up to date. 
+
+
+Next we have kubernetes flavoured installs - 
+
+openshift
+rancher
+
+These are essentially kubernetes with a host of advanced features. Openshift for example markets itself as an enterprise version of Kubernetes. 
