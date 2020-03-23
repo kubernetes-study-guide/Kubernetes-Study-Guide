@@ -1,12 +1,9 @@
-https://docs.docker.com/docker-for-mac/install/
+Iterm2 terminal (macos only) - https://iterm2.com/
+
+zsh has now become the default shell - https://www.theverge.com/2019/6/4/18651872/apple-macos-catalina-zsh-bash-shell-replacement-features
 
 
 
-https://minikube.sigs.k8s.io/docs/start/
+oh-my-zsh framework - https://github.com/ohmyzsh/ohmyzsh
 
-Now you might be thinking that zsh isn't as mature and or well established. 
-
-
-
-
-anything that's specific to bash will be covered in the course notes. 
+VS code Cobalt2 theme - https://github.com/wesbos/cobalt2-vscode

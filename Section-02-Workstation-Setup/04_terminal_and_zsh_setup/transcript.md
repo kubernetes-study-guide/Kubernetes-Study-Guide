@@ -1,30 +1,61 @@
-
-For my terminal, I'll be using iterm2. iterm2 has a loads of extra features when compared to the MacOS's default terminal. For example     I can split a iterm2 terminal into multiple smaller terminals.
+Alright. Let's take a look at my terminal setup. 
 
 ```
-click on iterm2 terminal
+click rocket icon - then search for 'term'
 ```
 
 
+In this course I won't be using my macos's builtin terminal. Instead I've installed a popular alternaive called iterm2. It shows iterm on the laaunch screen here, but it actually called iterm2 after I've opened it. 
+
+```
+open terminal -> hover over the header
+```
 
 
+iterm2 has a lot of extra capabilites and customization options, but the feature I'll be using most often is the ability to easily split my terminal into smaller terminals.
+
+```
+do vertical and horizontal splits
+```
+
+So if your also a mac user then you might like to give iterm2 a try. 
 
 
-zsh let's you take advantage of lots of timeaving shortcuts. 
-
-
-
-
-As for the shell itself, I'll be using zsh instead of bash.
+For my shell I'll be using zsh.
 
 ```
 echo $SHELL
 ```
 
+zsh is like bash but with a lot more features. In the year 2019 zsh replaced bash to become the default shell in macos. So if you're thinking of making the switch to zsh then now would be a great time to jump ship. In my experience nearly everything I used to do on bash, works on zsh as well. However if there are any differences then I'll mention them in the course notes.  
 
-zsh is basically the same as bash, but with a lot more feature. In 2019 zsh replaced bash to become the default shell in  MacOS. So if you're tempted in switching to zsh, then now would be a great time to jump ship. However all the commands I'll demo will work fine on both shells.
+I've also enhanced zsh further my installing the oh-my-zsh framework. 
 
-In my case not only have switched to using zsh, I've also turbocharged it installing the oh-my-zsh framework. This framework gives me access to a lot of extra features  including a bunch of handy aliases:
+It's dead easy to insteall, all you have to do is run a curl command. 
+
+
+This framework gives you access to a lot of cools themes and plugins. 
+
+
+
+
+
+
+
+and you can set these up by going into your .zshrc file,.... In my case I'm using the agnoster theme. 
+
+
+
+
+
+And I've activated several plugins entering them in the plugins section. 
+
+
+
+
+
+
+This framework gives me access to a lot of extra features including a bunch of handy aliases:
 
 ```
 alias
@@ -43,97 +74,3 @@ Pretty cool right. I'll be using these aliases a lot to cut down my typing and t
 By the way, these aliases are only available after activatin some om-my-zsh plugins. To do that I had to go to my home directory and open up the zsh config file, which is called .zshrc. In this file there's a section where you can select your plugins.
 
 So if you're already a zsh user but haven't used this framework before, then I definitely recommend giving it a try. It's dead easy to install and you can find the install instructions in this video's description.
-
-
-As for my code editor, I'll be using VS Code. VS Code has it's own integrated terminal. You might have noticed that my VS Code interface looks a little different to what you might be expecting, and that's because I'm using the Cobalt2 vscode theme. Check out this video's description for a link to that theme  .
-
-That's it for this video, see you in the next one.
-
-
-
-
-Slides -> bash terminal
-
-- watch
-- zsh (oh my zsh framework) along with plugins. 
-- zsh-syntax-highlighting
-- iterm2
-- [VS Code](https://code.visualstudio.com/) - Text editor for writing our code. themes and plugins
-- [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Used for building Virtual Machines on your local workstation
-- [docker](https://www.docker.com/get-started)
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - The main tool for interacting with Kubernetes clusters
-- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - Used for running Kubernetes locally on your workstation
-
-
-Now let's take a look at the software you should have on your workstation.
-
-First and foremost you must have the kubectl client installed. This whole course is based on how to use this cli tool. It comes in the form of a single executable binary file that you can simply download and place into one of your path folders.
-
-Next we have minikube. Minikube is one of the official Kubernetes projects and it is used for building a fully functional Kubernetes cluster directly on your local workstation. We'll be using minikube provisioned kube clusters for most of this course.
-
-Minikube needs to make use of a hyper visor to build a VM, and for that we'll be using Virtualbox.
-
-We also have a few optional extras that you may like to install as well:
-
-
-
-
-
-
-The quickest way to install all of these software is probably by using a tool called homebrew, This cli tool lets you install all these applications by just running a few commands.
-
-
-For Windows users you can try using chocolatey instead, chocolatey is like the windows equivalent of homebrew.
-
-Alternatively you can always refer to the official install instructions for each software.
-
-
-
-
-Now lets go back to the software requirements.
-
-In my case I have already installed all the required. So I can't show you homebrew in action. Instead I will run some checks to confirm all the software are definitely installed.
-
-First I'll check virtualbox is installed by running VboxManage version. You can also check this by opening up the virtualbox gui interface.
-
-I'll then perform similar checks for docker, minikube, and last but not least Kubectl.
-
-I've included the --short flag to make the output easier to read. By default the kubectl version commnad outputs two versions. The version of the kubectl client binary that's installed locally on your workstation, and the version of the kube cluster that our kubectl is pointing to. So we're using the --client flag here to limit the output to just client side since we don't have a kubecluster yet.
-
-As for VS code, to check if that's installed, it's just a case of seeing if you can open it up.
-
-Ok I'll just clear the screen now. There's one final thing I wanted to do before finishing this video. And that's to enable kubectl's autocomplete feature. To do that we need to run the following source command. After that, you can then try out the autocomplete feature by hitting the tab key twice after your kubectl command. here we can see that kubectl is trying to help us by suggesting what we can write next.
-
-However this approach only lasts for the current bash terminal. So to make it persistant we add it to our .bashrc profile script
-
-
-Ok we'll take a break here, see you in the next video.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-That's it for this video, see you in the next one.
