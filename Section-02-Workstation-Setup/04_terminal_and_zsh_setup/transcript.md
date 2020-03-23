@@ -48,29 +48,53 @@ and you can set these up by going into your .zshrc file,.... In my case I'm usin
 
 
 
-And I've activated several plugins entering them in the plugins section. 
+And I've activated several plugins by inserting their name in the plugins section. 
 
-
-
-
-
-
-This framework gives me access to a lot of extra features including a bunch of handy aliases:
+The docker plugin simply enables the docker autocomplete feature. The kubectl plugin does 2 things. First it another way of enableing the kubectl autocomplete and secondly it also sets up bunch of handy aliases. 
 
 ```
-alias
+aliases | grep kubectl
 ```
 
-For example if I want to run "kubectl get pods", then I can just use the kgp alias followed by space:
+
+These aliases are a massive time saver but can appear a bit cryptic if you're familiar. To solve that problem I've activated the globalias plugin. This auto expands an alias to the actual when I hit space after it. For example if I want to run `kubectl get pods` then I can use the kgp alias:
+
+```
+alias kgp
+```
+
+So when I type this alias, and hit space. 
+
 
 ```
 kgp<space>
 ```
 
-Hitting space ends up replacing the alias with the actual underlying command it referenced to.
+The globalias plugin get's triggered and it replaces the alias with the actual underlying command.
 
 Pretty cool right. I'll be using these aliases a lot to cut down my typing and to get things done quicker.
 
-By the way, these aliases are only available after activatin some om-my-zsh plugins. To do that I had to go to my home directory and open up the zsh config file, which is called .zshrc. In this file there's a section where you can select your plugins.
+Finally i have the minikube command. This is just another way to enable minikube autocompletion. 
 
-So if you're already a zsh user but haven't used this framework before, then I definitely recommend giving it a try. It's dead easy to install and you can find the install instructions in this video's description.
+```
+minikube tab-tab
+```
+
+Finally I've enabled the zsh-syntax-highlighting plugin. This is one of my favourite tools because it enables syntax highlighting on the command line. For example, an invalid command shows up in red:
+
+
+```
+ech
+```
+
+And turns green if it is valid, and it hight things in double quotes:
+
+```
+echo "hello world"
+```
+
+To get this working you also need to install the zsh-syntax-highlighting package which I've already done beforehand:
+
+```
+brew install zsh-syntax-highlighting
+```
