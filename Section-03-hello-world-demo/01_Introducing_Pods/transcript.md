@@ -1,4 +1,4 @@
-Setting up an containerised application to run on kubernetes involves creating a set of kubernetes objects. There are different kinde of objects, such as services, replicasets, serviceaccounts,....and so on. However there's one object type that's front and center of them all, and that the pod type. That's because pods are where you run your containers. All the other objects types plays more of a supporting role to your pods. 
+Setting up an containerised application to run on kubernetes involves creating a set of kubernetes objects. There are different kinde of objects, such as services, replicasets, serviceaccounts,....and so on. However there's one object type that's front and center of them all, and that the pod type. That's because pods are where you run your containers. Most of the other objects types plays more of a supporting role to your pods. 
 
 For example -
 
