@@ -1,0 +1,1 @@
+repeat hello world demo on digital ocean. Create both pod and service. 
