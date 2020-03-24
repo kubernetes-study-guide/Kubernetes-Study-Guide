@@ -19,6 +19,3 @@ do vertical and horizontal splits
 ```
 
 So if you're a mac user then you might like to give iterm2 a try.
-
-
-
