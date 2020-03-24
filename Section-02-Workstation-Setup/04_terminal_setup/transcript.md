@@ -5,7 +5,7 @@ click rocket icon - then search for 'term'
 ```
 
 
-In this course I won't be using my macos's builtin terminal. Instead I've installed a popular alternative called iterm2. It shows iterm on the laaunch screen here, but it actually called iterm2 after you open it up.
+In this course I won't be using my macos's builtin terminal. Instead I've installed a popular alternative called iterm2. It shows iterm on the launch screen here, but it actually called iterm2 after you open it up.
 
 ```
 open terminal -> hover over the header
