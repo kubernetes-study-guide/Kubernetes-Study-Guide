@@ -49,39 +49,23 @@ I've also activated several plugins by adding their name to the plugins section.
 
 Let's go over these plugins.
 
-The docker plugin simply enables the docker autocomplete feature.
+The docker, minikube, and kubectl plugins all do the same thing, which is that they enable the autocomplete feature for their respective tool.
 
-````
+```
 vertical split, vim in right terminal
-````
-
-Similarly the minikube plugin enable autocomplete for minikube.
-
-```
-minikube tab-tab
+docker con<tab>
 ```
 
-You might recall I've already setup autocompletion back when I first installed minikube. So this is just an alternative way of doing the same thing.
+You might recall I've already setup autocompletion for some of these tools. However this is just another way of doing the same thing.
 
-
-The kubectl plugin enables autocompletion for kubectl.
-
-
-```
-kubectl tab-tab
-```
-
-Once again I've already setup kubectl autocompletion in a previous video, so this is yet another way of enabling it.
-
-
-However the kubectl plugin also sets up bunch of handy aliases.
+The kubectl plugin has an extra feature, which is that it also sets up bunch of handy aliases.
 
 ```
 aliases | grep kubectl
 ```
 
-
-These aliases are a massive time saver but you might struggle to follow the demos if I'm using these cryptic looking aliases. That's why I've also installed the globalias plugin. This plugin auto expands an alias to the actual underlying command. Let me show you what I mean.
+I don't want to bore you by watching me type out the same commands over and over again. So I'll speed things up by use these aliases whenever I can.
+However you might struggle to follow the demos if I'm using these cryptic looking aliases. That's why I've also installed the globalias plugin. This plugin auto expands an alias to the actual underlying command. Let me show you what I mean.
 
 
 
@@ -104,9 +88,9 @@ Then to trigger th globalias plugin, all I have to do, is hit space.
 <space>
 ```
 
-globalias then automaically swaps out the alias with the actual underlying command. Pretty cool right.
+globalias then automatically swaps out the alias with the actual underlying command. Pretty cool right.
 
-Finally I've enabled the zsh-syntax-highlighting plugin. This enables syntax highlighting on the command line. For example, an invalid command shows up in red:
+Finally we have the zsh-syntax-highlighting plugin. This enables syntax highlighting on the command line. For example, an invalid command shows up in red:
 
 
 ```
@@ -119,4 +103,4 @@ And turns green if it is valid. It also does other syntax highlighting such as h
 echo "hello world"
 ```
 
-Most of these plugins do require some extra work to set them up. For example the docker plugin won't work if you haven't installed. So I recommend reading the plugin's install instruction when installing them.
+Most of these plugins do require some extra work to set them up. For example you need to install docker first before you use this docker plugin. So I recommend reading the plugin's install instruction when installing them.
