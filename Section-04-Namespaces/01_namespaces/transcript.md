@@ -1,6 +1,6 @@
 # transcript
 
-In Kubernetes 
+In Kubernetes
 
 
 . You see, in Kubernetes we can group our objects into a construct known as **namespaces**. We can use the   get command to list out our namespace:
@@ -48,7 +48,7 @@ $ tree configs/
 $ code configs/namespace-dev1.yml
 ```
 
-namespaces are quite a basic type of object, which is why the yaml definition is quite short compared to other object types. The name that you give to your namespaces should be something that makes sense in your workplace, such as naming them after    team names, project names, environment names, and etc. 
+namespaces are quite a basic type of object, which is why the yaml definition is quite short compared to other object types. The name that you give to your namespaces should be something that makes sense in your workplace, such as naming them after    team names, project names, environment names, and etc.
 
 Lets now create this namespace:
 
@@ -79,7 +79,7 @@ kubectl config set-context $(kubectl config current-context) --namespace=ns-dev1
 kubectl config get-contexts
 ```
 
-This effectily makes a one line change in the kubectl's config file. Now kubectl will use the ns-dev1 namespace as the new default, unless told otherwise. 
+This effectily makes a one line change in the kubectl's config file. Now kubectl will use the ns-dev1 namespace as the new default, unless told otherwise.
 
 ```bash
 $ kubectl get pods
@@ -89,7 +89,7 @@ $ kubectl get pods -o yaml --namespace=ns-dev1 | grep 'namespace:'
     namespace: ns-dev1
 ```
 
-If you want to limit a pod, so that it can only be created inside a specific namespace, then you can hard code the namespace into the pod's   definition. 
+If you want to limit a pod, so that it can only be created inside a specific namespace, then you can hard code the namespace into the pod's   definition.
 
 ```code
 code configs/pod-httpd-specfic-namespace.yml
@@ -110,13 +110,16 @@ $ kubectl api-resources -o wide
 ```
 
 
-There's a lot of output here so I'll just scroll up to the beginning. 
+There's a lot of output here so I'll just scroll up to the beginning.
 
-I'll zoom out a little bit so that each row fits on a single line. 
-
-
-Here we have the namespaced column. This tells us which of these objects can be put inside a namespace. 
+I'll zoom out a little bit so that each row fits on a single line.
 
 
-That's it for this video. See you in the next one. 
+Here we have the namespaced column. This tells us which of these objects can be put inside a namespace.
+
+
+the namespace changing command is quite long. I've got it set as an alias so I'm able to bring it up faster. however there's another tool you can use that makes it easier.
+
+
+With this you have the tab option to quickly pick your namespace.
 
