@@ -1,5 +1,4 @@
-
-For my shell I'll be using zsh.
+So I'm using iterm2 to access my shell. As for the shell itself, I'm using zsh.
 
 ```
 echo $SHELL
