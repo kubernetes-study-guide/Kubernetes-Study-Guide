@@ -15,16 +15,17 @@ Speaking of software, here's what you need to have installed on your workstation
 - [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - This is a tool for creating a Kubernetes cluster that's running direclty on your local workstation
 - [docker](https://www.docker.com/get-started) - we
 
-Up first we have kubectl, this is the main kubernetes command line tool that this whole course is about. kubectl is the client side tool that's
-used for talking to your Kubernetes instance. By the end this course you'll be typing out kubectl commands in your sleep.
+We'll walk through the install process for these tools in the upcoming videos. But for now let's quickly go over what these are.
 
-Next we have minikube. this let's you deploy a single-node cluster running locally on your workstation.
+Up first we have kubectl, this is the main kubernetes command line tool, it's a client side tool that's used for talking to your Kube clusters . This entire course is essentially all about how to use this tool. kubectl. By the end this course you'll be able to write kubectl commands in your sleep.
+
+Next we have minikube. this is used for creating a single-node kube cluster running directly on your local workstation.
 It's really easy to use and this cluster is in the form of a vm that's running on your workstation, so you're workstation
-will need to have some spare cpu cores and memory to spin up this vm.
+will need to have some spare cpu cores and memory to spin up this vm. However don't worry if your workstation isnt powerful enough to run minikube. In this course I'll also show you how to build a kubecluster in the cloud for free using Digital Ocean.
 
 Finally we have docker. The chances are you already have this installed. We don't actually use docker that much in this course.
-But I've listed it here because minikube needs to use a hypervisor to spin up vm and docker comes with one.
+But I've listed it here because minikube needs to use a hypervisor to spin up vm and docker comes with a builtin hypervisor that minikube can use.
 
 
-Ok so that's a list of must-have tools for this course. There are other non-essential tools we'll be using too,
+Ok so that's some of main tools we'll be using in this course. There are other tools we'll be using too,
 and we'll introduce them along the way.

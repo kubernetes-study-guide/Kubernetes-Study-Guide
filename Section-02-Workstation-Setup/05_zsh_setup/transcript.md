@@ -1,4 +1,4 @@
-So I'm using iterm2 to access my shell. As for the shell itself, I'm using zsh.
+So I'm using iterm2 to access my shell. But As for the shell itself, I'm using zsh.
 
 ```
 echo $SHELL
@@ -6,7 +6,7 @@ echo $SHELL
 
 zsh is like bash but with lots of extra features. In the year 2019 Apple made zsh the default shell in macOS, before it used to be bash. So if you're thinking of making the switch to zsh then now would be a great time to jump ship, if you haven't already done so. In my experience nearly everything I used to do on bash, works just as well in zsh, if not better.
 
-I've also made zsh even better by installing the oh-my-zsh framework.
+I've also made zsh even more powerful by installing the oh-my-zsh framework.
 
 ```
 swipe to web browser - tab1 = https://github.com/ohmyzsh/ohmyzsh
@@ -56,7 +56,7 @@ vertical split, vim in right terminal
 docker con<tab>
 ```
 
-You might recall I've already setup autocompletion for some of these tools. However this is just another way of doing the same thing.
+You might recall I've setup autocompletion for some of these tools. However this is just another way of doing the same thing.
 
 The kubectl plugin has an extra feature, which is that it also sets up bunch of handy aliases.
 
@@ -64,8 +64,8 @@ The kubectl plugin has an extra feature, which is that it also sets up bunch of 
 aliases | grep kubectl
 ```
 
-I don't want to bore you by watching me type out the same commands over and over again. So I'll speed things up by use these aliases whenever I can.
-However you might struggle to follow the demos if I'm using these cryptic looking aliases. That's why I've also installed the globalias plugin. This plugin auto expands an alias to the actual underlying command. Let me show you what I mean.
+Watching me type out the same commands over and over again can get a bit boring. So I'll speed things up by using these aliases whenever I can.
+However you might find these aliases a little cryptic and hard to follow. That's why I've also installed the globalias plugin. This plugin auto expands an alias to the actual underlying command. Let me show you what I mean.
 
 
 
@@ -103,4 +103,4 @@ And turns green if it is valid. It also does other syntax highlighting such as h
 echo "hello world"
 ```
 
-Most of these plugins do require some extra work to set them up. For example you need to install docker first before you use this docker plugin. So I recommend reading the plugin's install instruction when installing them.
+Most of these plugins do require some extra work to set them up. For example you need to install docker first before you use this docker plugin. that's why it's always a good idea to review a plugin's install instructions before installing it.
