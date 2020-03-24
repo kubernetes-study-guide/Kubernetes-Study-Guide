@@ -12,7 +12,7 @@ open terminal -> hover over the header
 ```
 
 
-iterm2 has a lot of cool capabilites and customization options, one of my favourite feature is that it lets me easily split my terminal into smaller terminals.
+iterm2 has a lot of cool features and customization options, one of my favourite feature is that it lets me easily split my terminal into smaller terminals.
 
 ```
 do vertical and horizontal splits
