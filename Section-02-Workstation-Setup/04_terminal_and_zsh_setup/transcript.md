@@ -1,24 +1,24 @@
-Alright. Let's take a look at my terminal setup. 
+Alright. Let's take a look at my terminal setup.
 
 ```
 click rocket icon - then search for 'term'
 ```
 
 
-In this course I won't be using my macos's builtin terminal. Instead I've installed a popular alternaive called iterm2. It shows iterm on the laaunch screen here, but it actually called iterm2 after I've opened it. 
+In this course I won't be using my macos's builtin terminal. Instead I've installed a popular alternaive called iterm2. It shows iterm on the laaunch screen here, but it actually called iterm2 after you open it.
 
 ```
 open terminal -> hover over the header
 ```
 
 
-iterm2 has a lot of extra capabilites and customization options, but the feature I'll be using most often is the ability to easily split my terminal into smaller terminals.
+iterm2 has a lot of extra capabilites and customization options, one of my favourite feature is that it lets me easily split my terminal into smaller terminals.
 
 ```
 do vertical and horizontal splits
 ```
 
-So if your also a mac user then you might like to give iterm2 a try. 
+So if your also a mac user then you might like to give iterm2 a try.
 
 
 For my shell I'll be using zsh.
@@ -27,30 +27,39 @@ For my shell I'll be using zsh.
 echo $SHELL
 ```
 
-zsh is like bash but with a lot more features. In the year 2019 zsh replaced bash to become the default shell in macos. So if you're thinking of making the switch to zsh then now would be a great time to jump ship. In my experience nearly everything I used to do on bash, works on zsh as well. However if there are any differences then I'll mention them in the course notes.  
+zsh is like bash but with a lot more features. In the year 2019 zsh replaced bash to become the default shell in macos. So if you're thinking of making the switch to zsh then now would be a great time to jump ship. In my experience nearly everything I used to do on bash, works on zsh as well. However if there are any differences then I'll mention them in the course notes.
 
-I've also enhanced zsh further my installing the oh-my-zsh framework. 
+I've also enhanced zsh by installing the oh-my-zsh framework.
 
-It's dead easy to insteall, all you have to do is run a curl command. 
+```
+swipe to web browser
+```
 
-
-This framework gives you access to a lot of cools themes and plugins. 
-
-
-
+It's dead easy to install, all you have to do is run a curl command.
 
 
-
-
-and you can set these up by going into your .zshrc file,.... In my case I'm using the agnoster theme. 
+This framework gives you access to a lot of cool themes and plugins.
 
 
 
 
 
-And I've activated several plugins by inserting their name in the plugins section. 
 
-The docker plugin simply enables the docker autocomplete feature. The kubectl plugin does 2 things. First it another way of enableing the kubectl autocomplete and secondly it also sets up bunch of handy aliases. 
+
+and you can set these up by going into your .zshrc file,....
+
+
+```
+vim ~/.zshrc
+```
+
+
+In my case I'm using the agnoster theme.
+
+
+And I've activated several plugins by inserting their name in the plugins section.
+
+The docker plugin simply enables the docker autocomplete feature. The kubectl plugin does 2 things. First it another way of enableing the kubectl autocomplete and secondly it also sets up bunch of handy aliases.
 
 ```
 aliases | grep kubectl
@@ -63,7 +72,7 @@ These aliases are a massive time saver but can appear a bit cryptic if you're fa
 alias kgp
 ```
 
-So when I type this alias, and hit space. 
+So when I type this alias, and hit space.
 
 
 ```
@@ -74,7 +83,7 @@ The globalias plugin get's triggered and it replaces the alias with the actual u
 
 Pretty cool right. I'll be using these aliases a lot to cut down my typing and to get things done quicker.
 
-Finally i have the minikube command. This is just another way to enable minikube autocompletion. 
+Finally i have the minikube command. This is just another way to enable minikube autocompletion.
 
 ```
 minikube tab-tab
