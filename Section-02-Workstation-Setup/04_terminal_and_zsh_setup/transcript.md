@@ -5,21 +5,22 @@ click rocket icon - then search for 'term'
 ```
 
 
-In this course I won't be using my macos's builtin terminal. Instead I've installed a popular alternaive called iterm2. It shows iterm on the laaunch screen here, but it actually called iterm2 after you open it.
+In this course I won't be using my macos's builtin terminal. Instead I've installed a popular alternative called iterm2. It shows iterm on the laaunch screen here, but it actually called iterm2 after you open it up.
 
 ```
 open terminal -> hover over the header
 ```
 
 
-iterm2 has a lot of extra capabilites and customization options, one of my favourite feature is that it lets me easily split my terminal into smaller terminals.
+iterm2 has a lot of cool capabilites and customization options, one of my favourite feature is that it lets me easily split my terminal into smaller terminals.
 
 ```
 do vertical and horizontal splits
 ```
 
-So if your also a mac user then you might like to give iterm2 a try.
+So if you're a mac user then you might like to give iterm2 a try.
 
+Now let's talk about my shell setup.
 
 For my shell I'll be using zsh.
 
@@ -27,39 +28,61 @@ For my shell I'll be using zsh.
 echo $SHELL
 ```
 
-zsh is like bash but with a lot more features. In the year 2019 zsh replaced bash to become the default shell in macos. So if you're thinking of making the switch to zsh then now would be a great time to jump ship. In my experience nearly everything I used to do on bash, works on zsh as well. However if there are any differences then I'll mention them in the course notes.
+zsh is like bash but with a lot more features. In the year 2019 Apple made zsh the default shell in macos, before it used to be bash. So if you're thinking of making the switch to zsh then now would be a great time to jump ship. In my experience nearly everything I used to do on bash, works just as well in zsh, if not better.
 
-I've also enhanced zsh by installing the oh-my-zsh framework.
+I've also made zsh even better by installing the oh-my-zsh framework.
 
 ```
-swipe to web browser
+swipe to web browser - tab1 = https://github.com/ohmyzsh/ohmyzsh
 ```
 
 It's dead easy to install, all you have to do is run a curl command.
 
-
-This framework gives you access to a lot of cool themes and plugins.
-
-
-
+```
+scroll to curl command
+```
 
 
 
+This framework gives you access to a lot of cool themes.
 
-and you can set these up by going into your .zshrc file,....
+```
+tab2 - https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+```
+
+
+There's also a long list of zsh plugins you can make use of as well:
+
+```
+tab3 - https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins
+```
+
+You can set your themes and plugins by by going into your .zshrc file.
 
 
 ```
+swipe
 vim ~/.zshrc
 ```
 
 
-In my case I'm using the agnoster theme.
+In my case I've activated the gianu theme.
 
 
-And I've activated several plugins by inserting their name in the plugins section.
+I've also activated several plugins by inserting their name in the plugins section.
 
-The docker plugin simply enables the docker autocomplete feature. The kubectl plugin does 2 things. First it another way of enableing the kubectl autocomplete and secondly it also sets up bunch of handy aliases.
+Let's go over some of these plugins
+
+The docker plugin simply enables the docker autocomplete feature.
+
+````
+vertical split, vim in right terminal
+````
+
+
+
+
+The kubectl plugin does 2 things. First it another way of enableing the kubectl autocomplete and secondly it also sets up bunch of handy aliases.
 
 ```
 aliases | grep kubectl
@@ -96,14 +119,10 @@ Finally I've enabled the zsh-syntax-highlighting plugin. This is one of my favou
 ech
 ```
 
-And turns green if it is valid, and it hight things in double quotes:
+And turns green if it is valid, and it does other syntax highlighting such as highlighting things in double quotes:
 
 ```
 echo "hello world"
 ```
 
-To get this working you also need to install the zsh-syntax-highlighting package which I've already done beforehand:
-
-```
-brew install zsh-syntax-highlighting
-```
+This plugin does require a couple of extra steps to setup. So check the course notes for more info.
