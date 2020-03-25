@@ -11,7 +11,13 @@ ls -l
 cat pod-httpd.yaml
 ```
 
-These yaml files follows a certain structure and a big part of Kubernetes is to do with writing these files. We'll cover how to write these files later.
+These yaml files follows a certain structure and a big part of Kubernetes is to do with writing these files. 
+
+Writing these yaml files does seem daunting at first. However it's not that bad. In fact I rarely write these files from scratch, instead I find an existing yaml file, and then use it as template to repurpose it for my needs. 
+
+
+
+We'll cover how to write these files later.
 
 But for now this yaml file is basically saying that:
 
