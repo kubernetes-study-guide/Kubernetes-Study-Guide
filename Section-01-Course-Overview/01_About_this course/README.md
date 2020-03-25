@@ -62,3 +62,5 @@ https://learnk8s.io/blog/
 eli5 guides
 [https://www.cncf.io/the-childrens-illustrated-guide-to-kubernetes/](https://www.cncf.io/the-childrens-illustrated-guide-to-kubernetes/)
 [https://cloud.google.com/kubernetes-engine/kubernetes-comic/](https://cloud.google.com/kubernetes-engine/kubernetes-comic/)
+
+https://collabnix.github.io/kubelabs/
