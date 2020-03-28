@@ -37,6 +37,14 @@ PROMPT='╭─%(?.%{$fg[green]%}%B √ %{$reset_color%}.%{$fg[red]%}%B X %{$rese
 ╰─%B$%b '
 ```
 
+### Globalias disable specific aliases.
+
+
+https://github.com/ohmyzsh/ohmyzsh/issues/7550#issuecomment-604519727
+```
+vim ./.oh-my-zsh/plugins/globalias/globalias.plugin.zsh
+```
+
 
 prompt setup:
 

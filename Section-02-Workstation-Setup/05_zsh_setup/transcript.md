@@ -104,3 +104,7 @@ echo "hello world"
 ```
 
 Most of these plugins do require some extra work to set them up. For example you need to install docker first before you use this docker plugin. that's why it's always a good idea to review a plugin's install instructions before installing it.
+
+
+
+https://github.com/ohmyzsh/ohmyzsh/issues/7550#issuecomment-604519727
