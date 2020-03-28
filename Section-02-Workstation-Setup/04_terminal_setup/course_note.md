@@ -2,5 +2,5 @@
 
 ## Alternative Terminal Apps
 
-- [iterm2](https://www.iterm2.com/) (MacOS only)
-- [hyper](https://hyper.is/)
+- [iterm2](https://www.iterm2.com/) - MacOS only
+- [hyper](https://hyper.is/) - Available on Linux, Windows, and MacOS
