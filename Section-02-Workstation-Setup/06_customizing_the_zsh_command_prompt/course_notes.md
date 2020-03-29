@@ -43,17 +43,3 @@ The second line has syntax in the form of:
 ```
 
 The `%(...)` indicates an if-else statement. This decides on which expression to print based on the exit code (?).
-
-
-
-
-
-
-
-
-```
-# https://github.com/jonmosco/kube-ps1
-PROMPT='$(kube_ps1)'$PROMPT
-PROMPT="╭─$PROMPT
-╰─%(?.➤.%{$fg[red]%}➤%{$reset_color%}) "
-```
