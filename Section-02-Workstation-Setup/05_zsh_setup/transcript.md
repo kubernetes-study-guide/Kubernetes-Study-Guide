@@ -48,7 +48,13 @@ vim ~/.zshrc
 ```
 
 
-In my case I've activated the agnoster theme. However some themes do require some extra work to setup, such as installing font packages.
+In my case I'm using the agnoster theme. This theme comes with a nice command prompt that tells you if you're inside a git repo using these symbols.
+
+```
+cd Kubernetes-Study-Guide
+```
+
+This theme did require some extra work to setup, such as installing font packages. You can find out more about this in the course notes.
 
 
 
