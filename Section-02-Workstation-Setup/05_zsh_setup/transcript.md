@@ -4,12 +4,19 @@ So I'm using iterm2 to access my shell. But As for the shell itself, I'm using z
 echo $SHELL
 ```
 
-zsh is like bash but with lots of extra features. In the year 2019 Apple made zsh the default shell in macOS, before it used to be bash. So if you're thinking of making the switch to zsh then now would be a great time to jump ship, if you haven't already done so. In my experience nearly everything I used to do on bash, works just as well in zsh, if not better.
+zsh is like bash but with lots of extra features. In the year 2019 Apple made zsh the default shell in macOS, before it used to be bash.
+
+```
+swipe to tab1 - https://support.apple.com/en-gb/HT208050
+```
+
+
+So if you're thinking of making the switch to zsh then now would be a great time to jump ship, if you haven't already done so. In my experience nearly everything I used to do on bash, works just as well in zsh, if not better.
 
 I've also made zsh even more powerful by installing the oh-my-zsh framework.
 
 ```
-swipe to web browser - tab1 = https://github.com/ohmyzsh/ohmyzsh
+swipe to web browser - tab2 = https://github.com/ohmyzsh/ohmyzsh
 ```
 
 It's dead easy to install, all you have to do is run a curl command.
@@ -41,7 +48,7 @@ vim ~/.zshrc
 ```
 
 
-In my case I've activated the gianu theme. However some themes do require some extra work to setup, such as installing font packages.
+In my case I've activated the agnoster theme. However some themes do require some extra work to setup, such as installing font packages.
 
 
 
@@ -58,7 +65,7 @@ docker con<tab>
 
 You might recall I've setup autocompletion for some of these tools. However this is just another way of doing the same thing.
 
-The kubectl plugin has an extra feature, which is that it also sets up bunch of handy aliases.
+The kubectl plugin has an extra feature, which is that it also sets up a bunch of handy aliases.
 
 ```
 aliases | grep kubectl
