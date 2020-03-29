@@ -18,7 +18,7 @@ Source: https://github.com/agnoster/agnoster-zsh-theme/issues/39#issuecomment-30
 
 
 
-## General guide to customizing ZSH $PROMPT variable
+## General guide to customizing zsh $PROMPT variable
 
 Useful links to learning about the zsh $PROMPT:
 
