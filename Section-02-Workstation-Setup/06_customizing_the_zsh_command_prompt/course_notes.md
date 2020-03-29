@@ -1,3 +1,7 @@
+# Course notes - Customizing the command prompt
+
+## Customizing the agnoster command prompt structure
+
 Removing workstation name and set custom username:
 
 ```
@@ -13,15 +17,17 @@ Source: https://github.com/agnoster/agnoster-zsh-theme/issues/39#issuecomment-30
 
 
 
-Modify PROMPT to span 2 lines, and add a dynamic arrow head to indicate the exit code of the previous command.
-
 
 ## General guide to customizing ZSH $PROMPT variable
 
 Useful links to learning about the zsh $PROMPT:
 
 - https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/
--
+- https://www.sitepoint.com/zsh-tips-tricks/
+- https://hackernoon.com/how-to-trick-out-terminal-287c0e93fce0
+- https://til.hashrocket.com/posts/f3093399d0-test-out-your-zsh-prompt
+- https://medium.com/@oldwestaction/beautifying-your-terminal-with-zsh-prezto-powerlevel9k-9e8de2023046
+- https://code.joejag.com/2014/why-zsh.html
 
 ```
 PROMPT="╭$PROMPT
