@@ -34,19 +34,26 @@ Now I need to restart the shell for this change to take effect.
 restart the shell
 ```
 
-Ok that looks better. However I can still run out space if I drill down into several directories. So fix that I need to make some more general customisations to the command prompt. This time I'm going to make the command prompt span across 2 lines. That's done by modifying the prompt environment variable:
+Ok that looks better. However I can still run out space if I drill down into several directories. So fix that I'm going to make the command prompt span across 2 lines. That's done by modifying the prompt environment variable:
 
 ```
 echo $PROMPT
 ```
 
-zsh has it's own syntax for configuring this prompt variable, and I've include links to website where you can learn more about this syntax language and build your own command prompt.
-
-But here's one i've prepared earlier.
+zsh has it's own syntax for configuring this prompt variable,...
 
 ```
 swipe to course notes
 ```
+
+... and in the course notes you'll find links to websites where you can learn more about this syntax language and build your own command prompt.
+
+
+But for now, here's one i've prepared earlier.
+
+In case you're interested, I've given a breakdown of this PROMPT in the course notes to explain what it does.
+
+
 
 Once again I have to add this to my zshell profile:
 
