@@ -48,7 +48,7 @@ vim ~/.zshrc
 ```
 
 
-In my case I'm using the agnoster theme. This theme comes with a nice command prompt that tells you if you're inside a git repo using these symbols.
+In my case I'm using the agnoster theme. This theme comes with a nice command prompt that tells you if you're inside a git repo and which branch you're on.
 
 ```
 cd Kubernetes-Study-Guide
