@@ -54,6 +54,10 @@ In my case I've activated the agnoster theme. However some themes do require som
 
 I've also activated several plugins by adding their name to the plugins section.
 
+```
+vim scroll to plugins secitons.
+```
+
 Let's go over these plugins.
 
 The docker, minikube, and kubectl plugins all do the same thing, which is that they enable the autocomplete feature for their respective tool.
