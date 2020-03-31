@@ -3,18 +3,35 @@ cd Kubernetes-Study-Guide
 ```
 
 
-Ok in the last video I mentioned that I'm using the agnoster zed-shell
-
-theme. And out of the box this theme's command prompt looks something like this. It shows my username and workstation name, followed by what directory I'm in, which in this case is a directory called Kubernetes-Study-Guide which is under my home directory. This directory is actually a git repo, which is why the prompt is also showing which git branch I'm on.
+Ok in the last video I mentioned that I'm using the agnoster zed-shell theme. And out of the box this theme's command prompt looks something like this. It shows my username and workstation name, followed by what directory I'm in, which in this case is a directory called Kubernetes-Study-Guide that's under the my home directory. This directory is actually a git repo, which is why the prompt is also showing which git branch I'm on.
 
 
-However this also means that this prompt is quite long and doesn't give a me a lot of room to write my command. So When I try to type out a command it ends up going to the next line.
+As you can see this prompt is quite long and doesn't give a me much room to write my command. So when I try typing something it ends up going to the next line.
 
 ```
 docker container ls
 ```
 
-To fix that, I'm going to modify my prompt to make it shorter. First I'll get rid of the workstation name since I already know what that is, and I'll set my name to just my first name. I wasn't sure how to do for the agnoster theme so I had to google for it and worked out that I need to add the following code block to my .zshrc file.
+To fix that, I'm going to first try making my prompt shorter by getting rid of the hostname section.
+
+```
+hostname
+```
+
+That's something I already know so there's no point showing it here as well. I'm also going to shorten the username part as well. At the moment that's showing as
+
+```
+whoami
+```
+
+So I'll change that to just show my first name, which is only only 4 characters long.
+
+
+```
+echo sher
+```
+
+I wasn't sure how to make these changes to the agnoster theme so I had to google for it and worked out that I need to add the following code block to my .zshrc file.
 
 
 ```
@@ -50,9 +67,6 @@ swipe to course notes
 
 
 But for now, here's one i've prepared earlier.
-
-In case you're interested, I've given a breakdown of this PROMPT in the course notes to explain what it does.
-
 
 
 Once again I have to add this to my zshell profile:
