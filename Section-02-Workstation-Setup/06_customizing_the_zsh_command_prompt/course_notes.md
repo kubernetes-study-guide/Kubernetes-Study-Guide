@@ -1,4 +1,4 @@
-# Course notes - Customizing the command prompt
+# Course notes - Customizing the zsh command prompt
 
 ## Customizing the agnoster command prompt structure
 
