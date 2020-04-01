@@ -12,7 +12,7 @@ git status
 ```
 
 
-this prompt is quite long and doesn't give me much room to write my command especially if I have multiple terminals open like I have here.  That's why my git-status command ended up going to the next line.
+this prompt is quite long and doesn't give me much room to write my command especially in a split terminal setup like this. That's why my git-status command ended up going to the next line.
 
 
 To fix that, I'm going to free up some room by getting rid of the hostname section.
@@ -21,7 +21,7 @@ To fix that, I'm going to free up some room by getting rid of the hostname secti
 hostname
 ```
 
-That's something I already know so there's no point showing it here as well. I'm also going to shorten the username part as well. At the moment that's showing my initial and lastname
+That's something I already know so there's no point showing it here as well. I'm also going to shorten the username bit. At the moment that's showing my initial and lastname
 
 ```
 whoami
@@ -34,7 +34,7 @@ So I'll change that to just show my first name, which is only only 4 characters 
 echo sher
 ```
 
-I wasn't sure how to make these changes to the agnoster theme so I had to google for it. I worked out that I needed to add the following code block to my .zshrc file. So let's do that now.
+I wasn't sure how to make these changes to the agnoster theme so I had to google for it. And I eventually worked out that I needed to add the following code block to my .zshrc file.
 
 
 ```
@@ -47,7 +47,9 @@ paste
 save
 ```
 
-I now need to restart the shell for this change to take effect.
+So let's do that now.
+
+ok I now need to restart the shell for this change to take effect.
 
 
 ```
@@ -67,10 +69,7 @@ So fix that I'm going to make the command prompt span across 2 lines. That's don
 swipe to course notes
 ```
 
-and Here's one i've prepared earlier.
-
-
-Once again I have to add this to my zshell profile:
+and Here's the one I'm going to use. Once again I have to add this to my zshell profile:
 
 ```
 swipe to iterm
@@ -80,7 +79,7 @@ paste
 then save
 ```
 
-Now let's load this in by restarting the shell:
+Now let's restart the shell to load this in:
 
 ```
 restart the shell
@@ -92,7 +91,7 @@ Cool, it looks like that did the trick. Now I've got the whole width of the term
 git checkout -b test
 ```
 
-I've also added a small arrow on the left. This is more for cosmetic purposes just to show that this is a single command prompt that spans across 2 lines.
+I've also added a small arrow on the left. This is more for cosmetic purposes, just to show that this is a single command prompt that spans across 2 lines.
 
 
 
@@ -103,10 +102,10 @@ swipe to browser
 ```
 
 
-This prompt is the same as before, except that the arrow turns red if the previous command exits with an error code. This might look quite complicated with all this special zsh prompt syntax, but it's just a couple of if-else statements. Where if the exit code of the last command is non-zero, then it outputs the arrows in red, otherwise they output as normal.
+This prompt is the same as before, except that the arrow turns red if the previous command exits with an error code. This might look quite complicated with all this special zsh prompt syntax, but it's actually just a couple of if-else statements. Where if the exit code of the last command is non-zero, then it outputs the arrow with red highlighting, otherwise they output as normal.
 
 
-So to use this I need replace my existing prompt setting with this one:
+So to use this I need replace my existing prompt setting with this one, so let's do that now:
 
 ```
 copy
@@ -115,18 +114,18 @@ vim
 restart shell
 ```
 
-Now let's try this out by running an invalid command
+Now let's try this out by running an bad command
 
 
 
 ```
-minikube xxx
+git xxx
 ```
 
-Awesome the arrow is now red. As an added bonus, the agnoster theme is also showing red cross to indicate that the previous failed. And when I run a valid command it goes back to normal:
+Awesome the arrow is now red. As an added bonus, the agnoster theme is also showing a red cross to indicate something has gone wrong. And when I run a valid command it goes back to normal:
 
 ```
-minikube status
+git status
 ```
 
 
