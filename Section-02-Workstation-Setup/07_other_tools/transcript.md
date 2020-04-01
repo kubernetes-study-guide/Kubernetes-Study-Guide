@@ -1,4 +1,4 @@
-There are a small handful of other tools I'll be using. I've listed them out in the course notes and most of them are installed using your usual package manager, for example in my case I would do `brew install` followed by the package name.
+There are a small handful of other tools I'll be using. I've listed them out in the course notes and most of them are installed using your usual package manager, such as apt, or homebrew for macs.
 
 
 
