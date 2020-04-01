@@ -1,4 +1,4 @@
-The watch command let's you run the same command over and over and displays it's output. You run it by typing watch followed by the command your interested in.
+The watch tool let's you run the same command over and over and displays it's output. You run it by typing watch followed by the command your interested in.
 
 ```
 watch ls -l

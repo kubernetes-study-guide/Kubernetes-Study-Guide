@@ -1,4 +1,4 @@
-# Course Notes - Other opttional tools
+# Course Notes - Other optional tools
 
 These are some tools I'll be using as teaching aid in this course.
 
