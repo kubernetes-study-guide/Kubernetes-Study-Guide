@@ -8,12 +8,27 @@ The watch utility runs your command every 2 seconds by default. At the moment it
 
 As you can see it now shows up in the output.
 
-This let's you watch for any changes in the output in near realtime, that's where it get's it's name from.
+So in effect tool let's you watch for any changes in the output in near realtime, that's where it get's it's name from.
 
-However you can change this interval using the minus-n flag. For example here I'm setting it to every 3 seconds.
+Also if you wanted to, you can thange this 2 second default interval using the minus-n flag. Let me first controlc to exit out of watch
+
+```
+control+c
+```
+
+Ok now here's how to use the -n flag:
 
 ```
 watch -n3 ls -l
 ```
 
-I'll be using the watch command a lot to monitor for changes that happens on our kube cluster while performing kubernetes demos.
+For example here I'm setting it to every 3 seconds.
+
+Now my command is being 3 seconds.
+
+```
+cntrlc
+up-arrow
+```
+
+By the way you can also put a space after the minus-n flag. it still works the same way.
