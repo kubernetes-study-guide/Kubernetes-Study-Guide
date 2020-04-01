@@ -54,12 +54,6 @@ restart the shell
 Ok that looks better. However I can still run out space if I drill down into several directories. So fix that I'm going to make the command prompt span across 2 lines. That's done by modifying the prompt environment variable:
 
 ```
-echo $PROMPT
-```
-
-zsh has it's own syntax for configuring this prompt variable,...
-
-```
 swipe to course notes
 ```
 
@@ -92,9 +86,36 @@ I've also added a small arrow on the left to show that this is a single command 
 docker container ls
 ```
 
+However I'm actually going to use a slightly fancier version of this prompt, which is this one:
+
+```
+swipe to browser
+```
 
 
-This prompt also has a bonus feature which is that this arrow head turns red if the previous command exits with an error code:
+This prompt is the same as before, except that the arrow turns red if the previous command exits with an error code. This might look quite complicated with all this special zsh prompt syntax, but it's just the arrow characters enclosed in two if-else statements. Where if the exit code of the last command is non-zero, then it outputs the arrow characters highlighted in red otherwise they output as normal.
+
+
+```
+go to http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Conditional-Substrings-in-Prompts
+```
+
+. But let
+
+The percentage sign show where this if statement
+
+
+now lets try this out:
+
+```
+copy
+swipe to iterm2
+vim
+```
+
+
+
+
 
 ```
 minikube xxx

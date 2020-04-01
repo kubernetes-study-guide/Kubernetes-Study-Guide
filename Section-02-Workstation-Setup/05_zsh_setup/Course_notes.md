@@ -46,11 +46,4 @@ vim ./.oh-my-zsh/plugins/globalias/globalias.plugin.zsh
 ```
 
 
-prompt setup:
-
-https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/
-https://www.sitepoint.com/zsh-tips-tricks/
-https://hackernoon.com/how-to-trick-out-terminal-287c0e93fce0
-https://til.hashrocket.com/posts/f3093399d0-test-out-your-zsh-prompt
-https://medium.com/@oldwestaction/beautifying-your-terminal-with-zsh-prezto-powerlevel9k-9e8de2023046
-https://code.joejag.com/2014/why-zsh.html
+[Official zsh website](http://zsh.sourceforge.net/)
