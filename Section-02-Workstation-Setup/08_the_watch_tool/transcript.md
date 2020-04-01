@@ -1,10 +1,22 @@
-The watch tool let's you run the same command over and over and displays it's output. You run it by typing watch followed by the command your interested in.
+The watch tool let's you run the same command over and over and displays it's output.
+
+```
+watch --help
+```
+
+
+You run it by typing watch followed by the command your interested in.
 
 ```
 watch ls -l
 ```
 
 The watch utility runs your command every 2 seconds by default. At the moment it's showing that this folder is empty. So lets see what happens when I create a new testfile.
+
+```
+# in another terminal
+touch testfile.txt
+```
 
 As you can see it now shows up in the output.
 
