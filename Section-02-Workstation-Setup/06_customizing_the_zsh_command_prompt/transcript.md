@@ -5,23 +5,23 @@ cd Kubernetes-Study-Guide
 ```
 
 
-Ok in the last video I mentioned that I'm using the agnoster zed-shell theme. And out of the box this theme's command prompt looks something like this. It shows my username and workstation name, followed by the directory path. This folder happens to be a git repo, and that's why the prompt also shows the currently active git branch.
+Ok in the last video I mentioned that I'm using the agnoster zed-shell theme. And out of the box this theme's command prompt looks something like this. It shows my username and hostname, followed by the directory path. This folder happens to be a git repo, and that's why the prompt also shows the current active git branch.
 
 ```
 git status
 ```
 
 
-this prompt is quite long and doesn't give me much room to write my command especially in a split terminal setup like this. That's why my git-status command ended up going to the next line.
+this prompt is quite long and doesn't give me much room to write out my commands, especially in a split terminal setup like this. That's why my git-status command ended up going to the next line.
 
 
-To fix that, I'm going to free up some room by getting rid of the hostname section.
+To fix that, I'm going to free up some room by getting rid of the hostname bit from the command prompt.
 
 ```
 hostname
 ```
 
-That's something I already know so there's no point showing it here as well. I'm also going to shorten the username bit. At the moment that's showing my initial and lastname
+I already what the hostname is since that's the macbook I'm using, so there's no point showing that here as well. I'm also going to shorten the username bit. At the moment that's showing my initial and lastname
 
 ```
 whoami
@@ -63,13 +63,13 @@ cd Section-02
 ```
 
 
-So fix that I'm going to make the command prompt span across 2 lines. That's done by modifying the prompt environment variable:
+So to fix that I'm going to make the command prompt span across 2 lines. and That's done by modifying the prompt environment variable:
 
 ```
 swipe to course notes
 ```
 
-and Here's the one I'm going to use. Once again I have to add this to my zshell profile:
+and here's the modified version that I'm going to use. Once again I have to add this to my zshell profile for this to work:
 
 ```
 swipe to iterm
@@ -88,10 +88,10 @@ restart the shell
 Cool, it looks like that did the trick. Now I've got the whole width of the terminal to play with.
 
 ```
-git checkout -b test
+minikube status
 ```
 
-I've also added a small arrow on the left. This is more for cosmetic purposes, just to show that this is a single command prompt that spans across 2 lines.
+I've also added a small arrow on the left. This is more for cosmetic purposes, it's just to show that this is a single command prompt that spans across 2 lines.
 
 
 
@@ -102,7 +102,7 @@ swipe to browser
 ```
 
 
-This prompt is the same as before, except that the arrow turns red if the previous command exits with an error code. This might look quite complicated with all this special zsh prompt syntax, but it's actually just a couple of if-else statements. Where if the exit code of the last command is non-zero, then it outputs the arrow with red highlighting, otherwise they output as normal.
+This prompt is the same as before, except that the arrow turns red if the previous command exits with an error code. This might look really complicated with all this special zsh prompt syntax, but it's actually just a couple of if-else statements. Where if the exit code of the last command is non-zero, then it outputs the arrow with red highlighting, otherwise they output as normal.
 
 
 So to use this I need replace my existing prompt setting with this one, so let's do that now:
@@ -127,6 +127,8 @@ Awesome the arrow is now red. As an added bonus, the agnoster theme is also show
 ```
 git status
 ```
+
+This command prompt now looks really pretty, if I do say so myself.
 
 
 
