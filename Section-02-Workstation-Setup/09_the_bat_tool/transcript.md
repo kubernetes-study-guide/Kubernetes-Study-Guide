@@ -1,4 +1,10 @@
-The bat tool is an alternative to the cat command, but has some really cool features, the key one being that it supports syntax highlighting, for example here's what the output looks like when I bat out a yaml file:
+The bat tool is an alternative to the cat command,
+
+```
+bat --help
+```
+
+but has some really cool features, the key one being that it supports syntax highlighting, for example here's what the output looks like when I bat out a yaml file:
 
 ```
 ls -l
