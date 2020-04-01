@@ -1,4 +1,4 @@
-# Course Notes - Other tools (optonal extras)
+# Course Notes - Other opttional tools
 
 These are some tools I'll be using as teaching aid in this course.
 
