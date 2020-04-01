@@ -20,7 +20,7 @@ Source: https://github.com/agnoster/agnoster-zsh-theme/issues/39#issuecomment-30
 
 ## General guide to customizing zsh $PROMPT variable
 
-Useful links to learning about the zsh $PROMPT:
+Useful links to learning about the zsh $PROMPT syntax:
 
 - https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/
 - https://www.sitepoint.com/zsh-tips-tricks/
@@ -30,18 +30,31 @@ Useful links to learning about the zsh $PROMPT:
 - https://code.joejag.com/2014/why-zsh.html
 
 
-Without the red-arrow feature:
+### Custom Prompt that spans across 2 lines
+
+Here's a very simple way to split the command prompt into 2 lines:
+
+```
+PROMPT="$PROMPT
+$ "
+```
+
+This variable contains a new-line character at the end of the first line. This is what causes the PROMPT to split into 2 lines. I've also included a dollar character followed by a blank space on the second line, to make it look more like a standard command prompt.
+
+
+Here's another variaton of the above example but this time using an arrow:
+
 
 ```
 PROMPT="╭$PROMPT
 ╰➤ "
 ```
 
-This variable contains a new-line character at the end of the first line. This is what causes the PROMPT to split into 2 lines.
+This includes an arrow for cosmetic purposes. I personally think this looks prettier.
 
 
 
-With the red arrow feature:
+Here's another example but with a fancier arrow:
 
 ```
 PROMPT="%(?.╭.%{$fg[red]%}╭%{$reset_color%})$PROMPT
@@ -49,15 +62,17 @@ PROMPT="%(?.╭.%{$fg[red]%}╭%{$reset_color%})$PROMPT
 ```
 
 
-The second line has syntax in the form of:
+This has enclosed the arrow inside a couple of if-else statements in the form of:
 
 ```
-%(?.<success expression>.<failure expression>)
+%(?.true-text.false-text)
 ```
 
-Here's we where you can learn more:
+Where '?' indicates the exit code.
 
-http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Conditional-Substrings-in-Prompts
+For more info about this syntax, see the official docs:
+
+[http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Conditional-Substrings-in-Prompts](http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Conditional-Substrings-in-Prompts)
 
 
 The `%(x.true-text.false-text)` indicates an if-else statement. This decides on which expression to print based on the exit code (?).
