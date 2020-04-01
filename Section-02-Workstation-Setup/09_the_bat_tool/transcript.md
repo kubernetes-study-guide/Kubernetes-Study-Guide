@@ -20,7 +20,7 @@ bat --list-themes
 Once you've decided on a theme you can set it as your defualt in your zsh profile:
 
 ```
-echo ""  >> ~/.zshrc
+echo "BAT_THEME=DarkNeon"  >> ~/.zshrc
 ```
 
 You should check out the documentation to learn about how to customise and configure this tool.
