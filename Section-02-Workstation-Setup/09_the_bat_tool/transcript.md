@@ -7,6 +7,7 @@ bat --help
 but has some really cool features, the key one being that it supports syntax highlighting, for example here's what the output looks like when I bat out a yaml file:
 
 ```
+clear
 ls -l
 bat po...
 ```
