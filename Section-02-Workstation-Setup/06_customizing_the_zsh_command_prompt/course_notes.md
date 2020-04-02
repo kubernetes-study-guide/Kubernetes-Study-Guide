@@ -39,6 +39,8 @@ PROMPT="$PROMPT
 $ "
 ```
 
+Note, $PROMPT is an alias of $PS1 
+
 This variable contains a new-line character at the end of the first line. This is what causes the PROMPT to split into 2 lines. I've also included a dollar character followed by a blank space on the second line, to make it look more like a standard command prompt.
 
 
