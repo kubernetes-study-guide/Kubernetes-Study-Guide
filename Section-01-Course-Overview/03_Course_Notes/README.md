@@ -1,5 +1,11 @@
 # The Kubernetes Study Guide
 
+NOtes: need to change all the course_notes.md to readme.md file. The the configs folder is visible. Can also rename the configs file to sample_files folder. 
+
+In this video say that each course_notes sections also have this folder where all the sample files used in the demo lives. 
+
+
+
 This course comes with it's very own study guide which you need to download from Github:
 
 [https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide](https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide)
