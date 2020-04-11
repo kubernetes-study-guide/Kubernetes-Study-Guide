@@ -17,3 +17,7 @@ with green ticks and red crosses:
 PROMPT='╭─%(?.%{$fg[green]%}%B √ %{$reset_color%}.%{$fg[red]%}%B X %{$reset_color%})$(kube_ps1)%{$reset_color%}%{$terminfo[bold]$fg[blue]%} %~ %{$reset_color%}$(ruby_prompt_info)$(git_prompt_info)$(virtualenv_prompt_info)
 ╰─%B$%b '
 ```
+
+new tool:
+https://www.reddit.com/r/kubernetes/comments/ftnoez/introducing_kubie_a_more_powerful_alternative_to/
+https://blog.sbstp.ca/introducing-kubie/
