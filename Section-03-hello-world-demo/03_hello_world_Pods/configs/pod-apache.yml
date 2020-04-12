@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pod-hello-world
+  name: pod-web
   labels:
     app: web
 spec:
   containers:
-  - name: cntr-httpd
+  - name: cntr-apache
     image: httpd:latest
     ports:
     - containerPort: 80
