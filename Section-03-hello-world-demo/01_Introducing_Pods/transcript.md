@@ -16,6 +16,5 @@ Persistant Volumes can be used to provide disk storage space for your pods to st
 
 
 
-We'll cover all this and more later on, and for now what I want you to take away from this is that pods are the fundamental building block in kubernetes.
+We'll cover all this and more later on, but for now, what I want you to take away from this. is that pods are the fundamental building block in kubernetes.
 
-We're now nearly ready to do our first kubernetes hello world demo, but before that I need to give an overview of the example app we'll be using for this demo. That's coming up next.
