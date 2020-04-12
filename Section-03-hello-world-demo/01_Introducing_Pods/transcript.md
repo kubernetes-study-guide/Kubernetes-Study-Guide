@@ -1,4 +1,4 @@
-Getting a containerised application to run on kubernetes involves creating a set of kubernetes objects. There are different types of kubernetes objects, and you can list out the different types using the api-resources command.
+Getting a containerised app running on kubernetes involves creating a set of kubernetes objects. There are different types of objects that you can create, and you can list them out using the api-resources command.
 
 ```
 minikube status
@@ -9,12 +9,12 @@ As you can see there's a lot here. However there's one object type that's front 
 
 For example -
 
-service objects can be used for routing network traffic to your pods.
-secrets objects can be used for injecting sensitive data into your pods, such as username and passwords
-configmaps objects can be used for supplying config files to the apps running inside your containers.
-Persistant Volumes can be used to provide disk storage space for your pods to store data in.
+services are used for routing network traffic to your pods.
+secrets are used for injecting sensitive data into your pods, such as username and passwords
+If you want to provide config files to the apps running inside the containers, then you can do that by injecting configmaps to your pods.
+Persistant Volumes are useful for allocating disk space for your pods to store data in.
 
 
 
-We'll cover all this and more later on, but for now, what I want you to take away from this. is that pods are the fundamental building block in kubernetes.
+We'll cover all this and more later on, but for now, what I want you to take away from this video. is that pods are the fundamental building block in kubernetes.
 
