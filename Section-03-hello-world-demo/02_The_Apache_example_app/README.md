@@ -4,9 +4,9 @@
 # Apache Web Server
 Here are some places where you can learn more about Apache
 
-[Official Apache Website](https://httpd.apache.org/)
-[Official Apache DockerHub image](https://hub.docker.com/_/httpd)
-[Guide on installing & Configuring Apache Web Server](https://www.digitalocean.com/community/tutorial_collections/21) on various Linux Distros.
+- [Official Apache Website](https://httpd.apache.org/)
+- [Official Apache DockerHub image](https://hub.docker.com/_/httpd)
+- [Guide on installing & Configuring Apache Web Server](https://www.digitalocean.com/community/tutorial_collections/21) on various Linux Distros.
 
 
 
