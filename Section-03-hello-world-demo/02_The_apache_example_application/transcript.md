@@ -44,9 +44,9 @@ I had to go through this image's documentation to figure out where to find this 
 
 Now let's say I want to change this default message to something else. In that case, we can simply update the index.html file with the new content:
 
-``` right terminal
+```
 docker exec -it vigilant_satoshi bash
-echo 'hello Sher!!!' > /usr/local/apache2/htdocs/index.html
+echo 'Hi Sher!' > /usr/local/apache2/htdocs/index.html
 ```
 
 Now if we run curl again we get the new response:
