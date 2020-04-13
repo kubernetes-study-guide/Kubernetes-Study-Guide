@@ -1,4 +1,4 @@
-# Course Notes
+# Course Notes - Introducing Pods
 
 To get a list of all the available kubernetes object types:
 
