@@ -1,6 +1,15 @@
 # Course Notes
 
 
+# Apache Web Server
+Here are some places where you can learn more about Apache
+
+[Official Apache Website](https://httpd.apache.org/)
+[Guide on installing & Configuring Apache Web Server](https://www.digitalocean.com/community/tutorial_collections/21) on various Linux Distros.
+
+
+
+## Commands used in this video
 
 ```
 $ docker run -d -p 80:80 httpd
