@@ -29,7 +29,7 @@ But for now this yaml file is basically saying that:
 
 
 
-Let's now create this pod by feeding this yaml file into the apply command:
+Let's now create this pod by feeding this yaml file into the kubectl apply command:
 
 ```bash
 kubectl apply -f pod-apache.yml
@@ -37,7 +37,7 @@ kubectl apply -f pod-apache.yml
 
 It doesn't matter what the filename is, as long as it ends with the yaml extension.
 
-Ok it looks like our pod has been created. Lets see if we can view it using the 'get pods' command:
+Ok it looks like our pod has been created now. Lets see if we can view it using the kubectl-get-pods command:
 
 ```bash
 kgp
@@ -51,7 +51,7 @@ I'll set the output flag to 'wide' to print out some more info:
 kgp -o wide
 ```
 
-This shows a bit more info, in particular which worker node the pod is running on, as well as the pod's IP address. Kubernetes has it's own private internal network and that ip address belongs to that private network.
+This gives us bit more detail, in particular which worker node the pod is running on, as well as the pod's IP address. Kubernetes has it's own private internal network and that ip address belongs to that private network.
 
 That means that we can't access that network from outside, such as from my macbook:
 
@@ -62,14 +62,14 @@ curl: (7) Failed to connect to 172.17.0.8 port 80: Operation timed out
 
 So how can we test to see our apache container is actually working. Well the proper is by creating a service object, which we'll do in the next video.
 
-But for now I'll use quick another technique that software developers often use for troubleshooting purposes, and that is port-forwarding.
+But for now I'll use alternative technique that software developers often use for troubleshooting purposes, and that is port-forwarding.
 
 ``` right terminal
 kubectl port-forward pod-hello-world 1234:80
 # hit enter
 ```
 
-Her'e we're saying that any traffic our workstations receives on port 8000 should be forwarded to our apache pod at port 80. This is a bit like creating a tunnel between my macbook and the kube cluster, and kubectl is continuously monitoring for any traffic and acting as the go between. That's why it hasn't exited and is hanging.
+Her'e we're saying that any traffic our workstations receives on port 1234 should be forwarded to our apache pod at port 80. This is a bit like creating a tunnel between my macbook and the kube cluster, and kubectl is continuously monitoring for any traffic and acting as the go between. That's why it hasn't exited and is hanging.
 
 Now let's try curling our pod using localhost:1234
 
