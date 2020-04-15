@@ -62,7 +62,7 @@ curl: (7) Failed to connect to 172.17.0.8 port 80: Operation timed out
 
 So how can we test to see our apache container is actually working. Well the proper is by creating a service object, which we'll do in the next video.
 
-But for now I'll use alternative technique that software developers often use for troubleshooting purposes, and that is port-forwarding.
+But for now I'll use a technique that software developers often use for troubleshooting purposes, and that is port-forwarding.
 
 ``` right terminal
 kubectl port-forward pod-hello-world 1234:80
@@ -82,6 +82,7 @@ curl http://localhost:1234
 
 Bingo that worked.
 
+Ok that's it for this demo and I don't need this pod anymore. So let's go ahead and delete it.
 
 In the next video we'll look at how to access our pod the proper usign kubernetes services.
 
