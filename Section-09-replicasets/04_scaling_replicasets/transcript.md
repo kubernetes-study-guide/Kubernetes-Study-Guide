@@ -1,4 +1,11 @@
-Now there can be times where you want to change the number of replicas pods in your replicaset. To do that you can just edit the replica setting in your replicaset's yaml file, and then reapply it. Or you can use the `kubectl scale` command which is purpose built for this kind of task.
+Now there can be times where you want to change the number of replicas pods in your replicaset. To do that you can just edit the replica setting in your replicaset's yaml file, and then reapply it.
+
+
+```
+bat my-replicaset.yml
+```
+
+Or you can use the `kubectl scale` command which is purpose built for this exact task.
 
 ```
 kubectl scale --help

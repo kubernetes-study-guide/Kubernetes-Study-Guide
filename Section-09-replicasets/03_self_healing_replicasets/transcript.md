@@ -1,4 +1,4 @@
-Ok here we have our replicaset along with it's 5 replica pods. By the way I've used the sort-by flag to list my pods based on age, starting with the oldest first. And I've also applied the selector filter flag so that it only shows pods that have the label of app, with the value of webserver.
+Ok here we have our replicaset along with it's 5 replica pods. By the way I've used a number of flags here. The show-labels flag juse displays the labels column, I'm usingthe sort-by flag to list my pods based on age, starting with the oldest first. And I've used the selector flag.  This acts as filter and here I'm telling it to only shows pods that have the label of app, and this applabel has it's value set as webserver.
 
 
 Now let's see what happens when I try deleting a couple of these replica pods.
