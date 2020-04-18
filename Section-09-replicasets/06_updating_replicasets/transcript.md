@@ -1,4 +1,4 @@
-When a new version of an app comes out, then this new version usually also gets packaged into a new docker image and then uploaded to a docker registry, such as dockerhub. This image usually have the same name, but with a newer tag version.
+When a new version of an app is released, the app's also usually package the new app into a new docker image and upload that image with a new tag to an image registry, such as docker hub
 
 Whenever that happens, it's common practice to update your replica pods to use the newer image.
 
@@ -18,7 +18,7 @@ However that's not the case. The replicaset's definition does end up changing, b
 In fact, only new pods that the replicaset creates from this point forward will end up being built using the new image.
 
 
-Now you might think that this is some kind of a bug, but in actual fact, replicasets have been designed to behave that way on purpose. That's because you're supposed to roll out changes to your replica pods using something called kubernetest deployments. Will cover deployments later in the course.
+Now you might think that this is some kind of a bug, but in actual fact, replicasets have been designed to behave that way on purpose. That's because you're supposed to roll out changes to your replica pods using something called kubernetest deployments. Will cover deployments in the next section of this course.
 
 
 
@@ -35,6 +35,6 @@ kubectl scale replicaset --replicas=0 rs-httpd
 kubectl scale replicaset --replicas=5 rs-httpd
 ```
 
-It's not good practice to do it this way espeically in a production environment since it will cause a downtime.
+It's not good practice to do it this way especially in a production environment since it will cause a downtime.
 
-So as I mentioned earlier, the proper way of rolling out this kind of change is by using Kubernetes Deployments, and we'll cover that later in the course.
+The proper way of rolling out this kind of change is by using Kubernetes Deployments, and we'll cover that next.

@@ -4,13 +4,13 @@ Now there can be times where you want to change the number of replicas pods in y
 kubectl scale --help
 ```
 
-For example to scale down my replicaset to a single pod I have to tell the kubectl scale command to scale my replicaset, called rs-httpd, to 1 replica.
+With this command you have to specify what type of object you want to scale, which in my case is a replicaset, the name of the replicaset, and how many replicas you want, which in my example I'm going to scale down to just a single pod.
 
 ```
 kubectl scale replicaset rs-httpd --replicas=1
 ```
 
-Ok let's scale back up to 5 pods again:
+This ends up deleting most of the pods, so that only one remains. Ok let's scale back up to 5 pods again:
 
 ```
 kubectl scale replicaset rs-httpd --replicas=5
