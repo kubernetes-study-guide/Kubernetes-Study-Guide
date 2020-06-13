@@ -131,6 +131,14 @@ $ minikube dashboard
 
 This is a really cool tool that let's you view and manage your Kubecluster visually. I encourage you to explore this tool as we progress through the course. 
 
+# Alternatives to minikube
+[kind](https://kind.sigs.k8s.io/) - Like minikube but setups up a multinode cluster on your local workstation
+[k3d](https://github.com/rancher/k3d) - like kind, but has the following enabled by default:
+- ingress enabled by default
+- Persistent Volumes enabled by default
+- enable a local internal docker registry with a single flag
+- uses far less resource compared to kind. Because it is built on [k3s](https://github.com/rancher/k3s). K3s is functionally identical to k8s, but is packaged into a single binary. 
+
 ### References
 
 [https://kubernetes.io/docs/setup/minikube/](https://kubernetes.io/docs/setup/minikube/)
