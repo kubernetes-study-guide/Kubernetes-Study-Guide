@@ -35,8 +35,9 @@ chmod +x ./kubectl
 
 Now I need to add my new bin folder to the PATH variable. I'll do that by appending the following line to my shell profile script.
 
+```
 echo "export PATH=~/bin:$PATH" >> ~/.zshrc
-
+```
 
 I'm using zsh as my shell, which is why I'm sending this line to the zshrc file. however if you're a bash user, then see the course notes for the bash version of this command.
 
