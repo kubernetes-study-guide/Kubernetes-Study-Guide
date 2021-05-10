@@ -1,3 +1,11 @@
+There are three types of healthchecks:
+
+- readiness probe
+- liveness probe
+- startup probe 
+
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+
 # Pods Healthchecks
 
 There can be situation where the primary application inside a pod is malfunctioning, but is still running. So to help Kubernetes to identify and rebuild these pods, you need to provide some additional details to Kubernetes on how perform periodic healthecks on your pod. That's done by adding the pod.spec.containers.livenessProbe setting to your pod yaml definition:
