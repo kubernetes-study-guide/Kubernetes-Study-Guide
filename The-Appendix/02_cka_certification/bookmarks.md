@@ -14,7 +14,7 @@ main exam homepage: [https://www.cncf.io/certification/cka/](https://www.cncf.io
 [https://medium.com/@pmvk/tips-to-crack-certified-kubernetes-administrator-cka-exam-c949c7a9bea1](https://medium.com/@pmvk/tips-to-crack-certified-kubernetes-administrator-cka-exam-c949c7a9bea1)
 [https://medium.com/akena-blog/k8s-admin-exam-tips-22961241ba7d](https://medium.com/akena-blog/k8s-admin-exam-tips-22961241ba7d)
 
-[https://medium.com/@krystiannowaczyk/how-i-passed-the-cka-certified-kubernetes-administrator-exam-f94b11566528](https://medium.com/@krystiannowaczyk/how-i-passed-the-cka-certified-kubernetes-administrator-exam-f94b11566528k)
+[https://medium.com/@krystiannowaczyk/how-i-passed-the-cka-certified-kubernetes-administrator-exam-f94b11566528](https://medium.com/@krystiannowaczyk/how-i-passed-the-cka-certified-kubernetes-administrator-exam-f94b11566528)
 
 “How to Pass Certified Kubernetes Administrator (CKA) exam on first Attempt.” by Prudhvi Godithi [How to pass the Certified Kubernetes Administrator (CKA) exam on the first attempt - medium.com](https://link.medium.com/vZfmibZtbW)
 
